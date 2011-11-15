@@ -1,0 +1,22 @@
+
+// Bullet types (for the shell effect)
+
+SHELL_9MM = 1
+SHELL_57 = 2
+SHELL_556 = 3
+SHELL_762NATO = 4
+SHELL_SHOTGUN = 5
+SHELL_338MAG = 6
+SHELL_50CAL = 7
+
+// Class types
+
+CLASS_SCOUT = 1
+CLASS_COMMANDO = 2
+CLASS_SPECIALIST = 3
+
+// Zed types
+
+CLASS_RUNNER = 1
+CLASS_BANSHEE = 2
+CLASS_CONTAGION = 3

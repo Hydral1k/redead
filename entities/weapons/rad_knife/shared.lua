@@ -1,0 +1,159 @@
+if SERVER then
+
+	AddCSLuaFile("shared.lua")
+	
+end
+
+if CLIENT then
+
+	SWEP.ViewModelFOV		= 72
+	SWEP.ViewModelFlip		= false
+	
+	SWEP.PrintName = "Knife"
+	SWEP.IconLetter = "j"
+	SWEP.Slot = 1
+	SWEP.Slotpos = 0
+	
+	killicon.AddFont( "rad_knife", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
+	
+end
+
+SWEP.HoldType = "slam"
+
+SWEP.Base = "rad_base"
+
+SWEP.ViewModel			= "models/weapons/v_knife_t.mdl"
+SWEP.WorldModel			= "models/weapons/w_knife_t.mdl"
+
+SWEP.IsSniper = false
+SWEP.AmmoType = "Knife"
+
+SWEP.Primary.Hit            = Sound( "Weapon_Knife.HitWall" )
+SWEP.Primary.HitFlesh		= Sound( "Weapon_Knife.Hit" )
+SWEP.Primary.Sound			= Sound( "Weapon_Knife.Slash" )
+SWEP.Primary.Recoil			= 3.5
+SWEP.Primary.Damage			= 35
+SWEP.Primary.NumShots		= 1
+SWEP.Primary.Delay			= 1.100
+
+SWEP.Primary.ClipSize		= 1
+SWEP.Primary.Automatic		= true
+
+function SWEP:GetViewModelPosition( pos, ang )
+
+	return pos, ang
+	
+end
+
+function SWEP:SecondaryAttack()
+
+end
+
+function SWEP:PrimaryAttack()
+
+	self.Owner:SetLuaAnimation( "shank" )
+	
+	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self.Weapon:MeleeTrace( self.Primary.Damage )
+	
+end
+
+function SWEP:Think()	
+
+end
+
+function SWEP:MeleeTrace( dmg )
+	
+	self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
+	
+	if CLIENT then return end
+	
+	local pos = self.Owner:GetShootPos()
+	local aim = self.Owner:GetAimVector() * 64
+	
+	local line = {}
+	line.start = pos
+	line.endpos = pos + aim
+	line.filter = self.Owner
+	
+	local linetr = util.TraceLine( line )
+	
+	local tr = {}
+	tr.start = pos + self.Owner:GetAimVector() * -5
+	tr.endpos = pos + aim
+	tr.filter = self.Owner
+	tr.mins = Vector(-16,-16,-16)
+	tr.maxs = Vector(16,16,16)
+
+	local trace = util.TraceHull( tr )
+	local ent = trace.Entity
+	local ent2 = linetr.Entity
+	
+	if not ValidEntity( ent ) and ValidEntity( ent2 ) then
+	
+		ent = ent2
+	
+	end
+
+	if not ValidEntity( ent ) then 
+		
+		self.Owner:EmitSound( self.Primary.Sound, 100, math.random(90,110) )
+		return 
+		
+	elseif not ent:IsWorld() then
+	
+		self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
+		
+		if ent:IsPlayer() and ent:Team() != self.Owner:Team() then
+		
+			ent:TakeDamage( dmg * 2, self.Owner, self.Weapon )
+			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
+			
+			self.Owner:AddStat( "Knife" )
+			self.Owner:DrawBlood()
+			
+		elseif string.find( ent:GetClass(), "npc" ) then
+		
+			ent:TakeDamage( dmg, self.Owner, self.Weapon )
+			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
+			
+			self.Owner:AddStat( "Knife" )
+			self.Owner:DrawBlood()
+		
+		elseif !ent:IsPlayer() then 
+		
+			if string.find( ent:GetClass(), "breakable" ) then
+			
+				ent:TakeDamage( 50, self.Owner, self.Weapon )
+				
+				if ent:GetClass() == "func_breakable_surf" then
+				
+					ent:Fire( "shatter", "1 1 1", 0 )
+				
+				end
+			
+			end
+		
+			ent:EmitSound( self.Primary.Hit, 100, math.random(90,110) )
+			
+			local phys = ent:GetPhysicsObject()
+			
+			if ValidEntity( phys ) then
+			
+				ent:SetPhysicsAttacker( self.Owner )
+				ent:TakeDamage( 10, self.Owner, self.Weapon )
+				
+				phys:Wake()
+				phys:ApplyForceCenter( self.Owner:GetAimVector() * phys:GetMass() * 200 )
+				
+			end
+			
+		end
+		
+	end
+
+end
+
+function SWEP:DrawHUD()
+	
+end
