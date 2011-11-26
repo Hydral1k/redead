@@ -1,30 +1,30 @@
 
-GM.Pain = {"toxsin/pain01.wav", 
-"toxsin/pain02.wav", 
-"toxsin/pain03.wav", 
-"toxsin/pain04.wav",
-"toxsin/pain05.wav",
-"toxsin/die05.wav"}
+GM.Pain = {"nuke/gore/pain01.wav", 
+"nuke/gore/pain02.wav", 
+"nuke/gore/pain03.wav", 
+"nuke/gore/pain04.wav",
+"nuke/gore/pain05.wav",
+"nuke/gore/die05.wav"}
 	
-GM.Death = {"toxsin/die01.wav", 
-"toxsin/die02.wav", 
-"toxsin/die03.wav", 
-"toxsin/die04.wav",
-"toxsin/carnage01.wav", 
-"toxsin/carnage02.wav", 
-"toxsin/carnage03.wav", 
-"toxsin/carnage04.wav",
-"toxsin/carnage05.wav"}
+GM.Death = {"nuke/gore/die01.wav", 
+"nuke/gore/die02.wav", 
+"nuke/gore/die03.wav", 
+"nuke/gore/die04.wav",
+"nuke/gore/carnage01.wav", 
+"nuke/gore/carnage02.wav", 
+"nuke/gore/carnage03.wav", 
+"nuke/gore/carnage04.wav",
+"nuke/gore/carnage05.wav"}
 
-GM.AxeHit = {"toxsin/hit01.wav", 
-"toxsin/hit02.wav", 
-"toxsin/hit03.wav", 
-"toxsin/hit04.wav", 
-"toxsin/hit05.wav"}
+GM.AxeHit = {"nuke/weapon/hit01.wav", 
+"nuke/weapon/hit02.wav", 
+"nuke/weapon/hit03.wav", 
+"nuke/weapon/hit04.wav", 
+"nuke/weapon/hit05.wav"}
 
-GM.GoreSplash = {"toxsin/blood01.wav", 
-"toxsin/blood02.wav", 
-"toxsin/blood03.wav",
+GM.GoreSplash = {"nuke/gore/blood01.wav", 
+"nuke/gore/blood02.wav", 
+"nuke/gore/blood03.wav",
 "npc/antlion_grub/squashed.wav" }
 
 GM.GoreSplat = { "physics/flesh/flesh_squishy_impact_hard1.wav",
@@ -54,14 +54,14 @@ GM.Ricochet = {"weapons/fx/rics/ric1.wav",
 "weapons/fx/rics/ric4.wav",
 "weapons/fx/rics/ric5.wav"}
 
-GM.Geiger = {"radbox/geiger_1.wav",
-"radbox/geiger_2.wav",
-"radbox/geiger_3.wav",
-"radbox/geiger_4.wav",
-"radbox/geiger_5.wav",
-"radbox/geiger_6.wav",
-"radbox/geiger_7.wav",
-"radbox/geiger_8.wav"}
+GM.Geiger = {"nuke/geiger_1.wav",
+"nuke/geiger_2.wav",
+"nuke/geiger_3.wav",
+"nuke/geiger_4.wav",
+"nuke/geiger_5.wav",
+"nuke/geiger_6.wav",
+"nuke/geiger_7.wav",
+"nuke/geiger_8.wav"}
 
 GM.RadioBeep = {"ambient/levels/prison/radio_random1.wav",
 "ambient/levels/prison/radio_random2.wav",

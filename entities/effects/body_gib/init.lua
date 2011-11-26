@@ -36,7 +36,7 @@ function EFFECT:Init( data )
 	
 	for i=1, 6 do
 	
-		local particle = emitter:Add( "toxsin/gore" .. math.random(1,2), pos )
+		local particle = emitter:Add( "nuke/gore" .. math.random(1,2), pos )
 		particle:SetVelocity( VectorRand() * 100 + Vector(0,0,75) )
 		particle:SetDieTime( math.Rand( 0.5, 1.0 ) )
 		particle:SetStartAlpha( 255 )
@@ -54,7 +54,7 @@ function EFFECT:Init( data )
 		local vec = VectorRand()
 		vec.z = math.Rand( -0.1, 1.0 )
 	
-		local particle = emitter:Add( "toxsin/gore" .. math.random(1,2), pos + Vector(0,0,math.random(-10,10)) )
+		local particle = emitter:Add( "nuke/gore" .. math.random(1,2), pos + Vector(0,0,math.random(-10,10)) )
 		particle:SetVelocity( vec * 450 )
 		particle:SetLifeTime( 0 )
 		particle:SetDieTime( 1.0 )
@@ -135,7 +135,7 @@ function GoreThink( part )
 	local pos = part:GetPos()
 	local emitter = ParticleEmitter( pos )
 	
-	local particle = emitter:Add( "z0r/gore" .. math.random(1,2), pos  )
+	local particle = emitter:Add( "nuke/gore" .. math.random(1,2), pos  )
 	particle:SetVelocity( Vector(0,0,-80) * scale )
 	particle:SetDieTime( 3.0 + scale * 1.0 )
 	particle:SetStartAlpha( 200 )

@@ -827,7 +827,13 @@ end
 
 function meta:SynchInventory()
 
-	datastream.StreamToClients( { self }, "InventorySynch", self:GetInventory() )
+	//datastream.StreamToClients( { self }, "InventorySynch", self:GetInventory() )
+	
+	net.Start( "InventorySynch" )
+		
+		net.WriteTable( self:GetInventory() )
+		
+	net.Broadcast()
 
 end
 
@@ -1034,7 +1040,13 @@ end
 
 function meta:SynchStash( ent )
 
-	datastream.StreamToClients( { self }, "StashSynch", ent:GetItems() )
+	//datastream.StreamToClients( { self }, "StashSynch", ent:GetItems() )
+	
+	net.Start( "StashSynch" )
+		
+		net.WriteTable( ent:GetItems() )
+		
+	net.Broadcast()
 
 end
 

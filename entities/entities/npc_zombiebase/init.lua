@@ -89,7 +89,7 @@ function ENT:DoDeath( dmginfo )
 	self.Dying = true
 	
 	self.Entity:SetNPCState( NPC_STATE_DEAD )
-	self.Entity:SetSchedule( SCHED_FALL_TO_GROUND )
+	//self.Entity:SetSchedule( SCHED_DIE_RAGDOLL )
 	
 	self.Entity:OnDeath( dmginfo )
 	

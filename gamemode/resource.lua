@@ -11,36 +11,13 @@ resource.AddFile( "resource/fonts/Graffiare.ttf" )
 resource.AddFile( "resource/fonts/typenoksidi.ttf" )
 resource.AddFile( "models/Zed/male_shared.mdl" )
 
-resource.AddFile( "sound/radbox/warning.wav" )
-resource.AddFile( "sound/radbox/heartbeat.wav" )
-resource.AddFile( "sound/toxsin/blood01.wav" )
-resource.AddFile( "sound/toxsin/blood02.wav" )
-resource.AddFile( "sound/toxsin/blood03.wav" )
-resource.AddFile( "sound/toxsin/carnage01.wav" )
-resource.AddFile( "sound/toxsin/carnage02.wav" )
-resource.AddFile( "sound/toxsin/carnage03.wav" )
-resource.AddFile( "sound/toxsin/carnage04.wav" )
-resource.AddFile( "sound/toxsin/carnage05.wav" )
-resource.AddFile( "sound/toxsin/hit01.wav" )
-resource.AddFile( "sound/toxsin/hit02.wav" )
-resource.AddFile( "sound/toxsin/hit03.wav" )
-resource.AddFile( "sound/toxsin/hit04.wav" )
-resource.AddFile( "sound/toxsin/hit05.wav" )
-resource.AddFile( "sound/toxsin/die01.wav" )
-resource.AddFile( "sound/toxsin/die02.wav" )
-resource.AddFile( "sound/toxsin/die03.wav" )
-resource.AddFile( "sound/toxsin/die04.wav" )
-resource.AddFile( "sound/toxsin/die05.wav" )
-resource.AddFile( "sound/toxsin/pain01.wav" )
-resource.AddFile( "sound/toxsin/pain02.wav" )
-resource.AddFile( "sound/toxsin/pain03.wav" )
-resource.AddFile( "sound/toxsin/pain04.wav" )
-resource.AddFile( "sound/toxsin/pain05.wav" )
+resource.AddFile( "sound/nuke/warning.wav" )
+resource.AddFile( "sound/nuke/heartbeat.wav" )
 resource.AddFile( "sound/toxsin/lastminute.mp3" )
 
 for i=1,8 do
 
-	resource.AddFile( "sound/radbox/geiger_" .. i .. ".wav" )
+	resource.AddFile( "sound/nuke/geiger_" .. i .. ".wav" )
 
 end
 
@@ -113,7 +90,7 @@ local include_mat = { "materials/models/weapons/v_models/shot_m3super91/shot_m3s
 for k,v in pairs( include_mat ) do
 
 	resource.AddFile( v..".vmt" )
-	resource.AddFile( v..".vtf" )
+	//resource.AddFile( v..".vtf" )
 
 end
 
@@ -136,11 +113,11 @@ local include_model = { "models/weapons/v_shot_m3super91",
 
 for k,v in pairs( include_model ) do
 
-	resource.AddFile( v..".vvd" )
-	resource.AddFile( v..".sw.vtx" )
+	//resource.AddFile( v..".vvd" )
+	//resource.AddFile( v..".sw.vtx" )
 	resource.AddFile( v..".mdl" )
-	resource.AddFile( v..".dx80.vtx" )
-	resource.AddFile( v..".dx90.vtx" )
+	//resource.AddFile( v..".dx80.vtx" )
+	//resource.AddFile( v..".dx90.vtx" )
 
 end
 

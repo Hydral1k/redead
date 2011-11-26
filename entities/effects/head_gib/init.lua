@@ -31,7 +31,7 @@ function EFFECT:Init( data )
 	
 	for i=1, 6 do
 	
-		local particle = emitter:Add( "toxsin/gore" .. math.random(1,2), pos )
+		local particle = emitter:Add( "nuke/gore" .. math.random(1,2), pos )
 		particle:SetVelocity( VectorRand() * 100 + Vector(0,0,75) )
 		particle:SetDieTime( 0.5 )
 		particle:SetStartAlpha( 200 )

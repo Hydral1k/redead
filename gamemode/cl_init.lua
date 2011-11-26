@@ -187,7 +187,7 @@ function GM:Think()
 		local scale = LocalPlayer():Health() / 100
 		HeartBeat = CurTime() + 0.5 + scale * 1.5
 		
-		LocalPlayer():EmitSound( Sound( "radbox/heartbeat.wav" ), 100, 150 - scale * 50 )
+		LocalPlayer():EmitSound( Sound( "nuke/heartbeat.wav" ), 100, 150 - scale * 50 )
 		
 	end
 	
@@ -861,7 +861,31 @@ function StatSynch( handler, id, encoded, decoded )
 end
 datastream.Hook( "StatSynch", StatSynch )
 
-function InventorySynch( handler, id, encoded, decoded )
+net.Receive( "InvnetorySynch", function( len )
+
+	LocalInventory = net.ReadTable()
+	
+	if InventoryScreen and InventoryScreen:IsVisible() then
+	
+		InventoryScreen:RefreshItems( LocalInventory )
+		
+	end
+
+end )
+
+net.Receive( "StashSynch", function( len )
+
+	LocalStash = net.ReadTable()
+	
+	if StashScreen and StashScreen:IsVisible() then
+	
+		StashScreen:RefreshItems( LocalStash )
+		
+	end
+
+end )
+
+--[[function InventorySynch( handler, id, encoded, decoded )
 
 	LocalInventory = {}
 	LocalInventory = decoded
@@ -873,9 +897,9 @@ function InventorySynch( handler, id, encoded, decoded )
 	end
 
 end
-datastream.Hook( "InventorySynch", InventorySynch )
+datastream.Hook( "InventorySynch", InventorySynch )]]
 
-function StashSynch( handler, id, encoded, decoded )
+--[[function StashSynch( handler, id, encoded, decoded )
 
 	LocalStash = {}
 	LocalStash = decoded
@@ -887,4 +911,4 @@ function StashSynch( handler, id, encoded, decoded )
 	end
 
 end
-datastream.Hook( "StashSynch", StashSynch )
+datastream.Hook( "StashSynch", StashSynch )]]
