@@ -833,7 +833,7 @@ function meta:SynchInventory()
 		
 		net.WriteTable( self:GetInventory() )
 		
-	net.Broadcast()
+	net.Send( self )
 
 end
 
@@ -1046,7 +1046,7 @@ function meta:SynchStash( ent )
 		
 		net.WriteTable( ent:GetItems() )
 		
-	net.Broadcast()
+	net.Send( self )
 
 end
 

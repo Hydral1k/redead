@@ -884,31 +884,3 @@ net.Receive( "StashSynch", function( len )
 	end
 
 end )
-
---[[function InventorySynch( handler, id, encoded, decoded )
-
-	LocalInventory = {}
-	LocalInventory = decoded
-	
-	if InventoryScreen and InventoryScreen:IsVisible() then
-	
-		InventoryScreen:RefreshItems( LocalInventory )
-		
-	end
-
-end
-datastream.Hook( "InventorySynch", InventorySynch )]]
-
---[[function StashSynch( handler, id, encoded, decoded )
-
-	LocalStash = {}
-	LocalStash = decoded
-	
-	if StashScreen and StashScreen:IsVisible() then
-	
-		StashScreen:RefreshItems( LocalStash )
-		
-	end
-
-end
-datastream.Hook( "StashSynch", StashSynch )]]

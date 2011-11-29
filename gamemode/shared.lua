@@ -1,6 +1,4 @@
 
-require( "datastream" )
-
 GM.Name 		= "ReDead"  
 GM.Author 		= "twoski"
 GM.Email 		= ""
