@@ -91,21 +91,32 @@ function SWEP:Synch()
 			table.insert( postbl, d:GetPos() )
 		
 		end
-	
-		local tbl = { Name = v, Ents = postbl }
 		
-		datastream.StreamToClients( { self.Owner }, "ItemPlacerSynch", tbl )
+		net.Start( "ItemPlacerSynch" )
+		net.WriteString( v )
+		net.WriteTable( postbl )
+		net.Send( self.Owner )
+	
+		//local tbl = { Name = v, Ents = postbl }
+		
+		//datastream.StreamToClients( { self.Owner }, "ItemPlacerSynch", tbl )
 		
 	end
 
 end
 
-function PlacerSynch( handler, id, encoded, decoded )
+net.Receive( "ItemPlacerSynch", function( len )
+
+	ClientItemPlacerTbl[ net.ReadString() ] = net.ReadTable()
+
+end )
+
+--[[function PlacerSynch( handler, id, encoded, decoded )
 
 	ClientItemPlacerTbl[ decoded.Name ] = decoded.Ents
 
 end
-datastream.Hook( "ItemPlacerSynch", PlacerSynch )
+datastream.Hook( "ItemPlacerSynch", PlacerSynch )]]
 
 function SWEP:Deploy()
 
@@ -281,4 +292,5 @@ function SWEP:DrawHUD()
 	end
 	
 end
+
 

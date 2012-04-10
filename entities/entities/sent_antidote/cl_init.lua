@@ -27,13 +27,13 @@ function ENT:Draw()
 		
 		render.SetColorModulation( 0, 1.0, 0.5 )
 		render.SetBlend( scale )
-		SetMaterialOverride( matLight )
+		render.MaterialOverride( matLight )
 		
 			self.Entity:DrawModel()
 		
 		render.SetColorModulation( 1, 1, 1 )
 		render.SetBlend( 1 )
-		SetMaterialOverride( 0 )
+		render.MaterialOverride( 0 )
 		
 	cam.End3D()
 	

@@ -59,10 +59,10 @@ function GM:PlayerNoClip( pl, on )
 end
 
 function IncludeItems()
-
+	
 	local folder = string.Replace( GM.Folder, "gamemodes/", "" )
 
-	for c,d in pairs( file.FindInLua( folder.."/gamemode/items/*.lua" ) ) do
+	for c,d in pairs( file.Find( folder.."/gamemode/items/*.lua", LUA_PATH ) ) do 
 	
 		include( folder.."/gamemode/items/"..d )
 		

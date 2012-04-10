@@ -203,7 +203,7 @@ function DrawPlayerRenderEffects()
 			render.SetBlend( scale * 0.4 )
 			render.SetColorModulation( 0, 0.5, 0 )
 			
-			SetMaterialOverride( MaterialItem )
+			render.MaterialOverride( MaterialItem )
 			
 			cam.IgnoreZ( false )
 
@@ -213,7 +213,7 @@ function DrawPlayerRenderEffects()
 			render.SetColorModulation( 1, 1, 1 )
 			render.SetBlend( 1 )
 			
-			SetMaterialOverride( 0 )
+			render.MaterialOverride( 0 )
 		
 		end
 	
@@ -228,7 +228,7 @@ function DrawPlayerRenderEffects()
 			render.SuppressEngineLighting( true )
 			render.SetBlend( scale )
 			
-			SetMaterialOverride( MaterialVision )
+			render.MaterialOverride( MaterialVision )
 		
 			if LocalPlayer():Team() == TEAM_ARMY then
 		
@@ -249,7 +249,7 @@ function DrawPlayerRenderEffects()
 			render.SetColorModulation( 1, 1, 1 )
 			render.SetBlend( 1 )
 			
-			SetMaterialOverride( 0 )
+			render.MaterialOverride( 0 )
 
 		end
 		

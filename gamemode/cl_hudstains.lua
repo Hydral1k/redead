@@ -42,14 +42,14 @@ local function DrawBlood()
 end
 hook.Add( "HUDPaint", "BloodPaint", DrawBlood )
 
-StainMats = { "toxsin/Blood1",
-"toxsin/Blood2",
-"toxsin/Blood3",
-"toxsin/Blood4",
-"toxsin/Blood5",
-"toxsin/Blood6",
-"toxsin/Blood7",
-"toxsin/Blood8" }
+StainMats = { "nuke/blood/Blood1",
+"nuke/blood/Blood2",
+"nuke/blood/Blood3",
+"nuke/blood/Blood4",
+"nuke/blood/Blood5",
+"nuke/blood/Blood6",
+"nuke/blood/Blood7",
+"nuke/blood/Blood8" }
 
 BloodTable = {}
 

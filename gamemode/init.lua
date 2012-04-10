@@ -43,6 +43,11 @@ AddCSLuaFile( 'vgui/vgui_playerpanel.lua' )
 AddCSLuaFile( 'vgui/vgui_panelsheet.lua' )
 AddCSLuaFile( 'vgui/vgui_goodmodelpanel.lua' )
 
+util.AddNetworkString( "InventorySynch" )
+util.AddNetworkString( "StashSynch" )
+util.AddNetworkString( "StatsSynch" )
+util.AddNetworkString( "InventorySynch" )
+
 function GM:Initialize()
 	
 	GAMEMODE.NextZombieThink = CurTime() + GAMEMODE.WaitTime
@@ -1103,15 +1108,17 @@ end
 
 function GM:SynchStats()
 
-	local tbl = {}
+	net.Start( "StatsSynch" )
+	net.WriteLong( table.Count( player.GetAll() ) )
 
 	for k,v in pairs( player.GetAll() ) do
 	
-		table.insert( tbl, { Player = v, Stats = v:GetStats() } )
+		net.WriteEntity( v )
+		net.WriteTable( v:GetStats() )
 	
 	end
 	
-	datastream.StreamToClients( player.GetAll(), "StatSynch", tbl )
+	net.Broadcast()
 
 end
 

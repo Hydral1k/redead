@@ -1,0 +1,9 @@
+"gamemode"
+{
+	"base"		"base"
+	"title"		"ReDead"
+	"maps"		"^rd_"
+	"settings"
+	{
+	}
+}
