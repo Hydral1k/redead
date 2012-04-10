@@ -78,7 +78,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "Scientific Medikit", 
+	Name = "Advanced Medikit", 
 	Description = "This kit will heal 100% of your health and relieve a small amount of radiation poisoning when used.",
 	Stackable = true, 
 	Type = ITEM_SUPPLY,
