@@ -38,7 +38,7 @@ function GM:Move( ply, mv )
 		
 		if ply:GetNWFloat( "Stamina", 0 ) < 5 then
 		
-			mv:SetMaxSpeed( 125 )
+			mv:SetMaxSpeed( 110 )
 		
 		end
 	

@@ -8,7 +8,7 @@ TEAM_ZOMBIES = 2
 
 GM.CurrencyName = "Bone"
 
-// Shop name and description
+// Shop name and description - obsolete?
 
 GM.ShopName = "UNCLE VIKTOR'S RUSSKI WEAPON SHOPPE"
 GM.ShopDesc = "A HAPPY CUSTOMER IS A DEAD ONE!"
@@ -155,9 +155,12 @@ GM.ClassModels[CLASS_COMMANDO] = "models/player/swat.mdl"
 GM.ClassModels[CLASS_SPECIALIST] = "models/player/gasmask.mdl"
 
 GM.ClassWeapons = {}
-GM.ClassWeapons[CLASS_SCOUT] = "models/weapons/w_pist_glock18.mdl" // use world model names since we have to use the inventory system
+GM.ClassWeapons[CLASS_SCOUT] = "models/weapons/w_pist_glock18.mdl" // use world model names since we have to use the old inventory system
 GM.ClassWeapons[CLASS_COMMANDO] = "models/weapons/w_pistol.mdl"
 GM.ClassWeapons[CLASS_SPECIALIST] = "models/weapons/w_pist_p228.mdl"
+
+GM.WalkSpeed = 175 // speed for humans
+GM.RunSpeed = 250
 
 GM.ZombieModels = {}
 GM.ZombieModels[CLASS_RUNNER] = "models/player/corpse1.mdl"
@@ -175,7 +178,7 @@ GM.ZombieHealth[CLASS_BANSHEE] = 175
 GM.ZombieHealth[CLASS_CONTAGION] = 250
 
 GM.ZombieSpeed = {}
-GM.ZombieSpeed[CLASS_RUNNER] = 275
+GM.ZombieSpeed[CLASS_RUNNER] = 250
 GM.ZombieSpeed[CLASS_BANSHEE] = 200
 GM.ZombieSpeed[CLASS_CONTAGION] = 225
 
@@ -187,7 +190,7 @@ GM.SpawnChance[ "npc_zombie_normal" ] = 0.2 // 20% chance
 GM.SpawnChance[ "npc_zombie_fast" ] = 0.4
 GM.SpawnChance[ "npc_zombie_poison" ] = 0.3
 
-GM.WaitTime = 30           // How much time (in seconds) do players have before the first wave spawns?
-GM.RadiationAmount = 0.6   // How much of the radiation on the map should be disabled on map startup? ( 0.6 means 60% will be disabled )
+GM.WaitTime = 45           // How much time (in seconds) do players have before the first wave spawns?
+GM.RadiationAmount = 0.6   // How much of the radiation on the map should be disabled on map startup? ( 0.6 means 60% will be disabled ) - OBSOLETE?
 GM.MaxLoot = 0.20          // Maximum amount of loot to be generated ( 0.05 means 5% of the info_lootspawns will have loot at them. )
 

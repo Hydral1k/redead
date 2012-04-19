@@ -25,7 +25,7 @@ function ENT:Initialize()
 
 	end
 	
-	self.Entity:SetColor( 255, 200, 150, 255 )
+	self.Entity:SetColor( Color( 255, 200, 150, 255 ) )
 
 	self.Removing = false
 	self.Contents = { 1 }

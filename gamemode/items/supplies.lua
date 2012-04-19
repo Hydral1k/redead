@@ -8,8 +8,8 @@ function FUNC_ENERGY( ply, id, client )
 	
 	ply:RemoveFromInventory( id )
 	ply:EmitSound( table.Random{ "npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav" }, 100, math.random( 90, 110 ) )
-	ply:AddStamina( 100 )
-	ply:Notice( "+100 Stamina", GAMEMODE.Colors.Green )
+	ply:AddStamina( 50 )
+	ply:Notice( "+50 Stamina", GAMEMODE.Colors.Green )
 
 end
 

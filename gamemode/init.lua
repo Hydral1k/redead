@@ -943,13 +943,13 @@ function GM:ScaleNPCDamage( npc, hitgroup, dmginfo )
 		effectdata:SetOrigin( dmginfo:GetDamagePosition() )
 		util.Effect( "headshot", effectdata, true, true )
 	
-		dmginfo:ScaleDamage( 2.50 ) 
+		dmginfo:ScaleDamage( math.Rand( 2.50, 3.00 ) ) 
 		dmginfo:GetAttacker():NoticeOnce( "Headshot combos earn you more " .. GAMEMODE.CurrencyName .. "s", GAMEMODE.Colors.Blue, 5 )
 		dmginfo:GetAttacker():AddHeadshot()
 		
     elseif hitgroup == HITGROUP_CHEST then
 	
-		dmginfo:ScaleDamage( 1.75 ) 
+		dmginfo:ScaleDamage( 1.25 ) 
 		
 		npc:SetHeadshotter( dmginfo:GetAttacker(), false )
 		dmginfo:GetAttacker():ResetHeadshots()
@@ -1189,7 +1189,7 @@ end
 
 function GM:ShowHelp( ply )
 
-	ply:SendLua( "GAMEMODE:ShowHelp()" )
+	//ply:SendLua( "GAMEMODE:ShowHelp()" ) - obsolete?
 
 end
 

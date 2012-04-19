@@ -14,10 +14,10 @@ function FUNC_DRINK( ply, id, client )
 
 	ply:RemoveFromInventory( id )
 	ply:EmitSound( table.Random{ "npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav" }, 100, math.random( 90, 110 ) )
-	ply:AddHealth( 20 )
-	ply:AddStamina( 50 )
-	ply:Notice( "+20 Health", GAMEMODE.Colors.Green )
-	ply:Notice( "+50 Stamina", GAMEMODE.Colors.Green )
+	ply:AddHealth( 10 )
+	ply:AddStamina( 25 )
+	ply:Notice( "+10 Health", GAMEMODE.Colors.Green )
+	ply:Notice( "+25 Stamina", GAMEMODE.Colors.Green )
 
 end
 
@@ -27,10 +27,10 @@ function FUNC_EAT( ply, id, client )
 	
 	ply:RemoveFromInventory( id )
 	ply:EmitSound( "npc/barnacle/barnacle_crunch2.wav", 100, math.random( 90, 110 ) )
-	ply:AddHealth( 50 )
-	ply:AddStamina( 20 )
-	ply:Notice( "+50 Health", GAMEMODE.Colors.Green )
-	ply:Notice( "+20 Stamina", GAMEMODE.Colors.Green )
+	ply:AddHealth( 25 )
+	ply:AddStamina( 10 )
+	ply:Notice( "+25 Health", GAMEMODE.Colors.Green )
+	ply:Notice( "+10 Stamina", GAMEMODE.Colors.Green )
 
 end
 

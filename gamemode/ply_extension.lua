@@ -459,8 +459,8 @@ function meta:OnSpawn()
 		
 		self:SetStamina( 100 )
 		
-		self:SetWalkSpeed( 200 )
-		self:SetRunSpeed( 300 )
+		self:SetWalkSpeed( GAMEMODE.WalkSpeed )
+		self:SetRunSpeed( GAMEMODE.RunSpeed )
 		
 		self:SetModel( GAMEMODE.ClassModels[ self:GetPlayerClass() ] )
 		
@@ -478,7 +478,7 @@ function meta:OnSpawn()
 		
 			self:NoticeOnce( "Harm the humans to fill your blood meter", GAMEMODE.Colors.Blue, 5, 15 )
 			self:NoticeOnce( "Once your meter is full you will be redeemed", GAMEMODE.Colors.Blue, 5, 17 )
-			self:NoticeOnce( "Killing a human will give you bonus points", GAMEMODE.Colors.Blue, 5, 19 )
+			self:NoticeOnce( "Killing a human will fill your meter faster", GAMEMODE.Colors.Blue, 5, 19 )
 		
 		end
 	

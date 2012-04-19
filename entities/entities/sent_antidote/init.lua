@@ -24,7 +24,7 @@ function ENT:Initialize()
 
 	end
 	
-	self.Entity:SetColor( 150, 255, 200, 255 )
+	self.Entity:SetColor( Color( 150, 255, 200, 255 ) )
 	
 	self.CureCount = math.max( team.NumPlayers( TEAM_ARMY ) / 2, 1 )
 

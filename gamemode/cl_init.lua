@@ -316,7 +316,7 @@ function GM:FadeRagdolls()
 	
 		if v.Time and v.Time < CurTime() then
 		
-			v:SetColor( 255, 255, 255, v.Alpha )
+			v:SetColor( Color( 255, 255, 255, v.Alpha ) )
 			v.Alpha = math.Approach( v.Alpha, 0, -2 )
 			
 			if v.Alpha <= 0 then
@@ -609,8 +609,8 @@ function GM:HUDPaint()
 	
 	if ShopMenu and LocalPlayer():Alive() then
 	
-		draw.SimpleTextOutlined( GAMEMODE.ShopName, "ShopBig", ScrW() * 0.5, ScrH() * 0.1, Color( 255, 0, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0,0,0,255) )
-		draw.SimpleTextOutlined( GAMEMODE.ShopDesc, "ShopSmall", ScrW() * 0.5, ScrH() * 0.1 + 30, Color( 255, 0, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0,0,0,255) )
+		//draw.SimpleTextOutlined( GAMEMODE.ShopName, "ShopBig", ScrW() * 0.5, ScrH() * 0.1, Color( 255, 0, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0,0,0,255) )
+		//draw.SimpleTextOutlined( GAMEMODE.ShopDesc, "ShopSmall", ScrW() * 0.5, ScrH() * 0.1 + 30, Color( 255, 0, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0,0,0,255) )
 	
 	end
 
