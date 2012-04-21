@@ -2,7 +2,7 @@ local PANEL = {}
 
 function PANEL:Init()
 
-	self:ShowCloseButton( false )
+	//self:ShowCloseButton( false )
 	
 	self.Avatar = vgui.Create( "AvatarImage", self )
 	self.PlayerName = "N/A"

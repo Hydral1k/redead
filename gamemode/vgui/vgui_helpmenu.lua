@@ -30,8 +30,8 @@ PANEL.ButtonText = { "Holy Shit I Don't Care",
 
 function PANEL:Init()
 
-	self:SetTitle( "" )
-	self:ShowCloseButton( false )
+	//self:SetTitle( "" )
+	//self:ShowCloseButton( false )
 	self:ChooseParent()
 	
 	local text = ""

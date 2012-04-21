@@ -2,8 +2,8 @@ local PANEL = {}
 
 function PANEL:Init()
 
-	self:SetTitle( "" )
-	self:ShowCloseButton( false )
+	//self:SetTitle( "" )
+	//self:ShowCloseButton( false )
 	self:ChooseParent()
 	
 	self.Items = {}

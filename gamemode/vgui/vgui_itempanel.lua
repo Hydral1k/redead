@@ -2,9 +2,9 @@ local PANEL = {}
 
 function PANEL:Init()
 
-	self:ShowCloseButton( false )
+	//self:ShowCloseButton( false )
 	self:SetKeyboardInputEnabled( false )
-	self:SetDraggable( true ) 
+	//self:SetDraggable( true ) 
 	self.FuncList = {}
 	
 	self.Stashable = false
@@ -44,12 +44,10 @@ end
 
 function PANEL:OnMousePressed()
 
-	if self:GetDraggable() then
+	//if self:GetDraggable() then
 		
-        self.Dragging = { gui.MouseX() - self.x, gui.MouseY() - self.y }
-        self:MouseCapture( true )
-
-    end
+    self.Dragging = { gui.MouseX() - self.x, gui.MouseY() - self.y }
+    self:MouseCapture( true )
 	
 	if ( self.NextClick or 0 ) > CurTime() then
 		
@@ -236,7 +234,7 @@ function PANEL:SetCount( num )
 	
 	if num > 1 then
 	
-		self:SetTitle( "  "..num )
+		self:SetTitle( tostring( num ) )
 		
 	else
 	

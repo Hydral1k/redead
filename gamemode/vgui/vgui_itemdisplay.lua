@@ -4,9 +4,9 @@ surface.CreateFont ( "Verdana", 12, 300, true, true, "ItemDisplayFont" )
 
 function PANEL:Init()
 
-	self:ShowCloseButton( false )
+	//self:ShowCloseButton( false )
 	self:SetKeyboardInputEnabled( false )
-	self:SetDraggable( false ) 
+	//self:SetDraggable( false ) 
 	
 	self.Text = "Click an item to see its description." 
 	self.Title = ""

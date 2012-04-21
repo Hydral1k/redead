@@ -2,7 +2,7 @@ local PANEL = {}
 
 function PANEL:Init()
 
-	self:SetTitle( "" )
+	//self:SetTitle( "" )
 	self:ChooseParent()
 	
 end
@@ -50,11 +50,29 @@ function PANEL:GetTextLabelFont()
 	return "PanelText"
 end
 
+function PANEL:SetTitle( title )
+
+	self.Title = title
+
+end
+
+function PANEL:GetTitle()
+
+	return self.Title
+
+end
+
 function PANEL:Paint()
 
 	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 0, 0, 0, 255 ) )
 	draw.RoundedBox( 4, 1, 1, self:GetWide() - 2, self:GetTall() - 2, Color( 150, 150, 150, 150 ) )
+	
+	if self.Title then
+	
+		draw.SimpleText( self.Title, "ItemDisplayFont", 5, 5, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+	
+	end
 
 end
 
-derma.DefineControl( "PanelBase", "A HUD Base Element", PANEL, "DFrame" )
+derma.DefineControl( "PanelBase", "A HUD Base Element", PANEL, "DPanel" )

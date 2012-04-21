@@ -2,9 +2,9 @@ local PANEL = {}
 
 function PANEL:Init()
 
-	self:ShowCloseButton( false )
+	//self:ShowCloseButton( false )
 	self:SetKeyboardInputEnabled( false )
-	self:SetDraggable( true ) 
+	//self:SetDraggable( true ) 
 	
 	self.Button = vgui.Create( "DButton", self )
 	self.Button:SetText( "Close" )

@@ -2,9 +2,9 @@ local PANEL = {}
 
 function PANEL:Init()
 
-	self:SetTitle( "" )
-	self:ShowCloseButton( false )
-	self:SetDraggable( false )
+	//self:SetTitle( "" )
+	//self:ShowCloseButton( false )
+	//self:SetDraggable( false )
 	
 	self.Items = {}
 	

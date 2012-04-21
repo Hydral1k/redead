@@ -2,9 +2,9 @@ local PANEL = {}
 
 function PANEL:Init()
 
-	self:ShowCloseButton( false )
+	//self:ShowCloseButton( false )
 	self:SetKeyboardInputEnabled( false )
-	self:SetDraggable( false ) 
+	//self:SetDraggable( false ) 
 	
 	self.Text = "" 
 	self.Title = ""

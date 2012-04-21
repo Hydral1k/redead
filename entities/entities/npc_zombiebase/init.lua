@@ -332,7 +332,7 @@ end
 function ENT:CloseDoor()
 
 	local tbl = ents.FindByClass( "prop_door_rotating" )
-	tbl = table.Add( tbl, ents.FindByClass( "func_breakabl*" ) )
+	tbl = table.Add( tbl, ents.FindByClass( "func_breakable*" ) )
 	tbl = table.Add( tbl, ents.FindByClass( "func_door*" ) )
 	tbl = table.Add( tbl, ents.FindByModel( "models/props_debris/wood_board04a.mdl" ) )
 
