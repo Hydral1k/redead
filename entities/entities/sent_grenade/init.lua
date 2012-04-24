@@ -79,7 +79,7 @@ function ENT:Explode()
 		
 	end
 	
-	for k,v in pairs( player.GetAll() ) do
+	--[[for k,v in pairs( player.GetAll() ) do
 	
 		if v:Team() != self.Entity:GetOwner():Team() and v:GetPos():Distance( self.Entity:GetPos() ) < self.Radius then
 		
@@ -87,7 +87,7 @@ function ENT:Explode()
 		
 		end
 	
-	end
+	end]]
 	
 	self.Entity:Remove()
 

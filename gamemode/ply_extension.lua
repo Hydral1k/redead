@@ -629,9 +629,9 @@ function meta:Think()
 	
 		if ( self.InfectionTime or 0 ) < CurTime() then
 			
-			self.InfectionTime = CurTime() + 1.5
+			self.InfectionTime = CurTime() + 2
 			
-			local rand = math.random(1,4)
+			local rand = math.random(1,5)
 			
 			if rand == 1 then
 			
@@ -641,7 +641,7 @@ function meta:Think()
 				
 			end
 			
-			if self:IsBleeding() then // infection also makes you bleed out slightly faster, ain't that a bitch
+			if self:IsBleeding() then // infection also makes you bleed out slightly faster
 			
 				self:AddHealth( -1 )
 				

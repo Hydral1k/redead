@@ -29,7 +29,7 @@ include( 'vgui/vgui_itempanel.lua' )
 include( 'vgui/vgui_panelsheet.lua' )
 include( 'vgui/vgui_goodmodelpanel.lua' )
 
-CV_RagdollVision = CreateClientConVar( "cl_toxsin_ragdoll_vision", "1", true, false)
+CV_RagdollVision = CreateClientConVar( "cl_redead_ragdoll_vision", "1", true, false)
 
 function GM:Initialize()
 	
@@ -316,17 +316,19 @@ function GM:FadeRagdolls()
 	
 		if v.Time and v.Time < CurTime() then
 		
-			v:SetColor( Color( 255, 255, 255, v.Alpha ) )
-			v.Alpha = math.Approach( v.Alpha, 0, -2 )
+			//v:SetColor( Color( 255, 255, 255, v.Alpha ) )
+			//v.Alpha = math.Approach( v.Alpha, 0, -2 )
 			
-			if v.Alpha <= 0 then
-				v:Remove()
-			end
+			//if v.Alpha <= 0 then
+				//v:Remove()
+			//end
+			
+			v:Remove()
 		
 		elseif not v.Time then
 		
-			v.Time = CurTime() + 10
-			v.Alpha = 255
+			v.Time = CurTime() + 12
+			//v.Alpha = 255
 		
 		end
 		

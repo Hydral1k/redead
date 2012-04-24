@@ -80,12 +80,12 @@ function EFFECT:Init( data )
 
 	emitter:Finish()
 	
-	for i=1, 10 do
+	for i=1, 8 do
 	
 		local ed = EffectData()
 		ed:SetOrigin( pos + Vector(0,0,math.random(0,30)) )
 		
-		if i < 5 then
+		if i < 4 then
 			ed:SetScale( 1 )
 		else
 			ed:SetScale( 2 )

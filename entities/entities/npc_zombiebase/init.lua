@@ -57,7 +57,7 @@ function ENT:SpawnRagdoll( model, pos )
 	
 		local ang = self.Entity:GetAngles()
 	
-		local shooter = ents.Create("env_shooter")
+		local shooter = ents.Create( "env_shooter" )
         shooter:SetPos( pos or self.Entity:GetPos() )
         shooter:SetKeyValue( "m_iGibs", "1" )
         shooter:SetKeyValue( "shootsounds", "3" )
@@ -105,12 +105,12 @@ function ENT:DoDeath( dmginfo )
 	end
 	
 	if dmginfo then
-	
-		if dmginfo:IsExplosionDamage() and ValidEntity( dmginfo:GetAttacker() ) and dmginfo:GetAttacker():IsPlayer() then
+		
+		--[[if dmginfo:IsExplosionDamage() and ValidEntity( dmginfo:GetAttacker() ) and dmginfo:GetAttacker():IsPlayer() then
 		
 			dmginfo:GetAttacker():AddStat( "Explode" )
 		
-		end
+		end]]
 		
 		local ent1 = self.Entity:GetHighestDamager()
 		local tbl = self.Entity:GetHighestDamagers()
@@ -130,7 +130,19 @@ function ENT:DoDeath( dmginfo )
 			
 			self.RemoveTimer = CurTime()
 			
-			if ent1:HasShotgun() and ent1:GetPos():Distance( self.Entity:GetPos() ) < 100 then
+			if dmginfo:IsExplosionDamage() then
+			
+				self.Entity:EmitSound( table.Random( GAMEMODE.GoreSplash ), 90, math.random( 60, 80 ) )
+				
+				local effectdata = EffectData()
+				effectdata:SetOrigin( self.Entity:GetPos() + Vector(0,0,20) )
+				util.Effect( "body_gib", effectdata, true, true )
+				
+				self.Entity:SpawnRagdoll()
+				
+				ent1:AddStat( "Explode" )
+			
+			elseif ent1:HasShotgun() and ent1:GetPos():Distance( self.Entity:GetPos() ) < 100 then
 			
 				self.Entity:EmitSound( table.Random( GAMEMODE.GoreSplash ), 90, math.random( 60, 80 ) )
 				

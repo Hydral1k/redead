@@ -60,7 +60,7 @@ end
 
 function SWEP:SecondaryAttack()
 
-	self.Weapon:SetNextSecondaryFire( CurTime() + 4.5 )
+	self.Weapon:SetNextSecondaryFire( CurTime() + 5 )
 	
 	if SERVER then
 	
@@ -84,7 +84,7 @@ function SWEP:SecondaryAttack()
 				umsg.Start( "ScreamHit", v )
 				umsg.End()
 				
-				v:TakeDamage( scale * 50, self.Owner, self.Weapon )
+				v:TakeDamage( scale * 25, self.Owner, self.Weapon )
 				v:SetDSP( 34, false )
 				
 				self.Owner:AddZedDamage( 25 )
@@ -97,7 +97,7 @@ function SWEP:SecondaryAttack()
 		
 		if hit then
 		
-			self.Owner:Notice( "You disoriented a human with your scream", GAMEMODE.Colors.Green )
+			self.Owner:Notice( "You disoriented a human", GAMEMODE.Colors.Green )
 		
 		end
 	

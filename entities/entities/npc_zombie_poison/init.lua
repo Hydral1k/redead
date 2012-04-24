@@ -3,7 +3,7 @@ AddCSLuaFile( "shared.lua" )
 
 include('shared.lua')
 	
-ENT.Damage = 50
+ENT.Damage = 75
 ENT.Radius = 300
 ENT.SoundRadius = 700
 
@@ -45,7 +45,7 @@ function ENT:Initialize()
 	self.Entity:CapabilitiesAdd( CAP_MOVE_GROUND | CAP_INNATE_MELEE_ATTACK1 ) 
 	
 	self.Entity:SetMaxYawSpeed( 5000 )
-	self.Entity:SetHealth( 450 )
+	self.Entity:SetHealth( 750 )
 	
 	self.Entity:ClearSchedule()
 	self.Entity:DropToFloor()
@@ -57,7 +57,7 @@ function ENT:Initialize()
 
 end
 
-function ENT:OnThink()
+--[[function ENT:OnThink()
 
 	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do
 	
@@ -91,12 +91,11 @@ function ENT:OnThink()
 	
 	end
 
-end
+end]]
 
 function ENT:OnDamageEnemy( enemy )
 
-	enemy:AddRadiation( 3 )
-	enemy:SetBleeding( true )
-	enemy:ViewBounce( 35 )
+	enemy:AddRadiation( 1 )
+	enemy:ViewBounce( 40 )
 
 end

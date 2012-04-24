@@ -65,8 +65,8 @@ GM.WeightCap = 50     // If your weight is higher than this then you run at a sn
 GM.Waves = {}
 GM.Waves[1] = { "npc_zombie_common" }
 GM.Waves[2] = { "npc_zombie_common", "npc_zombie_normal" }
-GM.Waves[3] = { "npc_zombie_common", "npc_zombie_fast", "npc_zombie_normal" }
-GM.Waves[4] = { "npc_zombie_common", "npc_zombie_fast", "npc_zombie_normal", "npc_zombie_poison" }
+GM.Waves[3] = { "npc_zombie_common", "npc_zombie_normal", "npc_zombie_fast" }
+GM.Waves[4] = { "npc_zombie_common", "npc_zombie_normal", "npc_zombie_fast", "npc_zombie_poison" }
 
 // Colors used by notices
 

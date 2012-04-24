@@ -3,7 +3,6 @@ local PANEL = {}
 function PANEL:Init()
 
 	self:PerformLayout()
-	self:ShowCloseButton( false )
 	
 	self.Wait = CurTime() + 5
 	self.Pos = 1
@@ -22,7 +21,7 @@ function PANEL:Init()
 	self.Awards[1] = { x, w, "Grey Matter:", "got the most headshots.", function() return self:GetStatMax( "Headshot" ) end, "zombie craniums", "player/headshot1.wav" }
 	self.Awards[2] = { x, w, "Silent Partner:", "got the most kill assists.", function() return self:GetStatMax( "Assist" ) end, "assists", "weapons/357/357_spin1.wav" }
 	self.Awards[3] = { x, w, "Longshot:", "got the longest distance kill.", function() return self:GetStatMax( "Longshot" ) end, "feet", "weapons/fx/nearmiss/bulletLtoR05.wav" }
-	self.Awards[4] = { x, w, "Meat Grinder:", "slaughtered the most zombies with a shotgun.", function() return self:GetStatMax( "Meat" ) end, "zombies butchered", "toxsin/blood01.wav", true }
+	self.Awards[4] = { x, w, "Meat Grinder:", "killed the most zombies with a shotgun.", function() return self:GetStatMax( "Meat" ) end, "zombies butchered", "toxsin/blood01.wav", true }
 	self.Awards[5] = { x, w, "Crazy Ivan:", "killed the most zombies with explosives.", function() return self:GetStatMax( "Explode" ) end, "unidentified bodies", "weapons/underwater_explode3.wav", true }
 	self.Awards[6] = { x, w, "Shoplifter:", "looted the most items.", function() return self:GetStatMax( "Loot" ) end, "items taken", "items/itempickup.wav" }
 	self.Awards[7] = { x, w, "Broke The Bank:", "bought the most expensive weapon.", function() return self:GetStatMax( "Pricey" ) end, GAMEMODE.CurrencyName .. "s spent", "ambient/office/coinslot1.wav" }

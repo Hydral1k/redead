@@ -54,14 +54,14 @@ function GM:Initialize()
 	GAMEMODE.PlayerIDs = {}
 	GAMEMODE.Lords = {}
 	GAMEMODE.Wave = 1
-	GAMEMODE.NextWave = CurTime() + 60 * GetConVar( "sv_toxsin_wave_length" ):GetInt()
+	GAMEMODE.NextWave = CurTime() + 60 * GetConVar( "sv_redead_wave_length" ):GetInt()
 	
-	local length = #GAMEMODE.Waves * ( GetConVar( "sv_toxsin_wave_length" ):GetInt() * 60 ) 
+	local length = #GAMEMODE.Waves * ( GetConVar( "sv_redead_wave_length" ):GetInt() * 60 ) 
 	
 	for i=1, #GAMEMODE.Waves - 1 do
 	
-		local remain = length - i * GetConVar( "sv_toxsin_wave_length" ):GetInt() * 60
-		local num = i * GetConVar( "sv_toxsin_wave_length" ):GetInt()
+		local remain = length - i * GetConVar( "sv_redead_wave_length" ):GetInt() * 60
+		local num = i * GetConVar( "sv_redead_wave_length" ):GetInt()
 		
 		timer.Simple( remain, function( amt ) for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do v:Notice( amt .. " minutes until evac arrives", GAMEMODE.Colors.White, 5 )  end end, num )
 	 
@@ -542,7 +542,7 @@ function GM:WaveThink()
 
 	if GAMEMODE.NextWave < CurTime() then
 	
-		GAMEMODE.NextWave = CurTime() + 60 * GetConVar( "sv_toxsin_wave_length" ):GetInt()
+		GAMEMODE.NextWave = CurTime() + 60 * GetConVar( "sv_redead_wave_length" ):GetInt()
 		GAMEMODE.Wave = GAMEMODE.Wave + 1
 		
 		if GAMEMODE.Wave > #GAMEMODE.Waves then return end
@@ -578,10 +578,10 @@ function GM:NPCThink()
 
 	if GAMEMODE.Wave > #GAMEMODE.Waves then return end
 	
-	if #ents.FindByClass( "npc_zombie*" ) < GetConVar( "sv_toxsin_max_zombies" ):GetInt() and #ents.FindByClass( "npc_zombie*" ) < GetConVar( "sv_toxsin_zombies_per_player" ):GetInt() * team.NumPlayers( TEAM_ARMY ) then
+	if #ents.FindByClass( "npc_zombie*" ) < GetConVar( "sv_redead_max_zombies" ):GetInt() and #ents.FindByClass( "npc_zombie*" ) < GetConVar( "sv_redead_zombies_per_player" ):GetInt() * team.NumPlayers( TEAM_ARMY ) then
 	
-		local total = GetConVar( "sv_toxsin_zombies_per_player" ):GetInt() * team.NumPlayers( TEAM_ARMY )
-		local num = math.Clamp( total, 1, math.Min( GetConVar( "sv_toxsin_max_zombies" ):GetInt() - #ents.FindByClass( "npc_zombie*" ), total ) )
+		local total = GetConVar( "sv_redead_zombies_per_player" ):GetInt() * team.NumPlayers( TEAM_ARMY )
+		local num = math.Clamp( total, 1, math.Min( GetConVar( "sv_redead_max_zombies" ):GetInt() - #ents.FindByClass( "npc_zombie*" ), total ) )
 		
 		for i=1, num do
 	
@@ -612,7 +612,7 @@ function GM:Think()
 		
 			GAMEMODE:NPCThink()
 			
-			GAMEMODE.NextZombieThink = CurTime() + GetConVar( "sv_toxsin_wave_time" ):GetInt()
+			GAMEMODE.NextZombieThink = CurTime() + GetConVar( "sv_redead_wave_time" ):GetInt()
 			
 		end
 		
@@ -896,11 +896,11 @@ function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 		
 		if ent:GetPlayerClass() == CLASS_COMMANDO then
 		
-			dmginfo:ScaleDamage( GetConVar( "sv_toxsin_dmg_scale" ):GetFloat() * 0.8 )
+			dmginfo:ScaleDamage( GetConVar( "sv_redead_dmg_scale" ):GetFloat() * 0.8 )
 		
 		else
 		
-			dmginfo:ScaleDamage( GetConVar( "sv_toxsin_dmg_scale" ):GetFloat() ) 
+			dmginfo:ScaleDamage( GetConVar( "sv_redead_dmg_scale" ):GetFloat() ) 
 		
 		end
 		
@@ -989,7 +989,7 @@ function GM:ScalePlayerDamage( ply, hitgroup, dmginfo )
 		ply:EmitSound( "Player.DamageHeadShot" )
 		ply:ViewBounce( 25 )
 		
-		dmginfo:ScaleDamage( 1.75 * GetConVar( "sv_toxsin_dmg_scale" ):GetFloat() ) 
+		dmginfo:ScaleDamage( 1.75 * GetConVar( "sv_redead_dmg_scale" ):GetFloat() ) 
 		
 		return
 		
@@ -997,17 +997,17 @@ function GM:ScalePlayerDamage( ply, hitgroup, dmginfo )
 	
 		ply:ViewBounce( 15 )
 	
-		dmginfo:ScaleDamage( 0.50 * GetConVar( "sv_toxsin_dmg_scale" ):GetFloat() ) 
+		dmginfo:ScaleDamage( 0.50 * GetConVar( "sv_redead_dmg_scale" ):GetFloat() ) 
 		
 		return
 		
 	elseif hitgroup == HITGROUP_STOMACH then
 	
-		dmginfo:ScaleDamage( 0.25 * GetConVar( "sv_toxsin_dmg_scale" ):GetFloat() ) 
+		dmginfo:ScaleDamage( 0.25 * GetConVar( "sv_redead_dmg_scale" ):GetFloat() ) 
 		
 	else
 	
-		dmginfo:ScaleDamage( 0.10 * GetConVar( "sv_toxsin_dmg_scale" ):GetFloat() )
+		dmginfo:ScaleDamage( 0.10 * GetConVar( "sv_redead_dmg_scale" ):GetFloat() )
 		
 	end
 	
@@ -1021,7 +1021,7 @@ function GM:PlayerShouldTakeDamage( ply, attacker )
 	
 	if ValidEntity( attacker ) and attacker:IsPlayer() and attacker != ply then
 	
-		return ( ply:Team() != attacker:Team() or GetConVar( "sv_toxsin_team_dmg" ):GetBool() ) 
+		return ( ply:Team() != attacker:Team() or GetConVar( "sv_redead_team_dmg" ):GetBool() ) 
 	
 	end
 
@@ -1677,7 +1677,7 @@ function SaveGameItems( ply, cmd, args )
 	
 end
 
-concommand.Add( "sv_toxsin_save_map_config", SaveGameItems )
+concommand.Add( "sv_redead_save_map_config", SaveGameItems )
 
 function MapSetupMode( ply, cmd, args )
 
@@ -1709,5 +1709,5 @@ function MapSetupMode( ply, cmd, args )
 
 end
 
-concommand.Add( "sv_toxsin_dev_mode", MapSetupMode )
+concommand.Add( "sv_redead_dev_mode", MapSetupMode )
 
