@@ -253,11 +253,14 @@ function meta:AddRadiation( num )
 	if self:Team() != TEAM_ARMY then return end
 	
 	if num > 0 then
+	
+		self.PoisonFade = CurTime() + 30
 		
 		self:EmitSound( table.Random{ "Geiger.BeepLow", "Geiger.BeepHigh" }, 100, math.random( 90, 110 ) )
 		
 		self:NoticeOnce( "You have been irradiated", GAMEMODE.Colors.Red, 5 )
 		self:NoticeOnce( "You can cure radiation sickness with vodka", GAMEMODE.Colors.Blue, 5, 2 )
+		self:NoticeOnce( "Radiation sickness will fade over time", GAMEMODE.Colors.Blue, 5, 4 )
 		
 	end
 
@@ -692,6 +695,14 @@ function meta:Think()
 		
 			self:AddHealth( paintbl[ self:GetRadiation() ] )
 			self:AddStamina( stamtbl[ self:GetRadiation() ] )
+			
+			if ( self.PoisonFade or 0 ) < CurTime() then
+			
+				self:AddRadiation( -1 )
+				
+				self.PoisonFade = CurTime() + 20
+			
+			end
 			
 		end
 		
