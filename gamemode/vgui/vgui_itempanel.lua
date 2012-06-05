@@ -351,6 +351,12 @@ end
 
 function PANEL:Paint()
 
+	if self.ItemCount > 1 then
+
+		draw.SimpleText( self.ItemCount, "ItemDisplayFont", self:GetWide() / 10, self:GetTall() / 10, Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+
+	end
+
 	if self.SizeOverride then
 	
 		draw.RoundedBox( 4, 2, 2, self:GetWide() - 4, self:GetTall() - 4, Color( 0, 0, 0, 200 ) )
