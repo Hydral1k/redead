@@ -351,9 +351,9 @@ end
 
 function PANEL:Paint()
 
-	if self.ItemCount > 1 then
+	if ( self.ItemCount or 1 ) > 1 then
 
-		draw.SimpleText( self.ItemCount, "ItemDisplayFont", self:GetWide() / 10, self:GetTall() / 10, Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+		draw.SimpleText( self.ItemCount, "ItemDisplayFont", self:GetWide() / 8, self:GetTall() / 8, Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
 
 	end
 

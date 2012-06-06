@@ -638,7 +638,14 @@ function meta:Think()
 			
 			if rand == 1 then
 			
-				self:VoiceSound( table.Random( GAMEMODE.Coughs ), 100, math.random( 90, 100 ) )
+				rand = math.random(1,3)
+				
+				if rand == 2 then
+				
+					self:VoiceSound( table.Random( GAMEMODE.Coughs ), 100, math.random( 90, 100 ) )
+				
+				end
+				
 				self:ViewBounce( math.random(10,15) )
 				self:AddHealth( -5 )
 				
