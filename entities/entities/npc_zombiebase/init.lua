@@ -51,7 +51,9 @@ function ENT:SpawnRagdoll( model, pos )
 
 	if not model then
 	
-		self:Fire( "BecomeRagdoll", "", 0 )
+		umsg.Start( "Ragdoll" )
+		umsg.Vector( self.Entity:GetPos() )
+		umsg.End()
 		
 	else
 	
@@ -73,6 +75,8 @@ function ENT:SpawnRagdoll( model, pos )
         
         shooter:Fire( "shoot", 0, 0 )
         shooter:Fire( "kill", 0.1, 0.1 )
+		
+		self.Entity:Remove()
 	
 	end
 
@@ -87,30 +91,14 @@ function ENT:DoDeath( dmginfo )
 	if self.Dying then return end
 	
 	self.Dying = true
+	self.RemoveTimer = CurTime() + 0.3
 	
 	self.Entity:SetNPCState( NPC_STATE_DEAD )
 	//self.Entity:SetSchedule( SCHED_DIE_RAGDOLL )
 	
 	self.Entity:OnDeath( dmginfo )
 	
-	if dmginfo and dmginfo:IsExplosionDamage() then	
-	
-		self.Entity:SetModel( table.Random( GAMEMODE.Corpses ) )
-		self.Entity:EmitSound( table.Random( GAMEMODE.GoreSplash ), 90, math.random( 40, 60 ) )
-		
-		local ed = EffectData()
-		ed:SetOrigin( self.Entity:GetPos() )
-		util.Effect( "gore_explosion", ed, true, true )
-		
-	end
-	
 	if dmginfo then
-		
-		--[[if dmginfo:IsExplosionDamage() and ValidEntity( dmginfo:GetAttacker() ) and dmginfo:GetAttacker():IsPlayer() then
-		
-			dmginfo:GetAttacker():AddStat( "Explode" )
-		
-		end]]
 		
 		local ent1 = self.Entity:GetHighestDamager()
 		local tbl = self.Entity:GetHighestDamagers()
@@ -128,15 +116,18 @@ function ENT:DoDeath( dmginfo )
 			
 			end
 			
-			self.RemoveTimer = CurTime()
-			
 			if dmginfo:IsExplosionDamage() then
 			
+				self.Entity:SetModel( table.Random( GAMEMODE.Corpses ) )
 				self.Entity:EmitSound( table.Random( GAMEMODE.GoreSplash ), 90, math.random( 60, 80 ) )
 				
 				local effectdata = EffectData()
 				effectdata:SetOrigin( self.Entity:GetPos() + Vector(0,0,20) )
 				util.Effect( "body_gib", effectdata, true, true )
+				
+				local ed = EffectData()
+				ed:SetOrigin( self.Entity:GetPos() )
+				util.Effect( "gore_explosion", ed, true, true )
 				
 				self.Entity:SpawnRagdoll()
 				
@@ -157,10 +148,6 @@ function ENT:DoDeath( dmginfo )
 			elseif self.HeadshotEffects and self.Entity:GetHeadshotter( ent1 ) then
 			
 				self.Entity:EmitSound( table.Random( GAMEMODE.GoreSplash ), 90, math.random( 90, 110 ) )
-			
-				umsg.Start( "Headless" )
-				umsg.Vector( self.Entity:GetPos() )
-				umsg.End()
 				
 				local effectdata = EffectData()
 				effectdata:SetOrigin( self.Entity:GetPos() + Vector(0,0,40) )
@@ -168,11 +155,15 @@ function ENT:DoDeath( dmginfo )
 				
 				self.Entity:SpawnRagdoll()
 				
-				self.RemoveTimer = CurTime() + 0.1
+				umsg.Start( "Headless" )
+				umsg.Vector( self.Entity:GetPos() )
+				umsg.End()
 			
 			else
 			
 				self.Entity:VoiceSound( self.VoiceSounds.Death )
+				
+				self.Entity:SpawnRagdoll()
 			
 			end
 		
@@ -368,13 +359,15 @@ end
 
 function ENT:Think()
 
-	self.Entity:OnThink()
-
 	if self.RemoveTimer and self.RemoveTimer < CurTime() then
 	
 		self.Entity:Remove()
 	
 	end
+	
+	if self.Dying then return end
+	
+	self.Entity:OnThink()
 	
 	if ( self.DoorFindTime or 0 ) < CurTime() then
 	
@@ -540,7 +533,7 @@ end
 
 function ENT:SelectSchedule()
 
-	if GetGlobalBool( "GameOver", false ) then
+	if GetGlobalBool( "GameOver", false ) or self.Dying then
 	
 		self.Entity:SetSchedule( SCHED_CHASE_ENEMY )
 		

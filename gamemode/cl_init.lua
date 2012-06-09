@@ -40,6 +40,7 @@ function GM:Initialize()
 	ShopMenu = false
 	HeadlessTbl = {}
 	GibbedTbl = {}
+	RagdollTbl = {}
 	PlayerStats = {}
 	Drunkness = 0
 	DeathScreenTime = 0
@@ -174,6 +175,7 @@ function GM:Think()
 
 	GAMEMODE:FadeRagdolls()
 	GAMEMODE:GoreRagdolls()
+	GAMEMODE:SpawnRagdolls()
 	
 	if GetGlobalBool( "GameOver", false ) and not EndScreenShown then
 	
@@ -343,6 +345,38 @@ function GM:GoreRagdolls()
 
 	for k,v in pairs( tbl ) do
 	
+		if not v.Randomized then
+		
+			v.Randomized = true
+			
+			if math.random(1,2) == 1 then 
+			
+				local phys = v:GetPhysicsObject()
+				
+				if ValidEntity( phys ) then
+			
+					for i=1, math.random(2,6) do
+			
+						local count = v:GetPhysicsObjectCount()
+						local limb = v:GetPhysicsObjectNum( math.random(0,count) )
+					
+						if ValidEntity( limb ) then
+					
+							limb:SetDamping( math.Rand(0,2), math.Rand(0,5) )
+							limb:ApplyForceCenter( VectorRand() * 75 )
+				
+						end
+				
+						phys:Wake()
+			
+					end
+				
+				end
+			
+			end
+		
+		end
+	
 		for c,d in pairs( HeadlessTbl ) do
 		
 			if d.Pos:Distance( v:GetPos() ) < 50 then
@@ -412,6 +446,36 @@ function GM:GoreRagdolls()
 				end
 				
 				phys:Wake()
+			
+			end
+		
+		end
+		
+	end
+	
+end
+
+function GM:SpawnRagdolls()
+
+	local tbl = ents.FindByClass( "npc_*" )
+
+	for k,v in pairs( tbl ) do
+	
+		for c,d in pairs( RagdollTbl ) do
+		
+			if d.Pos:Distance( v:GetPos() ) < 50 then
+			
+				v:BecomeRagdollOnClient()
+			
+				table.remove( RagdollTbl, c )
+			
+				break
+			
+			elseif d.Time < CurTime() then
+			
+				table.remove( RagdollTbl, c )
+			
+				break
 			
 			end
 		
@@ -853,6 +917,13 @@ function DeathScreen( msg )
 	
 end
 usermessage.Hook( "DeathScreen", DeathScreen )
+
+function Ragdoll( msg )
+
+	table.insert( RagdollTbl, { Pos = msg:ReadVector(), Time = CurTime() + 0.5 } )
+
+end
+usermessage.Hook( "Ragdoll", Ragdoll )
 
 function Gibbed( msg )
 
