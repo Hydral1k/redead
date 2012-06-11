@@ -4,10 +4,10 @@ AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
 ENT.HitSound = Sound( "Metal_Box.ImpactHard" )
-ENT.Model = Model( "models/props_phx/misc/potato_launcher_explosive.mdl" )
-ENT.Damage = 150
+ENT.DieSound = Sound( "ambient/fire/ignite.wav" )
+ENT.Model = Model( "models/props_junk/metalgascan.mdl" )
+ENT.Damage = 180
 ENT.Radius = 350
-ENT.Speed = 3000
 
 function ENT:Initialize()
 
@@ -24,7 +24,6 @@ function ENT:Initialize()
 	if ValidEntity( phys ) then
 	
 		phys:Wake()
-		phys:ApplyForceCenter( self.Entity:GetAngles():Forward() * self.Speed )
 	
 	end
 	
@@ -80,6 +79,7 @@ function ENT:Explode()
 	
 	end
 	
+	self.Entity:EmitSound( self.DieSound, 100, math.random(90,110) )
 	self.Entity:Remove()
 
 end
@@ -109,7 +109,7 @@ function ENT:PhysicsCollide( data, phys )
 
 	if data.Speed > 50 and data.DeltaTime > 0.15 then
 	
-		self.Entity:EmitSound( self.HitSound, 100, 120 )
+		self.Entity:EmitSound( self.HitSound )
 		
 	end
 	

@@ -39,49 +39,6 @@ function FUNC_MOONSHINE( ply, id, client )
 
 end
 
-function FUNC_OXYGEN( ply, id, client )
-
-	if client then return "Throw" end
-	
-	ply:RemoveFromInventory( id )
-	ply:EmitSound( Sound( "WeaponFrag.Throw" ) )
-	
-	local oxy = ents.Create( "sent_oxygen" )
-	oxy:SetPos( ply:GetItemDropPos() )
-	oxy:SetAngles( ply:GetAimVector():Angle() )
-	oxy:Spawn()
-
-end
-
-function FUNC_DROPOXYGEN( ply, id, drop )
-
-	if not drop then return end
-
-	local oxy = ents.Create( "sent_oxygen" )
-	oxy:SetSpeed( 500 )
-	oxy:SetPos( ply:GetItemDropPos() )
-	oxy:SetAngles( ply:GetAimVector():Angle() )
-	oxy:Spawn()
-
-	return false // override spawning a prop for this item
-
-end
-
-item.Register( { 
-	Name = "Liquid Oxygen", 
-	Description = "This canister is full of highly explosive liquid oxygen.",
-	Stackable = true, 
-	Type = ITEM_LOOT,
-	Weight = 1.50, 
-	Price = 50,
-	Rarity = 0.50,
-	Model = "models/props_phx/misc/potato_launcher_explosive.mdl",
-	Functions = { FUNC_OXYGEN },
-	DropFunction = FUNC_DROPOXYGEN,
-	CamPos = Vector(25,0,9),
-	CamOrigin = Vector(0,0,6)	
-} )
-
 item.Register( { 
 	Name = "Wood", 
 	Description = "This piece of wood can be used to build a sturdy barricade.",

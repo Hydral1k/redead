@@ -934,7 +934,7 @@ function meta:AddToInventory( prop )
 
 	local tbl = item.GetByModel( prop:GetModel() )
 	
-	if not tbl then return end
+	if not tbl or ( tbl and tbl.AllowPickup ) then return end
 	
 	if tbl.PickupFunction then
 	

@@ -112,7 +112,7 @@ function GM:InitPostEntity()
 	
 	for k,v in pairs( ents.FindByClass( "prop_phys*" ) ) do
 	
-		if string.find( v:GetModel(), "explosive" ) then
+		if string.find( v:GetModel(), "explosive" ) or string.find( v:GetModel(), "propane" ) or string.find( v:GetModel(), "gascan" ) then
 		
 			table.insert( badshit, v )
 		
@@ -489,7 +489,7 @@ function GM:LootThink()
 	if num > 0 then
 	
 		local tbl = { ITEM_FOOD, ITEM_SUPPLY, ITEM_LOOT, ITEM_AMMO, ITEM_MISC, ITEM_SPECIAL }
-		local chancetbl = { 1.00,    0.80,        0.30,      0.60,     0.50,       0.05 }
+		local chancetbl = { 0.95,    0.70,        0.30,      0.60,     0.50,       0.05 }
 		
 		if math.random(1,10) == 1 then
 		
@@ -509,10 +509,6 @@ function GM:LootThink()
 			
 				local ent = table.Random( ents.FindByClass( "info_lootspawn" ) )
 				local pos = ent:GetPos()
-			
-				local loot = ents.Create( "prop_physics" )
-				loot:SetPos( pos + Vector(0,0,5) )
-				
 				local rnd = math.Rand(0,1)
 				local choice = math.random( 1, #tbl ) 
 				
@@ -524,7 +520,16 @@ function GM:LootThink()
 				end
 				
 				local rand = item.RandomItem( tbl[choice] )
+				local proptype = "prop_physics"
 				
+				if rand.TypeOverride then
+				
+					proptype = rand.TypeOverride
+				
+				end
+				
+				local loot = ents.Create( proptype )
+				loot:SetPos( pos + Vector(0,0,5) )
 				loot:SetModel( rand.Model )
 				loot:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 				loot:Spawn()
@@ -855,7 +860,27 @@ function GM:PropBreak( att, prop )
 
 end 
 
+function GM:AllowPlayerPickup( ply, ent )
+
+	local tbl = item.GetByModel( ent:GetModel() )
+	
+	if tbl and tbl.AllowPickup then
+	
+		return true
+	
+	elseif not tbl then
+	
+		return true
+		
+	end
+
+	return false
+	
+end
+
 function GM:PlayerUse( ply, entity )
+	
+	if ply:Team() != TEAM_ZOMBIES then return true end
 	
 	local trace = {}
     trace.start = ply:GetShootPos()
@@ -864,14 +889,10 @@ function GM:PlayerUse( ply, entity )
 	
 	local tr = util.TraceLine( trace )
 	
-	if ply:Team() == TEAM_ZOMBIES then
-	
-		if entity:GetClass() == "prop_door_rotating" or entity:GetClass() == "func_button" then
+	if entity:GetClass() == "prop_door_rotating" or entity:GetClass() == "func_button" then
 
-			return false
+		return false
 		
-		end
-
 	end
 	
 	return true
