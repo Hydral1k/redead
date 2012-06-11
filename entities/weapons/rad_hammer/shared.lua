@@ -69,7 +69,7 @@ end
 
 function SWEP:MakeGhost( model, pos, angle )
 
-	self.GhostEntity = ents.Create( "prop_physics" )
+	self.GhostEntity = CreateClientProp() //ents.Create( "prop_physics" )
 	self.GhostEntity:SetModel( model )
 	self.GhostEntity:SetPos( pos )
 	self.GhostEntity:SetAngles( angle )
@@ -87,7 +87,7 @@ function SWEP:UpdateGhost()
 
 	if not ValidEntity( self.GhostEntity ) then return end
 	
-	local tr = utilx.GetPlayerTrace( self.Owner, self.Owner:GetCursorAimVector() )
+	local tr = util.GetPlayerTrace( self.Owner, self.Owner:GetCursorAimVector() )
 	local trace = util.TraceLine( tr )
 	
 	if not trace.Hit then return end
@@ -133,7 +133,7 @@ end
 
 function SWEP:SetPlacePosition( ent )
 
-	local tr = utilx.GetPlayerTrace( self:GetOwner(), self:GetOwner():GetCursorAimVector() )
+	local tr = util.GetPlayerTrace( self:GetOwner(), self:GetOwner():GetCursorAimVector() )
 	local trace = util.TraceLine( tr )
 	
 	if not trace.Hit then return end

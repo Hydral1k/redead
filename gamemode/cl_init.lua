@@ -463,7 +463,7 @@ function GM:SpawnRagdolls()
 	
 		for c,d in pairs( RagdollTbl ) do
 		
-			if d.Pos:Distance( v:GetPos() ) < 50 then
+			if d.Pos:Distance( v:GetPos() ) < 20 then
 			
 				v:BecomeRagdollOnClient()
 			
