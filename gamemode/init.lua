@@ -1261,7 +1261,7 @@ function GM:PanicButton( ply )
 
 	local panic = { { ply:IsBleeding(), { "Bandage" }, "bleeding" },
 	{ ply:GetRadiation() > 0, { "Vodka", "Moonshine Vodka", "Anti-Rad" }, "irradiated" },
-	{ ply:Health() < 50, { "Scientific Medikit", "Basic Medikit", "Canned Meat" }, "severely wounded" },
+	{ ply:Health() < 50, { "Advanced Medikit", "Basic Medikit", "Canned Meat" }, "severely wounded" },
 	{ ply:Health() < 100, { "Basic Medikit", "Canned Meat" }, "wounded" },
 	{ ply:GetStamina() < 20, { "Energy Drink" }, "exhausted" },
 	{ ply:GetStamina() < 50, { "Water" }, "fatigued" } }
@@ -1274,7 +1274,7 @@ function GM:PanicButton( ply )
 			
 				local tbl = item.GetByName( d )
 			
-				if ply:HasItem( tbl.ID ) then
+				if tbl and ply:HasItem( tbl.ID ) then
                 
 					tbl.Functions[ 1 ]( ply, tbl.ID )
 					

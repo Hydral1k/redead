@@ -69,8 +69,8 @@ end
 
 function SWEP:MakeGhost( model, pos, angle )
 
-	self.GhostEntity = CreateClientProp() //ents.Create( "prop_physics" )
-	self.GhostEntity:SetModel( model )
+	self.GhostEntity = ents.CreateClientProp( model )
+	//self.GhostEntity:SetModel( model )
 	self.GhostEntity:SetPos( pos )
 	self.GhostEntity:SetAngles( angle )
 	self.GhostEntity:Spawn()
@@ -79,7 +79,7 @@ function SWEP:MakeGhost( model, pos, angle )
 	self.GhostEntity:SetMoveType( MOVETYPE_NONE )
 	self.GhostEntity:SetNotSolid( true )
 	self.GhostEntity:SetRenderMode( RENDERMODE_TRANSALPHA )
-	self.GhostEntity:SetColor( 255, 255, 255, 200 )
+	self.GhostEntity:SetColor( Color( 255, 255, 255, 200 ) )
 	
 end
 
@@ -100,17 +100,17 @@ function SWEP:UpdateGhost()
 	
 	if trlength < 150 and ( trace.HitWorld or trace.Entity:GetClass() == "prop_door_rotating" ) then
 	
-		self.GhostEntity:SetColor( 50, 255, 50, 200 )
+		self.GhostEntity:SetColor( Color( 50, 255, 50, 200 ) )
 		
 	else
 	
-		self.GhostEntity:SetColor( 255, 50, 50, 200 )
+		self.GhostEntity:SetColor( Color( 255, 50, 50, 200 ) )
 		
 	end
 	
 	if not trace.HitWorld and not trace.Entity:GetClass() == "prop_door_rotating" then
 	
-		self.GhostEntity:SetColor( 255, 50, 50, 200 )
+		self.GhostEntity:SetColor( Color( 255, 50, 50, 200 ) )
 		self.GhostEntity:SetModel( self.Barricade )
 		self.GhostEntity:SetPos( pos + ( self.GhostEntity:GetUp() * self.Position ) )
 		self.GhostEntity:SetAngles( ang )
@@ -191,9 +191,9 @@ function SWEP:Reload()
 
 	if CLIENT then return end
 	
-	if self.ReloadTime or 0 < CurTime() then
+	if ( self.ReloadTime or 0 ) < CurTime() then
 	
-		self.ReloadTime = CurTime() + 0.5
+		self.ReloadTime = CurTime() + 0.75
 		
 		self.Weapon:SetNWBool( "BuildMode", !self.Weapon:GetNWBool( "BuildMode", false ) )
 		
