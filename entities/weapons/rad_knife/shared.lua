@@ -112,6 +112,10 @@ function SWEP:MeleeTrace( dmg )
 			self.Owner:AddStat( "Knife" )
 			self.Owner:DrawBlood()
 			
+			local ed = EffectData()
+			ed:SetOrigin( trace.HitPos )
+			util.Effect( "BloodImpact", ed, true, true )
+			
 		elseif string.find( ent:GetClass(), "npc" ) then
 		
 			ent:TakeDamage( dmg, self.Owner, self.Weapon )
@@ -119,6 +123,10 @@ function SWEP:MeleeTrace( dmg )
 			
 			self.Owner:AddStat( "Knife" )
 			self.Owner:DrawBlood()
+			
+			local ed = EffectData()
+			ed:SetOrigin( trace.HitPos )
+			util.Effect( "BloodImpact", ed, true, true )
 		
 		elseif !ent:IsPlayer() then 
 		
