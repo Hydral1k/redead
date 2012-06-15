@@ -14,6 +14,9 @@ ENT.ClawMiss = {"npc/zombie/claw_miss1.wav",
 
 ENT.DoorHit = Sound("npc/zombie/zombie_hit.wav")
 
+ENT.FireTime = 0
+ENT.FireDamageTime = 0
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/zombie/classic.mdl" )
@@ -53,6 +56,17 @@ function ENT:SpawnRagdoll( model, pos )
 	
 		umsg.Start( "Ragdoll" )
 		umsg.Vector( self.Entity:GetPos() )
+		
+		if self.Entity:OnFire() then
+		
+			umsg.Short(2)
+		
+		else
+		
+			umsg.Short(1)
+		
+		end
+		
 		umsg.End()
 		
 	else
@@ -269,6 +283,12 @@ function ENT:AddDamageTaken( attacker, dmg )
 end
 
 function ENT:OnTakeDamage( dmginfo )
+
+	if dmginfo:IsExplosionDamage() then
+	
+		dmginfo:ScaleDamage( 1.75 )
+	
+	end
 	
 	self.Entity:SetHealth( math.Clamp( self.Entity:Health() - dmginfo:GetDamage(), 0, 1000 ) )
 	self.Entity:AddDamageTaken( dmginfo:GetAttacker(), dmginfo:GetDamage() )
@@ -357,6 +377,27 @@ function ENT:OnThink()
 
 end
 
+function ENT:DoIgnite( att )
+
+	if self.Entity:OnFire() then return end
+	
+	self.FireTime = CurTime() + 5
+	self.FireAttacker = att
+	
+	local ed = EffectData()
+	ed:SetEntity( self.Entity )
+	util.Effect( "immolate", ed, true, true )
+	
+	self.Entity:EmitSound( table.Random( GAMEMODE.Burning ), 100, 80 )
+
+end
+
+function ENT:OnFire()
+
+	return self.FireTime > CurTime()
+
+end
+
 function ENT:Think()
 
 	if self.RemoveTimer and self.RemoveTimer < CurTime() then
@@ -368,6 +409,14 @@ function ENT:Think()
 	if self.Dying then return end
 	
 	self.Entity:OnThink()
+	
+	if self.Entity:OnFire() and self.FireDamageTime < CurTime() then
+	
+		self.FireDamageTime = CurTime() + 0.25
+		
+		self.Entity:TakeDamage( 10, self.FireAttacker )
+	
+	end
 	
 	if ( self.DoorFindTime or 0 ) < CurTime() then
 	

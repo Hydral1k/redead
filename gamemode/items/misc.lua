@@ -39,6 +39,47 @@ function FUNC_MOONSHINE( ply, id, client )
 
 end
 
+function FUNC_OPENSUITCASE( ply, id )
+
+	local tbl = item.GetByID( id )
+	
+	ply:Notice( "You found some " .. GAMEMODE.CurrencyName .. "s", GAMEMODE.Colors.Green )
+	ply:EmitSound( Sound( "Chain.ImpactSoft" ) )
+	
+	if math.random(1,10) == 1 then
+	
+		ply:AddCash( math.random(5,50) )
+	
+	else
+	
+		ply:AddCash( math.random(1,10) )
+		
+	end
+	
+	return false
+
+end
+
+item.Register( { 
+	Name = "Suitcase", 
+	CollisionOverride = true,
+	Type = ITEM_LOOT,
+	Rarity = 0.50,
+	Model = "models/props_c17/suitcase_passenger_physics.mdl", 
+	PickupFunction = FUNC_OPENSUITCASE,
+	Functions = {}
+} )
+
+item.Register( { 
+	Name = "Briefcase", 
+	CollisionOverride = true,
+	Type = ITEM_LOOT,
+	Rarity = 0.50,
+	Model = "models/props_c17/briefcase001a.mdl", 
+	PickupFunction = FUNC_OPENSUITCASE,
+	Functions = {}
+} )
+
 item.Register( { 
 	Name = "Wood", 
 	Description = "This piece of wood can be used to build a sturdy barricade.",

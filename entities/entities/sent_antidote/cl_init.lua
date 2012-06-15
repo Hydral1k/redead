@@ -15,7 +15,9 @@ function ENT:Draw()
 
 	self.Entity:DrawModel()
 	
-	local scale = ( math.Clamp( self.Entity:GetPos():Distance( LocalPlayer():GetPos() ), 500, 3000 ) - 500 ) / 2500
+end
+	
+	--[[local scale = ( math.Clamp( self.Entity:GetPos():Distance( LocalPlayer():GetPos() ), 500, 3000 ) - 500 ) / 2500
 	
 	local eyenorm = self.Entity:GetPos() - EyePos()
 	local dist = eyenorm:Length()
@@ -37,4 +39,4 @@ function ENT:Draw()
 		
 	cam.End3D()
 	
-end
+end]]

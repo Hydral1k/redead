@@ -16,6 +16,10 @@ GM.Death = {"nuke/gore/die01.wav",
 "nuke/gore/carnage04.wav",
 "nuke/gore/carnage05.wav"}
 
+GM.Burning = { "player/pl_burnpain1.wav",
+"player/pl_burnpain2.wav",
+"player/pl_burnpain3.wav" }
+
 GM.AxeHit = {"nuke/weapon/hit01.wav", 
 "nuke/weapon/hit02.wav", 
 "nuke/weapon/hit03.wav", 

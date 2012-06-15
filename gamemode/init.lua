@@ -51,6 +51,7 @@ util.AddNetworkString( "InventorySynch" )
 function GM:Initialize()
 	
 	GAMEMODE.NextZombieThink = CurTime() + GAMEMODE.WaitTime
+	GAMEMODE.RandomLoot = {}
 	GAMEMODE.PlayerIDs = {}
 	GAMEMODE.Lords = {}
 	GAMEMODE.Wave = 1
@@ -448,14 +449,24 @@ end
 function GM:GetGeneratedLoot()
 
 	local tbl = {}
-	local things = ents.FindByClass( "prop_phys*" )
-	things = table.Add( things, ents.FindByClass( "sent_droppedgun" ) )
 
-	for k,v in pairs( things ) do
+	for k,v in pairs( GAMEMODE.RandomLoot ) do
 	
-		if v.RandomLoot then
+		if ValidEntity( v ) then
 		
 			table.insert( tbl, v )
+		
+		end
+	
+	end
+	
+	for k,v in pairs( GAMEMODE.RandomLoot ) do
+	
+		if not ValidEntity( v ) then
+		
+			table.remove( tbl, k )
+			
+			return tbl
 		
 		end
 	
@@ -488,54 +499,46 @@ function GM:LootThink()
 	
 	if num > 0 then
 	
-		local tbl = { ITEM_FOOD, ITEM_SUPPLY, ITEM_LOOT, ITEM_AMMO, ITEM_MISC, ITEM_SPECIAL }
-		local chancetbl = { 0.95,    0.70,        0.30,      0.60,     0.50,       0.05 }
+		local tbl = { ITEM_FOOD, ITEM_SUPPLY, ITEM_LOOT, ITEM_AMMO, ITEM_MISC, ITEM_SPECIAL, ITEM_WPN_COMMON, ITEM_WPN_SPECIAL }
+		local chancetbl = { 0.95,    0.70,        0.35,      0.60,     0.50,       0.05,           0.02,           0.01 }
 		
-		if math.random(1,10) == 1 then
-		
+		for i=1, num do
+			
 			local ent = table.Random( ents.FindByClass( "info_lootspawn" ) )
 			local pos = ent:GetPos()
-			local rand = item.RandomItem( table.Random{ ITEM_WPN_COMMON, ITEM_WPN_SPECIAL } )
-			
-			local gun = ents.Create( "sent_droppedgun" )
-			gun:SetPos( pos )
-			gun:SetModel( rand.Model )
-			gun:Spawn()
-			gun.RandomLoot = true
-		
-		else
-	
-			for i=1, num do
-			
-				local ent = table.Random( ents.FindByClass( "info_lootspawn" ) )
-				local pos = ent:GetPos()
-				local rnd = math.Rand(0,1)
-				local choice = math.random( 1, #tbl ) 
+			local rnd = math.Rand(0,1)
+			local choice = math.random( 1, #tbl ) 
 				
-				while rnd > chancetbl[ choice ] do
+			while rnd > chancetbl[ choice ] do
 					
-					rnd = math.Rand(0,1)
-					choice = math.random(1,6)
+				rnd = math.Rand(0,1)
+				choice = math.random(1,6)
 					
-				end
+			end
 				
-				local rand = item.RandomItem( tbl[choice] )
-				local proptype = "prop_physics"
+			local rand = item.RandomItem( tbl[choice] )
+			local proptype = "prop_physics"
 				
-				if rand.TypeOverride then
+			if rand.TypeOverride then
 				
-					proptype = rand.TypeOverride
+				proptype = rand.TypeOverride
 				
-				end
+			end
 				
-				local loot = ents.Create( proptype )
-				loot:SetPos( pos + Vector(0,0,5) )
-				loot:SetModel( rand.Model )
+			local loot = ents.Create( proptype )
+			loot:SetPos( pos + Vector(0,0,5) )
+			loot:SetModel( rand.Model )
+			loot:Spawn()
+			loot.RandomLoot = true
+			loot.IsItem = true
+				
+			if not rand.CollisionOverride then
+				
 				loot:SetCollisionGroup( COLLISION_GROUP_WEAPON )
-				loot:Spawn()
-				loot.RandomLoot = true
 			
 			end
+			
+			table.insert( GAMEMODE.RandomLoot, loot )
 			
 		end
 	
@@ -674,6 +677,11 @@ function GM:PlayerInitialSpawn( pl )
 	if table.HasValue( GAMEMODE.PlayerIDs, pl:SteamID() ) then
 	
 		pl:SetTeam( TEAM_ZOMBIES )
+	
+	elseif pl:IsBot() then
+	
+		pl:SetTeam( TEAM_ARMY )
+		pl:Spawn()
 	
 	else
 	
@@ -853,6 +861,7 @@ function GM:PropBreak( att, prop )
 			ent:SetPos( prop:LocalToWorld( prop:OBBCenter() ) )
 			ent:SetModel( "models/props_debris/wood_chunk04a.mdl" )
 			ent:Spawn()
+			ent.IsItem = true
 		
 		end
 	
@@ -879,6 +888,30 @@ function GM:AllowPlayerPickup( ply, ent )
 end
 
 function GM:PlayerUse( ply, entity )
+
+	if ply:Team() == TEAM_ARMY and ( ply.LastUse or 0 ) < CurTime() then
+	
+		if table.HasValue( { "sent_propane_canister", "sent_propane_tank", "sent_fuel_diesel", "sent_fuel_gas" }, entity:GetClass() ) then 
+		
+			ply.LastUse = CurTime() + 0.5
+		
+			if not ValidEntity( ply.HeldObject ) and not ValidEntity( entity.Holder ) then 
+	
+				ply:PickupObject( entity )
+				ply.HeldObject = entity
+				entity.Holder = ply
+				
+			elseif entity == ply.HeldObject then 
+			
+				ply:DropObject( entity )
+				ply.HeldObject = nil
+				entity.Holder = nil
+			
+			end
+	
+		end
+	
+	end
 	
 	if ply:Team() != TEAM_ZOMBIES then return true end
 	

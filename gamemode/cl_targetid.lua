@@ -5,9 +5,11 @@ local TargetedName = nil
 local TargetedTime = 0
 local TargetedDist = Vector(0,0,0)
 
+ValidTargetEnts = { "prop_physics", "sent_oxygen", "sent_fuel_diesel", "sent_fuel_gas", "sent_propane_tank", "sent_propane_canister" }
+
 function GM:GetEntityID( ent )
 	
-	if ent:GetClass() == "prop_physics" or ent:GetClass() == "sent_oxygen" then
+	if table.HasValue( ValidTargetEnts, ent:GetClass() ) then
 	
 		local tbl = item.GetByModel( ent:GetModel() )
 		
@@ -88,11 +90,14 @@ function GM:HUDDrawTargetID()
 	
 	if ValidEntity( TargetedEntity ) and TargetedTime > CurTime() then
 	
-		local pos = ( TargetedEntity:LocalToWorld( TargetedEntity:OBBCenter() ) + TargetedDist ):ToScreen()
+		local worldpos = TargetedEntity:LocalToWorld( TargetedEntity:OBBCenter() ) + TargetedDist
+		local pos = ( worldpos ):ToScreen()
 		
-		if pos.visible and TargetedName then
+		//print( TargetedName .. " " .. tostring(TargetedDist) .. tostring(pos.visible) .. " - " .. pos.x .. " n " .. pos.y )
+		
+		if pos.visible then
 			
-			draw.SimpleTextOutlined( TargetedName, "AmmoFontSmall", pos.x, pos.y, Color( 80, 150, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
+			draw.SimpleText( TargetedName or "Error", "AmmoFontSmall", pos.x, pos.y, Color( 80, 150, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
 			
 		end
 	

@@ -17,7 +17,7 @@ function ENT:Initialize()
 	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
 	self.Entity:SetSolid( SOLID_VPHYSICS )
 	
-	self.Entity:SetCollisionGroup( COLLISION_GROUP_WEAPON )
+	//self.Entity:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 	
 	local phys = self.Entity:GetPhysicsObject()
 	
@@ -54,10 +54,10 @@ function ENT:Explode()
 
 	if tr.HitWorld then
 	
-		local ed = EffectData()
+		--[[local ed = EffectData()
 		ed:SetOrigin( tr.HitPos )
 		ed:SetMagnitude( 0.8 )
-		util.Effect( "smoke_crater", ed, true, true )
+		util.Effect( "smoke_crater", ed, true, true )]]
 		
 		util.Decal( "Scorch", tr.HitPos + tr.HitNormal, tr.HitPos - tr.HitNormal )
 	
@@ -78,6 +78,12 @@ function ENT:Explode()
 		end
 	
 	end
+	
+	local fire = ents.Create( "sent_fire" )
+	fire:SetPos( self.Entity:GetPos() )
+	fire:SetOwner( self.Entity:GetOwner() )
+	fire:SetLifeTime( 10 )
+	fire:Spawn()
 	
 	self.Entity:EmitSound( self.DieSound, 100, math.random(90,110) )
 	self.Entity:Remove()

@@ -40,6 +40,7 @@ function GM:Initialize()
 	ShopMenu = false
 	HeadlessTbl = {}
 	GibbedTbl = {}
+	BurnTbl = {}
 	RagdollTbl = {}
 	PlayerStats = {}
 	Drunkness = 0
@@ -402,6 +403,26 @@ function GM:GoreRagdolls()
 			elseif d.Time < CurTime() then
 			
 				table.remove( HeadlessTbl, c )
+			
+				break
+			
+			end
+		
+		end
+		
+		for c,d in pairs( BurnTbl ) do
+		
+			if d.Pos:Distance( v:GetPos() ) < 50 then
+			
+				v:SetMaterial( "models/charple/charple3_sheet" )
+			
+				table.remove( BurnTbl, c )
+			
+				break
+			
+			elseif d.Time < CurTime() then
+			
+				table.remove( BurnTbl, c )
 			
 				break
 			
@@ -920,7 +941,15 @@ usermessage.Hook( "DeathScreen", DeathScreen )
 
 function Ragdoll( msg )
 
-	table.insert( RagdollTbl, { Pos = msg:ReadVector(), Time = CurTime() + 0.5 } )
+	local pos = msg:ReadVector()
+
+	table.insert( RagdollTbl, { Pos = pos, Time = CurTime() + 0.5 } )
+	
+	if msg:ReadShort() == 2 then
+	
+		table.insert( BurnTbl, { Pos = pos, Time = CurTime() + 0.5 } )
+	
+	end
 
 end
 usermessage.Hook( "Ragdoll", Ragdoll )

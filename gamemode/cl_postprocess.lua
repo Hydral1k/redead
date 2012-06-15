@@ -120,7 +120,7 @@ function GM:RenderScreenspaceEffects()
 	end
 	
 	DrawColorModify( MixedColorMod )
-	DrawPlayerRenderEffects()
+	//DrawPlayerRenderEffects()
 	
 end
 
@@ -183,8 +183,6 @@ end
 local MaterialVision = Material( "toxsin/allyvision" )
 local MaterialItem = Material( "toxsin/allyvision" )
 
-//MaterialItem:SetMaterialInt( "$ignorez", 0 )
-
 function DrawPlayerRenderEffects()
 	
 	if LocalPlayer():Team() != TEAM_ZOMBIES and LocalPlayer():Team() != TEAM_ARMY then return end
@@ -193,7 +191,7 @@ function DrawPlayerRenderEffects()
 	
 	cam.Start3D( EyePos(), EyeAngles() )
 	
-	if ValidEntity( TargetedEntity ) and TargetedEntity:GetClass() == "prop_physics" then
+	if ValidEntity( TargetedEntity ) and table.HasValue( ValidTargetEnts, TargetedEntity:GetClass() ) then
 	
 		if TargetedEntity:GetPos():Distance( LocalPlayer():GetPos() ) < 500 then
 		
@@ -256,6 +254,57 @@ function DrawPlayerRenderEffects()
 	end
 	
 	cam.End3D()
+
+end
+
+function GM:PreDrawViewModel()
+
+	if GetGlobalBool( "GameOver", false ) then return end
+
+	if LocalPlayer():Team() != TEAM_ZOMBIES and LocalPlayer():Team() != TEAM_ARMY then return end
+
+	for k,v in pairs( player.GetAll() ) do
+		
+		if ( v:Alive() and v != LocalPlayer() and v:Team() == TEAM_ARMY ) then
+		
+			local dist = math.Clamp( v:GetPos():Distance( LocalPlayer():GetPos() ), 250, 500 ) - 250
+			local scale = dist / 250
+		
+			if LocalPlayer():Team() == TEAM_ARMY then
+			
+				halo.Add( {v}, Color( 0, 200, 200, 200 * scale ), 2, 2, 1, 1, true )
+			
+			else
+			
+				halo.Add( {v}, Color( 200, 0, 0, 200 * scale ), 2, 2, 1, 1, false )
+			
+			end
+
+		end
+		
+	end
+	
+	if LocalPlayer():Team() == TEAM_ARMY then
+	
+		if ValidEntity( TargetedEntity ) and not TargetedEntity:IsPlayer() then
+	
+			local dist = math.Clamp( TargetedEntity:GetPos():Distance( LocalPlayer():GetPos() ), 0, 500 )
+			local scale = 1 - ( dist / 500 )
+		
+			halo.Add( {TargetedEntity}, Color( 0, 100, 200, 255 * scale ), 2 * scale, 2 * scale, 1, 1, false )
+			
+		end
+		
+		for k,v in pairs( ents.FindByClass( "sent_antidote" ) ) do
+		
+			local dist = math.Clamp( v:GetPos():Distance( LocalPlayer():GetPos() ), 250, 500 ) - 250
+			local scale = dist / 250
+			
+			halo.Add( {v}, Color( 0, 200, 0, 200 * scale ), 2, 2, 1, 1, true )
+		
+		end
+	
+	end
 
 end
 

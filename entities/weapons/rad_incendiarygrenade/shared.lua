@@ -9,13 +9,13 @@ if CLIENT then
 	SWEP.ViewModelFOV		= 74
 	SWEP.ViewModelFlip      = true
 	
-	SWEP.PrintName = "HE Grenade"
+	SWEP.PrintName = "Incendiary Grenade"
 	SWEP.IconLetter = "h"
 	SWEP.Slot = 3
 	SWEP.Slotpos = 3
 	
-	killicon.AddFont( "sent_grenade", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
-	killicon.AddFont( "rad_grenade", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
+	killicon.AddFont( "sent_grenade_incendiary", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
+	killicon.AddFont( "rad_incendiarygrenade", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
 	
 end
 
@@ -23,8 +23,8 @@ SWEP.HoldType = "grenade"
 
 SWEP.Base = "rad_base"
 
-SWEP.ViewModel			= "models/weapons/v_eq_fraggrenade.mdl"
-SWEP.WorldModel			= "models/weapons/w_eq_fraggrenade.mdl"
+SWEP.ViewModel			= "models/weapons/v_eq_flashbang.mdl"
+SWEP.WorldModel			= "models/weapons/w_eq_flashbang.mdl"
 
 SWEP.SprintPos = Vector (10.9603, -1.1484, -0.4996)
 SWEP.SprintAng = Vector (13.9974, 21.7915, 59.3288)
@@ -76,7 +76,7 @@ function SWEP:Think()
 			
 			if CLIENT then return end
 			
-			local tbl = item.GetByModel( "models/weapons/w_eq_fraggrenade_thrown.mdl" )
+			local tbl = item.GetByModel( "models/weapons/w_eq_flashbang.mdl" )
 			
 			if self.Owner:HasItem( tbl.ID ) then 
 		
@@ -84,7 +84,7 @@ function SWEP:Think()
 			
 			end
 			
-			local ent = ents.Create( "sent_grenade" )
+			local ent = ents.Create( "sent_grenade_incendiary" )
 			ent:SetPos( self.Owner:GetShootPos() + self.Owner:GetRight() * 5 + self.Owner:GetUp() * -5 )
 			ent:SetOwner( self.Owner )
 			ent:SetAngles( self.Owner:GetAimVector():Angle() )
@@ -93,7 +93,7 @@ function SWEP:Think()
 			
 			if not self.Owner:HasItem( tbl.ID ) then
 				
-				self.Owner:StripWeapon( "rad_grenade" )
+				self.Owner:StripWeapon( "rad_incendiarygrenade" )
 				
 			end
 			
