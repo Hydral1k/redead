@@ -5,8 +5,8 @@ include( 'shared.lua' )
 
 ENT.HitSound = Sound( "physics/metal/metal_grenade_impact_hard2.wav" )
 ENT.DieSound = Sound( "ambient/fire/ignite.wav" )
-ENT.Damage = 150
-ENT.Radius = 350
+ENT.Damage = 30
+ENT.Radius = 200
 ENT.Speed = 3500
 
 function ENT:Initialize()

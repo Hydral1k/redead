@@ -610,9 +610,51 @@ function meta:DropLoot()
 	
 end
 
+function meta:DoIgnite( att )
+
+	if self:OnFire() then return end
+
+	self.BurnTime = CurTime() + 5
+	self.BurnAttacker = att
+
+	local ed = EffectData()
+	ed:SetEntity( self )
+	util.Effect( "immolate", ed, true, true )
+	
+	self:EmitSound( table.Random( GAMEMODE.Burning ), 100, 80 )
+
+end
+
+function meta:OnFire()
+
+	return ( self.BurnTime or 0 ) > CurTime()
+
+end
+
 function meta:Think()
 
 	if not self:Alive() then return end
+	
+	if self:OnFire() and ( self.BurnInt or 0 ) < CurTime() then
+	
+		self.BurnInt = CurTime() + 0.5
+	
+		if self:Team() == TEAM_ARMY then
+
+			local dmginfo = DamageInfo()
+			dmginfo:SetDamage( 2 )
+			dmginfo:SetDamageType( DMG_BURN ) 
+			dmginfo:SetAttacker( self )
+		
+			self:TakeDamageInfo( dmginfo )
+		
+		elseif ValidEntity( self.BurnAttacker ) then
+		
+			self:TakeDamage( 5, self.BurnAttacker )
+		
+		end
+	
+	end
 	
 	if self:Team() == TEAM_ZOMBIES then
 	

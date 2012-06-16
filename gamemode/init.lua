@@ -942,11 +942,19 @@ function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 		
 	end
 	
-	if ent:IsPlayer() and ent:Team() == TEAM_ARMY and ValidEntity( attacker ) and ( attacker:IsNPC() or ( attacker:IsPlayer() and attacker:Team() == TEAM_ZOMBIES ) ) then
+	if ent:IsPlayer() and ent:Team() == TEAM_ARMY and ValidEntity( attacker ) and ( attacker:IsNPC() or ( ( attacker:IsPlayer() and attacker:Team() == TEAM_ZOMBIES ) or ( attacker:IsPlayer() and attacker == ent ) ) ) then
 	
-		ent:DrawBlood()
-		ent:ViewBounce( 25 )
-		ent:VoiceSound( table.Random( GAMEMODE.Pain ) )
+		if dmginfo:IsDamageType( DMG_BURN ) then
+	
+			ent:ViewBounce( 30 )
+			
+		else
+		
+			ent:ViewBounce( 25 )
+			ent:VoiceSound( table.Random( GAMEMODE.Pain ) )
+			ent:DrawBlood()
+		
+		end
 		
 		if ent:GetPlayerClass() == CLASS_COMMANDO then
 		

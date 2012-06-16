@@ -45,7 +45,7 @@ function ENT:Touch( ent )
 
 	if not ValidEntity( self.Entity:GetOwner() ) then return end
 	
-	if ent:IsPlayer() and ent:Team() == self.Entity:GetOwner():Team() then return end
+	//if ent:IsPlayer() and ent:Team() == self.Entity:GetOwner():Team() then return end
 	
 	ent:DoIgnite( self.Entity:GetOwner() )
 	
