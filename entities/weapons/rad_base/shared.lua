@@ -214,6 +214,7 @@ function SWEP:AngApproach( newang, ang, mul )
 	return ang
 
 end
+
 function SWEP:PosApproach( newpos, pos, ang, mul ) 
 
 	local right 	= ang:Right()
@@ -577,11 +578,11 @@ function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
 	bullet.Damage	= damage
 	bullet.AmmoType = "Pistol"
 	
-	if self.IsSniper and self.AmmoType == "Sniper" then
+	//if self.IsSniper and self.AmmoType == "Sniper" then
 	
-		bullet.TracerName = "sniper_tracer"
+		//bullet.TracerName = "sniper_tracer"
 	
-	end
+	//end
 	
 	if math.random(1,5) == 1 then
 	

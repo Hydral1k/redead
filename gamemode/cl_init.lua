@@ -380,7 +380,7 @@ function GM:GoreRagdolls()
 	
 		for c,d in pairs( HeadlessTbl ) do
 		
-			if d.Pos:Distance( v:GetPos() ) < 50 then
+			if d.Pos:Distance( v:GetPos() ) < 30 and not v.IsHeadless then
 			
 				function v:BuildBonePositions( numbones, num ) 
 				
@@ -395,6 +395,8 @@ function GM:GoreRagdolls()
 					end
 					
 				end
+				
+				v.IsHeadless = true
 			
 				table.remove( HeadlessTbl, c )
 			
@@ -412,9 +414,10 @@ function GM:GoreRagdolls()
 		
 		for c,d in pairs( BurnTbl ) do
 		
-			if d.Pos:Distance( v:GetPos() ) < 50 then
+			if d.Pos:Distance( v:GetPos() ) < 30 and not v.IsBurnt then
 			
 				v:SetMaterial( "models/charple/charple3_sheet" )
+				v.IsBurnt = true
 			
 				table.remove( BurnTbl, c )
 			
@@ -484,9 +487,10 @@ function GM:SpawnRagdolls()
 	
 		for c,d in pairs( RagdollTbl ) do
 		
-			if d.Pos:Distance( v:GetPos() ) < 20 then
+			if d.Pos:Distance( v:GetPos() ) < 30 and not v.Ragdolled then
 			
 				v:BecomeRagdollOnClient()
+				v.Ragdolled = true
 			
 				table.remove( RagdollTbl, c )
 			

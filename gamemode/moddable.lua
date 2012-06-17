@@ -58,7 +58,7 @@ GM.ZombieLogos[CLASS_CONTAGION] = "toxsin/zomb_zombie"
 
 GM.OptimalWeight = 20 // If your weight is less than this then you gain stamina faster.
 GM.MaxWeight = 35     // If your weight is higher than this then you run slower. 
-GM.WeightCap = 50     // If your weight is higher than this then you run at a snail's pace.
+GM.WeightCap = 40     // If your weight is higher than this then you run at a snail's pace.
 
 // The individual waves and the list of zombies that will spawn. ( more waves means a longer match )
 
@@ -143,9 +143,9 @@ if CLIENT then return end // Serverside configuration stuff past this point.
 GM.HeadshotCombos = {}
 GM.HeadshotCombos[5] = 1    // Get 1 point for 5 consecutive headshots
 GM.HeadshotCombos[10] = 2   // Get 2 points for 10 consecutive headshots
-GM.HeadshotCombos[15] = 3
-GM.HeadshotCombos[20] = 5
-GM.HeadshotCombos[50] = 10
+GM.HeadshotCombos[15] = 5
+GM.HeadshotCombos[20] = 15
+GM.HeadshotCombos[50] = 25
  
 // Player class models + weapons
 
@@ -155,7 +155,7 @@ GM.ClassModels[CLASS_COMMANDO] = "models/player/swat.mdl"
 GM.ClassModels[CLASS_SPECIALIST] = "models/player/gasmask.mdl"
 
 GM.ClassWeapons = {}
-GM.ClassWeapons[CLASS_SCOUT] = "models/weapons/w_pist_glock18.mdl" // use world model names since we have to use the old inventory system
+GM.ClassWeapons[CLASS_SCOUT] = "models/weapons/w_pist_glock18.mdl" // use world model names since we have to use the old fucky inventory system
 GM.ClassWeapons[CLASS_COMMANDO] = "models/weapons/w_pistol.mdl"
 GM.ClassWeapons[CLASS_SPECIALIST] = "models/weapons/w_pist_p228.mdl"
 
@@ -192,5 +192,5 @@ GM.SpawnChance[ "npc_zombie_poison" ] = 0.3
 
 GM.WaitTime = 45           // How much time (in seconds) do players have before the first wave spawns?
 GM.RadiationAmount = 0.6   // How much of the radiation on the map should be disabled on map startup? ( 0.6 means 60% will be disabled ) - OBSOLETE?
-GM.MaxLoot = 0.3           // Maximum amount of loot to be generated ( 0.05 means 5% of the info_lootspawns will have loot at them. )
+GM.MaxLoot = 0.35          // Maximum amount of loot to be generated ( 0.05 means 5% of the info_lootspawns will have loot at them. )
 

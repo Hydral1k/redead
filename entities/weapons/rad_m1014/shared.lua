@@ -146,7 +146,7 @@ function SWEP:Reload()
 	
 	self.Weapon:SetIron( false )
 	
-	if self.Weapon:Clip1() < self.Primary.ClipSize then
+	if self.Weapon:Clip1() < self.Primary.ClipSize and not self.Weapon:GetNWBool( "Reloading", false ) then
 		
 		self.Weapon:SetNWBool( "Reloading", true )
 		self.Weapon:SetVar( "ReloadTimer", CurTime() + 0.5 )
