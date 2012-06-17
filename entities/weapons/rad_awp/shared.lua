@@ -47,4 +47,7 @@ SWEP.Primary.Delay			= 1.500
 SWEP.Primary.ClipSize		= 10
 SWEP.Primary.Automatic		= false
 
+SWEP.MinShellDelay = 0.8
+SWEP.MaxShellDelay = 1.0
+
 SWEP.Primary.ShellType = SHELL_50CAL

@@ -45,6 +45,9 @@ SWEP.Primary.Delay			= 0.500
 SWEP.Primary.ClipSize		= 2
 SWEP.Primary.Automatic		= false
 
+SWEP.MinShellDelay = 0.5
+SWEP.MaxShellDelay = 0.7
+
 SWEP.Primary.ShellType = SHELL_SHOTGUN
 
 function SWEP:Deploy()
@@ -117,6 +120,10 @@ function SWEP:ShootEffects()
 	if SERVER then
 	
 		self.Owner:ViewBounce( self.Primary.Recoil )  
+		
+		local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ]
+	
+		timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function( tbl, pos ) WorldSound( table.Random( tbl.Wavs ), pos, 75, tbl.Pitch )  end, tbl, self.Owner:GetPos() )
 		
 	end
 	

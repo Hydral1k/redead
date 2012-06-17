@@ -75,12 +75,24 @@ SWEP.LastRunFrame = 0
 SWEP.InIron = false
 SWEP.ApproachPos = Vector(0,0,0)
 
+SWEP.MinShellDelay = 0.3
+SWEP.MaxShellDelay = 0.6
+
 SWEP.FalloffDistances = {}
 SWEP.FalloffDistances[ "Sniper" ] = { Range = 5000, Falloff = 8000 }
 SWEP.FalloffDistances[ "Rifle" ] = { Range = 2000, Falloff = 2000 }
 SWEP.FalloffDistances[ "SMG" ] = { Range = 1500, Falloff = 1500 }
 SWEP.FalloffDistances[ "Pistol" ] = { Range = 1000, Falloff = 500 }
 SWEP.FalloffDistances[ "Buckshot" ] = { Range = 300, Falloff = 500 }
+
+SWEP.ShellSounds = {}
+SWEP.ShellSounds[1] = { Pitch = 100, Wavs = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" } }
+SWEP.ShellSounds[2] = { Pitch = 100, Wavs = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" } }
+SWEP.ShellSounds[3] = { Pitch = 90, Wavs = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" } }
+SWEP.ShellSounds[4] = { Pitch = 90, Wavs = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" } }
+SWEP.ShellSounds[5] = { Pitch = 110, Wavs = { "weapons/fx/tink/shotgun_shell1.wav", "weapons/fx/tink/shotgun_shell2.wav", "weapons/fx/tink/shotgun_shell3.wav" } }
+SWEP.ShellSounds[6] = { Pitch = 80, Wavs = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" } }
+SWEP.ShellSounds[7] = { Pitch = 70, Wavs = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" } }
 
 function SWEP:SetViewModelPosition( vec, ang, movetime )
 	
@@ -456,12 +468,16 @@ function SWEP:ShootEffects()
 	
 	if CLIENT then return end
 
-	local ed = EffectData()
+	local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ]
+	
+	timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function( tbl, pos ) WorldSound( table.Random( tbl.Wavs ), pos, 75, tbl.Pitch )  end, tbl, self.Owner:GetPos() )
+	
+	--[[local ed = EffectData()
 	ed:SetOrigin( self.Owner:GetShootPos() )
 	ed:SetEntity( self.Weapon )
 	ed:SetAttachment( self.Weapon:LookupAttachment( "2" ) )
 	ed:SetScale( ( self.Primary.ShellType or SHELL_9MM ) )
-	util.Effect( "weapon_shell", ed, true, true )
+	util.Effect( "weapon_shell", ed, true, true )]]
 	
 end
 

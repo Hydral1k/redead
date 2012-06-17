@@ -90,7 +90,7 @@ function SWEP:CanPrimaryAttack()
 	
 	end
 
-	if self.Weapon:Clip1() <= 0 then
+	if self.Weapon:Clip1() <= 0 and not self.Weapon:GetNWBool( "Reloading", false ) then
 		
 		self.Weapon:SetNWBool( "Reloading", true )
 		self.Weapon:SetVar( "ReloadTimer", CurTime() + 0.5 )
@@ -155,7 +155,7 @@ end
 
 function SWEP:Reload()
 
-	if self.HolsterMode or self.Weapon:Clip1() == self.Primary.ClipSize then return end
+	if self.HolsterMode or self.Weapon:Clip1() == self.Primary.ClipSize or self.Weapon:GetNWBool( "Reloading", false ) then return end
 	
 	self.Weapon:SetIron( false )
 	
@@ -181,12 +181,9 @@ function SWEP:PumpIt()
 	
 	if SERVER then
 	
-		local ed = EffectData()
-		ed:SetOrigin( self.Owner:GetShootPos() )
-		ed:SetEntity( self.Weapon )
-		ed:SetAttachment( self.Weapon:LookupAttachment( "2" ) )
-		ed:SetScale( ( self.Primary.ShellType or SHELL_9MM ) )
-		util.Effect( "weapon_shell", ed, true, true )
+		local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ]
+	
+		timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function( tbl, pos ) WorldSound( table.Random( tbl.Wavs ), pos, 75, tbl.Pitch )  end, tbl, self.Owner:GetPos() )
 	
 	end
 	
