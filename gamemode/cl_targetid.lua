@@ -62,13 +62,20 @@ function GM:GetEntityID( ent )
 		TargetedEntity = ent
 		TargetedTime = CurTime() + 5
 		TargetedDist = Vector( 0, 0, 15 )
+		
+	elseif ent:GetClass() == "npc_scientist" then
+	
+		TargetedName = "Researcher"
+		TargetedEntity = ent
+		TargetedTime = CurTime() + 5
+		TargetedDist = Vector( 0, 0, 40 )
 	
 	elseif ent:IsPlayer() and ent:Team() == TEAM_ARMY then
 	
 		TargetedName = ent:Name()
 		TargetedEntity = ent
 		TargetedTime = CurTime() + 5
-		TargetedDist = Vector( 0, 0, 40 )
+		TargetedDist = Vector( 0, 0, 38 )
 	
 	end
 	

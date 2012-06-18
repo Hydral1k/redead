@@ -257,15 +257,24 @@ function DrawPlayerRenderEffects()
 
 end
 
+function GM:GetHighlightedUnits()
+
+	local tbl = player.GetAll()
+	tbl = table.Add( tbl, ents.FindByClass( "npc_scientist" ) )
+	
+	return tbl
+
+end
+
 function GM:PreDrawViewModel()
 
 	if GetGlobalBool( "GameOver", false ) then return end
 
 	if LocalPlayer():Team() != TEAM_ZOMBIES and LocalPlayer():Team() != TEAM_ARMY then return end
 
-	for k,v in pairs( player.GetAll() ) do
+	for k,v in pairs( GAMEMODE:GetHighlightedUnits() ) do
 		
-		if ( v:Alive() and v != LocalPlayer() and v:Team() == TEAM_ARMY ) then
+		if ( ( v:IsPlayer() and v:Alive() and v != LocalPlayer() and v:Team() == TEAM_ARMY ) or v:IsNPC() ) then
 		
 			local dist = math.Clamp( v:GetPos():Distance( LocalPlayer():GetPos() ), 250, 500 ) - 250
 			local scale = dist / 250

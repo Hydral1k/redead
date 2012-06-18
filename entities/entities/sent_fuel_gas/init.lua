@@ -6,7 +6,7 @@ include( 'shared.lua' )
 ENT.HitSound = Sound( "Metal_Box.ImpactHard" )
 ENT.DieSound = Sound( "ambient/fire/ignite.wav" )
 ENT.Model = Model( "models/props_junk/gascan001a.mdl" )
-ENT.Damage = 180
+ENT.Damage = 50
 ENT.Radius = 350
 
 function ENT:Initialize()

@@ -77,3 +77,21 @@ function IncludeItems()
 end
 
 IncludeItems()
+
+function IncludeEvents()
+	
+	local folder = string.Replace( GM.Folder, "gamemodes/", "" )
+
+	for c,d in pairs( file.Find( folder.."/gamemode/events/*.lua", LUA_PATH ) ) do 
+	
+		if SERVER then
+	
+			include( folder.."/gamemode/events/"..d )
+			
+		end
+		
+	end
+
+end
+
+IncludeItems()

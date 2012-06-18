@@ -308,6 +308,7 @@ end
 function ENT:FindEnemy()
 
 	local tbl = team.GetPlayers( TEAM_ARMY )
+	tbl = table.Add( tbl, ents.FindByClass( "npc_scientist" ) )
 
 	if #tbl < 1 then
 		
@@ -322,7 +323,7 @@ function ENT:FindEnemy()
 		
 			local compare = v:GetPos():Distance( self.Entity:GetPos() )
 			
-			if compare < dist and v:Alive() and v:GetObserverMode() == OBS_MODE_NONE then
+			if compare < dist and self.Entity:CanTarget( v ) then
 			
 				enemy = v
 				dist = compare
@@ -337,9 +338,15 @@ function ENT:FindEnemy()
 	
 end
 
+function ENT:CanTarget( v )
+
+	return ( ( v:IsPlayer() and v:Alive() and v:GetObserverMode() == OBS_MODE_NONE ) or ( v:IsNPC() and not v:IsZombie() ) )
+
+end
+
 function ENT:UpdateEnemy( enemy )
 
-	if ValidEntity( enemy ) and enemy:Alive() and enemy:GetObserverMode() == OBS_MODE_NONE then
+	if ValidEntity( enemy ) and self.Entity:CanTarget( enemy ) then
 		
 		self:SetEnemy( enemy, true ) 
 		self:UpdateEnemyMemory( enemy, enemy:GetPos() ) 
@@ -572,9 +579,15 @@ function ENT:OnDamageEnemy( enemy )
 
 end
 
+function ENT:IsZombie()
+
+	return true
+
+end
+
 function ENT:GetRelationship( entity )
 
-	if ValidEntity( entity ) and ( entity:IsPlayer() and entity:Team() == TEAM_ARMY ) then return D_HT end
+	if ValidEntity( entity ) and self.Entity:CanTarget( entity ) then return D_HT end
 	
 	return D_LI
 	

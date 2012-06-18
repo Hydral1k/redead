@@ -285,9 +285,17 @@ function GM:Think()
 				
 					color = Color( 255, 255, 255 )
 				
-				elseif string.find( v:GetClass(), "npc" ) then
+				elseif v:IsNPC() then
 				
-					color = Color( 255, 80, 80 )
+					if string.find( v:GetClass(), "zombie" ) then
+				
+						color = Color( 255, 80, 80 )
+						
+					else
+					
+						color = Color( 255, 0, 150 )
+					
+					end
 				
 				end
 				
@@ -339,99 +347,33 @@ function GM:FadeRagdolls()
 	
 end
 
+function GM:GetNearestEnt( pos, dist, tbl )
+
+	local closest 
+	local best = 9000
+
+	for k,v in pairs( tbl ) do
+	
+		local newdist = v:GetPos():Distance( pos )
+	
+		if newdist < dist and newdist < best then
+		
+			closest = v
+		
+		end
+	
+	end
+	
+	return closest
+
+end
+
 function GM:GoreRagdolls()
 
 	local tbl = ents.FindByClass( "class C_HL2MPRagdoll" )
 	tbl = table.Add( tbl, ents.FindByClass( "class C_ClientRagdoll" ) )
 
 	for k,v in pairs( tbl ) do
-	
-		if not v.Randomized then
-		
-			v.Randomized = true
-			
-			if math.random(1,2) == 1 then 
-			
-				local phys = v:GetPhysicsObject()
-				
-				if ValidEntity( phys ) then
-			
-					for i=1, math.random(2,6) do
-			
-						local count = v:GetPhysicsObjectCount()
-						local limb = v:GetPhysicsObjectNum( math.random(0,count) )
-					
-						if ValidEntity( limb ) then
-					
-							limb:SetDamping( math.Rand(0,2), math.Rand(0,5) )
-							limb:ApplyForceCenter( VectorRand() * 75 )
-				
-						end
-				
-						phys:Wake()
-			
-					end
-				
-				end
-			
-			end
-		
-		end
-	
-		for c,d in pairs( HeadlessTbl ) do
-		
-			if d.Pos:Distance( v:GetPos() ) < 30 and not v.IsHeadless then
-			
-				function v:BuildBonePositions( numbones, num ) 
-				
-					local bone = 6
-					local matrix = self:GetBoneMatrix( bone )
-					
-					if matrix then
-					
-						matrix:Scale( Vector(0,0,0) )
-						self:SetBoneMatrix( bone, matrix )
-						
-					end
-					
-				end
-				
-				v.IsHeadless = true
-			
-				table.remove( HeadlessTbl, c )
-			
-				break
-			
-			elseif d.Time < CurTime() then
-			
-				table.remove( HeadlessTbl, c )
-			
-				break
-			
-			end
-		
-		end
-		
-		for c,d in pairs( BurnTbl ) do
-		
-			if d.Pos:Distance( v:GetPos() ) < 30 and not v.IsBurnt then
-			
-				v:SetMaterial( "models/charple/charple3_sheet" )
-				v.IsBurnt = true
-			
-				table.remove( BurnTbl, c )
-			
-				break
-			
-			elseif d.Time < CurTime() then
-			
-				table.remove( BurnTbl, c )
-			
-				break
-			
-			end
-		
-		end
 	
 		if not v.Gore and table.HasValue( GAMEMODE.Corpses, string.lower( v:GetModel() ) ) then
 		
@@ -473,6 +415,97 @@ function GM:GoreRagdolls()
 			
 			end
 		
+		end
+	
+		if not v.Randomized then
+		
+			v.Randomized = true
+			
+			if math.random(1,2) == 1 then 
+			
+				local phys = v:GetPhysicsObject()
+				
+				if ValidEntity( phys ) then
+			
+					for i=1, math.random(2,6) do
+			
+						local count = v:GetPhysicsObjectCount()
+						local limb = v:GetPhysicsObjectNum( math.random(0,count) )
+					
+						if ValidEntity( limb ) then
+					
+							limb:SetDamping( math.Rand(0,2), math.Rand(0,5) )
+							limb:ApplyForceCenter( VectorRand() * 75 )
+				
+						end
+				
+						phys:Wake()
+			
+					end
+				
+				end
+			
+			end
+		
+		end
+		
+	end
+	
+	for c,d in pairs( HeadlessTbl ) do
+	
+		local ent = GAMEMODE:GetNearestEnt( d.Pos, 30, tbl )
+		
+		if ValidEntity( ent ) and not ent.IsHeadless then
+			
+			function ent:BuildBonePositions( numbones, num ) 
+				
+				local bone = 6
+				local matrix = self:GetBoneMatrix( bone )
+					
+				if matrix then
+				
+					matrix:Scale( Vector(0,0,0) )
+					self:SetBoneMatrix( bone, matrix )
+						
+				end
+					
+			end
+				
+			ent.IsHeadless = true
+			
+			table.remove( HeadlessTbl, c )
+			
+			break
+			
+		elseif d.Time < CurTime() then
+			
+			table.remove( HeadlessTbl, c )
+			
+			break
+			
+		end
+		
+	end
+		
+	for c,d in pairs( BurnTbl ) do
+	
+		local ent = GAMEMODE:GetNearestEnt( d.Pos, 30, tbl )
+		
+		if ValidEntity( ent ) and not ent.IsBurnt then
+			
+			ent:SetMaterial( "models/charple/charple3_sheet" )
+			ent.IsBurnt = true
+			
+			table.remove( BurnTbl, c )
+			
+			break
+			
+		elseif d.Time < CurTime() then
+			
+			table.remove( BurnTbl, c )
+			
+			break
+			
 		end
 		
 	end

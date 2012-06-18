@@ -11,6 +11,7 @@ include( 'tables.lua' )
 include( 'boneanimlib.lua' )
 include( 'sh_boneanimlib.lua' )
 include( 'ply_anims.lua' )
+include( 'events.lua' )
 
 AddCSLuaFile( 'sh_boneanimlib.lua' )
 AddCSLuaFile( 'cl_animeditor.lua' )
@@ -546,6 +547,39 @@ function GM:LootThink()
 
 end
 
+function GM:EventThink()
+
+	if not GAMEMODE.RandomEvent then
+	
+		GAMEMODE.RandomEvent = CurTime() + ( 60 * math.Rand( 3.5, 6.5 ) )
+	
+	end
+	
+	if GAMEMODE.RandomEvent < CurTime() then
+		
+		local ev = event.GetRandom()
+		ev.Start()
+	
+		GAMEMODE.Event = ev
+		GAMEMODE.RandomEvent = nil
+	
+	end
+	
+	if GAMEMODE.Event then
+	
+		GAMEMODE.Event:Think()
+		
+		if GAMEMODE.Event:EndThink() then
+		
+			GAMEMODE.Event:End()
+			GAMEMODE.Event = nil
+		
+		end
+	
+	end
+
+end
+
 function GM:WaveThink()
 
 	if GAMEMODE.NextWave < CurTime() then
@@ -614,7 +648,7 @@ end
 
 function GM:Think()
 
-	if ( GAMEMODE.NextItemThink or 0 ) < CurTime() then
+	if ( GAMEMODE.NextGameThink or 0 ) < CurTime() then
 
 		if GAMEMODE.NextZombieThink < CurTime() then
 		
@@ -625,10 +659,11 @@ function GM:Think()
 		end
 		
 		GAMEMODE:RespawnAntidote()
+		GAMEMODE:EventThink()
 		GAMEMODE:LootThink()
 		GAMEMODE:WaveThink()
 		GAMEMODE:CheckGameOver( false )
-		GAMEMODE.NextItemThink = CurTime() + 1
+		GAMEMODE.NextGameThink = CurTime() + 1
 		
 	end
 
