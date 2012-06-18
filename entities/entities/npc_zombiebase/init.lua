@@ -390,12 +390,20 @@ function ENT:DoIgnite( att )
 	
 	self.FireTime = CurTime() + 5
 	self.FireAttacker = att
+	self.FireSound = true
 	
 	local ed = EffectData()
 	ed:SetEntity( self.Entity )
 	util.Effect( "immolate", ed, true, true )
 	
 	self.Entity:EmitSound( table.Random( GAMEMODE.Burning ), 100, 80 )
+	self.Entity:EmitSound( GAMEMODE.BurnFlesh )
+
+end
+
+function ENT:StopFireSounds()
+
+	self.Entity:StopSound( GAMEMODE.BurnFlesh )
 
 end
 
@@ -407,9 +415,15 @@ end
 
 function ENT:Think()
 
-	if self.RemoveTimer and self.RemoveTimer < CurTime() then
+	if self.RemoveTimer then
 	
-		self.Entity:Remove()
+		self.Entity:StopFireSounds()
+
+		if self.RemoveTimer < CurTime() then
+	
+			self.Entity:Remove()
+		
+		end
 	
 	end
 	
@@ -422,6 +436,10 @@ function ENT:Think()
 		self.FireDamageTime = CurTime() + 0.25
 		
 		self.Entity:TakeDamage( 10, self.FireAttacker )
+	
+	elseif self.FireSound and not self.Entity:OnFire() then
+	
+		self.Entity:StopFireSounds()
 	
 	end
 	
