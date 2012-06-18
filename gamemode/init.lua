@@ -1659,7 +1659,7 @@ function BuyItem( ply, cmd, args )
 	local id = tonumber( args[1] )
 	local count = tonumber( args[2] )
 	
-	if not ValidEntity( ply.Stash ) or not ply.Stash:GetClass() == "info_trader" or not table.HasValue( ply.Stash:GetItems(), id ) then return end
+	if not ValidEntity( ply.Stash ) or not ply.Stash:GetClass() == "info_trader" or not table.HasValue( ply.Stash:GetItems(), id ) or count < 0 then return end
 	
 	local tbl = item.GetByID( id )
 	
