@@ -21,13 +21,19 @@ function ENT:Initialize()
 	
 	self.DieTime = CurTime() + self.LifeTime
 	
-	self.Entity:StartLoopingSound( self.BurnSound )
+	self.Entity:EmitSound( self.BurnSound )
 	
 end
 
 function ENT:SetLifeTime( num )
 
 	self.LifeTime = num
+
+end
+
+function ENT:OnRemove()
+
+	self.Entity:StopSound( self.BurnSound )
 
 end
 
@@ -46,6 +52,8 @@ function ENT:Touch( ent )
 	if not ValidEntity( self.Entity:GetOwner() ) then return end
 	
 	//if ent:IsPlayer() and ent:Team() == self.Entity:GetOwner():Team() then return end
+	
+	if not ent:IsNPC() and not ent:IsPlayer() then return end
 	
 	ent:DoIgnite( self.Entity:GetOwner() )
 	

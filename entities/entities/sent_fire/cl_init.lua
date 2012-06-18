@@ -14,10 +14,15 @@ function ENT:Initialize()
 		for j=-30,30 do
 	
 			local trace = {}
-			trace.start = self.Entity:GetPos() + Vector( i * 2, j * 2, 500 )
-			trace.endpos = trace.start + Vector( i * 2, j * 2, -2000 )
+			trace.start = self.Entity:GetPos() + Vector( i * 2, j * 2, 10 )
+			trace.endpos = trace.start + Vector(0,0,500)
 			
 			local tr = util.TraceLine( trace )
+	
+			trace.start = tr.HitPos
+			trace.endpos = trace.start + Vector( 0, 0, -2000 )
+			
+			tr = util.TraceLine( trace )
 			
 			table.insert( self.PosTbl, { Pos = tr.HitPos, Scale = ( ( 30 - math.abs(i) ) + ( 30 - math.abs(j) ) ) / 60 } )
 			
@@ -72,7 +77,7 @@ function ENT:Think()
 			dlight.g = 120
 			dlight.b = 50
 			dlight.Brightness = 4
-			dlight.Decay = 4096
+			dlight.Decay = 2048
 			dlight.size = 256 * math.Rand( 0.8, 1.2 )
 			dlight.DieTime = CurTime() + 1
 			

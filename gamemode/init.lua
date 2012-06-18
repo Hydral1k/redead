@@ -969,6 +969,12 @@ end
 
 function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 
+	if ent:GetClass() == "prop_physics" and ent:IsOnFire() then
+	
+		ent:Extinguish()
+	
+	end
+
 	if not ent:IsPlayer() and ent.IsItem then 
 
 		dmginfo:ScaleDamage( 0 )
