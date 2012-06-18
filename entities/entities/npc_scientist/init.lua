@@ -54,8 +54,10 @@ function ENT:Initialize()
 	self.Entity:SetHealth( 100 )
 	
 	self.Entity:DropToFloor()
+	self.Entity:UpdateEnemy()
 	
 	self.NextUpdate = 0
+	self.LastPos = Vector(0,0,0)
 	self.DmgTable = {}
 
 end
@@ -136,6 +138,7 @@ function ENT:Heal( ply )
 
 	self.Entity:VoiceSound( self.Happy )
 
+	ply:EmitSound( "HealthVial.Touch", 50, 120 )
 	ply:AddHealth( 25 )
 	ply:Notice( "+25 Health", GAMEMODE.Colors.Green )
 
@@ -268,6 +271,24 @@ function ENT:Think()
 		self.FireDamageTime = CurTime() + 0.25
 		
 		self.Entity:TakeDamage( 10, self.FireAttacker )
+	
+	end
+	
+	if ( self.PosCheck or 0 ) < CurTime() then
+	
+		self.PosCheck = CurTime() + 10
+	
+		if self.LastPos == self.Entity:GetPos() then
+		
+			local ent = ents.Create( "npc_scientist" )
+			ent:SetPos( self.Entity:GetPos() )
+			ent:Spawn()
+		
+			self.Entity:Remove()
+		
+		end
+		
+		self.LastPos = self.Entity:GetPos()
 	
 	end
 	

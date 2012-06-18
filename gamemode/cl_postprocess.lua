@@ -274,7 +274,7 @@ function GM:PreDrawViewModel()
 
 	for k,v in pairs( GAMEMODE:GetHighlightedUnits() ) do
 		
-		if ( ( v:IsPlayer() and v:Alive() and v != LocalPlayer() and v:Team() == TEAM_ARMY ) or v:IsNPC() ) then
+		if ( ( v:IsPlayer() and v:Alive() and v != LocalPlayer() and v:Team() == TEAM_ARMY ) or ( v:IsNPC() and not v.Ragdolled ) ) then
 		
 			local dist = math.Clamp( v:GetPos():Distance( LocalPlayer():GetPos() ), 250, 500 ) - 250
 			local scale = dist / 250
@@ -295,7 +295,7 @@ function GM:PreDrawViewModel()
 	
 	if LocalPlayer():Team() == TEAM_ARMY then
 	
-		if ValidEntity( TargetedEntity ) and not TargetedEntity:IsPlayer() then
+		if ValidEntity( TargetedEntity ) and not TargetedEntity:IsPlayer() and not TargetedEntity.Ragdolled then
 	
 			local dist = math.Clamp( TargetedEntity:GetPos():Distance( LocalPlayer():GetPos() ), 0, 500 )
 			local scale = 1 - ( dist / 500 )

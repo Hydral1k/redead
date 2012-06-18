@@ -3,10 +3,11 @@ local EVENT = {}
 
 function EVENT:Start()
 	
-	local evac = table.Random( ents.FindByClass( "point_evac" ) )
+	local spawns = ents.FindByClass( "info_evac" )
+	local evac = table.Random( spawns )
 	
 	local ent = ents.Create( "npc_scientist" )
-	ent:SetPos( evac:GetPos() )
+	ent:SetPos( evac:GetPos() + Vector(0,0,10) )
 	ent:Spawn()
 	
 	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do

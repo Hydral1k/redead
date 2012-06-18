@@ -293,7 +293,7 @@ function GM:Think()
 						
 					else
 					
-						color = Color( 255, 0, 150 )
+						color = Color( 200, 200, 0 )
 					
 					end
 				

@@ -5,13 +5,13 @@ include( 'resource.lua' )
 include( 'enums.lua' )
 include( 'items.lua' )
 include( 'moddable.lua' )
+include( 'events.lua' )
 include( 'shared.lua' )
 include( 'ply_extension.lua' )
 include( 'tables.lua' )
 include( 'boneanimlib.lua' )
 include( 'sh_boneanimlib.lua' )
 include( 'ply_anims.lua' )
-include( 'events.lua' )
 
 AddCSLuaFile( 'sh_boneanimlib.lua' )
 AddCSLuaFile( 'cl_animeditor.lua' )
@@ -555,7 +555,7 @@ function GM:EventThink()
 	
 	end
 	
-	if GAMEMODE.RandomEvent < CurTime() then
+	if GAMEMODE.RandomEvent and GAMEMODE.RandomEvent < CurTime() then
 		
 		local ev = event.GetRandom()
 		ev.Start()
