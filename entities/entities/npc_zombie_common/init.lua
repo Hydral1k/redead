@@ -30,18 +30,23 @@ ENT.VoiceSounds.Taunt = { "nuke/redead/idle_1.wav",
 "nuke/redead/idle_3.wav",
 "nuke/redead/idle_4.wav",
 "nuke/redead/idle_5.wav",
-"nuke/redead/idle_6.wav" }
+"nuke/redead/idle_6.wav",
+"nuke/redead/idle_7.wav",
+"nuke/redead/idle_8.wav" }
 
 ENT.VoiceSounds.Attack = { "nuke/redead/attack_1.wav",
- "nuke/redead/attack_2.wav",
- "nuke/redead/attack_3.wav",
- "nuke/redead/attack_4.wav" }
+"nuke/redead/attack_2.wav",
+"nuke/redead/attack_3.wav",
+"nuke/redead/attack_4.wav",
+"nuke/redead/attack_5.wav",
+"nuke/redead/attack_6.wav" }
 
 ENT.AttackAnims = { "attack01", "attack01", "attack02", "attack02", "attack03" }
 ENT.AnimSpeeds = { .65, .65, .65, .65, .70 }
 ENT.AnimScale = 2.0
 ENT.Damage = 40
 ENT.HeadshotEffects = true
+ENT.SoundOverride = 85
 
 function ENT:Initialize()
 

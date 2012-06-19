@@ -515,27 +515,25 @@ end
 function GM:SpawnRagdolls()
 
 	local tbl = ents.FindByClass( "npc_*" )
-
-	for k,v in pairs( tbl ) do
 	
-		for c,d in pairs( RagdollTbl ) do
+	for c,d in pairs( RagdollTbl ) do
+	
+		local ent = GAMEMODE:GetNearestEnt( d.Pos, 30, tbl )
 		
-			if d.Pos:Distance( v:GetPos() ) < 30 and not v.Ragdolled then
+		if ValidEntity( ent ) and not ent.Ragdolled then
 			
-				v:BecomeRagdollOnClient()
-				v.Ragdolled = true
+			ent:BecomeRagdollOnClient()
+			ent.Ragdolled = true
 			
-				table.remove( RagdollTbl, c )
+			table.remove( RagdollTbl, c )
 			
-				break
+			break
 			
-			elseif d.Time < CurTime() then
+		elseif d.Time < CurTime() then
 			
-				table.remove( RagdollTbl, c )
+			table.remove( RagdollTbl, c )
 			
-				break
-			
-			end
+			break
 		
 		end
 		

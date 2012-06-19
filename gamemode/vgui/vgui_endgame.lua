@@ -30,9 +30,9 @@ function PANEL:Init()
 	self.Awards[10] ={ x, w, "Meet The Engineer:", "built the most barricades.", function() return self:GetStatMax( "Wood" ) end, "barricades built", "npc/dog/dog_servo6.wav", true }
 	self.Awards[11] ={ x, w, "Brain Munch:", "killed the most humans.", function() return self:GetStatMax( "ZedKills" ) end, "brains eaten", "npc/zombie/zombie_voice_idle2.wav", true }
 	self.Awards[12] ={ x, w, "Cum Dumpster:", "was infected by zombies the most.", function() return self:GetStatMax( "Infections" ) end, "infections", "ambient/voices/cough1.wav", true }
-	self.Awards[13] ={ x, w, "Accident Prone:", "took the most damage from zombies.", function() return self:GetStatMax( "Damage" ) end, "damage", "toxsin/pain05.wav" }
+	self.Awards[13] ={ x, w, "Accident Prone:", "took the most damage from zombies.", function() return self:GetStatMax( "Damage" ) end, "damage", "nuke/gore/pain05.wav" }
 	self.Awards[14] ={ x, w, "Piss Poor:", "spent the least " .. GAMEMODE.CurrencyName .. "s.", function() return self:GetStatMin( "Spent" ) end, GAMEMODE.CurrencyName .. "s spent", "bot/i_got_nothing.wav" }
-	self.Awards[15] ={ x, w, "Martyr:", "was the first human to die.", function() return self:GetStatMax( "Martyr" ) end, "sacrifice made", "toxsin/carnage04.wav", true }
+	self.Awards[15] ={ x, w, "Martyr:", "was the first human to die.", function() return self:GetStatMax( "Martyr" ) end, "sacrifice made", "nuke/gore/carnage04.wav", true }
 	self.Awards[16] ={ x, w, "Roleplayer:", "did jack shit.", function() return self:GetWorstPlayer() end, "kills", "ambient/sheep.wav" }
 	
 end
