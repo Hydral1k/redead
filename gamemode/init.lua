@@ -994,6 +994,12 @@ function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 			ent:ViewBounce( 25 )
 			ent:VoiceSound( table.Random( GAMEMODE.Pain ) )
 			ent:DrawBlood()
+			
+			if math.random(1,3) == 1 then
+			
+				ent:RadioSound( VO_PAIN )
+			
+			end
 		
 		end
 		

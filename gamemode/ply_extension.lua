@@ -61,9 +61,14 @@ function meta:DrawBlood()
 
 end
 
-function meta:ClientSound( snd )
+function meta:ClientSound( snd, pitch )
 
-	self:SendLua( "surface.PlaySound( \"" .. snd .. "\" )" ) 
+	umsg.Start( "Radio", self )
+	umsg.String( snd )
+	umsg.Short( pitch or 100 )
+	umsg.End()
+
+	//self:SendLua( "LocalPlayer():EmitSound( \"" .. snd .. "\", 100, " .. ( pitch or 100 ) .. " )" ) 
 
 end
 
@@ -74,6 +79,55 @@ function meta:VoiceSound( snd, lvl, pitch )
 		self.SoundDelay = CurTime() + 1.25
 		self:EmitSound( snd, lvl, pitch )
 		
+	end
+
+end
+
+function meta:RadioSound( vtype, override )
+
+	if not self:Alive() then return end
+		
+	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do 
+	
+		if ( ( v.RadioTimer or 0 ) < CurTime() or override ) and v != self then
+		
+			local sound = table.Random( GAMEMODE.Radio[ vtype ] )
+		
+			v:ClientSound( table.Random( GAMEMODE.VoiceStart ), math.random( 90, 110 ) )
+			timer.Simple( 0.2, function( ply, snd ) if ValidEntity( ply ) and ply:Alive() then ply:ClientSound( snd, 90 ) end end, v, sound )
+			timer.Simple( SoundDuration( sound ) + math.Rand( 0.6, 0.8 ), function( ply, snd ) if ValidEntity( ply ) and ply:Alive() then ply:ClientSound( snd, math.random( 90, 110 ) ) end end, v, table.Random( GAMEMODE.VoiceEnd ) )
+				
+			v.RadioTimer = CurTime() + SoundDuration( sound ) + 1
+	
+		end
+	
+	end
+
+end
+
+function meta:VoiceThink()
+
+	if ( self.VoiceTbl[ VO_IDLE ] or 0 ) < CurTime() then
+	
+		self:RadioSound( VO_IDLE )
+		self.VoiceTbl[ VO_IDLE ] = CurTime() + math.Rand( 20, 60 )
+	
+	end
+	
+	if ( self.VoiceTbl[ VO_ALERT ] or 0 ) < CurTime() then
+	
+		self.VoiceTbl[ VO_ALERT ] = CurTime() + math.Rand( 20, 60 )
+	
+		for k,v in pairs( ents.FindByClass( "npc_zombie*" ) ) do
+		
+			if v:GetPos():Distance( self:GetPos() ) < 100 then
+			
+				self:RadioSound( VO_ALERT )
+			
+			end
+		
+		end
+	
 	end
 
 end
@@ -431,6 +485,7 @@ end
 
 function meta:OnSpawn()
 
+	self.VoiceTbl = {}
 	self:SetRadiation( 0 )
 	self:SetInfected( false )
 	self:SetBleeding( false )
@@ -669,6 +724,8 @@ function meta:Think()
 		return
 	
 	end
+	
+	self:VoiceThink()
 	
 	if self:IsInfected() then // infection overrides health regen 
 	
@@ -1178,6 +1235,8 @@ function meta:OnDeath()
 	self:StopAllLuaAnimations( 0.2 )
 
 	if self:Team() == TEAM_ARMY then
+	
+		self:RadioSound( VO_DEATH )
 
 		if ValidEntity( self.Stash ) then
 		

@@ -11,21 +11,31 @@ end
 
 ENT.VoiceSounds = {}
 
-ENT.VoiceSounds.Death = { "vo/npc/vortigaunt/vortigese02.wav",
-"vo/npc/vortigaunt/vortigese03.wav",
-"vo/npc/vortigaunt/vortigese05.wav",
-"vo/npc/vortigaunt/vortigese07.wav" }
+ENT.VoiceSounds.Death = { "nuke/redead/death_1.wav",
+"nuke/redead/death_2.wav",
+"nuke/redead/death_3.wav",
+"nuke/redead/death_4.wav",
+"nuke/redead/death_5.wav",
+"nuke/redead/death_6.wav" }
 
-ENT.VoiceSounds.Pain = { "vo/npc/vortigaunt/vortigese04.wav",
-"vo/npc/vortigaunt/vortigese08.wav",
-"vo/npc/vortigaunt/vortigese09.wav" }
+ENT.VoiceSounds.Pain = { "nuke/redead/pain_1.wav",
+"nuke/redead/pain_2.wav",
+"nuke/redead/pain_3.wav",
+"nuke/redead/pain_4.wav",
+"nuke/redead/pain_5.wav",
+"nuke/redead/pain_6.wav" }
 
-ENT.VoiceSounds.Taunt = { "npc/zombie/zombie_alert1.wav",
-"npc/zombie/zombie_alert2.wav",
-"npc/zombie/zombie_alert3.wav" }
+ENT.VoiceSounds.Taunt = { "nuke/redead/idle_1.wav",
+"nuke/redead/idle_2.wav",
+"nuke/redead/idle_3.wav",
+"nuke/redead/idle_4.wav",
+"nuke/redead/idle_5.wav",
+"nuke/redead/idle_6.wav" }
 
-ENT.VoiceSounds.Attack = { "npc/fast_zombie/idle1.wav",
-"npc/fast_zombie/idle1.wav" }
+ENT.VoiceSounds.Attack = { "nuke/redead/attack_1.wav",
+ "nuke/redead/attack_2.wav",
+ "nuke/redead/attack_3.wav",
+ "nuke/redead/attack_4.wav" }
 
 ENT.AttackAnims = { "attack01", "attack01", "attack02", "attack02", "attack03" }
 ENT.AnimSpeeds = { .65, .65, .65, .65, .70 }

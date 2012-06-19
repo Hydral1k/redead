@@ -9,6 +9,14 @@ SHELL_SHOTGUN = 5
 SHELL_338MAG = 6
 SHELL_50CAL = 7
 
+// Voice types
+
+VO_DEATH = 1
+VO_PAIN = 2
+VO_TAUNT = 3
+VO_ALERT = 4
+VO_IDLE = 5
+
 // Class types
 
 CLASS_SCOUT = 1

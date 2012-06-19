@@ -118,6 +118,12 @@ function ENT:DoDeath( dmginfo )
 		local tbl = self.Entity:GetHighestDamagers()
 		
 		if ValidEntity( ent1 ) then
+		
+			if math.random(1,10) == 1 then
+		
+				ent1:RadioSound( VO_TAUNT )
+				
+			end
 			
 			ent1:AddCash( 2 )
 			ent1:AddFrags( 1 )
@@ -479,7 +485,7 @@ function ENT:Think()
 	if ( self.IdleTalk or 0 ) < CurTime() then
 	
 		self.Entity:VoiceSound( self.VoiceSounds.Taunt )
-		self.IdleTalk = CurTime() + math.random(15,30)
+		self.IdleTalk = CurTime() + math.Rand(10,20)
 		
 	end
 	

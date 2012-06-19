@@ -134,7 +134,7 @@ GM.LoseMusic = { "music/HL1_song14.mp3",
 
 // Last minute
 
-GM.LastMinute = Sound( "toxsin/lastminute.mp3" )
+GM.LastMinute = Sound( "nuke/redead/lastminute.mp3" )
 
 if CLIENT then return end // Serverside configuration stuff past this point.
 

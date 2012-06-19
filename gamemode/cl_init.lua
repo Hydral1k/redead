@@ -287,13 +287,13 @@ function GM:Think()
 				
 				elseif v:IsNPC() then
 				
-					if string.find( v:GetClass(), "zombie" ) then
+					if v:GetClass() == "npc_scientist" then
 				
-						color = Color( 255, 80, 80 )
+						color = Color( 200, 200, 0 )
 						
 					else
-					
-						color = Color( 200, 200, 0 )
+						
+						color = Color( 255, 80, 80 )
 					
 					end
 				
@@ -1026,6 +1026,18 @@ function CashSynch( msg )
  
 end
 usermessage.Hook( "CashSynch", CashSynch )
+
+function Radio( msg )
+
+	local snd = msg:ReadString()
+	local num = msg:ReadShort()
+	
+	if not ValidEntity( LocalPlayer() ) then return end
+	
+	LocalPlayer():EmitSound( Sound( snd ), 100, num )
+
+end
+usermessage.Hook( "Radio", Radio )
 
 net.Receive( "StatsSynch", function( len )
 

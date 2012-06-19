@@ -259,34 +259,38 @@ end
 
 function GM:GetHighlightedUnits()
 
-	local tbl = player.GetAll()
+	local tbl = team.GetPlayers( TEAM_ARMY )
 	tbl = table.Add( tbl, ents.FindByClass( "npc_scientist" ) )
 	
 	return tbl
 
 end
 
-function GM:PreDrawViewModel()
+function GM:PreDrawHalos()
 
 	if GetGlobalBool( "GameOver", false ) then return end
 
 	if LocalPlayer():Team() != TEAM_ZOMBIES and LocalPlayer():Team() != TEAM_ARMY then return end
-
+	
 	for k,v in pairs( GAMEMODE:GetHighlightedUnits() ) do
 		
-		if ( ( v:IsPlayer() and v:Alive() and v != LocalPlayer() and v:Team() == TEAM_ARMY ) or ( v:IsNPC() and not v.Ragdolled ) ) then
+		if ( ( v:IsPlayer() and v:Alive() and v != LocalPlayer() ) or ( v:IsNPC() and not v.Ragdolled ) ) then
 		
 			local dist = math.Clamp( v:GetPos():Distance( LocalPlayer():GetPos() ), 250, 500 ) - 250
 			local scale = dist / 250
 		
-			if LocalPlayer():Team() == TEAM_ARMY then
-			
-				halo.Add( {v}, Color( 0, 200, 200, 200 * scale ), 2, 2, 1, 1, true )
-			
-			else
-			
-				halo.Add( {v}, Color( 200, 0, 0, 200 * scale ), 2, 2, 1, 1, false )
-			
+			if scale > 0 then
+		
+				if LocalPlayer():Team() == TEAM_ARMY then
+				
+					halo.Add( {v}, Color( 0, 200, 200, 200 * scale ), 2, 2, 1, 1, true ) // removed till garry fixes
+				
+				else
+				
+					--halo.Add( {v}, Color( 200, 0, 0, 200 * scale ), 2, 2, 1, 1, false )
+				
+				end
+				
 			end
 
 		end
