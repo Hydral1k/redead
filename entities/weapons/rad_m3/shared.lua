@@ -183,7 +183,7 @@ function SWEP:PumpIt()
 	
 		local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ]
 	
-		timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function( tbl, pos ) WorldSound( table.Random( tbl.Wavs ), pos, 75, tbl.Pitch )  end, tbl, self.Owner:GetPos() )
+		timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() WorldSound( table.Random( tbl.Wavs ), self.Owner:GetPos(), 75, tbl.Pitch ) end )
 	
 	end
 	

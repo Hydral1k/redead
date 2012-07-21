@@ -28,25 +28,10 @@ end
 
 function PANEL:Think()
 
-	if self.Dragging then
-		
-		local x = gui.MouseX() - self.Dragging[1]
-        local y = gui.MouseY() - self.Dragging[2]
-		
-		x = math.Clamp( x, 0, ScrW() - self:GetWide() )
-		y = math.Clamp( y, 0, ScrH() - self:GetTall() )
-		
-		self:SetPos( x, y )
-	
-	end
-
 end
 
 function PANEL:OnMousePressed()
 
-	//if self:GetDraggable() then
-		
-    self.Dragging = { gui.MouseX() - self.x, gui.MouseY() - self.y }
     self:MouseCapture( true )
 	
 	if ( self.NextClick or 0 ) > CurTime() then
@@ -60,7 +45,7 @@ function PANEL:OnMousePressed()
 		
 	else
 		
-		GAMEMODE:SetItemToPreview( self.ID, self.StashStyle, self.PriceScale )
+		GAMEMODE:SetItemToPreview( self.ID, self.StashStyle, self.PriceScale, self:GetCount() )
 		
 		self.NextClick = CurTime() + 0.3
 	
@@ -357,11 +342,13 @@ function PANEL:Paint()
 
 	end
 
-	if self.SizeOverride then
+	//if self.SizeOverride then
 	
-		draw.RoundedBox( 4, 2, 2, self:GetWide() - 4, self:GetTall() - 4, Color( 0, 0, 0, 200 ) )
+	draw.RoundedBox( 0, 3, 3, self:GetWide() - 6, self:GetTall() - 6, Color( 80, 80, 80, 50 ) )
 	
-	end
+	surface.SetDrawColor( 200, 200, 200, 200 )
+	surface.DrawOutlinedRect( 3, 3, self:GetWide() - 6, self:GetTall() - 6 )
+
 
 end
 

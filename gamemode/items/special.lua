@@ -4,6 +4,7 @@ ITEM_SPECIAL = 3
 
 function FUNC_ANTIRAD( ply, id, client )
 
+	if icon then return "icon16/pill.png" end
 	if client then return "Use" end
 	
 	ply:RemoveFromInventory( id )
@@ -13,8 +14,9 @@ function FUNC_ANTIRAD( ply, id, client )
 
 end
 
-function FUNC_FLARE( ply, id, client )
+function FUNC_FLARE( ply, id, client, icon )
 
+	if icon then return "icon16/lightbulb.png" end
 	if client then return "Ignite" end
 	
 	ply:RemoveFromInventory( id )
@@ -27,7 +29,7 @@ end
 
 item.Register( { 
 	Name = "Anti-Rad", 
-	Description = "This powerful medication will instantly neutralize all radiation poisoning.",
+	Description = "Radiation poisoning medication.",
 	Stackable = true, 
 	Type = ITEM_SPECIAL,
 	Weight = 0.15, 
@@ -41,21 +43,20 @@ item.Register( {
 
 item.Register( { 
 	Name = "Respirator", 
-	Description = "This mask filters out hazardous airborne chemicals and radiation when equipped.",
+	Description = "Filters out hazardous chemicals and radiation.",
 	Stackable = true, 
 	Type = ITEM_SPECIAL,
 	Weight = 1.75, 
 	Price = 40,
 	Rarity = 0.95,
 	Model = "models/items/combine_rifle_cartridge01.mdl",
-	Functions = {},
 	CamPos = Vector(15,15,0),
 	CamOrigin = Vector(0,0,0)	
 } )
 
 item.Register( { 
 	Name = "Sonar Module", 
-	Description = "This device connects to your radar, improving its detection range and speed.",
+	Description = "Improves your radar detection range and speed.",
 	Stackable = true, 
 	Type = ITEM_SPECIAL,
 	Weight = 0.75, 
@@ -69,7 +70,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "Flare", 
-	Description = "This emergency flare will emit a bright red light for a short duration of time.",
+	Description = "Emits a bright red light for a short duration of time.",
 	Stackable = true, 
 	Type = ITEM_SPECIAL,
 	Weight = 0.35, 

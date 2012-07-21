@@ -62,7 +62,7 @@ function ENT:Draw()
 
 	self.Entity:DrawModel()
 
-	if self.Entity:GetNWFloat( "BurnDelay", 9000 ) > CurTime() then return end
+	if self.Entity:GetNWFloat( "BurnDelay", CurTime() + 1 ) > CurTime() then return end
 	
 	local size = math.Rand( 5, 25 )
 	

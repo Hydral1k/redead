@@ -8,8 +8,9 @@ WEIGHT_FOOD_SMALL = 0.15
 // Price constants
 PRICE_FOOD = 3
 
-function FUNC_DRINK( ply, id, client )
+function FUNC_DRINK( ply, id, client, icon )
 
+	if icon then return "icon16/cup.png" end
 	if client then return "Drink" end
 
 	ply:RemoveFromInventory( id )
@@ -21,8 +22,9 @@ function FUNC_DRINK( ply, id, client )
 
 end
 
-function FUNC_EAT( ply, id, client )
+function FUNC_EAT( ply, id, client, icon )
 
+	if icon then return "icon16/cake.png" end
 	if client then return "Eat" end
 	
 	ply:RemoveFromInventory( id )
@@ -36,7 +38,7 @@ end
 
 item.Register( { 
 	Name = "Water", 
-	Description = "This old bottle is full of clean water. It should be safe to drink.",
+	Description = "Restores 25 stamina and 10 health.",
 	Stackable = true, 
 	Type = ITEM_FOOD,
 	Weight = WEIGHT_FOOD_SMALL, 
@@ -49,8 +51,8 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "Canned Meat", 
-	Description = "This can contains what appears to be processed meat. Maybe it's dog food.",
+	Name = "Canned Food", 
+	Description = "Restores 25 health and 10 stamina.",
 	Stackable = true, 
 	Type = ITEM_FOOD,
 	Weight = WEIGHT_FOOD_SMALL, 

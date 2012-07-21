@@ -1,6 +1,7 @@
 
-function FUNC_OXYGEN( ply, id, client )
+function FUNC_OXYGEN( ply, id, client, icon )
 
+	if icon then return "icon16/arrow_turn_right.png" end
 	if client then return "Throw" end
 	
 	ply:RemoveFromInventory( id )
@@ -15,6 +16,7 @@ end
 
 function FUNC_DROPOXYGEN( ply, id, drop )
 
+	
 	if not drop then return end
 
 	local oxy = ents.Create( "sent_oxygen" )
@@ -29,7 +31,7 @@ end
 
 item.Register( { 
 	Name = "Liquid Oxygen", 
-	Description = "This canister is full of highly explosive liquid oxygen.",
+	Description = "Highly explosive liquid oxygen.",
 	TypeOverride = "sent_oxygen",
 	Stackable = true, 
 	Type = ITEM_LOOT,

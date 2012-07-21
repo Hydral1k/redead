@@ -20,7 +20,7 @@ function meta:Notice( text, col, len, delay )
 			
 		end
 		
-		timer.Simple( delay, Notice, self, col, len )
+		timer.Simple( delay, Notice( self, col, len ) )
 		
 		return
 		
@@ -94,8 +94,8 @@ function meta:RadioSound( vtype, override )
 			local sound = table.Random( GAMEMODE.Radio[ vtype ] )
 		
 			v:ClientSound( table.Random( GAMEMODE.VoiceStart ), math.random( 90, 110 ) )
-			timer.Simple( 0.2, function( ply, snd ) if ValidEntity( ply ) and ply:Alive() then ply:ClientSound( snd, 90 ) end end, v, sound )
-			timer.Simple( SoundDuration( sound ) + math.Rand( 0.6, 0.8 ), function( ply, snd ) if ValidEntity( ply ) and ply:Alive() then ply:ClientSound( snd, math.random( 90, 110 ) ) end end, v, table.Random( GAMEMODE.VoiceEnd ) )
+			timer.Simple( 0.2, function() if ValidEntity( v ) and v:Alive() then v:ClientSound( sound, 90 ) end end )
+			timer.Simple( SoundDuration( sound ) + math.Rand( 0.6, 0.8 ), function() if ValidEntity( v ) and v:Alive() then v:ClientSound( table.Random( GAMEMODE.VoiceEnd ), math.random( 90, 110 ) ) end end )
 				
 			v.RadioTimer = CurTime() + SoundDuration( sound ) + 1
 	
@@ -556,6 +556,12 @@ end
 
 function meta:GetItemLoadout()
 
+	if self:GetPlayerClass() == CLASS_ENGINEER then
+	
+		return { ITEM_SUPPLY }
+	
+	end
+
 	return { ITEM_FOOD, ITEM_SUPPLY, ITEM_SUPPLY }
 
 end
@@ -580,6 +586,17 @@ function meta:OnLoadout()
 		ammobox:Spawn()
 		
 		self:AddToInventory( ammobox )
+		
+		if self:GetPlayerClass() == CLASS_ENGINEER then
+		
+			local hammer = ents.Create( "prop_physics" )
+			hammer:SetPos( self:GetPos() )
+			hammer:SetModel( "models/weapons/w_hammer.mdl" )
+			hammer:Spawn()
+			
+			self:AddToInventory( hammer )
+		
+		end
 		
 		local load = self:GetItemLoadout()
 		local items = {}
@@ -879,16 +896,19 @@ function meta:SendShipment()
 	
 	if self:IsIndoors() then 
 	
-		self:Notice( "You can't order shipments if you're indoors", GAMEMODE.Colors.Red ) 
+		self:Notice( "You can't order shipments while indoors", GAMEMODE.Colors.Red ) 
 	
 		return 
 		
 	end
 	
-	self:Notice( "Your shipment will arrive shortly", GAMEMODE.Colors.Green )
+	local droptime = 15 + ( #self.Shipment * 0.5 )
+	
+	self:Notice( "Your shipment will arrive in " .. math.Round( droptime ) .. " seconds", GAMEMODE.Colors.Green )
 	
 	local prop = ents.Create( "sent_dropflare" )
 	prop:SetPos( self:GetItemDropPos() )
+	prop:SetDieTime( droptime )
 	prop:Spawn()
 	
 	local function DropBox( ply, pos, tbl )
@@ -905,7 +925,7 @@ function meta:SendShipment()
 	
 	local tr = util.TraceLine( util.GetPlayerTrace( self, Vector(0,0,1) ) )
 	
-	timer.Simple( 20, DropBox, self, tr.HitPos + Vector(0,0,-100), self.Shipment )
+	timer.Simple( droptime + 1, DropBox( self, tr.HitPos + Vector(0,0,-100), self.Shipment ) )
 	
 	self.Shipment = {}
 

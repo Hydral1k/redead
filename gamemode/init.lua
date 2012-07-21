@@ -4,9 +4,9 @@ require( "glon" )
 include( 'resource.lua' )
 include( 'enums.lua' )
 include( 'items.lua' )
-include( 'moddable.lua' )
 include( 'events.lua' )
 include( 'shared.lua' )
+include( 'moddable.lua' )
 include( 'ply_extension.lua' )
 include( 'tables.lua' )
 include( 'boneanimlib.lua' )
@@ -19,8 +19,8 @@ AddCSLuaFile( 'cl_boneanimlib.lua' )
 AddCSLuaFile( 'ply_anims.lua' )
 AddCSLuaFile( 'enums.lua' )
 AddCSLuaFile( 'items.lua' )
-AddCSLuaFile( 'moddable.lua' )
 AddCSLuaFile( 'shared.lua' )
+AddCSLuaFile( 'moddable.lua' )
 AddCSLuaFile( 'cl_notice.lua' )
 AddCSLuaFile( 'cl_hudstains.lua' )
 AddCSLuaFile( 'cl_targetid.lua' )
@@ -43,6 +43,8 @@ AddCSLuaFile( 'vgui/vgui_playerdisplay.lua' )
 AddCSLuaFile( 'vgui/vgui_playerpanel.lua' )
 AddCSLuaFile( 'vgui/vgui_panelsheet.lua' )
 AddCSLuaFile( 'vgui/vgui_goodmodelpanel.lua' )
+AddCSLuaFile( 'vgui/vgui_categorybutton.lua' )
+AddCSLuaFile( 'vgui/vgui_sidebutton.lua' )
 
 util.AddNetworkString( "InventorySynch" )
 util.AddNetworkString( "StashSynch" )
@@ -65,7 +67,7 @@ function GM:Initialize()
 		local remain = length - i * GetConVar( "sv_redead_wave_length" ):GetInt() * 60
 		local num = i * GetConVar( "sv_redead_wave_length" ):GetInt()
 		
-		timer.Simple( remain, function( amt ) for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do v:Notice( amt .. " minutes until evac arrives", GAMEMODE.Colors.White, 5 )  end end, num )
+		timer.Simple( remain, function() for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do v:Notice( num .. " minutes until evac arrives", GAMEMODE.Colors.White, 5 )  end end )
 	 
 	end
 	
@@ -211,9 +213,9 @@ end
 
 function GM:LoadAllEnts()
 
-	MsgN( "Loading toxsin entity data..." )
+	MsgN( "Loading stored entity data..." )
 
-	local glondry = glon.decode( file.Read( "toxsin/" .. string.lower( game.GetMap() ) .. ".txt" ) )
+	local glondry = glon.decode( file.Read( "redead/" .. string.lower( game.GetMap() ) .. ".txt" ) )
 	
 	if not glondry then return end
 	
@@ -351,7 +353,7 @@ function GM:PickLord( force )
 		
 		ply:Notice( "You have been chosen to become the zombie lord", GAMEMODE.Colors.White, 5, 1 )
 		
-		timer.Simple( 6, function( pl ) pl:Gib() pl:SetLord( true ) pl:SetTeam( TEAM_ZOMBIES ) end, ply )
+		timer.Simple( 6, function() ply:Gib() ply:SetLord( true ) ply:SetTeam( TEAM_ZOMBIES ) end )
 		
 		return
 	
@@ -1218,7 +1220,7 @@ end
 function GM:SynchStats()
 
 	net.Start( "StatsSynch" )
-	net.WriteLong( table.Count( player.GetAll() ) )
+	net.WriteInt( table.Count( player.GetAll() ) )
 
 	for k,v in pairs( player.GetAll() ) do
 	
@@ -1314,7 +1316,11 @@ function GM:ShowTeam( ply )
 	
 	if not ply:Alive() then return end
 	
-	if not ply:IsIndoors() then
+	if ply:IsIndoors() then
+	
+		ply:Notice( "You cannot use your radio indoors", GAMEMODE.Colors.Red )
+	
+	else
 	
 		if ply:GetPlayerClass() == CLASS_SPECIALIST then
 	
@@ -1341,10 +1347,6 @@ function GM:ShowTeam( ply )
 			end
 		
 		end
-		
-	else
-	
-		ply:Notice( "You cannot use your radio indoors", GAMEMODE.Colors.Red )
 	
 	end
 
@@ -1760,7 +1762,7 @@ function SetPlyClass( ply, cmd, args )
 
 	local class = tonumber( args[1] )
 	
-	if not GAMEMODE.ClassNames[ class ] then return end
+	if not GAMEMODE.ClassLogos[ class ] then return end
 	
 	if ply:Team() == TEAM_ARMY then return end
 	

@@ -139,7 +139,7 @@ function SWEP:GetViewModelPosition( pos, ang )
 	self.SwayScale 	= 1.0
 	self.BobScale 	= 1.0
 	
-	if ( self.Owner:KeyDown( IN_SPEED ) and self.Owner:GetVelocity():Length() > 0 and self.Owner:GetNWFloat( "Weight", 0 ) < 50 ) or InventoryScreen:IsVisible() or self.HolsterMode then
+	if ( self.Owner:KeyDown( IN_SPEED ) and self.Owner:GetVelocity():Length() > 0 and self.Owner:GetNWFloat( "Weight", 0 ) < 50 ) or GAMEMODE:ElementsVisible() or self.HolsterMode then
 	
 		self.SwayScale 	= 1.25
 		self.BobScale 	= 1.25
@@ -468,9 +468,9 @@ function SWEP:ShootEffects()
 	
 	if CLIENT then return end
 
-	local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ]
+	local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ] 
 	
-	timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function( tbl, pos ) WorldSound( table.Random( tbl.Wavs ), pos, 75, tbl.Pitch )  end, tbl, self.Owner:GetPos() )
+	timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() WorldSound( table.Random( tbl.Wavs ), self.Owner:GetPos(), 75, tbl.Pitch ) end )
 	
 	--[[local ed = EffectData()
 	ed:SetOrigin( self.Owner:GetShootPos() )

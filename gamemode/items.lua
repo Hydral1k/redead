@@ -6,6 +6,7 @@ local ID = 1
 
 function Register( tbl )
 	
+	tbl.Functions = tbl.Functions or {}
 	tbl.ID = ID
 	ItemTables[ ID ] = tbl
 	

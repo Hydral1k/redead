@@ -501,7 +501,7 @@ function SWEP:DrawHUD()
 	
 	end
 	
-	for k,v in pairs( self.InvPanels ) do
+	for k,v in pairs( self.InvPanels or {} ) do
 	
 		v.LastX = math.Clamp( math.max( ( v.LastX or self.PanelSize + self.XPos ) - ( FrameTime() * 700 ), 1 ), 0, self.PanelSize + self.XPos )
 		v.LastY = math.Clamp( math.max( ( v.LastY or self.YPos ) - ( FrameTime() * 700 ), 1 ), 0, self.PanelSize + self.YPos )

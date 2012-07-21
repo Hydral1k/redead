@@ -7,8 +7,9 @@ ITEM_QUEST_ZOMBIE = 421
 
 PRICE_QUEST_ZOMBIE_ITEM = 20
 
-function FUNC_BOOZE( ply, id, client )
+function FUNC_BOOZE( ply, id, client, icon )
 
+	if icon then return "icon16/drink.png" end
 	if client then return "Drink" end
 	
 	ply:RemoveFromInventory( id )
@@ -24,8 +25,9 @@ function FUNC_BOOZE( ply, id, client )
 
 end
 
-function FUNC_MOONSHINE( ply, id, client )
+function FUNC_MOONSHINE( ply, id, client, icon )
 
+	if icon then return "icon16/drink.png" end
 	if client then return "Drink" end
 	
 	ply:RemoveFromInventory( id )
@@ -82,7 +84,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "Wood", 
-	Description = "This piece of wood can be used to build a sturdy barricade.",
+	Description = "Useful for building barricades with.",
 	Stackable = true, 
 	Type = ITEM_MISC,
 	Weight = 1.50, 
@@ -96,11 +98,11 @@ item.Register( {
 
 item.Register( { 
 	Name = "Vodka", 
-	Description = "This glass bottle is full of vodka. It will provide some relief from radiation poisoning when drunk.",
+	Description = "Provides relief from radiation poisoning.",
 	Stackable = true, 
 	Type = ITEM_MISC,
 	Weight = 0.30, 
-	Price = 10,
+	Price = 12,
 	Rarity = 0.10,
 	Model = "models/props_junk/garbage_glassbottle002a.mdl",
 	Functions = { FUNC_BOOZE },
@@ -110,7 +112,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "Moonshine Vodka", 
-	Description = "This old glass bottle is full of homemade vodka. It's less potent than regular vodka but tastes twice as strong.",
+	Description = "Less potent than regular vodka and twice as strong.",
 	Stackable = true, 
 	Type = ITEM_BUYABLE,
 	Weight = 0.30, 

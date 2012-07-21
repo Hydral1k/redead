@@ -8,7 +8,7 @@ function PANEL:Init()
 	
 	self.Items = {}
 	
-	for k,v in pairs( GAMEMODE.ClassNames ) do
+	for k,v in pairs( { CLASS_SCOUT, CLASS_COMMANDO, CLASS_SPECIALIST, CLASS_ENGINEER } ) do
 
 		local desc = GAMEMODE.ClassDescriptions[k] or "TEH"
 		local logo = GAMEMODE.ClassLogos[k] or "brick/brick_model"

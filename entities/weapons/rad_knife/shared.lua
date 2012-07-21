@@ -103,6 +103,7 @@ function SWEP:MeleeTrace( dmg )
 	elseif not ent:IsWorld() then
 	
 		self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
+		self.Owner:AddStamina( -2 )
 		
 		if ent:IsPlayer() and ent:Team() != self.Owner:Team() then
 		

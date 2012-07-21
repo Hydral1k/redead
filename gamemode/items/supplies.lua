@@ -2,8 +2,9 @@
 // This is the ID given to any item that is an essential supply for every faction
 ITEM_SUPPLY = 2
 
-function FUNC_ENERGY( ply, id, client )
+function FUNC_ENERGY( ply, id, client, icon )
 
+	if icon then return "icon16/cup.png" end
 	if client then return "Drink" end
 	
 	ply:RemoveFromInventory( id )
@@ -13,8 +14,9 @@ function FUNC_ENERGY( ply, id, client )
 
 end
 
-function FUNC_HEAL( ply, id, client )
+function FUNC_HEAL( ply, id, client, icon )
 
+	if icon then return "icon16/heart.png" end
 	if client then return "Use" end
 	
 	ply:RemoveFromInventory( id )
@@ -24,8 +26,9 @@ function FUNC_HEAL( ply, id, client )
 
 end
 
-function FUNC_SUPERHEAL( ply, id, client )
+function FUNC_SUPERHEAL( ply, id, client, icon )
 
+	if icon then return "icon16/heart.png" end
 	if client then return "Use" end
 	
 	ply:RemoveFromInventory( id )
@@ -33,12 +36,12 @@ function FUNC_SUPERHEAL( ply, id, client )
 	ply:AddRadiation( -1 )
 	ply:AddHealth( 150 )
 	ply:Notice( "+150 Health", GAMEMODE.Colors.Green )
-	ply:Notice( "-1 Radiation", GAMEMODE.Colors.Green )
 
 end
 
-function FUNC_BANDAGE( ply, id, client )
+function FUNC_BANDAGE( ply, id, client, icon )
 
+	if icon then return "icon16/heart.png" end
 	if client then return "Use" end
 	
 	ply:RemoveFromInventory( id )
@@ -52,7 +55,7 @@ end
 
 item.Register( { 
 	Name = "Energy Drink", 
-	Description = "This is a carbonated energy drink. It will replenish your stamina when used.",
+	Description = "Restores 50 stamina.",
 	Stackable = true, 
 	Type = ITEM_SUPPLY,
 	Weight = 0.25, 
@@ -66,7 +69,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "Basic Medikit", 
-	Description = "This kit will heal 50% of your health when used.",
+	Description = "Restores 50% of your health.",
 	Stackable = true, 
 	Type = ITEM_SUPPLY,
 	Weight = 1.25, 
@@ -79,7 +82,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "Advanced Medikit", 
-	Description = "This kit will heal 100% of your health and relieve a small amount of radiation poisoning when used.",
+	Description = "Restores 100% of your health.",
 	Stackable = true, 
 	Type = ITEM_SUPPLY,
 	Weight = 1.25, 
@@ -92,7 +95,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "Bandage", 
-	Description = "This medicinal gauze will effectively cover your open wounds and stop all bleeding.",
+	Description = "Stops all bleeding.",
 	Stackable = true, 
 	Type = ITEM_SUPPLY,
 	Weight = 0.35, 

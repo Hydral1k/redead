@@ -1,8 +1,4 @@
 
-// Team numbers
-
-TEAM_ARMY = 1
-TEAM_ZOMBIES = 2
 
 // Currency name
 
@@ -13,31 +9,75 @@ GM.CurrencyName = "Bone"
 GM.ShopName = "UNCLE VIKTOR'S RUSSKI WEAPON SHOPPE"
 GM.ShopDesc = "A HAPPY CUSTOMER IS A DEAD ONE!"
 
-// Team names
+// Team names 
 
 GM.ArmyTeamName = "S.I.N Unit"
 GM.ZombieTeamName = "The Undead"
+
+// Death Screen text
+
+GM.DeathScreenText = {}
+
+GM.DeathScreenText[ TEAM_ARMY ] = { "DEATH IS A BITCH, AIN'T IT",
+"DEATH IS THE FINAL UNKNOWN",
+"LIFE'S A BITCH AND THEN YOU DIE",
+"THE ARMY OF HELL GROWS STRONGER",
+"YOU'RE ZOMBIE BAIT" }
+
+GM.DeathScreenText[ TEAM_ZOMBIES ] = { "DEATH IS ONLY THE BEGINNING",
+"REST IS FOR THE LIVING" }
 
 // Amount of damage that the zombie lord needs to deal before he is redeemed
 
 GM.RedemptionDamage = 450
 
-// Class names, descriptions, logos
+// Player class models + weapons
 
-GM.ClassNames = {}
-GM.ClassNames[CLASS_SCOUT] = "Scout"
-GM.ClassNames[CLASS_COMMANDO] = "Commando"
-GM.ClassNames[CLASS_SPECIALIST] = "Specialist"
+GM.ClassModels = {}
+GM.ClassModels[CLASS_SCOUT] = "models/player/riot.mdl"
+GM.ClassModels[CLASS_COMMANDO] = "models/player/swat.mdl"
+GM.ClassModels[CLASS_SPECIALIST] = "models/player/gasmask.mdl"
+GM.ClassModels[CLASS_ENGINEER] = "models/player/urban.mdl"
+
+GM.ClassWeapons = {}
+GM.ClassWeapons[CLASS_SCOUT] = "models/weapons/w_pist_glock18.mdl" // use world model names since we have to use the old fucky inventory system
+GM.ClassWeapons[CLASS_COMMANDO] = "models/weapons/w_pistol.mdl"
+GM.ClassWeapons[CLASS_SPECIALIST] = "models/weapons/w_pist_p228.mdl"
+GM.ClassWeapons[CLASS_ENGINEER] = "models/weapons/w_pist_fiveseven.mdl"
+
+GM.ZombieModels = {}
+GM.ZombieModels[CLASS_RUNNER] = "models/player/corpse1.mdl"
+GM.ZombieModels[CLASS_BANSHEE] = "models/player/charple01.mdl"
+GM.ZombieModels[CLASS_CONTAGION] = "models/player/classic.mdl"
+
+GM.ZombieWeapons = {}
+GM.ZombieWeapons[CLASS_RUNNER] = "rad_z_runner"
+GM.ZombieWeapons[CLASS_BANSHEE] = "rad_z_banshee"
+GM.ZombieWeapons[CLASS_CONTAGION] = "rad_z_contagion"
+
+GM.ZombieHealth = {}
+GM.ZombieHealth[CLASS_RUNNER] = 150
+GM.ZombieHealth[CLASS_BANSHEE] = 175
+GM.ZombieHealth[CLASS_CONTAGION] = 250
+
+GM.ZombieSpeed = {}
+GM.ZombieSpeed[CLASS_RUNNER] = 250
+GM.ZombieSpeed[CLASS_BANSHEE] = 200
+GM.ZombieSpeed[CLASS_CONTAGION] = 225
+
+// Class names, descriptions, logos
 
 GM.ClassDescriptions = {}
 GM.ClassDescriptions[CLASS_SCOUT] = "The Scout: Wears lightweight kevlar armor, allowing for improved mobility. Starts off with extra " .. GM.CurrencyName .. "s."
-GM.ClassDescriptions[CLASS_COMMANDO] = "The Commando: Wears prototype kevlar armor, allowing for improved melee damage resistance."
-GM.ClassDescriptions[CLASS_SPECIALIST] = "The Specialist: Has access to restricted tools and weapons due to a higher level of field experience."
+GM.ClassDescriptions[CLASS_COMMANDO] = "The Commando: Wears prototype kevlar armor, allowing for improved damage resistance."
+GM.ClassDescriptions[CLASS_SPECIALIST] = "The Specialist: Has access to restricted utilities and weapons due to a higher level of field experience."
+GM.ClassDescriptions[CLASS_ENGINEER] = "The Technician: A highly qualified combat engineer. Starts off with barricade construction tools."
 
 GM.ClassLogos = {}
-GM.ClassLogos[CLASS_SCOUT] = "toxsin/scout"
-GM.ClassLogos[CLASS_COMMANDO] = "toxsin/commando"
-GM.ClassLogos[CLASS_SPECIALIST] = "toxsin/specialist"
+GM.ClassLogos[CLASS_SCOUT] = "nuke/redead/scout"
+GM.ClassLogos[CLASS_COMMANDO] = "nuke/redead/commando"
+GM.ClassLogos[CLASS_SPECIALIST] = "nuke/redead/specialist"
+GM.ClassLogos[CLASS_ENGINEER] = "nuke/redead/engineer"
 
 GM.ZombieNames = {}
 GM.ZombieNames[CLASS_RUNNER] = "Runner"
@@ -50,9 +90,9 @@ GM.ZombieDescriptions[CLASS_BANSHEE] = "The Banshee: A highly radioactive zombie
 GM.ZombieDescriptions[CLASS_CONTAGION] = "The Contagion: A bloated, festering zombie. When killed it will burst into a shower of acid."
 
 GM.ZombieLogos = {}
-GM.ZombieLogos[CLASS_RUNNER] = "toxsin/zomb_corpse"
-GM.ZombieLogos[CLASS_BANSHEE] = "toxsin/zomb_banshee"
-GM.ZombieLogos[CLASS_CONTAGION] = "toxsin/zomb_zombie"
+GM.ZombieLogos[CLASS_RUNNER] = "nuke/redead/zomb_corpse"
+GM.ZombieLogos[CLASS_BANSHEE] = "nuke/redead/zomb_banshee"
+GM.ZombieLogos[CLASS_CONTAGION] = "nuke/redead/zomb_zombie"
 	
 // Weight Limits (lbs)
 
@@ -146,41 +186,11 @@ GM.HeadshotCombos[10] = 2   // Get 2 points for 10 consecutive headshots
 GM.HeadshotCombos[15] = 5
 GM.HeadshotCombos[20] = 15
 GM.HeadshotCombos[50] = 25
- 
-// Player class models + weapons
 
-GM.ClassModels = {}
-GM.ClassModels[CLASS_SCOUT] = "models/player/riot.mdl"
-GM.ClassModels[CLASS_COMMANDO] = "models/player/swat.mdl"
-GM.ClassModels[CLASS_SPECIALIST] = "models/player/gasmask.mdl"
+// human movespeeds
 
-GM.ClassWeapons = {}
-GM.ClassWeapons[CLASS_SCOUT] = "models/weapons/w_pist_glock18.mdl" // use world model names since we have to use the old fucky inventory system
-GM.ClassWeapons[CLASS_COMMANDO] = "models/weapons/w_pistol.mdl"
-GM.ClassWeapons[CLASS_SPECIALIST] = "models/weapons/w_pist_p228.mdl"
-
-GM.WalkSpeed = 175 // speed for humans
+GM.WalkSpeed = 175 
 GM.RunSpeed = 250
-
-GM.ZombieModels = {}
-GM.ZombieModels[CLASS_RUNNER] = "models/player/corpse1.mdl"
-GM.ZombieModels[CLASS_BANSHEE] = "models/player/charple01.mdl"
-GM.ZombieModels[CLASS_CONTAGION] = "models/player/classic.mdl"
-
-GM.ZombieWeapons = {}
-GM.ZombieWeapons[CLASS_RUNNER] = "rad_z_runner"
-GM.ZombieWeapons[CLASS_BANSHEE] = "rad_z_banshee"
-GM.ZombieWeapons[CLASS_CONTAGION] = "rad_z_contagion"
-
-GM.ZombieHealth = {}
-GM.ZombieHealth[CLASS_RUNNER] = 150
-GM.ZombieHealth[CLASS_BANSHEE] = 175
-GM.ZombieHealth[CLASS_CONTAGION] = 250
-
-GM.ZombieSpeed = {}
-GM.ZombieSpeed[CLASS_RUNNER] = 250
-GM.ZombieSpeed[CLASS_BANSHEE] = 200
-GM.ZombieSpeed[CLASS_CONTAGION] = 225
 
 // Chances to spawn each zombie type ( from 100 to 0 %)
 

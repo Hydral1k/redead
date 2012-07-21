@@ -6,7 +6,42 @@ function PANEL:Init()
 	self.Stashable = false
 	self.StashStyle = "Stash"
 	self.PriceScale = 1
+	self.Categories = {}
 	
+end
+
+function PANEL:ToggleVisible( tbl, bool )
+
+	if bool then
+	
+		local newtbl = {}
+	
+		for k,v in pairs( self.Categories ) do // remove all of tbl from categories
+		
+			if not table.HasValue( tbl, v ) then
+			
+				table.insert( newtbl, v )
+			
+			end
+		
+		end
+		
+		self.Categories = newtbl
+	
+	else
+	
+		for k,v in pairs( tbl ) do // insert all of tbl into categories
+		
+			if not table.HasValue( self.Categories, v ) then
+			
+				table.insert( self.Categories, v )
+			
+			end
+		
+		end
+	
+	end
+
 end
 
 function PANEL:ChooseParent()
@@ -54,6 +89,27 @@ function PANEL:HasItem( id )
 
 end
 
+function PANEL:GetItemPnlSize()
+
+	if self.StashStyle == "Buy" then
+	
+		return ( self:GetWide() * 0.2 )
+	
+	end
+
+	return ( self:GetWide() * 0.25 ) 
+
+end
+
+function PANEL:IsBlacklisted( id )
+
+	local tbl = item.GetByID( id )
+	local cat = tbl.Type
+	
+	return table.HasValue( self.Categories, cat )
+
+end
+
 function PANEL:RefreshItems( tbl )
 
 	self:Clear( true )
@@ -66,13 +122,14 @@ function PANEL:RefreshItems( tbl )
 		
 			pnl:AddCount( 1 )
 		
-		else
+		elseif not self:IsBlacklisted( v ) then
 		
 			local pnl = vgui.Create( "ItemPanel" )
 			pnl:SetItemTable( item.GetByID( v ) )
 			pnl:SetCount( 1 )
 			pnl:SetPriceScale( self.PriceScale )
 			pnl:SetStashable( self.Stashable, self.StashStyle )
+			pnl:SetSizeOverride( self:GetItemPnlSize() ) //bigg0r
 		
 			self:AddItem( pnl )
 		
@@ -189,6 +246,12 @@ function PANEL:Think()
 
 end
 
+function PANEL:OnVScroll( offset )
+
+	self.pnlCanvas:SetPos( 0, offset )
+
+end
+
 function PANEL:Rebuild()
 
 	local Offset = 0
@@ -201,10 +264,10 @@ function PANEL:Rebuild()
 		
 			if ( panel:IsVisible() ) then
 			
-				local w = 64
-				local h = 64
+				local w = self:GetItemPnlSize()
+				local h = self:GetItemPnlSize()
 				
-				if ( x + w  > self:GetWide() ) then
+				if ( x + w  > self:GetWide() ) then // move down
 				
 					x = self.Padding
 					y = y + h + self.Spacing
@@ -248,7 +311,7 @@ function PANEL:Rebuild()
 	
 	self:GetCanvas():SetTall( self:GetTall() + Offset - self.Spacing ) 
 
-	if ( self.m_bNoSizing && self:GetCanvas():GetTall() < self:GetTall() ) then
+	if ( self.m_bNoSizing and self:GetCanvas():GetTall() < self:GetTall() ) then
 
 		self:GetCanvas():SetPos( 0, (self:GetTall()-self:GetCanvas():GetTall()) * 0.5 )
 	
@@ -278,8 +341,10 @@ end
 
 function PANEL:Paint()
 
-	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 0, 0, 0, 255 ) )
-	draw.RoundedBox( 4, 1, 1, self:GetWide() - 2, self:GetTall() - 2, Color( 150, 150, 150, 100 ) )
+	//draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 0, 0, 0, 255 ) )
+	//draw.RoundedBox( 4, 1, 1, self:GetWide() - 2, self:GetTall() - 2, Color( 150, 150, 150, 100 ) )
+	
+	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 0, 0, 0, 180 ) )
 	
 	if self.StashStyle == "Buy" then return end
 	

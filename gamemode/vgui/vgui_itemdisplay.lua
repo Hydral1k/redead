@@ -9,7 +9,7 @@ function PANEL:Init()
 	//self:SetDraggable( false ) 
 	
 	self.Text = "Click an item to see its description." 
-	self.Title = ""
+	self.Title = "N/A"
 	self.Style = "Stash"
 	self.PriceScale = 1
 	self.Price = 0
@@ -79,7 +79,7 @@ function PANEL:Think()
 		self:SetModel( tbl.Model, tbl.CamPos, tbl.CamOrigin )
 		self:SetItemDesc( tbl.Description, tbl.Name, style, scale, tbl.Price, tbl.Weight )
 		
-		GAMEMODE:SetItemToPreview()
+		//GAMEMODE:SetItemToPreview()
 		
 	end
 
@@ -92,7 +92,7 @@ function PANEL:PerformLayout()
 		local size = math.Min( self:GetWide(), self:GetTall() * 0.85 )
 		local pos = ( self:GetWide() - size ) / 2
 	
-		self.ModelPanel:SetPos( pos, 10 )
+		self.ModelPanel:SetPos( pos, 25 )
 		self.ModelPanel:SetSize( size, size )
 	
 	end
@@ -101,63 +101,43 @@ function PANEL:PerformLayout()
 	
 end
 
+function PANEL:GetPadding()
+
+	return 5
+
+end
+
 function PANEL:Paint()
 
-	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 0, 0, 0, 255 ) )
-	draw.RoundedBox( 4, 1, 1, self:GetWide() - 2, self:GetTall() - 2, Color( 150, 150, 150, 100 ) )
+	//draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 0, 0, 0, 255 ) )
+	//draw.RoundedBox( 4, 1, 1, self:GetWide() - 2, self:GetTall() - 2, Color( 150, 150, 150, 100 ) )
 	
-	draw.RoundedBox( 4, 10, ( self:GetTall() * 0.85 ) - 10, self:GetWide() - 20, self:GetTall() * 0.15, Color( 0, 0, 0, 255 ) )
-	draw.RoundedBox( 4, 11, ( self:GetTall() * 0.85 ) - 9, self:GetWide() - 22, self:GetTall() * 0.15 - 2, Color( 150, 150, 150, 150 ) )
+	//draw.RoundedBox( 4, 10, ( self:GetTall() * 0.85 ) - 10, self:GetWide() - 20, self:GetTall() * 0.15, Color( 0, 0, 0, 255 ) )
+	//draw.RoundedBox( 4, 11, ( self:GetTall() * 0.85 ) - 9, self:GetWide() - 22, self:GetTall() * 0.15 - 2, Color( 150, 150, 150, 150 ) )
 	
-	surface.SetFont( "ItemDisplayFont" )
+	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 0, 0, 0, 180 ) )
+	draw.RoundedBox( 0, 35, 40, self:GetWide() - 70, self:GetTall() - 80, Color( 80, 80, 80, 50 ) )
 	
-	local tbl = string.Explode( " ", self.Text )
-	local str = { "" } 
-	local pos = 1
+	surface.SetDrawColor( 200, 200, 200, 200 )
+	surface.DrawOutlinedRect( 35, 40, self:GetWide() - 70, self:GetTall() - 80 )
 	
-	for k,v in pairs( tbl ) do
-		
-		local test = str[pos] .. " " .. v
-		local size = surface.GetTextSize( test )
-		
-		if size > self:GetWide() - 40 then
-		
-			str[pos] = string.Trim( str[pos] )
-			pos = pos + 1
-			str[pos] = ( str[pos] or "" ) .. v
-		
+	draw.SimpleText( self.Title or "N/A", "ItemDisplayFont", self:GetWide() * 0.5, 10, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+	
+	if self.Style != "Stash" then
+	
+		if not self.Price or self.Price == 0 then
+			
+			draw.SimpleText( "Cost: N/A", "ItemDisplayFont", self:GetWide() * 0.5, 25, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+			
 		else
 		
-			str[pos] = str[pos] .. " " .. v
-		
+			draw.SimpleText( "Cost: "..self.Price.." "..GAMEMODE.CurrencyName.."s", "ItemDisplayFont", self:GetWide() * 0.5, 25, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+			
 		end
 		
 	end
 	
-	for k,v in pairs( str ) do
-	
-		draw.SimpleText( v, "ItemDisplayFont", 20, self:GetTall() * 0.85 + ( ( k - 1 ) * 15 ), Color( 255, 255, 255, 255 ), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT )
-	
-	end
-	
-	draw.SimpleText( self.Title, "ItemDisplayFont", self:GetWide() * 0.5, 10, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
-	
-	if not self.Price or self.Price == 0 then
-		
-		draw.SimpleText( "Cost: N/A", "ItemDisplayFont", self:GetWide() * 0.5, 25, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
-		
-	else
-	
-		draw.SimpleText( "Cost: "..self.Price.." "..GAMEMODE.CurrencyName.."s", "ItemDisplayFont", self:GetWide() * 0.5, 25, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
-		
-	end
-		
-	
-	if self.Title != "" then
-	
-		draw.SimpleText( "Weight: "..self.Weight.." lbs", "ItemDisplayFont", self:GetWide() * 0.5, 40, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
-	
-	end
+	draw.SimpleText( self.Text or "N/A", "ItemDisplayFont", self:GetWide() * 0.5, self:GetTall() - 10, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
 
 end
 

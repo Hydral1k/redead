@@ -34,6 +34,12 @@ function ENT:Initialize()
 	
 end
 
+function ENT:SetDieTime( t )
+
+	self.DieTime = CurTime() + t
+
+end
+
 function ENT:Think()
 
 	if self.Entity:GetNWFloat( "BurnDelay", 0 ) < CurTime() then

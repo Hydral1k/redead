@@ -28,12 +28,12 @@ include( 'vgui/vgui_playerpanel.lua' )
 include( 'vgui/vgui_itempanel.lua' )
 include( 'vgui/vgui_panelsheet.lua' )
 include( 'vgui/vgui_goodmodelpanel.lua' )
+include( 'vgui/vgui_categorybutton.lua' )
+include( 'vgui/vgui_sidebutton.lua' )
 
 CV_RagdollVision = CreateClientConVar( "cl_redead_ragdoll_vision", "1", true, false)
 
 function GM:Initialize()
-	
-	GAMEMODE:InitVGUI()
 	
 	WindVector = Vector( math.random(-10,10), math.random(-10,10), 0 )
 	StaticPos = Vector(0,0,0)
@@ -41,7 +41,6 @@ function GM:Initialize()
 	HeadlessTbl = {}
 	GibbedTbl = {}
 	BurnTbl = {}
-	RagdollTbl = {}
 	PlayerStats = {}
 	Drunkness = 0
 	DeathScreenTime = 0
@@ -123,7 +122,7 @@ end]]
 function GM:ShowClasses()
 
 	local classmenu = vgui.Create( "ClassPicker" )
-	classmenu:SetSize( 415, 370 )
+	classmenu:SetSize( 415, 475 )
 	classmenu:Center()
 	classmenu:MakePopup()
 
@@ -176,7 +175,7 @@ function GM:Think()
 
 	GAMEMODE:FadeRagdolls()
 	GAMEMODE:GoreRagdolls()
-	GAMEMODE:SpawnRagdolls()
+	//GAMEMODE:SpawnRagdolls()
 	
 	if GetGlobalBool( "GameOver", false ) and not EndScreenShown then
 	
@@ -209,7 +208,7 @@ function GM:Think()
 	
 	end
 
-	if not LocalPlayer():Alive() and InventoryScreen:IsVisible() then
+	if not LocalPlayer():Alive() and GAMEMODE:ElementsVisible() then
 	
 		InventoryScreen:SetVisible( false )
 		InfoScreen:SetVisible( false )
@@ -543,15 +542,15 @@ end
 
 function DrawBar( x, y, w, h, value, maxvalue, icon, colorlight, colordark )
 
-	draw.RoundedBox( 4, x - 1, y, h + 1, h, Color( 0, 0, 0, 200 ) )
+	draw.RoundedBox( 4, x - 1, y, h + 1, h, Color( 0, 0, 0, 180 ) )
 	
-	surface.SetDrawColor( colorlight.r, colorlight.g, colorlight.b, 200 ) 
+	surface.SetDrawColor( colorlight.r, colorlight.g, colorlight.b, 180 ) 
 	surface.SetMaterial( icon ) 
 	surface.DrawTexturedRect( x, y + 1, h - 1, h - 2 ) 
 	
 	x = x + h + 2
 	
-	draw.RoundedBox( 4, x, y, w, h, Color( 0, 0, 0, 200 ) )
+	draw.RoundedBox( 4, x, y, w, h, Color( 0, 0, 0, 180 ) )
 	
 	local maxlen = ( value / maxvalue ) * w
 	local i = 3
@@ -569,9 +568,9 @@ end
 
 function DrawIcon( x, y, w, h, icon, color )
 
-	draw.RoundedBox( 4, x - 1, y, h + 1, h, Color( 0, 0, 0, 200 ) )
+	draw.RoundedBox( 4, x - 1, y, h + 1, h, Color( 0, 0, 0, 180 ) )
 	
-	surface.SetDrawColor( color.r, color.g, color.b, 200 ) 
+	surface.SetDrawColor( color.r, color.g, color.b, 180 ) 
 	surface.SetMaterial( icon ) 
 	surface.DrawTexturedRect( x, y + 1, h - 1, h - 2 ) 
 
@@ -581,7 +580,7 @@ function DrawAmmo( x, y, w, h, text, label )
 
 	if not ValidEntity( LocalPlayer():GetActiveWeapon() ) then return end
 
-	draw.RoundedBox( 4, x, y, w, h, Color( 0, 0, 0, 200 ) )
+	draw.RoundedBox( 4, x, y, w, h, Color( 0, 0, 0, 180 ) )
 	
 	draw.SimpleText( text, "AmmoFont", x + 5, y + ( h * 0.5 ) - 5, Color( 255, 255, 255 ), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT )
 	draw.SimpleText( label, "AmmoFontSmall", x + 5, y + 5, Color( 255, 255, 150 ), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT )
@@ -590,7 +589,7 @@ end
 
 function DrawCash( x, y, w, h, text )
 
-	draw.RoundedBox( 4, x, y, w, h, Color( 0, 0, 0, 200 ) )
+	draw.RoundedBox( 4, x, y, w, h, Color( 0, 0, 0, 180 ) )
 	draw.SimpleText( text, "CashFont", x + w * 0.5, y + h * 0.5 + 2, Color( 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
 
 end
@@ -650,8 +649,8 @@ function GM:HUDPaint()
 		
 			DeathScreenScale = math.Approach( DeathScreenScale, 1, FrameTime() * 0.3 ) 
 			
-			draw.RoundedBox( 0, 0, 0, ScrW(), ScrH() * ( 0.15 * DeathScreenScale ), Color( 0, 0, 0, 200 ) )
-			draw.RoundedBox( 0, 0, ScrH() - ( ScrH() * ( 0.15 * DeathScreenScale ) ), ScrW(), ScrH() * ( 0.15 * DeathScreenScale ), Color( 0, 0, 0, 200 ) )
+			draw.RoundedBox( 0, 0, 0, ScrW(), ScrH() * ( 0.15 * DeathScreenScale ), Color( 0, 0, 0, 180 ) )
+			draw.RoundedBox( 0, 0, ScrH() - ( ScrH() * ( 0.15 * DeathScreenScale ) ), ScrW(), ScrH() * ( 0.15 * DeathScreenScale ), Color( 0, 0, 0, 180 ) )
 			
 			if DeathScreenScale == 1 then
 			
@@ -679,7 +678,7 @@ function GM:HUDPaint()
 			surface.SetFont( "ZombieHud" )
 			local w, h = surface.GetTextSize( "Health: " .. hp )
 		
-			draw.RoundedBox( 4, 30, ScrH() - 70, w + 20, h + 20, Color( 0, 0, 0, 200 ) )
+			draw.RoundedBox( 4, 30, ScrH() - 70, w + 20, h + 20, Color( 0, 0, 0, 180 ) )
 		
 			draw.SimpleText( "Health: " .. hp, "ZombieHud", x+1, y+1, Color(40,40,40), TEXT_ALIGN_LEFT )
 			draw.SimpleText( "Health: " .. hp, "ZombieHud", x+1, y-1, Color(40,40,40), TEXT_ALIGN_LEFT )
@@ -694,14 +693,14 @@ function GM:HUDPaint()
 			local scale = math.floor( w * math.Clamp( LocalPlayer():GetNWInt( "ZedDamage", 0 ) / GAMEMODE.RedemptionDamage, 0.01, 1.00 ) )
 			local pos = 0
 			
-			draw.RoundedBox( 4, xpos, ypos, w + 20, h + 20, Color( 0, 0, 0, 200 ) )
+			draw.RoundedBox( 4, xpos, ypos, w + 20, h + 20, Color( 0, 0, 0, 180 ) )
 			
 			while pos < scale do
 			
 				local width = math.min( math.random(5,30), math.max( scale - pos, 1 ) ) 
 			
 				local tbl = {} 
-				tbl.texture = surface.GetTextureID( "toxsin/noise0" .. math.random(1,3) )
+				tbl.texture = surface.GetTextureID( "nuke/redead/noise0" .. math.random(1,3) )
 				tbl.x = xpos + pos + 10
 				tbl.y = ScrH() - 60 
 				tbl.w = width
@@ -742,8 +741,8 @@ function GM:HUDPaint()
 		
 		DeathScreenScale = math.Approach( DeathScreenScale, 1, FrameTime() * 0.3 ) 
 		
-		draw.RoundedBox( 0, 0, 0, ScrW(), ScrH() * ( 0.15 * DeathScreenScale ), Color( 0, 0, 0, 200 ) )
-		draw.RoundedBox( 0, 0, ScrH() - ( ScrH() * ( 0.15 * DeathScreenScale ) ), ScrW(), ScrH() * ( 0.15 * DeathScreenScale ), Color( 0, 0, 0, 200 ) )
+		draw.RoundedBox( 0, 0, 0, ScrW(), ScrH() * ( 0.15 * DeathScreenScale ), Color( 0, 0, 0, 180 ) )
+		draw.RoundedBox( 0, 0, ScrH() - ( ScrH() * ( 0.15 * DeathScreenScale ) ), ScrW(), ScrH() * ( 0.15 * DeathScreenScale ), Color( 0, 0, 0, 180 ) )
 		
 		if DeathScreenScale == 1 then
 		
@@ -765,7 +764,7 @@ function GM:HUDPaint()
 	
 	end
 	
-	if not LocalPlayer():Alive() or LocalPlayer():Team() == TEAM_UNASSIGNED or InventoryScreen:IsVisible() then return end
+	if not LocalPlayer():Alive() or LocalPlayer():Team() == TEAM_UNASSIGNED or GAMEMODE:ElementsVisible() then return end
 	
 	local xlen = 200
 	local ylen = 25
@@ -977,10 +976,17 @@ usermessage.Hook( "DeathScreen", DeathScreen )
 function Ragdoll( msg )
 
 	local pos = msg:ReadVector()
-
-	table.insert( RagdollTbl, { Pos = pos, Time = CurTime() + 0.5 } )
+	local burn = msg:ReadShort()
+	local ent = Entity( msg:ReadShort() )
 	
-	if msg:ReadShort() == 2 then
+	if ValidEntity( ent ) and not ent.Ragdolled then
+	
+		ent:BecomeRagdollOnClient()
+		ent.Ragdolled = true
+	
+	end
+	
+	if burn == 2 then
 	
 		table.insert( BurnTbl, { Pos = pos, Time = CurTime() + 0.5 } )
 	
@@ -1039,7 +1045,7 @@ usermessage.Hook( "Radio", Radio )
 
 net.Receive( "StatsSynch", function( len )
 
-	local count = net.ReadLong()
+	local count = net.ReadInt()
 	PlayerStats = {}
 	
 	for i=1, count do
@@ -1054,9 +1060,9 @@ net.Receive( "InventorySynch", function( len )
 
 	LocalInventory = net.ReadTable()
 	
-	if InventoryScreen and InventoryScreen:IsVisible() then
+	if GAMEMODE.ItemSheet and GAMEMODE.ItemSheet:IsVisible() then
 	
-		InventoryScreen:RefreshItems( LocalInventory )
+		GAMEMODE.ItemSheet:RefreshItems( LocalInventory )
 		
 	end
 

@@ -24,7 +24,7 @@ end
 
 item.Register( { 
 	Name = "HE Grenade", 
-	Description = "These grenades have a large explosion radius and a fuse that lasts 3 seconds.",
+	Description = "The fuse lasts 3 seconds.",
 	Stackable = true, 
 	Type = ITEM_WPN_SPECIAL,
 	TypeOverride = "sent_droppedgun",
@@ -42,7 +42,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "Incendiary Grenade", 
-	Description = "These grenades explode and ignite a small area after 3 seconds.",
+	Description = "These grenades explode and ignite a small area.",
 	Stackable = true, 
 	Type = ITEM_WPN_SPECIAL,
 	TypeOverride = "sent_droppedgun",
@@ -60,7 +60,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "Timed Explosives", 
-	Description = "This is a homemade Composition-C explosive. The timer is set to last 10 seconds.",
+	Description = "This is a homemade Composition-C explosive.",
 	Stackable = true, 
 	Type = ITEM_WPN_SPECIAL,
 	TypeOverride = "sent_droppedgun",
@@ -75,7 +75,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "M249", 
-	Description = "This belt-fed machine gun chews through the zombie hordes with ease.",
+	Description = "A belt-fed support machine gun.",
 	Stackable = false, 
 	Type = ITEM_WPN_SPECIAL,
 	TypeOverride = "sent_droppedgun",
@@ -93,7 +93,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "AWP", 
-	Description = "The very definition of overkill, now in sniper rifle form.",
+	Description = "The very definition of overkill.",
 	Stackable = false, 
 	Type = ITEM_WPN_SPECIAL,
 	TypeOverride = "sent_droppedgun",

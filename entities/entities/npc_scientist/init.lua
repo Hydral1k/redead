@@ -89,6 +89,7 @@ function ENT:SpawnRagdoll( model, pos )
 		
 		end
 		
+		umsg.Short( self.Entity:EntIndex() )
 		umsg.End()
 		
 	else

@@ -67,7 +67,10 @@ function ENT:SpawnRagdoll( model, pos )
 		
 		end
 		
+		umsg.Short( self.Entity:EntIndex() )
 		umsg.End()
+		
+		//self:Fire( "BecomeRagdoll", "", 0 ) // ragdolling npcs is such a hacky shitty thing right now. nothing seems to properly work. this is the best so far.
 		
 	else
 	
@@ -303,7 +306,7 @@ function ENT:OnTakeDamage( dmginfo )
 	
 		self.Entity:DoDeath( dmginfo )
 		
-	elseif math.random(1,3) == 1 then
+	elseif math.random(1,2) == 1 then
 	
 		self.Entity:VoiceSound( self.VoiceSounds.Pain )
 		
@@ -636,7 +639,12 @@ function ENT:SelectSchedule()
 		
 			sched = SCHED_MELEE_ATTACK1
 			self.AttackTime = CurTime() + 0.5
-			self.Entity:VoiceSound( self.VoiceSounds.Attack )
+			
+			if ( ValidEntity( self.AttackDoor ) and math.random(1,2) == 1 ) or not ValidEntity( self.AttackDoor ) then
+			
+				self.Entity:VoiceSound( self.VoiceSounds.Attack )
+				
+			end
 			
 		else
 		

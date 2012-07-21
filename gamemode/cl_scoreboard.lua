@@ -1,7 +1,7 @@
 
 function GM:ScoreboardShow()
 
-	if not GAMEMODE.ScoreBoard then
+	if not GAMEMODE.ScoreBoard or GAMEMODE.ScoreBoard == NULL then
 	
 		GAMEMODE:CustomizeScoreboard()
 		GAMEMODE.ScoreBoard = vgui.Create( "ScoreBoard" )
@@ -16,6 +16,8 @@ function GM:ScoreboardShow()
 end
 
 function GM:ScoreboardHide()
+
+	if not GAMEMODE.ScoreBoard or GAMEMODE.ScoreBoard == NULL then return end
 
 	GAMEMODE.ScoreBoard:SetVisible( false )
 	GAMEMODE.ScoreboardVisible = false
