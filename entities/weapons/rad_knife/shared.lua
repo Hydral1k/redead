@@ -31,6 +31,7 @@ SWEP.AmmoType = "Knife"
 SWEP.Primary.Hit            = Sound( "Weapon_Knife.HitWall" )
 SWEP.Primary.HitFlesh		= Sound( "Weapon_Knife.Hit" )
 SWEP.Primary.Sound			= Sound( "Weapon_Knife.Slash" )
+SWEP.Primary.Deploy         = Sound( "Weapon_Knife.Deploy" )
 SWEP.Primary.Recoil			= 3.5
 SWEP.Primary.Damage			= 35
 SWEP.Primary.NumShots		= 1
@@ -166,3 +167,22 @@ end
 function SWEP:DrawHUD()
 	
 end
+
+function SWEP:Deploy()
+
+	if SERVER then
+	
+		self.Weapon:SetViewModelPosition()
+		self.Weapon:SetZoomMode( 1 )
+		self.Owner:DrawViewModel( true )
+		self.Owner:EmitSound( self.Primary.Deploy, 100, math.random(90,110) )
+		
+	end	
+	
+	self.InIron = false
+
+	self.Weapon:SendWeaponAnim( ACT_VM_DRAW )
+	
+	return true
+	
+end  

@@ -20,7 +20,7 @@ function meta:Notice( text, col, len, delay )
 			
 		end
 		
-		timer.Simple( delay, Notice( self, col, len ) )
+		timer.Simple( delay, function() Notice( self, col, len ) end )
 		
 		return
 		

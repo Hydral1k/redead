@@ -469,8 +469,9 @@ function SWEP:ShootEffects()
 	if CLIENT then return end
 
 	local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ] 
+	local pos = self.Owner:GetPos()
 	
-	timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() WorldSound( table.Random( tbl.Wavs ), self.Owner:GetPos(), 75, tbl.Pitch ) end )
+	timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() WorldSound( table.Random( tbl.Wavs ), pos, 75, tbl.Pitch ) end )
 	
 	--[[local ed = EffectData()
 	ed:SetOrigin( self.Owner:GetShootPos() )
@@ -701,7 +702,17 @@ function SWEP:BulletPenetration( attacker, tr, dmginfo, bounce )
 		effectdata:SetNormal( PeneTrace.Normal )
 		util.Effect( "Impact", effectdata ) 
 		
-		timer.Simple( 0.05, attacker.FireBullets, attacker, bullet, true )
+		local func = function( attacker, bullet )
+		
+			if ValidEntity( attacker ) then
+			
+				attacker.FireBullets( attacker, bullet, true )
+			
+			end
+		
+		end
+		
+		timer.Simple( 0.05, function() func( attacker, bullet ) end )
 		
 		if SERVER and tr.MatType != MAT_FLESH then
 	
