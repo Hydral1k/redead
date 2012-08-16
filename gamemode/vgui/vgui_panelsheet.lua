@@ -8,6 +8,37 @@ function PANEL:Init()
 	self.PriceScale = 1
 	self.Categories = {}
 	
+	self:SetDraggableName( "GlobalDPanel" );
+
+	self.pnlCanvas 	= vgui.Create( "DPanel", self )
+	self.pnlCanvas:SetPaintBackground( false )
+	self.pnlCanvas.OnMousePressed = function( self, code ) self:GetParent():OnMousePressed( code ) end
+	self.pnlCanvas.OnChildRemoved = function() self:OnChildRemoved() end
+	self.pnlCanvas:SetMouseInputEnabled( true )
+	self.pnlCanvas.InvalidateLayout = function() self:InvalidateLayout() end
+	
+	self.Items = {}
+	self.YOffset = 0
+	self.m_fAnimTime = 0;
+	self.m_fAnimEase = -1; -- means ease in out
+	self.m_iBuilds = 0
+	
+	self:SetSpacing( 0 )
+	self:SetPadding( 0 )
+	self:EnableHorizontal( false )
+	self:SetAutoSize( false )
+	self:SetDrawBackground( true )
+	self:SetBottomUp( false )
+	self:SetNoSizing( false )
+	
+	self:SetMouseInputEnabled( true )
+	
+	-- This turns off the engine drawing
+	self:SetPaintBackgroundEnabled( false )
+	self:SetPaintBorderEnabled( false )
+	
+	self.ScrollAmt = 0
+	
 end
 
 function PANEL:ToggleVisible( tbl, bool )
@@ -89,13 +120,13 @@ function PANEL:HasItem( id )
 
 end
 
-function PANEL:GetItemPnlSize()
+function PANEL:GetItemPnlSize() // determine the size of item panels, always needs to add up to 1.0
 
-	if self.StashStyle == "Buy" then
+	--[[if self.StashStyle == "Buy" then
 	
 		return ( self:GetWide() * 0.2 )
 	
-	end
+	end]]
 
 	return ( self:GetWide() * 0.25 ) 
 
@@ -246,9 +277,34 @@ function PANEL:Think()
 
 end
 
+function PANEL:AddScroll( amt )
+	
+	self.ScrollAmt = self.ScrollAmt + amt
+	
+	self.pnlCanvas:SetPos( 0, self.ScrollAmt * self:GetItemPnlSize() )
+
+end
+
 function PANEL:OnVScroll( offset )
 
 	self.pnlCanvas:SetPos( 0, offset )
+
+end
+
+function PANEL:PerformLayout()
+
+	local wide = self:GetWide()
+	
+	if ( !self.Rebuild ) then
+		debug.Trace()
+	end
+	
+	self:Rebuild()
+
+	self.pnlCanvas:SetPos( 0, self.ScrollAmt * self:GetItemPnlSize() )
+	self.pnlCanvas:SetWide( wide )
+	
+	self:Rebuild()
 
 end
 

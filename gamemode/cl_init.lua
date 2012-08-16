@@ -30,6 +30,7 @@ include( 'vgui/vgui_panelsheet.lua' )
 include( 'vgui/vgui_goodmodelpanel.lua' )
 include( 'vgui/vgui_categorybutton.lua' )
 include( 'vgui/vgui_sidebutton.lua' )
+include( 'vgui/vgui_scroller.lua' )
 
 CV_RagdollVision = CreateClientConVar( "cl_redead_ragdoll_vision", "1", true, false)
 
@@ -261,7 +262,7 @@ function GM:Think()
 	
 		if not ValidEntity( v ) then break end
 		
-		local dirp = ( LocalPlayer():GetPos() - v:GetPos() ):Normalize()
+		local dirp = ( LocalPlayer():GetPos() - v:GetPos() ):GetNormal()
 		local aimvec = LocalPlayer():GetAimVector()
 		aimvec.z = dirp.z
 		

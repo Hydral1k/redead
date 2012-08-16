@@ -46,6 +46,7 @@ AddCSLuaFile( 'vgui/vgui_panelsheet.lua' )
 AddCSLuaFile( 'vgui/vgui_goodmodelpanel.lua' )
 AddCSLuaFile( 'vgui/vgui_categorybutton.lua' )
 AddCSLuaFile( 'vgui/vgui_sidebutton.lua' )
+AddCSLuaFile( 'vgui/vgui_scroller.lua' )
 
 util.AddNetworkString( "InventorySynch" )
 util.AddNetworkString( "StashSynch" )

@@ -9,16 +9,21 @@ function PANEL:Init()
 	self.Image = vgui.Create( "DImageButton", self )
 	self.Image:SetImage( "icon16/car.png" )
 	self.Image:SetStretchToFit( false )
-	self.Image.DoClick = function()
+	self.Image.OnMousePressed = function()
 	
-		self:DoClick()
+		self.Depressed = true
+	
+	end
+	
+	self.Image.OnMouseReleased = function()
+	
+		self.Depressed = false
 	
 	end
 	
 	self:SetCursor( "hand" )
-	self.Text = ""
-	self.White = 255
-	self.ColorTime = 0
+	self.Up = true
+	self.MoveTime = 0
 	
 end
 
@@ -28,45 +33,53 @@ function PANEL:SetImage( img )
 
 end
 
-function PANEL:SetText( text )
+function PANEL:SetScrollUp( bool )
 
-	self.Text = text
-
-end
-
-function PANEL:DoClick()
-
-	self.Func()
-	surface.PlaySound( self.Sound )
+	self.Up = bool
 
 end
 
-function PANEL:SetFunction( func ) 
+function PANEL:Think()
 
-	self.Func = func
-
-end
-
-function PANEL:SetSelectedState( bool, ignore )
-
-	self.Selected = tobool( bool )
+	if not self.Target then return end
 	
-	if ignore then return end
+	if self.Depressed and self.MoveTime < CurTime() then
 	
-	self:DoSound( bool )
+		self.MoveTime = CurTime() + 0.5
+	
+		if self.Up then
+	
+			self.Target:AddScroll( 1 )
+	
+		else
+	
+			self.Target:AddScroll( -1 )
+			
+		end
+		
+		surface.PlaySound( "Buttons.snd14" )
+		
+	end
+
+end
+
+function PANEL:SetTarget( pnl )
+
+	self.Target = pnl
 
 end
 
 function PANEL:OnMousePressed( mousecode )
 
+	self.Depressed = true
 	self:MouseCapture( true )
 
 end
 
 function PANEL:OnMouseReleased( mousecode )
 
+	self.Depressed = false
 	self:MouseCapture( false )
-	self:DoClick()
 
 end
 

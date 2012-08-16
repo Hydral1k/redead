@@ -214,6 +214,17 @@ function GM:OnSpawnMenuClose()
 		local disp = GAMEMODE:CreateElement( "ItemDisplay" )
 		disp:SetSize( 250, 250 )
 		disp:SetPos( 510, 145 )
+		
+		local scrollup = GAMEMODE:CreateElement( "Scroller" )
+		scrollup:SetSize( 30, 30 )
+		scrollup:SetPos( 465, ScrH() - 120 )
+		scrollup:SetTarget( inv )
+		
+		local scrolldown = GAMEMODE:CreateElement( "Scroller" )
+		scrolldown:SetSize( 30, 30 )
+		scrolldown:SetPos( 430, ScrH() - 120 )
+		scrolldown:SetTarget( inv )
+		scrolldown:SetScrollUp( false )
 	
 	end
 	
@@ -295,6 +306,19 @@ function StoreMenu( msg )
 		local disp = GAMEMODE:CreateElement( "ItemDisplay" )
 		disp:SetSize( 250, 250 )
 		disp:SetPos( 510, 145 )
+		
+		local scrollup = GAMEMODE:CreateElement( "Scroller" )
+		scrollup:SetSize( 30, 30 )
+		scrollup:SetPos( 475, ScrH() - 115 )
+		scrollup:SetTarget( inv )
+		scrollup:SetImage( "icon16/arrow_up.png" )
+		
+		local scrolldown = GAMEMODE:CreateElement( "Scroller" )
+		scrolldown:SetSize( 30, 30 )
+		scrolldown:SetPos( 440, ScrH() - 115 )
+		scrolldown:SetTarget( inv )
+		scrolldown:SetScrollUp( false )
+		scrolldown:SetImage( "icon16/arrow_down.png" )
 		
 		surface.PlaySound( table.Random( GAMEMODE.RadioBeep ) )
 	
