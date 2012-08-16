@@ -1452,20 +1452,10 @@ function DropItem( ply, cmd, args )
 	end
 	
 	local items = {}
-	
-	for i=1, count do
-	
-		if ply:HasItem( id ) then
-		
-			table.insert( items, id )
-		
-		end
-		
-	end
-	
+	local itemcount = math.min( ply:GetItemCount( id ), count )
 	local loot = ents.Create( "sent_lootbag" )
 	
-	for k,v in pairs( items ) do
+	for i=1, itemcount do
 	
 		loot:AddItem( v )
 	
