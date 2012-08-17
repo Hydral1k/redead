@@ -87,7 +87,7 @@ function SWEP:UpdateGhost()
 
 	if not ValidEntity( self.GhostEntity ) then return end
 	
-	local tr = util.GetPlayerTrace( self.Owner, self.Owner:IsWorldClicking() )
+	local tr = util.GetPlayerTrace( self.Owner )
 	local trace = util.TraceLine( tr )
 	
 	if not trace.Hit then return end
@@ -133,7 +133,7 @@ end
 
 function SWEP:SetPlacePosition( ent )
 
-	local tr = util.GetPlayerTrace( self:GetOwner(), self:GetOwner():IsWorldClicking() )
+	local tr = util.GetPlayerTrace( self:GetOwner() )
 	local trace = util.TraceLine( tr )
 	
 	if not trace.Hit then return end
