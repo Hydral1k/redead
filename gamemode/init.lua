@@ -1222,7 +1222,7 @@ end
 function GM:SynchStats()
 
 	net.Start( "StatsSynch" )
-	net.WriteInt( table.Count( player.GetAll() ) )
+	net.WriteInt( table.Count( player.GetAll() ), 8 )
 
 	for k,v in pairs( player.GetAll() ) do
 	

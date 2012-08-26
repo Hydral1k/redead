@@ -3,7 +3,7 @@ local PANEL = {}
 PANEL.OnSound = Sound( "common/talk.wav" )
 PANEL.OffSound = Sound( "weapons/sniper/sniper_zoomin.wav" )
 
-surface.CreateFont( "Typenoksidi", 16, 500, true, false, "CategoryButton" )
+surface.CreateFont ( "CategoryButton", { size = 16, weight = 500, antialias = true, additive = false, font = "Typenoksidi" } )
 
 function PANEL:Init()
 

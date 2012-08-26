@@ -32,7 +32,7 @@ include( 'vgui/vgui_categorybutton.lua' )
 include( 'vgui/vgui_sidebutton.lua' )
 include( 'vgui/vgui_scroller.lua' )
 
-CV_RagdollVision = CreateClientConVar( "cl_redead_ragdoll_vision", "1", true, false)
+CV_RagdollVision = CreateClientConVar( "cl_redead_ragdoll_vision", "1", true, false )
 
 function GM:Initialize()
 	
@@ -56,19 +56,18 @@ function GM:Initialize()
 	RadarEntTable = {}
 	TimeSeedTable = {}
 	
-	surface.CreateFont ( "ZombieHud", { size = 24,weight = 500, antialias = true, additive = true, font = "Typenoksidi"} )
-	surface.CreateFont ( "ShopBig", { size = 22,  weight = 500,  antialias = true,  additive = true,  font = "Typenoksidi"} )
-	surface.CreateFont ( "ShopSmall", { size = 16, weight = 400, antialias = true, additive = true, font = "TypenoksidiShopSmall"} )
-	surface.CreateFont ( "EndGameBig", { size = 24, weight = 300,antialias = true, additive = true, font = "Typenoksidi"} )
-	surface.CreateFont ( "EndGame", { size = 14,  weight = 400,  antialias = true, additive = true, font = "Tahoma"} )
-	surface.CreateFont ( "DeathFont", { size = 34, weight = 200, antialias = true, additive = true, font = "Graffiare"} )
-	surface.CreateFont ( "AmmoFont", { size = 28, weight = 200, antialias = true, additive = true, font = "AmmoFont"} )
-	surface.CreateFont ( "CashFont", { size = 22, weight = 200, antialias = true, additive = true, font = "Graffiare"} )
-	surface.CreateFont ( "InventoryFont", { size = 20, weight = 150, antialias = true, additive = true, font = "Graffiare"} )
-	surface.CreateFont ( "AmmoFontSmall", { size = 12, weight = 300, antialias = true, additive = true, font = "Verdana"} )
+	surface.CreateFont ( "DeathFont", { size = 34, weight = 200, antialias = true, additive = true, font = "Graffiare" } )
+	surface.CreateFont ( "AmmoFont", { size = 28, weight = 200, antialias = true, additive = true, font = "Graffiare" } )
+	surface.CreateFont ( "CashFont", { size = 22, weight = 200, antialias = true, additive = true, font = "Graffiare" } )
+	surface.CreateFont ( "InventoryFont", { size = 20, weight = 150, antialias = true, additive = true, font = "Graffiare" } )
+	surface.CreateFont ( "ZombieHud", { size = 24, weight = 500, antialias = true, additive = true, font = "Typenoksidi" } )
+	surface.CreateFont ( "ShopBig", { size = 22, weight = 500,  antialias = true, additive = true, font = "Typenoksidi" } )
+	surface.CreateFont ( "ShopSmall", { size = 16, weight = 400, antialias = true, additive = true, font = "Typenoksidi" } )
+	surface.CreateFont ( "EndGameBig", { size = 24, weight = 300,antialias = true, additive = true, font = "Typenoksidi" } )
+	surface.CreateFont ( "EndGame", { size = 14, weight = 400,  antialias = true, additive = true, font = "Tahoma" } )
+	surface.CreateFont ( "AmmoFontSmall", { size = 12, weight = 300, antialias = true, additive = true, font = "Verdana" } )
 	surface.CreateFont ( "TargetIDFont", { size = 12, weight = 200, antialias = true, additive = true, font = "Verdana" } )
 
-	
 	matRadar = Material( "radbox/radar" )
 	matArm = Material( "radbox/radar_arm" )
 	matArrow = Material( "radbox/radar_arrow" )
@@ -1047,7 +1046,7 @@ usermessage.Hook( "Radio", Radio )
 
 net.Receive( "StatsSynch", function( len )
 
-	local count = net.ReadInt()
+	local count = net.ReadInt( 8 )
 	PlayerStats = {}
 	
 	for i=1, count do

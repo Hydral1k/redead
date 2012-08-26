@@ -57,7 +57,7 @@ function PANEL:Think()
 			
 		end
 		
-		surface.PlaySound( "Buttons.snd14" )
+		surface.PlaySound( "buttons/lightswitch2.wav" )
 		
 	end
 

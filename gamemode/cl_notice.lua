@@ -5,7 +5,7 @@ local HUDNotes = {}
 local NoteQueue = {}
 local NextNotify = 0
 
-surface.CreateFont( "Typenoksidi", 18, 500, true, false, "Notice" )
+surface.CreateFont ( "Notice", { size = 18, weight = 500, antialias = true, additive = true, font = "Typenoksidi" } )
 
 function DoNotice( msg )
 

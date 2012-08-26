@@ -1,4 +1,33 @@
 
+function GM:CustomizeScoreboard()
+
+	// these fonts are used in the header on the top of the scoreboard
+	surface.CreateFont ( "MenuTitle", { size = 30, weight = 500, antialias = true, additive = false, font = "Graffiare" } )
+	surface.CreateFont ( "MenuDesc", { size = 16, weight = 800, antialias = true, additive = false, font = "Verdana" } )
+	
+	// scoreboard fonts
+	surface.CreateFont ( "ScoreboardLabel", { size = 14, weight = 1000, antialias = true, additive = false, font = "Tahoma" } )
+	surface.CreateFont ( "ScoreboardTeamName", { size = 14, weight = 1000, antialias = true, additive = false, font = "Verdana" } )
+	surface.CreateFont ( "ScoreboardPlayerText", { size = 14, weight = 600, antialias = true, additive = false, font = "Arial" } )
+	
+	// colors used on the scoreboard
+	GAMEMODE.TitleColor = Color( 255, 255, 255, 255 ) // title text color
+	GAMEMODE.TitleShadow = Color( 0, 0, 0, 100 ) // title shadow color
+	
+	GAMEMODE.DescColor = Color( 255, 255, 255, 255 ) // subtext color
+	GAMEMODE.DescShadow = Color( 50, 50, 50, 100 ) // subtext shadow color
+	
+	GAMEMODE.TeamTextColor = Color( 0, 0, 0, 255 ) // text color for team bar
+	GAMEMODE.TeamShadowColor = Color( 255, 255, 255, 0 ) // text shadow color for team bar
+	
+	GAMEMODE.TitleBackground = Color( 100, 100, 100, 150 ) // background color for the title and subtext
+	GAMEMODE.ScreenBackground = Color( 50, 50, 50, 50 ) //background color for the rest of the screen
+	
+	GAMEMODE.ScoreBackground = Color( 200, 200, 200, 100 ) // background for team score panel
+	GAMEMODE.PlayerBackground = Color( 60, 60, 60, 100 ) // background for player score panel
+	
+end
+
 function GM:ScoreboardShow()
 
 	if not GAMEMODE.ScoreBoard or GAMEMODE.ScoreBoard == NULL then
@@ -31,40 +60,12 @@ function GM:GetPlayerStats( ply )
 	if not ply then 
 	
 		return { "Kills", GAMEMODE.CurrencyName .. "s" } 
+		
 	else
 	
 		return { ply:Frags(), ply:GetNWInt( "Cash", 10 ) } 
 		
 	end
-	
-end
-
-function GM:CustomizeScoreboard()
-
-	// these fonts are used in the header on the top of the scoreboard
-	surface.CreateFont( "Graffiare", 30, 600, true, false, "MenuTitle" )
-	surface.CreateFont( "Verdana", 16, 800, true, false, "MenuDesc" )
-	
-	// scoreboard fonts
-	surface.CreateFont( "Tahoma", 14, 1000, true, false, "ScoreboardLabel" )
-	surface.CreateFont( "Verdana", 14, 1000, true, false, "ScoreboardTeamName" )
-	surface.CreateFont( "Arial", 14, 600, true, false, "ScoreboardPlayerText" )
-	
-	// colors used on the scoreboard
-	GAMEMODE.TitleColor = Color( 255, 255, 255, 255 ) // title text color
-	GAMEMODE.TitleShadow = Color( 0, 0, 0, 100 ) // title shadow color
-	
-	GAMEMODE.DescColor = Color( 255, 255, 255, 255 ) // subtext color
-	GAMEMODE.DescShadow = Color( 50, 50, 50, 100 ) // subtext shadow color
-	
-	GAMEMODE.TeamTextColor = Color( 0, 0, 0, 255 ) // text color for team bar
-	GAMEMODE.TeamShadowColor = Color( 255, 255, 255, 0 ) // text shadow color for team bar
-	
-	GAMEMODE.TitleBackground = Color( 100, 100, 100, 150 ) // background color for the title and subtext
-	GAMEMODE.ScreenBackground = Color( 50, 50, 50, 50 ) //background color for the rest of the screen
-	
-	GAMEMODE.ScoreBackground = Color( 200, 200, 200, 100 ) // background for team score panel
-	GAMEMODE.PlayerBackground = Color( 60, 60, 60, 100 ) // background for player score panel
 	
 end
 

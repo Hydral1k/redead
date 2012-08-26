@@ -71,8 +71,8 @@ end
 
 local matFlare = Material( "sprites/light_glow02" )
 
-matFlare:SetMaterialInt( "$spriterendermode", 9 )
-matFlare:SetMaterialInt( "$illumfactor", 8 )
+//matFlare:SetMaterialInt( "$spriterendermode", 9 )
+//matFlare:SetMaterialInt( "$illumfactor", 8 )
 
 function ENT:Draw()
 
