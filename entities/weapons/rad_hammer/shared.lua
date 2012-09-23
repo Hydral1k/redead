@@ -58,7 +58,7 @@ end
 
 function SWEP:ReleaseGhost()
 
-	if ValidEntity( self.GhostEntity ) then
+	if IsValid( self.GhostEntity ) then
 
 		self.GhostEntity:Remove()
 		self.GhostEntity = nil
@@ -85,7 +85,7 @@ end
 
 function SWEP:UpdateGhost()
 
-	if not ValidEntity( self.GhostEntity ) then return end
+	if not IsValid( self.GhostEntity ) then return end
 	
 	local tr = util.GetPlayerTrace( self.Owner )
 	local trace = util.TraceLine( tr )
@@ -146,7 +146,7 @@ function SWEP:SetPlacePosition( ent )
 	
 	local phys = ent:GetPhysicsObject()
 	
-	if ValidEntity( phys ) then
+	if IsValid( phys ) then
 	
 		phys:EnableMotion( false )
 		
@@ -335,13 +335,13 @@ function SWEP:MeleeTrace( dmg )
 	local ent = trace.Entity
 	local ent2 = linetr.Entity
 	
-	if not ValidEntity( ent ) and ValidEntity( ent2 ) then
+	if not IsValid( ent ) and IsValid( ent2 ) then
 	
 		ent = ent2
 	
 	end
 
-	if not ValidEntity( ent ) then 
+	if not IsValid( ent ) then 
 		
 		self.Owner:EmitSound( self.Primary.Sound, 100, math.random(60,80) )
 		return 
@@ -384,7 +384,7 @@ function SWEP:MeleeTrace( dmg )
 			
 			local phys = ent:GetPhysicsObject()
 			
-			if ValidEntity( phys ) then
+			if IsValid( phys ) then
 			
 				ent:SetPhysicsAttacker( self.Owner )
 				ent:TakeDamage( 25, self.Owner, self.Weapon )
@@ -416,7 +416,7 @@ function SWEP:Think()
 				
 			end
 			
-		elseif ValidEntity( self.GhostEntity ) then
+		elseif IsValid( self.GhostEntity ) then
 		
 			self.Weapon:ReleaseGhost()
 		

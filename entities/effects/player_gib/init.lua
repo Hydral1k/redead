@@ -18,7 +18,7 @@ function EFFECT:Init( data )
 	
 	local phys = self.Entity:GetPhysicsObject()
 	
-	if ValidEntity( phys ) then
+	if IsValid( phys ) then
 	
 		local vec = VectorRand()
 		vec.z = math.Clamp( vec.z, -0.4, 0.8 )

@@ -191,7 +191,7 @@ function DrawPlayerRenderEffects()
 	
 	cam.Start3D( EyePos(), EyeAngles() )
 	
-	if ValidEntity( TargetedEntity ) and table.HasValue( ValidTargetEnts, TargetedEntity:GetClass() ) then
+	if IsValid( TargetedEntity ) and table.HasValue( ValidTargetEnts, TargetedEntity:GetClass() ) then
 	
 		if TargetedEntity:GetPos():Distance( LocalPlayer():GetPos() ) < 500 then
 		
@@ -299,7 +299,7 @@ function GM:PreDrawHalos()
 	
 	if LocalPlayer():Team() == TEAM_ARMY then
 	
-		if ValidEntity( TargetedEntity ) and not TargetedEntity:IsPlayer() and not TargetedEntity.Ragdolled then
+		if IsValid( TargetedEntity ) and not TargetedEntity:IsPlayer() and not TargetedEntity.Ragdolled then
 	
 			local dist = math.Clamp( TargetedEntity:GetPos():Distance( LocalPlayer():GetPos() ), 0, 500 )
 			local scale = 1 - ( dist / 500 )
@@ -386,7 +386,7 @@ function GM:CalcView( ply, origin, angle, fov )
 	
 		local rag = ply:GetRagdollEntity()
 		
-		if ValidEntity( rag ) then
+		if IsValid( rag ) then
 			
 			local eyes = rag:LookupAttachment( "eyes" )
 			local tbl = rag:GetAttachment( eyes )

@@ -349,7 +349,7 @@ end
 
 function ENT:UpdateEnemy( enemy )
 
-	if ValidEntity( enemy ) and ( ( enemy:IsPlayer() and enemy:Alive() and enemy:GetObserverMode() == OBS_MODE_NONE ) or enemy:IsNPC() ) then
+	if IsValid( enemy ) and ( ( enemy:IsPlayer() and enemy:Alive() and enemy:GetObserverMode() == OBS_MODE_NONE ) or enemy:IsNPC() ) then
 		
 		self:SetEnemy( enemy, true ) 
 		self:UpdateEnemyMemory( enemy, enemy:GetPos() ) 
@@ -376,7 +376,7 @@ function ENT:SelectSchedule()
 	local friend = self.Entity:FindFriend()
 	local enemy = self.Entity:NearZombie()
 	
-	if ValidEntity( friend ) then
+	if IsValid( friend ) then
 
 		sched = SCHED_CHASE_ENEMY
 			
@@ -403,7 +403,7 @@ function ENT:SelectSchedule()
 			
 		end
 		
-	elseif ValidEntity( enemy ) then
+	elseif IsValid( enemy ) then
 	
 		sched = SCHED_RUN_FROM_ENEMY_FALLBACK 
 	

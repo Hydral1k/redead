@@ -49,7 +49,7 @@ end
 
 function ENT:Touch( ent ) 
 
-	if not ValidEntity( self.Entity:GetOwner() ) then return end
+	if not IsValid( self.Entity:GetOwner() ) then return end
 	
 	//if ent:IsPlayer() and ent:Team() == self.Entity:GetOwner():Team() then return end
 	

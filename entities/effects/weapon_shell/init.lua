@@ -19,10 +19,13 @@ EFFECT.Sounds[7] = { Pitch = 70, Wavs = { "player/pl_shell1.wav", "player/pl_she
 
 function EFFECT:Init( data )
 	
-	if not ValidEntity( data:GetEntity() ) then 
+	if not IsValid( data:GetEntity() ) then 
+	
 		self.Entity:SetModel( "models/shells/shell_9mm.mdl" )
 		self.RemoveMe = true
+		
 		return 
+		
 	end
 	
 	local bullettype = math.Clamp( ( data:GetScale() or 1 ), 1, 6 )
@@ -41,7 +44,7 @@ function EFFECT:Init( data )
 	
 	local phys = self.Entity:GetPhysicsObject()
 	
-	if ValidEntity( phys ) then
+	if IsValid( phys ) then
 	
 		phys:Wake()
 		phys:SetDamping( 0, 15 )

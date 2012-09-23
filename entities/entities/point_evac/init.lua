@@ -77,7 +77,7 @@ function ENT:Evac()
 
 	for k,v in pairs( self.Players ) do
 	
-		if ValidEntity( v ) and v:Alive() and v:Team() == TEAM_ARMY and v:GetPos():Distance( self.Entity:GetPos() ) < self.EvacDist then
+		if IsValid( v ) and v:Alive() and v:Team() == TEAM_ARMY and v:GetPos():Distance( self.Entity:GetPos() ) < self.EvacDist then
 		
 			v:Evac()
 		

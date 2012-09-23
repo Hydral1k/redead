@@ -171,7 +171,7 @@ function PANEL:Paint()
 		end
 	end
 	
-	if ValidEntity( self.Entity ) and not GetGlobalBool( "GameOver", false ) then
+	if IsValid( self.Entity ) and not GetGlobalBool( "GameOver", false ) then
 	
 		self.Entity:DrawModel()
 		

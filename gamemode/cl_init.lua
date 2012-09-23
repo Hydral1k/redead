@@ -202,7 +202,7 @@ function GM:Think()
 	
 	end
 
-	if ValidEntity( LocalPlayer() ) and LocalPlayer():Alive() and not StartMenuShown then
+	if IsValid( LocalPlayer() ) and LocalPlayer():Alive() and not StartMenuShown then
 	
 		StartMenuShown = true
 		GAMEMODE:ShowClasses()
@@ -260,7 +260,7 @@ function GM:Think()
 		
 	for k,v in pairs( RadarEntTable ) do
 	
-		if not ValidEntity( v ) then break end
+		if not IsValid( v ) then break end
 		
 		local dirp = ( LocalPlayer():GetPos() - v:GetPos() ):GetNormal()
 		local aimvec = LocalPlayer():GetAimVector()
@@ -382,19 +382,19 @@ function GM:GoreRagdolls()
 			
 			local phys = v:GetPhysicsObject()
 			
-			if ValidEntity( phys ) then
+			if IsValid( phys ) then
 			
 				phys:ApplyForceCenter( VectorRand() * 5000 )
 			
 			end
 		
-		elseif not LocalPlayer():Alive() and ValidEntity( LocalPlayer():GetRagdollEntity() ) and LocalPlayer():GetRagdollEntity() == v and not v.Slowed and not table.HasValue( GAMEMODE.Corpses, string.lower( v:GetModel() ) ) then
+		elseif not LocalPlayer():Alive() and IsValid( LocalPlayer():GetRagdollEntity() ) and LocalPlayer():GetRagdollEntity() == v and not v.Slowed and not table.HasValue( GAMEMODE.Corpses, string.lower( v:GetModel() ) ) then
 		
 			v.Slowed = true
 			
 			local phys = v:GetPhysicsObject()
 			
-			if ValidEntity( phys ) then
+			if IsValid( phys ) then
 			
 				local count = LocalPlayer():GetRagdollEntity():GetPhysicsObjectCount()
 				
@@ -402,7 +402,7 @@ function GM:GoreRagdolls()
 				
 					local limb = v:GetPhysicsObjectNum( i )
 					
-					if ValidEntity( limb ) then
+					if IsValid( limb ) then
 					
 						limb:SetDamping( 5, 0 )
 						limb:ApplyForceCenter( VectorRand() * 50 )
@@ -425,14 +425,14 @@ function GM:GoreRagdolls()
 			
 				local phys = v:GetPhysicsObject()
 				
-				if ValidEntity( phys ) then
+				if IsValid( phys ) then
 			
 					for i=1, math.random(2,6) do
 			
 						local count = v:GetPhysicsObjectCount()
 						local limb = v:GetPhysicsObjectNum( math.random(0,count) )
 					
-						if ValidEntity( limb ) then
+						if IsValid( limb ) then
 					
 							limb:SetDamping( math.Rand(0,2), math.Rand(0,5) )
 							limb:ApplyForceCenter( VectorRand() * 75 )
@@ -455,7 +455,7 @@ function GM:GoreRagdolls()
 	
 		local ent = GAMEMODE:GetNearestEnt( d.Pos, 30, tbl )
 		
-		if ValidEntity( ent ) and not ent.IsHeadless then
+		if IsValid( ent ) and not ent.IsHeadless then
 			
 			function ent:BuildBonePositions( numbones, num ) 
 				
@@ -491,7 +491,7 @@ function GM:GoreRagdolls()
 	
 		local ent = GAMEMODE:GetNearestEnt( d.Pos, 30, tbl )
 		
-		if ValidEntity( ent ) and not ent.IsBurnt then
+		if IsValid( ent ) and not ent.IsBurnt then
 			
 			ent:SetMaterial( "models/charple/charple3_sheet" )
 			ent.IsBurnt = true
@@ -520,7 +520,7 @@ function GM:SpawnRagdolls()
 	
 		local ent = GAMEMODE:GetNearestEnt( d.Pos, 30, tbl )
 		
-		if ValidEntity( ent ) and not ent.Ragdolled then
+		if IsValid( ent ) and not ent.Ragdolled then
 			
 			ent:BecomeRagdollOnClient()
 			ent.Ragdolled = true
@@ -579,7 +579,7 @@ end
 
 function DrawAmmo( x, y, w, h, text, label )
 
-	if not ValidEntity( LocalPlayer():GetActiveWeapon() ) then return end
+	if not IsValid( LocalPlayer():GetActiveWeapon() ) then return end
 
 	draw.RoundedBox( 4, x, y, w, h, Color( 0, 0, 0, 180 ) )
 	
@@ -791,7 +791,7 @@ function GM:HUDPaint()
 	local ylen = 55
 	local ypos = 35
 	
-	if ValidEntity( LocalPlayer():GetActiveWeapon() ) and ( LocalPlayer():GetActiveWeapon().AmmoType or "SMG" ) != "Knife" then
+	if IsValid( LocalPlayer():GetActiveWeapon() ) and ( LocalPlayer():GetActiveWeapon().AmmoType or "SMG" ) != "Knife" then
 	
 		local total = LocalPlayer():GetNWInt( "Ammo" .. ( LocalPlayer():GetActiveWeapon().AmmoType or "SMG" ), 0 )
 		local ammo = math.Clamp( LocalPlayer():GetActiveWeapon():Clip1(), 0, total )
@@ -828,7 +828,7 @@ function GM:HUDPaint()
 		local diff = v.Pos - LocalPlayer():GetPos()
 		local alpha = 100 
 		
-		if ValidEntity( v.Ent ) and ( v.Ent:IsPlayer() or v.Ent:IsNPC() ) then
+		if IsValid( v.Ent ) and ( v.Ent:IsPlayer() or v.Ent:IsNPC() ) then
 		
 			diff = v.Ent:GetPos() - LocalPlayer():GetPos()
 		
@@ -838,7 +838,7 @@ function GM:HUDPaint()
 		
 			alpha = 100 * ( math.Clamp( v.DieTime - CurTime(), 0, BlipTime ) / BlipTime )
 		
-		elseif not ValidEntity( v.Ent ) then
+		elseif not IsValid( v.Ent ) then
 			
 			PosTable[k].DieTime = CurTime() + 1.5
 			
@@ -882,11 +882,11 @@ function GM:HUDPaint()
 	
 	local ent = LocalPlayer():GetDTEntity( 0 )
 	
-	if ValidEntity( ent ) or StaticPos != Vector(0,0,0) then
+	if IsValid( ent ) or StaticPos != Vector(0,0,0) then
 	
 		local ang = Angle(0,0,0)
 	
-		if ValidEntity( ent ) then
+		if IsValid( ent ) then
 		
 			ang = ( ent:GetPos() - LocalPlayer():GetShootPos()):Angle() - LocalPlayer():GetForward():Angle()
 			
@@ -980,7 +980,7 @@ function Ragdoll( msg )
 	local burn = msg:ReadShort()
 	local ent = Entity( msg:ReadShort() )
 	
-	if ValidEntity( ent ) and not ent.Ragdolled then
+	if IsValid( ent ) and not ent.Ragdolled then
 	
 		ent:BecomeRagdollOnClient()
 		ent.Ragdolled = true
@@ -1037,7 +1037,7 @@ function Radio( msg )
 	local snd = msg:ReadString()
 	local num = msg:ReadShort()
 	
-	if not ValidEntity( LocalPlayer() ) then return end
+	if not IsValid( LocalPlayer() ) then return end
 	
 	LocalPlayer():EmitSound( Sound( snd ), 100, num )
 

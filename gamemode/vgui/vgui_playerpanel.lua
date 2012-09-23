@@ -16,7 +16,7 @@ function PANEL:SetPlayerEnt( ply )
 
 	self.Avatar:SetPlayer( ply )
 	
-	if ValidEntity( ply ) then
+	if IsValid( ply ) then
 	
 		self.PlayerName = ply:Nick()
 	

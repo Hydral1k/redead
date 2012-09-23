@@ -120,7 +120,7 @@ function ENT:DoDeath( dmginfo )
 		local ent1 = self.Entity:GetHighestDamager()
 		local tbl = self.Entity:GetHighestDamagers()
 		
-		if ValidEntity( ent1 ) then
+		if IsValid( ent1 ) then
 		
 			if math.random(1,10) == 1 then
 		
@@ -196,7 +196,7 @@ function ENT:DoDeath( dmginfo )
 		
 			for k,v in pairs( tbl ) do
 			
-				if ValidEntity( v ) and v != ent1 then
+				if IsValid( v ) and v != ent1 then
 				
 					v:AddCash( 1 )
 					v:AddStat( "Assist" )
@@ -238,7 +238,7 @@ function ENT:GetHighestDamager()
 
 	for k,v in pairs( self.DmgTable ) do
 	
-		if ValidEntity( k ) and v.Dmg and v.Dmg > high then
+		if IsValid( k ) and v.Dmg and v.Dmg > high then
 			
 			high = v.Dmg
 			ent1 = k
@@ -258,7 +258,7 @@ function ENT:GetHighestDamagers()
 
 	for k,v in pairs( self.DmgTable ) do
 	
-		if ValidEntity( k ) then
+		if IsValid( k ) then
 
 			table.insert( tbl, k )
 		
@@ -355,7 +355,7 @@ end
 
 function ENT:UpdateEnemy( enemy )
 
-	if ValidEntity( enemy ) and self.Entity:CanTarget( enemy ) then
+	if IsValid( enemy ) and self.Entity:CanTarget( enemy ) then
 		
 		self:SetEnemy( enemy, true ) 
 		self:UpdateEnemyMemory( enemy, enemy:GetPos() ) 
@@ -458,7 +458,7 @@ function ENT:Think()
 		
 		local door = self.Entity:CloseDoor()
 		
-		if ValidEntity( door ) then
+		if IsValid( door ) then
 		
 			self.AttackDoor = door
 			
@@ -497,7 +497,7 @@ function ENT:Think()
 		self.AttackTime = nil
 		local enemy = self.Entity:GetEnemy()
 		
-		if ValidEntity( enemy ) and enemy:GetPos():Distance( self.Entity:GetPos() ) < 64 then
+		if IsValid( enemy ) and enemy:GetPos():Distance( self.Entity:GetPos() ) < 64 then
 		
 			enemy:TakeDamage( self.Damage, self.Entity )
 			
@@ -510,7 +510,7 @@ function ENT:Think()
 			local sound = table.Random( self.ClawHit )
 			self.Entity:EmitSound( Sound( sound ), 100, math.random(90,110) )
 
-		elseif ValidEntity( self.AttackDoor ) and self.AttackDoor:GetPos():Distance( self.Entity:GetPos() ) < 100 then
+		elseif IsValid( self.AttackDoor ) and self.AttackDoor:GetPos():Distance( self.Entity:GetPos() ) < 100 then
 		
 			if string.find( self.AttackDoor:GetClass(), "func_breakable" ) then
 			
@@ -560,7 +560,7 @@ function ENT:Think()
 							local dir = ( self.AttackDoor:GetPos() - self.Entity:GetPos() ):Normalize()
 							local phys = prop:GetPhysicsObject()
 							
-							if ValidEntity( phys ) then
+							if IsValid( phys ) then
 							
 								phys:ApplyForceCenter( dir * phys:GetMass() * 800 )
 
@@ -614,7 +614,7 @@ end
 
 function ENT:GetRelationship( entity )
 
-	if ValidEntity( entity ) and self.Entity:CanTarget( entity ) then return D_HT end
+	if IsValid( entity ) and self.Entity:CanTarget( entity ) then return D_HT end
 	
 	return D_LI
 	
@@ -633,14 +633,14 @@ function ENT:SelectSchedule()
 	local enemy = self.Entity:GetEnemy()
 	local sched = SCHED_IDLE_WANDER 
 	
-	if ValidEntity( enemy ) or ValidEntity( self.AttackDoor ) then
+	if IsValid( enemy ) or IsValid( self.AttackDoor ) then
 	
-		if self.Entity:HasCondition( 23 ) or ValidEntity( self.AttackDoor ) then  
+		if self.Entity:HasCondition( 23 ) or IsValid( self.AttackDoor ) then  
 		
 			sched = SCHED_MELEE_ATTACK1
 			self.AttackTime = CurTime() + 0.5
 			
-			if ( ValidEntity( self.AttackDoor ) and math.random(1,2) == 1 ) or not ValidEntity( self.AttackDoor ) then
+			if ( IsValid( self.AttackDoor ) and math.random(1,2) == 1 ) or not IsValid( self.AttackDoor ) then
 			
 				self.Entity:VoiceSound( self.VoiceSounds.Attack )
 				

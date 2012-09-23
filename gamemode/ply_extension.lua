@@ -8,7 +8,7 @@ function meta:Notice( text, col, len, delay )
 	
 		local function Notice( ply, col, len )
 		
-			if not ValidEntity( ply ) then return end
+			if not IsValid( ply ) then return end
 		
 			umsg.Start( "ToxNotice", ply )
 			umsg.String( text )
@@ -94,8 +94,8 @@ function meta:RadioSound( vtype, override )
 			local sound = table.Random( GAMEMODE.Radio[ vtype ] )
 		
 			v:ClientSound( table.Random( GAMEMODE.VoiceStart ), math.random( 90, 110 ) )
-			timer.Simple( 0.2, function() if ValidEntity( v ) and v:Alive() then v:ClientSound( sound, 90 ) end end )
-			timer.Simple( SoundDuration( sound ) + math.Rand( 0.6, 0.8 ), function() if ValidEntity( v ) and v:Alive() then v:ClientSound( table.Random( GAMEMODE.VoiceEnd ), math.random( 90, 110 ) ) end end )
+			timer.Simple( 0.2, function() if IsValid( v ) and v:Alive() then v:ClientSound( sound, 90 ) end end )
+			timer.Simple( SoundDuration( sound ) + math.Rand( 0.6, 0.8 ), function() if IsValid( v ) and v:Alive() then v:ClientSound( table.Random( GAMEMODE.VoiceEnd ), math.random( 90, 110 ) ) end end )
 				
 			v.RadioTimer = CurTime() + SoundDuration( sound ) + 1
 	
@@ -245,7 +245,7 @@ function meta:HasShotgun()
 
 	local wep = self:GetActiveWeapon()
 	
-	if ValidEntity( wep ) then
+	if IsValid( wep ) then
 	
 		if wep.AmmoType == "Buckshot" or wep.WorldModel == "models/weapons/w_snip_awp.mdl" then
 		
@@ -363,7 +363,7 @@ function meta:SetBleeding( bool )
 
 	if self:Team() != TEAM_ARMY then bool = false end
 
-	if bool and ValidEntity( self.Stash ) and ( string.find( self.Stash:GetClass(), "npc" ) or self.Stash:GetClass() == "info_storage" ) then return end
+	if bool and IsValid( self.Stash ) and ( string.find( self.Stash:GetClass(), "npc" ) or self.Stash:GetClass() == "info_storage" ) then return end
 	
 	if bool then
 	
@@ -720,7 +720,7 @@ function meta:Think()
 		
 			self:TakeDamageInfo( dmginfo )
 		
-		elseif ValidEntity( self.BurnAttacker ) then
+		elseif IsValid( self.BurnAttacker ) then
 		
 			self:TakeDamage( 5, self.BurnAttacker )
 		
@@ -1059,7 +1059,7 @@ function meta:AddToInventory( prop )
 	
 		if not tbl.PickupFunction( self, tbl.ID ) then 
 		
-			if ValidEntity( prop ) then
+			if IsValid( prop ) then
 	
 				prop:Remove()
 	
@@ -1075,7 +1075,7 @@ function meta:AddToInventory( prop )
 	self:AddWeight( tbl.Weight )
 	self:Notice( "Picked up " .. tbl.Name, GAMEMODE.Colors.Green )
 	
-	if ValidEntity( prop ) then
+	if IsValid( prop ) then
 	
 		prop:Remove()
 	
@@ -1258,7 +1258,7 @@ function meta:OnDeath()
 	
 		self:RadioSound( VO_DEATH )
 
-		if ValidEntity( self.Stash ) then
+		if IsValid( self.Stash ) then
 		
 			if self.Stash:GetClass() == "info_trader" then
 			

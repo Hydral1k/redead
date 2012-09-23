@@ -5,7 +5,7 @@ function EFFECT:Init( data )
 	self.SmokeTime = 0
 	self.Ent = data:GetEntity()
 	
-	if not ValidEntity( self.Ent ) then self.DieTime = 0 return end
+	if not IsValid( self.Ent ) then self.DieTime = 0 return end
 	
 	self.Emitter = ParticleEmitter( self.Ent:GetPos() )
 	
@@ -17,7 +17,7 @@ end
 
 function EFFECT:Think()
 
-	if ValidEntity( self.Ent ) then
+	if IsValid( self.Ent ) then
 	
 		if self.Ent:IsPlayer() and ( !self.Ent:Alive() or self.Ent == LocalPlayer() ) then
 	
@@ -27,7 +27,7 @@ function EFFECT:Think()
 	
 	end
 
-	if self.DieTime < CurTime() or not ValidEntity( self.Ent ) then
+	if self.DieTime < CurTime() or not IsValid( self.Ent ) then
 	
 		if self.Emitter then
 		

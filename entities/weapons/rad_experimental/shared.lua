@@ -110,7 +110,7 @@ function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
 	
 	bullet.Callback = function ( attacker, tr, dmginfo )
 
-		if ValidEntity( tr.Entity ) and SERVER then
+		if IsValid( tr.Entity ) and SERVER then
 		
 			if tr.Entity:IsPlayer() and tr.Entity:Team() == TEAM_ZOMBIES then
 			

@@ -127,13 +127,13 @@ function SWEP:MeleeTrace( dmg )
 	local ent = trace.Entity
 	local ent2 = linetr.Entity
 	
-	if not ValidEntity( ent ) and ValidEntity( ent2 ) then
+	if not IsValid( ent ) and IsValid( ent2 ) then
 	
 		ent = ent2
 	
 	end
 
-	if not ValidEntity( ent ) then 
+	if not IsValid( ent ) then 
 		
 		self.Owner:EmitSound( self.Primary.Sound, 100, math.random(60,80) )
 		return 
@@ -176,7 +176,7 @@ function SWEP:MeleeTrace( dmg )
 			
 			local phys = ent:GetPhysicsObject()
 			
-			if ValidEntity( phys ) then
+			if IsValid( phys ) then
 			
 				ent:SetPhysicsAttacker( self.Owner )
 				ent:TakeDamage( 25, self.Owner, self.Weapon )

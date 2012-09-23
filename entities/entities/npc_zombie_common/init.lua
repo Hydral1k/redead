@@ -105,9 +105,9 @@ function ENT:SelectSchedule()
 	local enemy = self.Entity:GetEnemy()
 	local sched = SCHED_IDLE_WANDER
 	
-	if ValidEntity( enemy ) then
+	if IsValid( enemy ) then
 
-		if self.Entity:HasCondition( 23 ) or ValidEntity( self.AttackDoor ) then 
+		if self.Entity:HasCondition( 23 ) or IsValid( self.AttackDoor ) then 
 		
 			local slot = math.random(1,5)
 		

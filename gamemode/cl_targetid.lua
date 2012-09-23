@@ -83,19 +83,19 @@ end
 
 function GM:HUDDrawTargetID()
 
-	if not ValidEntity( LocalPlayer() ) then return end
+	if not IsValid( LocalPlayer() ) then return end
 	
 	if not LocalPlayer():Alive() or LocalPlayer():Team() == TEAM_ZOMBIES then return end
 	
 	local tr = util.TraceLine( util.GetPlayerTrace( LocalPlayer() ) )
 	
-	if ValidEntity( tr.Entity ) and tr.Entity:GetPos():Distance( LocalPlayer():GetPos() ) < 1000 then
+	if IsValid( tr.Entity ) and tr.Entity:GetPos():Distance( LocalPlayer():GetPos() ) < 1000 then
 	
 		GAMEMODE:GetEntityID( tr.Entity )
 		
 	end
 	
-	if ValidEntity( TargetedEntity ) and TargetedTime > CurTime() then
+	if IsValid( TargetedEntity ) and TargetedTime > CurTime() then
 	
 		local worldpos = TargetedEntity:LocalToWorld( TargetedEntity:OBBCenter() ) + TargetedDist
 		local pos = ( worldpos ):ToScreen()

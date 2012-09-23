@@ -15,7 +15,7 @@ function ENT:Initialize()
 	
 	local phys = self.Entity:GetPhysicsObject()
 	
-	if ValidEntity( phys ) then
+	if IsValid( phys ) then
 	
 		phys:Wake()
 
@@ -40,7 +40,7 @@ end
 
 function ENT:Think() 
 
-	if not ValidEntity( self.Entity:GetUser() ) then
+	if not IsValid( self.Entity:GetUser() ) then
 		
 		if ( #self.Entity:GetItems() < 1 and self:GetCash() < 5 ) or ( self.DieTime and self.DieTime < CurTime() ) then
 	
@@ -50,7 +50,7 @@ function ENT:Think()
 	
 	end
 	
-	if not ValidEntity( self.Entity:GetUser() ) then return end
+	if not IsValid( self.Entity:GetUser() ) then return end
 	
 	if not self.Entity:GetUser():Alive() then
 	
@@ -78,7 +78,7 @@ function ENT:SetUser( ply )
 	
 	local phys = self.Entity:GetPhysicsObject()
 	
-	if ValidEntity( phys ) then
+	if IsValid( phys ) then
 	
 		if ply then
 	
@@ -103,11 +103,11 @@ end
 function ENT:OnExit( ply )
 
 	if ( self.LastUse or 0 ) > CurTime() then return end
-	if ValidEntity( self.Entity:GetNWEntity( "QuestOwner", nil ) ) and self.Entity:GetNWEntity( "QuestOwner", nil ) != ply then return end
+	if IsValid( self.Entity:GetNWEntity( "QuestOwner", nil ) ) and self.Entity:GetNWEntity( "QuestOwner", nil ) != ply then return end
 	
 	self.LastUse = CurTime() + 1.0
 
-	if ValidEntity( self.Entity:GetUser() ) then
+	if IsValid( self.Entity:GetUser() ) then
 	
 		self.Entity:SetUser()
 		ply:ToggleStashMenu( self.Entity, false, "StashMenu" )
@@ -119,11 +119,11 @@ end
 function ENT:OnUsed( ply )
 
 	if ( self.LastUse or 0 ) > CurTime() then return end
-	if ValidEntity( self.Entity:GetNWEntity( "QuestOwner", nil ) ) and self.Entity:GetNWEntity( "QuestOwner", nil ) != ply then return end
+	if IsValid( self.Entity:GetNWEntity( "QuestOwner", nil ) ) and self.Entity:GetNWEntity( "QuestOwner", nil ) != ply then return end
 	
 	self.LastUse = CurTime() + 1.0
 
-	if not ValidEntity( self.Entity:GetUser() ) then
+	if not IsValid( self.Entity:GetUser() ) then
 	
 		ply:SynchCash( self.Cash )
 	
@@ -136,7 +136,7 @@ end
 
 function ENT:Use( ply, caller )
 
-	if ValidEntity( self.User ) and self.User:Alive() and ply != self.User then return end
+	if IsValid( self.User ) and self.User:Alive() and ply != self.User then return end
 	
 	if ply:Team() != TEAM_ARMY then return end
 
@@ -185,7 +185,7 @@ end
 
 function ENT:Synch()
 
-	if ValidEntity( self.Entity:GetUser() ) then
+	if IsValid( self.Entity:GetUser() ) then
 			
 		self.Entity:GetUser():SynchStash( self.Entity )
 			

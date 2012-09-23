@@ -87,7 +87,7 @@ function GM:Initialize()
 										v:Notice( "You have 45 seconds to reach the evac zone", GAMEMODE.Colors.White, 5, 2 )
 										v:Notice( "The location is marked on your radar", GAMEMODE.Colors.White, 5, 4 )
 									end 
-									if ValidEntity( GAMEMODE.Antidote ) then
+									if IsValid( GAMEMODE.Antidote ) then
 									
 										GAMEMODE.Antidote:SetOverride()
 									
@@ -136,7 +136,7 @@ function GM:InitPostEntity()
 	
 		local phys = v:GetPhysicsObject()
 		
-		if ValidEntity( phys ) and phys:GetMass() <= 5 then
+		if IsValid( phys ) and phys:GetMass() <= 5 then
 		
 			v:Remove()
 		
@@ -191,7 +191,7 @@ function GM:SaveAllEnts()
 				
 					local phys = d:GetPhysicsObject()
 					
-					if ValidEntity( phys ) then
+					if IsValid( phys ) then
 				
 						table.insert( enttbl[k], { d:GetPos(), d:GetModel(), d:GetAngles(), phys:IsMoveable() } )
 						
@@ -241,7 +241,7 @@ function GM:LoadAllEnts()
 						
 						local phys = ent:GetPhysicsObject()
 						
-						if ValidEntity( phys ) and not d[4] then
+						if IsValid( phys ) and not d[4] then
 						
 							phys:EnableMotion( false )
 						
@@ -331,7 +331,7 @@ function GM:PickLord( force )
 			
 			for k,v in pairs( GAMEMODE.Lords ) do
 			
-				if ValidEntity( v ) then
+				if IsValid( v ) then
 			
 					table.insert( tbl, v )
 					
@@ -371,7 +371,7 @@ end
 
 function GM:RespawnAntidote()
 	
-	if ValidEntity( ents.FindByClass( "sent_antidote" )[1] ) and ents.FindByClass( "sent_antidote" )[1]:CuresLeft() > 0 then return end
+	if IsValid( ents.FindByClass( "sent_antidote" )[1] ) and ents.FindByClass( "sent_antidote" )[1]:CuresLeft() > 0 then return end
 	
 	if #ents.FindByClass( "info_lootspawn" ) < 3 then return end
 
@@ -457,7 +457,7 @@ function GM:GetGeneratedLoot()
 
 	for k,v in pairs( GAMEMODE.RandomLoot ) do
 	
-		if ValidEntity( v ) then
+		if IsValid( v ) then
 		
 			table.insert( tbl, v )
 		
@@ -467,7 +467,7 @@ function GM:GetGeneratedLoot()
 	
 	for k,v in pairs( GAMEMODE.RandomLoot ) do
 	
-		if not ValidEntity( v ) then
+		if not IsValid( v ) then
 		
 			table.remove( tbl, k )
 			
@@ -485,7 +485,7 @@ function GM:LootThink()
 
 	for k,v in pairs( ents.FindByClass( "prop_phys*" ) ) do
 	
-		if v.Removal and v.Removal < CurTime() and ValidEntity( v ) then
+		if v.Removal and v.Removal < CurTime() and IsValid( v ) then
 		
 			v:Remove()
 		
@@ -848,9 +848,9 @@ function GM:KeyRelease( ply, key )
 	
 	local tr = util.TraceLine( trace )
 	
-	if ValidEntity( tr.Entity ) and tr.Entity:GetClass() == "prop_physics" then
+	if IsValid( tr.Entity ) and tr.Entity:GetClass() == "prop_physics" then
         
-        if ValidEntity( ply.Stash ) then
+        if IsValid( ply.Stash ) then
             
             ply.Stash:OnExit( ply )
             
@@ -862,9 +862,9 @@ function GM:KeyRelease( ply, key )
 	
 		return true
         
-    elseif ValidEntity( tr.Entity ) and tr.Entity:GetClass() == "point_stash" then
+    elseif IsValid( tr.Entity ) and tr.Entity:GetClass() == "point_stash" then
         
-        if ValidEntity( ply.Stash ) then
+        if IsValid( ply.Stash ) then
             
             ply.Stash:OnExit( ply )
             
@@ -874,9 +874,9 @@ function GM:KeyRelease( ply, key )
             
         end
         
-    elseif not ValidEntity( tr.Entity ) then
+    elseif not IsValid( tr.Entity ) then
         
-        if ValidEntity( ply.Stash ) then
+        if IsValid( ply.Stash ) then
             
             ply.Stash:OnExit( ply )
             
@@ -892,7 +892,7 @@ function GM:PropBreak( att, prop )
 
 	local phys = prop:GetPhysicsObject()
 	
-	if ValidEntity( phys ) and prop:GetModel() != "models/props_debris/wood_board04a.mdl" then
+	if IsValid( phys ) and prop:GetModel() != "models/props_debris/wood_board04a.mdl" then
 	
 		if table.HasValue( { "wood", "wood_crate", "wood_furniture", "default" }, phys:GetMaterial() ) and phys:GetMass() > 8 then
 		
@@ -934,7 +934,7 @@ function GM:PlayerUse( ply, entity )
 		
 			ply.LastUse = CurTime() + 0.5
 		
-			if not ValidEntity( ply.HeldObject ) and not ValidEntity( entity.Holder ) then 
+			if not IsValid( ply.HeldObject ) and not IsValid( entity.Holder ) then 
 	
 				ply:PickupObject( entity )
 				ply.HeldObject = entity
@@ -987,7 +987,7 @@ function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 		
 	end
 	
-	if ent:IsPlayer() and ent:Team() == TEAM_ARMY and ValidEntity( attacker ) and ( attacker:IsNPC() or ( ( attacker:IsPlayer() and attacker:Team() == TEAM_ZOMBIES ) or ( attacker:IsPlayer() and attacker == ent ) ) ) then
+	if ent:IsPlayer() and ent:Team() == TEAM_ARMY and IsValid( attacker ) and ( attacker:IsNPC() or ( ( attacker:IsPlayer() and attacker:Team() == TEAM_ZOMBIES ) or ( attacker:IsPlayer() and attacker == ent ) ) ) then
 	
 		if dmginfo:IsDamageType( DMG_BURN ) then
 	
@@ -1089,7 +1089,7 @@ end
 
 function GM:ScalePlayerDamage( ply, hitgroup, dmginfo )
 
-	if ValidEntity( ply.Stash ) then
+	if IsValid( ply.Stash ) then
 	
 		dmginfo:ScaleDamage( 0.25 )
 		
@@ -1132,7 +1132,7 @@ function GM:PlayerShouldTakeDamage( ply, attacker )
 
 	if ply:Team() == TEAM_UNASSIGNED then return false end
 	
-	if ValidEntity( attacker ) and attacker:IsPlayer() and attacker != ply then
+	if IsValid( attacker ) and attacker:IsPlayer() and attacker != ply then
 	
 		return ( ply:Team() != attacker:Team() or GetConVar( "sv_redead_team_dmg" ):GetBool() ) 
 	
@@ -1182,7 +1182,7 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 		ply:ClientSound( table.Random( GAMEMODE.DeathMusic ) )
 		ply:SetTeam( TEAM_ZOMBIES )
 		
-		if ValidEntity( attacker ) and attacker:IsPlayer() and attacker != ply then
+		if IsValid( attacker ) and attacker:IsPlayer() and attacker != ply then
 		
 			attacker:AddStat( "ZedKills" )
 			attacker:AddZedDamage( 50 )
@@ -1191,7 +1191,7 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 	
 	elseif ply:Team() == TEAM_ZOMBIES then
 
-		if ValidEntity( attacker ) and attacker:IsPlayer() then
+		if IsValid( attacker ) and attacker:IsPlayer() then
 	
 			attacker:AddCash( 2 )
 			attacker:AddFrags( 1 )
@@ -1326,7 +1326,7 @@ function GM:ShowTeam( ply )
 	
 		if ply:GetPlayerClass() == CLASS_SPECIALIST then
 	
-			if ValidEntity( ply.Stash ) then
+			if IsValid( ply.Stash ) then
 			
 				GAMEMODE.SpecialTrader:OnExit( ply )
 			
@@ -1338,7 +1338,7 @@ function GM:ShowTeam( ply )
 			
 		else
 		
-			if ValidEntity( ply.Stash ) then
+			if IsValid( ply.Stash ) then
 			
 				GAMEMODE.Trader:OnExit( ply )
 			
@@ -1503,7 +1503,7 @@ function TakeItem( ply, cmd, args )
 	local id = tonumber( args[1] )
 	local count = math.Clamp( tonumber( args[2] ), 1, 100 )
 	
-	if not ValidEntity( ply.Stash ) or not table.HasValue( ply.Stash:GetItems(), id ) or string.find( ply.Stash:GetClass(), "npc" ) then return end
+	if not IsValid( ply.Stash ) or not table.HasValue( ply.Stash:GetItems(), id ) or string.find( ply.Stash:GetClass(), "npc" ) then return end
 	
 	local tbl = item.GetByID( id )
 	
@@ -1518,7 +1518,7 @@ function TakeItem( ply, cmd, args )
 	
 	local items = {}
 	
-	if ValidEntity( ply.Stash ) then
+	if IsValid( ply.Stash ) then
 	
 		for i=1, count do
 	
@@ -1545,7 +1545,7 @@ function StoreItem( ply, cmd, args )
 	local id = tonumber( args[1] )
 	local count = math.Clamp( tonumber( args[2] ), 1, 100 )
 	
-	if not ValidEntity( ply.Stash ) or not ply:HasItem( id ) then return end
+	if not IsValid( ply.Stash ) or not ply:HasItem( id ) then return end
 	
 	local tbl = item.GetByID( id )
 	
@@ -1594,12 +1594,12 @@ concommand.Add( "inv_store", StoreItem )
 
 function SellItem( ply, cmd, args )
 
-	if ValidEntity( ply ) then return end
+	if IsValid( ply ) then return end
 
 	local id = tonumber( args[1] )
 	local count = math.Clamp( tonumber( args[2] ), 1, 100 )
 	
-	if not ValidEntity( ply.Stash ) or not string.find( ply.Stash:GetClass(), "npc" ) or not ply:HasItem( id ) then return end
+	if not IsValid( ply.Stash ) or not string.find( ply.Stash:GetClass(), "npc" ) or not ply:HasItem( id ) then return end
 	
 	local tbl = item.GetByID( id )
 	local cash = math.Round( ply.Stash:GetBuybackScale() * tbl.Price )
@@ -1659,7 +1659,7 @@ function BuyItem( ply, cmd, args )
 	local id = tonumber( args[1] )
 	local count = tonumber( args[2] )
 	
-	if not ValidEntity( ply.Stash ) or not ply.Stash:GetClass() == "info_trader" or not table.HasValue( ply.Stash:GetItems(), id ) or count < 0 then return end
+	if not IsValid( ply.Stash ) or not ply.Stash:GetClass() == "info_trader" or not table.HasValue( ply.Stash:GetItems(), id ) or count < 0 then return end
 	
 	local tbl = item.GetByID( id )
 	
@@ -1726,7 +1726,7 @@ function StashCash( ply, cmd, args )
 
 	local amt = tonumber( args[1] )
 	
-	if not ValidEntity( ply.Stash ) or amt > ply:GetCash() or amt < 5 or string.find( ply.Stash:GetClass(), "npc" ) then return end
+	if not IsValid( ply.Stash ) or amt > ply:GetCash() or amt < 5 or string.find( ply.Stash:GetClass(), "npc" ) then return end
 	
 	ply:AddCash( -amt )
 	ply:SynchCash( ply.Stash:GetCash() + amt )
@@ -1740,7 +1740,7 @@ function TakeCash( ply, cmd, args )
 
 	local amt = tonumber( args[1] )
 	
-	if not ValidEntity( ply.Stash ) or amt > ply.Stash:GetCash() or amt < 5 or string.find( ply.Stash:GetClass(), "npc" ) then return end
+	if not IsValid( ply.Stash ) or amt > ply.Stash:GetCash() or amt < 5 or string.find( ply.Stash:GetClass(), "npc" ) then return end
 	
 	ply:AddCash( amt )
 	ply:SynchCash( ply.Stash:GetCash() - amt )
@@ -1784,7 +1784,7 @@ concommand.Add( "sv_redead_save_map_config", SaveGameItems )
 
 function MapSetupMode( ply, cmd, args )
 
-	if not ValidEntity( ply ) then 
+	if not IsValid( ply ) then 
 	
 		for k, ply in pairs( player.GetAll() ) do
 		

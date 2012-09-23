@@ -15,7 +15,7 @@ function ENT:Initialize()
 	
 			local trace = {}
 			trace.start = self.Entity:GetPos() + Vector( i * 2, j * 2, 10 )
-			trace.endpos = trace.start + Vector(0,0,500)
+			trace.endpos = trace.start + Vector(0,0,200)
 			
 			local tr = util.TraceLine( trace )
 	

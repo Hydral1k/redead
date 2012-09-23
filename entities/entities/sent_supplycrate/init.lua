@@ -19,7 +19,7 @@ function ENT:Initialize()
 	
 	local phys = self.Entity:GetPhysicsObject()
 	
-	if ValidEntity( phys ) then
+	if IsValid( phys ) then
 	
 		phys:Wake()
 
@@ -50,7 +50,7 @@ end
 
 function ENT:Use( ply, caller )
 
-	if ValidEntity( self.User ) and self.User:Alive() and self.User:Team() == TEAM_ARMY and ply != self.User then return end
+	if IsValid( self.User ) and self.User:Alive() and self.User:Team() == TEAM_ARMY and ply != self.User then return end
 	
 	if ply:Team() != TEAM_ARMY then return end
 
