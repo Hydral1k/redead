@@ -53,7 +53,7 @@ end
 
 function GM:PlayerNoClip( pl, on )
 	
-	if ( SinglePlayer() ) then return true end
+	if ( game.SinglePlayer() ) then return true end
 	
 	if pl:IsAdmin() or pl:IsSuperAdmin() then return true end
 	

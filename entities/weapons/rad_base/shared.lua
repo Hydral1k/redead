@@ -471,7 +471,7 @@ function SWEP:ShootEffects()
 	local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ] 
 	local pos = self.Owner:GetPos()
 	
-	timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() WorldSound( table.Random( tbl.Wavs ), pos, 75, tbl.Pitch ) end )
+	timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() sound.Play( table.Random( tbl.Wavs ), pos, 75, tbl.Pitch ) end )
 	
 	--[[local ed = EffectData()
 	ed:SetOrigin( self.Owner:GetShootPos() )

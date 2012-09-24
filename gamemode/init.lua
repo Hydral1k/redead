@@ -12,7 +12,6 @@ include( 'tables.lua' )
 include( 'boneanimlib.lua' )
 include( 'sh_boneanimlib.lua' )
 include( 'ply_anims.lua' )
-//include( 'hrh.lua' )
 
 AddCSLuaFile( 'sh_boneanimlib.lua' )
 AddCSLuaFile( 'cl_animeditor.lua' )

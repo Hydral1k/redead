@@ -113,7 +113,7 @@ function EFFECT:Think( )
 
 	if self.SoundTime < CurTime() then
 	
-		WorldSound( table.Random( GAMEMODE.GoreSplat ), self.Pos, 100, math.random(90,110) )
+		sound.Play( table.Random( GAMEMODE.GoreSplat ), self.Pos, 100, math.random(90,110) )
 		
 		self.SoundTime = CurTime() + math.Rand( 0.2, 0.6 )
 	
