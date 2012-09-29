@@ -511,7 +511,7 @@ function GM:LootThink()
 			local ent = table.Random( ents.FindByClass( "info_lootspawn" ) )
 			local pos = ent:GetPos()
 			local rnd = math.Rand(0,1)
-			local choice = math.random( 1, #tbl ) 
+			local choice = math.random( 1, table.Count( tbl ) ) 
 				
 			while rnd > chancetbl[ choice ] do
 					
