@@ -39,14 +39,27 @@ function PANEL:SetModel( model, campos, origin )
 	self.ModelPanel:SetModel( model )
 	self.ModelPanel:SetCamPos( Vector(20,10,5) )
 	self.ModelPanel:SetLookAt( Vector(0,0,0) )
+	self.ModelPanel.LayoutEntity = function( this, ent ) end
 	
-	if string.find( model, "models/weapons/w_" ) then
+	--[[if string.find( model, "models/weapons/w_" ) then
 	
 		self.ModelPanel.LayoutEntity = function( this, ent ) if IsValid( ent ) then ent:SetAngles( Angle( 0, 0, 0 ) ) end end
 		
 	else
 	
 		self.ModelPanel.LayoutEntity = function( this, ent ) if IsValid( ent ) then ent:SetAngles( Angle( 0, RealTime() * 10, 0 ) ) end end
+	
+	end]]
+	
+	if CamPosOverride then
+	
+		campos = CamPosOverride
+	
+	end
+	
+	if CamOrigOverride then
+	
+		origin = CamOrigOverride
 	
 	end
 	

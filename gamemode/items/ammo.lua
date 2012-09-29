@@ -42,8 +42,8 @@ item.Register( {
 	Amount = 40,
 	PickupFunction = FUNC_AMMO,
 	DropFunction = FUNC_DROPAMMO,
-	CamPos = Vector(16,16,5),
-	CamOrigin = Vector(0,0,5)	
+	CamPos = Vector(14,13,4),
+	CamOrigin = Vector(0,0,3)	
 } )
 
 item.Register( { 
@@ -59,8 +59,8 @@ item.Register( {
 	Amount = 20,
 	PickupFunction = FUNC_AMMO,
 	DropFunction = FUNC_DROPAMMO,
-	CamPos = Vector(20,10,10),
-	CamOrigin = Vector(0,0,5)
+	CamPos = Vector(17,12,10),
+	CamOrigin = Vector(0,0,4)
 } )
 
 item.Register( { 
@@ -76,8 +76,8 @@ item.Register( {
 	Amount = 60,
 	PickupFunction = FUNC_AMMO,
 	DropFunction = FUNC_DROPAMMO,
-	CamPos = Vector(20,15,10),
-	CamOrigin = Vector(0,0,5)
+	CamPos = Vector(27,15,10),
+	CamOrigin = Vector(0,0,4)
 } )
 
 item.Register( { 
@@ -93,8 +93,8 @@ item.Register( {
 	Amount = 60,
 	PickupFunction = FUNC_AMMO,
 	DropFunction = FUNC_DROPAMMO,
-	CamPos = Vector(25,15,10),
-	CamOrigin = Vector(0,0,6)
+	CamPos = Vector(29,22,10),
+	CamOrigin = Vector(0,0,5)
 } )
 
 item.Register( { 
@@ -110,8 +110,8 @@ item.Register( {
 	Amount = 30,
 	PickupFunction = FUNC_AMMO,
 	DropFunction = FUNC_DROPAMMO,
-	CamPos = Vector(-16,-16,8),
-	CamOrigin = Vector(3,0,2)
+	CamPos = Vector(-18,-14,8),
+	CamOrigin = Vector(4,0,-1)
 } )
 
 item.Register( { 
@@ -127,7 +127,7 @@ item.Register( {
 	Amount = 20,
 	PickupFunction = FUNC_AMMO,
 	DropFunction = FUNC_DROPAMMO,
-	CamPos = Vector(15,15,5),
-	CamOrigin = Vector(0,0,6)	
+	CamPos = Vector(15,15,8),
+	CamOrigin = Vector(0,0,5)	
 } )
 

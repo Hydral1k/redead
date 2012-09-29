@@ -77,7 +77,8 @@ item.Register( {
 	Rarity = 0.65,
 	Model = "models/radbox/healthpack.mdl",
 	Functions = { FUNC_HEAL },
-	CamPos = Vector(23,8,5)	
+	CamPos = Vector(23,8,3),
+	CamOrigin = Vector(0,0,-1)		
 } )
 
 item.Register( { 
@@ -90,7 +91,8 @@ item.Register( {
 	Rarity = 0.85,
 	Model = "models/radbox/healthpack2.mdl",
 	Functions = { FUNC_SUPERHEAL },
-	CamPos = Vector(23,8,5)
+	CamPos = Vector(23,8,3),
+	CamOrigin = Vector(0,0,-1)
 } )
 
 item.Register( { 
@@ -103,7 +105,7 @@ item.Register( {
 	Rarity = 0.50,
 	Model = "models/radbox/bandage.mdl",
 	Functions = { FUNC_BANDAGE },
-	CamPos = Vector(20,10,5),
-	CamOrigin = Vector(0,1,1)
+	CamPos = Vector(18,10,5),
+	CamOrigin = Vector(0,0,0)
 } )
 

@@ -11,20 +11,25 @@ GM.ShopDesc = "A HAPPY CUSTOMER IS A DEAD ONE!"
 
 // Team names 
 
-GM.ArmyTeamName = "S.I.N Unit"
+GM.ArmyTeamName = "Containment Team 3"
 GM.ZombieTeamName = "The Undead"
 
-// Death Screen text
+// Death Screen text shit
 
 GM.DeathScreenText = {}
 
 GM.DeathScreenText[ TEAM_ARMY ] = { "DEATH IS A BITCH, AIN'T IT",
 "DEATH IS THE FINAL UNKNOWN",
 "LIFE'S A BITCH AND THEN YOU DIE",
-"THE ARMY OF HELL GROWS STRONGER",
+"EVERYTHING HAS AN EXPIRATION DATE",
+"THE UNDEAD ARMY GROWS STRONGER",
 "YOU'RE ZOMBIE BAIT" }
 
 GM.DeathScreenText[ TEAM_ZOMBIES ] = { "DEATH IS ONLY THE BEGINNING",
+"GET UP AND TRY AGAIN",
+"THERE IS NO ROOM LEFT IN HELL FOR YOU",
+"IF AT FIRST YOU DON'T SUCCEED... DIE, DIE AGAIN",
+"LIFE IS OVERRATED",
 "REST IS FOR THE LIVING" }
 
 // Amount of damage that the zombie lord needs to deal before he is redeemed
@@ -49,29 +54,33 @@ GM.ZombieModels = {}
 GM.ZombieModels[CLASS_RUNNER] = "models/player/corpse1.mdl"
 GM.ZombieModels[CLASS_BANSHEE] = "models/player/charple01.mdl"
 GM.ZombieModels[CLASS_CONTAGION] = "models/player/classic.mdl"
+GM.ZombieModels[CLASS_LEAPER] = "models/player/zombiefast.mdl"
 
 GM.ZombieWeapons = {}
 GM.ZombieWeapons[CLASS_RUNNER] = "rad_z_runner"
 GM.ZombieWeapons[CLASS_BANSHEE] = "rad_z_banshee"
 GM.ZombieWeapons[CLASS_CONTAGION] = "rad_z_contagion"
+GM.ZombieWeapons[CLASS_LEAPER] = "rad_z_leaper"
 
 GM.ZombieHealth = {}
 GM.ZombieHealth[CLASS_RUNNER] = 150
 GM.ZombieHealth[CLASS_BANSHEE] = 175
 GM.ZombieHealth[CLASS_CONTAGION] = 250
+GM.ZombieHealth[CLASS_LEAPER] = 75
 
 GM.ZombieSpeed = {}
 GM.ZombieSpeed[CLASS_RUNNER] = 250
-GM.ZombieSpeed[CLASS_BANSHEE] = 200
-GM.ZombieSpeed[CLASS_CONTAGION] = 225
+GM.ZombieSpeed[CLASS_BANSHEE] = 225
+GM.ZombieSpeed[CLASS_CONTAGION] = 200
+GM.ZombieSpeed[CLASS_LEAPER] = 275
 
 // Class names, descriptions, logos
 
 GM.ClassDescriptions = {}
 GM.ClassDescriptions[CLASS_SCOUT] = "The Scout: Wears lightweight kevlar armor, allowing for improved mobility. Starts off with extra " .. GM.CurrencyName .. "s."
 GM.ClassDescriptions[CLASS_COMMANDO] = "The Commando: Wears prototype kevlar armor, allowing for improved damage resistance."
-GM.ClassDescriptions[CLASS_SPECIALIST] = "The Specialist: Has access to restricted utilities and weapons due to a higher level of field experience."
-GM.ClassDescriptions[CLASS_ENGINEER] = "The Technician: A highly qualified combat engineer. Starts off with barricade construction tools."
+GM.ClassDescriptions[CLASS_SPECIALIST] = "The Specialist: Has access to restricted utilities and weaponry."
+GM.ClassDescriptions[CLASS_ENGINEER] = "The Technician: Starts off with the tools needed for barricade construction."
 
 GM.ClassLogos = {}
 GM.ClassLogos[CLASS_SCOUT] = "nuke/redead/scout"
@@ -83,16 +92,19 @@ GM.ZombieNames = {}
 GM.ZombieNames[CLASS_RUNNER] = "Runner"
 GM.ZombieNames[CLASS_BANSHEE] = "Banshee"
 GM.ZombieNames[CLASS_CONTAGION] = "Contagion"
+GM.ZombieNames[CLASS_LEAPER] = "Leaper"
 
 GM.ZombieDescriptions = {}
-GM.ZombieDescriptions[CLASS_RUNNER] = "The Runner: An agile reanimated corpse. Capable of infecting humans with its claws."
+GM.ZombieDescriptions[CLASS_RUNNER] = "The Runner: A resilient and agile zombie. Capable of infecting humans with its claws."
 GM.ZombieDescriptions[CLASS_BANSHEE] = "The Banshee: A highly radioactive zombie. Capable of disorienting humans with its scream."
 GM.ZombieDescriptions[CLASS_CONTAGION] = "The Contagion: A bloated, festering zombie. When killed it will burst into a shower of acid."
+GM.ZombieDescriptions[CLASS_LEAPER] = "The Leaper: A bony, mutated zombie. Capable of jumping great distances and making humans bleed with its claws."
 
 GM.ZombieLogos = {}
 GM.ZombieLogos[CLASS_RUNNER] = "nuke/redead/zomb_corpse"
 GM.ZombieLogos[CLASS_BANSHEE] = "nuke/redead/zomb_banshee"
 GM.ZombieLogos[CLASS_CONTAGION] = "nuke/redead/zomb_zombie"
+GM.ZombieLogos[CLASS_LEAPER] = "nuke/redead/zomb_zombie"
 	
 // Weight Limits (lbs)
 

@@ -98,7 +98,7 @@ item.Register( {
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
 	CamPos = Vector(0,15,5),
-	CamOrigin = Vector(5,0,2)
+	CamOrigin = Vector(6,0,2)
 } )
 
 item.Register( { 
@@ -134,7 +134,7 @@ item.Register( {
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
 	CamPos = Vector(0,15,5),
-	CamOrigin = Vector(5,0,2)
+	CamOrigin = Vector(6,0,2)
 } )
 
 item.Register( { 
@@ -188,7 +188,7 @@ item.Register( {
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
 	CamPos = Vector(0,18,-5),
-	CamOrigin = Vector(5,0,2)
+	CamOrigin = Vector(6,0,2)
 } )
 
 item.Register( { 
@@ -223,8 +223,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,22,5),
-	CamOrigin = Vector(5,0,0)
+	CamPos = Vector(0,24,5),
+	CamOrigin = Vector(10,0,0)
 } )
 
 item.Register( { 

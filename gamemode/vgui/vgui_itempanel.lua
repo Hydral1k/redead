@@ -280,6 +280,18 @@ function PANEL:SetModel( model, campos, origin )
 	self.ModelPanel.OnMousePressed = function( mc ) self:OnMousePressed( mc ) end
 	self.ModelPanel.OnMouseReleased = function( mc ) self:OnMouseReleased( mc ) end
 	
+	if CamPosOverride then
+	
+		campos = CamPosOverride
+	
+	end
+	
+	if CamOrigOverride then
+	
+		origin = CamOrigOverride
+	
+	end
+	
 	if campos then
 	
 		self.ModelPanel:SetCamPos( campos )

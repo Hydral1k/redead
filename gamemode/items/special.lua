@@ -37,7 +37,7 @@ item.Register( {
 	Rarity = 0.30,
 	Model = "models/healthvial.mdl",
 	Functions = { FUNC_ANTIRAD },
-	CamPos = Vector(15,10,9),
+	CamPos = Vector(-16,0,8),
 	CamOrigin = Vector(0,0,5)	
 } )
 
@@ -50,7 +50,7 @@ item.Register( {
 	Price = 40,
 	Rarity = 0.95,
 	Model = "models/items/combine_rifle_cartridge01.mdl",
-	CamPos = Vector(15,15,0),
+	CamPos = Vector(13,-13,0),
 	CamOrigin = Vector(0,0,0)	
 } )
 
@@ -64,8 +64,8 @@ item.Register( {
 	Rarity = 0.90,
 	Model = "models/gibs/shield_scanner_gib1.mdl",
 	Functions = {},
-	CamPos = Vector(5,8,8),
-	CamOrigin = Vector(0,0,0)		
+	CamPos = Vector(2,-9,7),
+	CamOrigin = Vector(0,1,-1)		
 } )
 
 item.Register( { 
@@ -78,7 +78,7 @@ item.Register( {
 	Rarity = 0.10,
 	Model = "models/props_c17/trappropeller_lever.mdl",
 	Functions = { FUNC_FLARE },
-	CamPos = Vector(15,5,5),
+	CamPos = Vector(15,6,5),
 	CamOrigin = Vector(0,0,0)		
 } )
 

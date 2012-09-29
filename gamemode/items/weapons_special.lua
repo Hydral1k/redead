@@ -36,13 +36,13 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(1,10,-3),
-	CamOrigin = Vector(0,0,0)
+	CamPos = Vector(1,10,4),
+	CamOrigin = Vector(0,0,1)
 } )
 
 item.Register( { 
 	Name = "Incendiary Grenade", 
-	Description = "These grenades explode and ignite a small area.",
+	Description = "These grenades ignite a small area.",
 	Stackable = true, 
 	Type = ITEM_WPN_SPECIAL,
 	TypeOverride = "sent_droppedgun",
@@ -54,8 +54,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(1,10,-3),
-	CamOrigin = Vector(0,0,0)
+	CamPos = Vector(3,11,1),
+	CamOrigin = Vector(0,0,-1)
 } )
 
 item.Register( { 
@@ -69,7 +69,7 @@ item.Register( {
 	Rarity = 0.80,
 	Model = "models/weapons/w_c4.mdl",
 	Functions = { FUNC_PLANTBOMB },
-	CamPos = Vector(-13,-3,-3),
+	CamPos = Vector(-12,-2,0),
 	CamOrigin = Vector(0,5,0)
 } )
 

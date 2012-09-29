@@ -41,7 +41,7 @@ item.Register( {
 	Model = "models/props_phx/misc/potato_launcher_explosive.mdl",
 	Functions = { FUNC_OXYGEN },
 	DropFunction = FUNC_DROPOXYGEN,
-	CamPos = Vector(25,0,9),
+	CamPos = Vector(24,0,8),
 	CamOrigin = Vector(0,0,6)	
 } )
 

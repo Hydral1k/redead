@@ -1813,3 +1813,39 @@ end
 
 concommand.Add( "sv_redead_dev_mode", MapSetupMode )
 
+function ItemListing( ply, cmd, args )
+
+	if IsValid( ply ) and ply:IsAdmin() then
+	
+		local itemlist = item.GetList()
+		
+		for k,v in pairs( itemlist ) do
+		
+			print( v.ID .. ": " .. v.Name )
+		
+		end
+	
+	end
+
+end
+
+concommand.Add( "sv_redead_dev_itemlist", ItemListing )
+
+function TestItem( ply, cmd, args )
+
+	if IsValid( ply ) and ply:IsAdmin() then
+	
+		local id = tonumber( args[1] )
+		local tbl = item.GetByID( id )
+		
+		if tbl then
+		
+			ply:AddIDToInventory( id )
+		
+		end
+	
+	end
+
+end
+
+concommand.Add( "sv_redead_dev_give", TestItem )

@@ -3,9 +3,35 @@
 ITEM_MISC = 5 // Can be found in stores or in loot
 ITEM_BUYABLE = 6 // Only found in stores
 ITEM_LOOT = 7 // Only found in loot
-ITEM_QUEST_ZOMBIE = 421 
+ITEM_QUEST_ZOMBIE = 421 // obsolete?
 
-PRICE_QUEST_ZOMBIE_ITEM = 20
+function FUNC_DRINK( ply, id, client, icon )
+
+	if icon then return "icon16/cup.png" end
+	if client then return "Drink" end
+
+	ply:RemoveFromInventory( id )
+	ply:EmitSound( table.Random{ "npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav" }, 100, math.random( 90, 110 ) )
+	ply:AddHealth( 15 )
+	ply:AddStamina( 25 )
+	ply:Notice( "+15 Health", GAMEMODE.Colors.Green )
+	ply:Notice( "+25 Stamina", GAMEMODE.Colors.Green )
+
+end
+
+function FUNC_EAT( ply, id, client, icon )
+
+	if icon then return "icon16/cake.png" end
+	if client then return "Eat" end
+	
+	ply:RemoveFromInventory( id )
+	ply:EmitSound( "npc/barnacle/barnacle_crunch2.wav", 100, math.random( 90, 110 ) )
+	ply:AddHealth( 25 )
+	ply:AddStamina( 15 )
+	ply:Notice( "+25 Health", GAMEMODE.Colors.Green )
+	ply:Notice( "+15 Stamina", GAMEMODE.Colors.Green )
+
+end
 
 function FUNC_BOOZE( ply, id, client, icon )
 
@@ -18,9 +44,10 @@ function FUNC_BOOZE( ply, id, client, icon )
 	ply:AddStamina( 20 )
 	ply:Notice( "+20 Stamina", GAMEMODE.Colors.Green )
 	ply:Notice( "-2 Radiation", GAMEMODE.Colors.Green )
+	ply:Notice( "+3 Drunkness", GAMEMODE.Colors.Red )
 	
 	umsg.Start( "Drunk", ply )
-    umsg.Short( 2 )
+    umsg.Short( 3 )
 	umsg.End()
 
 end
@@ -34,9 +61,42 @@ function FUNC_MOONSHINE( ply, id, client, icon )
 	ply:EmitSound( table.Random{ "npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav" }, 100, math.random( 90, 110 ) )
 	ply:AddRadiation( -1 )
 	ply:Notice( "-1 Radiation", GAMEMODE.Colors.Green )
+	ply:Notice( "+4 Drunkness", GAMEMODE.Colors.Red )
 	
 	umsg.Start( "Drunk", ply )
-    umsg.Short( 3 )
+    umsg.Short( 4 )
+	umsg.End()
+
+end
+
+function FUNC_BEER( ply, id, client, icon )
+
+	if icon then return "icon16/drink.png" end
+	if client then return "Drink" end
+	
+	ply:RemoveFromInventory( id )
+	ply:EmitSound( table.Random{ "npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav" }, 100, math.random( 90, 110 ) )
+	ply:AddStamina( 10 )
+	ply:Notice( "+15 Stamina", GAMEMODE.Colors.Green )
+	ply:Notice( "+2 Drunkness", GAMEMODE.Colors.Red )
+	
+	umsg.Start( "Drunk", ply )
+    umsg.Short( 2 )
+	umsg.End()
+
+end
+
+function FUNC_SPACEBEER( ply, id, client, icon )
+
+	if icon then return "icon16/drink.png" end
+	if client then return "Drink" end
+	
+	ply:RemoveFromInventory( id )
+	ply:EmitSound( table.Random{ "npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav" }, 100, math.random( 90, 110 ) )
+	ply:Notice( "+10 Drunkness", GAMEMODE.Colors.Red )
+	
+	umsg.Start( "Drunk", ply )
+    umsg.Short( 10 )
 	umsg.End()
 
 end
@@ -84,7 +144,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "Wood", 
-	Description = "Useful for building barricades with.",
+	Description = "Used in building barricades.",
 	Stackable = true, 
 	Type = ITEM_MISC,
 	Weight = 1.50, 
@@ -93,12 +153,68 @@ item.Register( {
 	Model = "models/props_debris/wood_chunk04a.mdl",
 	Functions = {},
 	CamPos = Vector(42,15,0),
-	CamOrigin = Vector(0,0,1)
+	CamOrigin = Vector(0,0,-1)
+} )
+
+item.Register( { 
+	Name = "Water", 
+	Description = "Restores 25 stamina and 10 health.",
+	Stackable = true, 
+	Type = ITEM_MISC,
+	Weight = 0.15, 
+	Price = 3,
+	Rarity = 0.05,
+	Model = "models/props/cs_office/water_bottle.mdl",
+	Functions = { FUNC_DRINK },
+	CamPos = Vector(12,12,1),
+	CamOrigin = Vector(0,0,0)	
+} )
+
+item.Register( { 
+	Name = "Canned Food", 
+	Description = "Restores 25 health and 10 stamina.",
+	Stackable = true, 
+	Type = ITEM_MISC,
+	Weight = 0.15, 
+	Price = 3,
+	Rarity = 0.05,
+	Model = "models/props_junk/garbage_metalcan001a.mdl",
+	Functions = { FUNC_EAT },
+	CamPos = Vector(10,10,0),
+	CamOrigin = Vector(0,0,0)	
+} )
+
+item.Register( { 
+	Name = "Beer", 
+	Description = "Restores 15 stamina.",
+	Stackable = true, 
+	Type = ITEM_LOOT,
+	Weight = 0.30, 
+	Price = 5,
+	Rarity = 0.80,
+	Model = "models/props_junk/glassbottle01a.mdl",
+	Functions = { FUNC_BEER },
+	CamPos = Vector(16,12,1),
+	CamOrigin = Vector(0,0,0)	
+} )
+
+item.Register( { 
+	Name = "Tequila", 
+	Description = "Don't drink this shit.",
+	Stackable = true, 
+	Type = ITEM_LOOT,
+	Weight = 0.30, 
+	Price = 5,
+	Rarity = 0.95,
+	Model = "models/props_junk/glassjug01.mdl",
+	Functions = { FUNC_SPACEBEER },
+	CamPos = Vector(19,0,6),
+	CamOrigin = Vector(0,0,5)	
 } )
 
 item.Register( { 
 	Name = "Vodka", 
-	Description = "Provides relief from radiation poisoning.",
+	Description = "Releives radiation poisoning.",
 	Stackable = true, 
 	Type = ITEM_MISC,
 	Weight = 0.30, 
@@ -106,13 +222,13 @@ item.Register( {
 	Rarity = 0.10,
 	Model = "models/props_junk/garbage_glassbottle002a.mdl",
 	Functions = { FUNC_BOOZE },
-	CamPos = Vector(15,20,0),
+	CamPos = Vector(15,19,4),
 	CamOrigin = Vector(0,0,0)
 } )
 
 item.Register( { 
 	Name = "Moonshine Vodka", 
-	Description = "Less potent than regular vodka and twice as strong.",
+	Description = "Weaker homebrewed vodka.",
 	Stackable = true, 
 	Type = ITEM_BUYABLE,
 	Weight = 0.30, 
@@ -120,8 +236,8 @@ item.Register( {
 	Rarity = 0.25,
 	Model = "models/props_junk/garbage_glassbottle003a.mdl",
 	Functions = { FUNC_MOONSHINE },
-	CamPos = Vector(16,18,-3),
-	CamOrigin = Vector(0,0,0)	
+	CamPos = Vector(16,17,1),
+	CamOrigin = Vector(0,0,-1)	
 } )
 
 item.Register( { 
@@ -130,7 +246,7 @@ item.Register( {
 	Stackable = true, 
 	Type = ITEM_QUEST_ZOMBIE,
 	Weight = 2.50, 
-	Price = PRICE_QUEST_ZOMBIE_ITEM,
+	Price = 1,
 	Rarity = 0.75,
 	Model = "models/gibs/hgibs.mdl",
 	Functions = { },
@@ -144,7 +260,7 @@ item.Register( {
 	Stackable = true, 
 	Type = ITEM_QUEST_ZOMBIE,
 	Weight = 2.50, 
-	Price = PRICE_QUEST_ZOMBIE_ITEM,
+	Price = 1,
 	Rarity = 0.25,
 	Model = "models/gibs/antlion_gib_small_1.mdl",
 	Functions = { },
@@ -158,7 +274,7 @@ item.Register( {
 	Stackable = true, 
 	Type = ITEM_QUEST_ZOMBIE,
 	Weight = 2.50, 
-	Price = PRICE_QUEST_ZOMBIE_ITEM,
+	Price = 1,
 	Rarity = 0.25,
 	Model = "models/gibs/HGIBS_spine.mdl",
 	Functions = { },
@@ -172,7 +288,7 @@ item.Register( {
 	Stackable = true, 
 	Type = ITEM_QUEST_ZOMBIE,
 	Weight = 2.50, 
-	Price = PRICE_QUEST_ZOMBIE_ITEM,
+	Price = 1,
 	Rarity = 0.25,
 	Model = "models/gibs/HGIBS_rib.mdl",
 	Functions = { },
@@ -186,7 +302,7 @@ item.Register( {
 	Stackable = true, 
 	Type = ITEM_QUEST_ZOMBIE,
 	Weight = 2.50, 
-	Price = PRICE_QUEST_ZOMBIE_ITEM,
+	Price = 1,
 	Rarity = 0.25,
 	Model = "models/props_junk/watermelon01_chunk02a.mdl",
 	Functions = { },
