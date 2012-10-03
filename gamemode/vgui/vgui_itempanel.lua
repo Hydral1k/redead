@@ -39,7 +39,8 @@ function PANEL:OnMousePressed()
 		if self.StashStyle == "Buy" then
 			
 			RunConsoleCommand( "inv_buy", self.ID, 1 )
-			SaleScreen:AddItems( self.ID, 1 )
+			GAMEMODE:AddToCart( self.ItemTable, 1 )
+			//SaleScreen:AddItems( self.ID, 1 )
 			
 		end
 		
@@ -261,6 +262,7 @@ function PANEL:SetItemTable( tbl )
 	self.IsWeapon = tbl.Weapon
 	self.Stackable = tbl.Stackable
 	self.PanelModel = tbl.Model
+	self.ItemTable = tbl
 	
 	if tbl.Sellable != nil and tbl.Sellable == false then
 	

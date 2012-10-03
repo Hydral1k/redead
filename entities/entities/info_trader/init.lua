@@ -13,12 +13,6 @@ end
 
 function ENT:GenerateInventory()
 	
-	for k,v in pairs( item.GetByType( ITEM_FOOD ) ) do
-	
-		self.Entity:AddItem( v.ID)
-	
-	end
-	
 	for k,v in pairs( item.GetByType( ITEM_SUPPLY ) ) do
 	
 		self.Entity:AddItem( v.ID )

@@ -878,6 +878,22 @@ function meta:AddToShipment( tbl )
 
 end
 
+function meta:RemoveFromShipment( id )
+
+	for k,v in pairs( self.Shipment or {} ) do
+	
+		if v == id then
+		
+			table.remove( self.Shipment, k )
+			
+			return
+		
+		end
+	
+	end
+
+end
+
 function meta:GetShipment()
 
 	return self.Shipment or {}
@@ -902,9 +918,9 @@ function meta:SendShipment()
 		
 	end
 	
-	local droptime = 15 + ( #self.Shipment * 0.5 )
+	local droptime = 10 + ( table.Count( self.Shipment ) * 0.5 )
 	
-	self:Notice( "Your shipment will arrive in " .. math.Round( droptime ) .. " seconds", GAMEMODE.Colors.Green )
+	self:Notice( "Your shipment is due in " .. math.Round( droptime ) .. " seconds", GAMEMODE.Colors.Green )
 	
 	local prop = ents.Create( "sent_dropflare" )
 	prop:SetPos( self:GetItemDropPos() )
@@ -925,7 +941,7 @@ function meta:SendShipment()
 	
 	local tr = util.TraceLine( util.GetPlayerTrace( self, Vector(0,0,1) ) )
 	
-	timer.Simple( droptime + 1, DropBox( self, tr.HitPos + Vector(0,0,-100), self.Shipment ) )
+	timer.Simple( droptime + 1, function() DropBox( self, tr.HitPos + Vector(0,0,-100), self.Shipment ) end )
 	
 	self.Shipment = {}
 

@@ -1,12 +1,14 @@
 
 GM.Elements = {}
+GM.Cart = {}
+GM.CartItems = {}
 GM.OptionPanels = {}
 
 GM.Categories = { 
 { Name = "Weapons", Icon = "icon16/gun.png", Categories = { ITEM_WPN_COMMON, ITEM_WPN_SPECIAL } },
 { Name = "Ammunition", Icon = "icon16/package.png", Categories = { ITEM_AMMO } },
 { Name = "Supplies", Icon = "icon16/pill.png", Categories = { ITEM_SUPPLY, ITEM_SPECIAL } },
-{ Name = "Miscellaneous", Icon = "icon16/bin.png", Categories = { ITEM_FOOD, ITEM_MISC, ITEM_BUYABLE } } 
+{ Name = "Miscellaneous", Icon = "icon16/bin.png", Categories = { ITEM_MISC, ITEM_BUYABLE } } 
 }
 
 function GM:CreateElement( name )
@@ -16,6 +18,103 @@ function GM:CreateElement( name )
 	table.insert( GAMEMODE.Elements, element )
 	
 	return element
+
+end
+
+function GM:AddToCart( tbl, amt )
+
+	for i=1,amt do
+	
+		table.insert( GAMEMODE.Cart, tbl.ID )
+		
+		local btn = GAMEMODE:CreateElement( "SideButton" )
+		btn:SetPos( 765, 5 + 35 * ( table.Count( GAMEMODE.Cart ) - 1 ) )
+		btn:SetSize( 250, 30 )
+		btn:SetImage( "icon16/cross.png" )
+		btn:SetText( tbl.Name )
+		btn:SetFunction( function() RunConsoleCommand( "inv_refund", tbl.ID ) btn:Remove() GAMEMODE:ClearCartItem( tbl.ID ) end )
+		
+		table.insert( GAMEMODE.CartItems, btn )
+	
+	end
+	
+	GAMEMODE:CheckCartButton()
+
+end
+
+function GM:RefreshCart()
+
+	local cart = GAMEMODE.CartItems
+	
+	GAMEMODE.CartItems = {}
+	
+	for k,v in pairs( cart ) do
+	
+		if IsValid( v ) then
+		
+			table.insert( GAMEMODE.CartItems, v )
+			
+			v:SetPos( 765, 5 + 35 * ( table.Count( GAMEMODE.CartItems ) - 1 ) )
+		
+		end
+	
+	end
+
+end
+
+function GM:CheckCartButton()
+
+	if GAMEMODE.CartButton then
+	
+		GAMEMODE.CartButton:Remove()
+	
+	end
+	
+	if table.Count( GAMEMODE.Cart ) < 1 then return end
+
+	local btn = GAMEMODE:CreateElement( "SideButton" )
+	btn:SetPos( 765, 5 + 35 * ( table.Count( GAMEMODE.Cart ) ) )
+	btn:SetSize( 250, 30 )
+	btn:SetImage( "icon16/cart.png" )
+	btn:SetText( "Airdrop  Items" )
+	btn:SetFunction( function() RunConsoleCommand( "ordershipment" ) GAMEMODE:ClearCart() btn:Remove() end )
+	
+	GAMEMODE.CartButton = btn
+
+end
+
+function GM:ClearCartItem( id )
+
+	for k,v in pairs( GAMEMODE.Cart ) do
+	
+		if v == id then
+		
+			table.remove( GAMEMODE.Cart, k )
+			
+			GAMEMODE:RefreshCart()
+			GAMEMODE:CheckCartButton()
+			
+			return
+		
+		end
+	
+	end
+
+end
+
+function GM:ClearCart()
+
+	GAMEMODE.Cart = {}
+
+	for k,v in pairs( GAMEMODE.CartItems ) do
+	
+		if IsValid( v ) then
+		
+			v:Remove()
+		
+		end
+		
+	end
 
 end
 
@@ -74,14 +173,14 @@ function GM:RebuildOptions( tbl, style, count )
 	
 	if style == "Buy" then
 	
-		for k,v in pairs{ 1, 3, 5, 10, 20 } do
+		for k,v in pairs{ 1, 3, 5, 10 } do
 	
 			if v == 1 or not tbl.Weapon then
 	
 				local btn = GAMEMODE:CreateElement( "SideButton" )
 				btn:SetPos( 510, ypos )
 				btn:SetSize( 250, 30 )
-				btn:SetImage( "icon16/cart.png" )
+				btn:SetImage( "icon16/money.png" )
 				
 				if v == 1 then
 					btn:SetText( "Buy" )
@@ -89,7 +188,7 @@ function GM:RebuildOptions( tbl, style, count )
 					btn:SetText( "Buy  " .. v )
 				end
 				
-				btn:SetFunction( function() RunConsoleCommand( "inv_buy", tbl.ID, v ) end )
+				btn:SetFunction( function() RunConsoleCommand( "inv_buy", tbl.ID, v ) GAMEMODE:AddToCart( tbl, v ) end )
 				
 				table.insert( GAMEMODE.OptionPanels, btn )
 				
@@ -101,7 +200,7 @@ function GM:RebuildOptions( tbl, style, count )
 	
 	else
 	
-		for k,v in pairs{ 1, 3, 5, 10, 20 } do
+		for k,v in pairs{ 1, 3, 5, 10 } do
 		
 			if not tbl.Weapon and count >= v then
 		
@@ -323,6 +422,17 @@ function StoreMenu( msg )
 		scrolldown:SetImage( "icon16/arrow_down.png" )
 		
 		surface.PlaySound( table.Random( GAMEMODE.RadioBeep ) )
+		
+		local cart = GAMEMODE.Cart
+		GAMEMODE.Cart = {}
+		
+		for k,v in pairs( cart ) do
+		
+			local tbl = item.GetByID( v )
+		
+			GAMEMODE:AddToCart( tbl, 1 )
+			
+		end
 	
 	else
 	
@@ -353,7 +463,7 @@ function StoreMenu( msg )
 end
 usermessage.Hook( "StoreMenu", StoreMenu )
 
-function GM:InitVGUI()
+function GM:InitVGUI() //obsolete
 	
 	InventoryScreen = vgui.Create( "ItemSheet" )
 	InventoryScreen:SetSize( ScrW() * 0.5 - 10, ScrH() * 0.5 - 10 )

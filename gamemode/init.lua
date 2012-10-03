@@ -1591,59 +1591,22 @@ end
 
 concommand.Add( "inv_store", StoreItem )
 
-function SellItem( ply, cmd, args )
+function SellbackItem( ply, cmd, args )
 
-	if IsValid( ply ) then return end
+	if not IsValid( ply ) then return end
 
 	local id = tonumber( args[1] )
-	local count = math.Clamp( tonumber( args[2] ), 1, 100 )
 	
-	if not IsValid( ply.Stash ) or not string.find( ply.Stash:GetClass(), "npc" ) or not ply:HasItem( id ) then return end
+	if not table.HasValue( ply:GetShipment(), id ) then return end
 	
 	local tbl = item.GetByID( id )
-	local cash = math.Round( ply.Stash:GetBuybackScale() * tbl.Price )
-	
-	if count == 1 then
-	
-		ply:RemoveFromInventory( id )
-		ply:AddCash( cash )
-		
-		if tbl.DropFunction then
-			
-			tbl.DropFunction( ply, id )
-			
-		end
-		
-		return
-	
-	end
-	
-	local items = {}
-	local cashamt = 0
-	
-	for i=1, math.Clamp( count, 1, ply:GetItemCount( id ) ) do
-	
-		if ply:HasItem( id ) then
-			
-			table.insert( items, id )
-			cashamt = cashamt + cash
-			
-		end
-	
-	end
-	
-	ply:AddCash( cashamt )
-	ply:RemoveMultipleFromInventory( items )
-	
-	if tbl.DropFunction then
-		
-		tbl.DropFunction( ply, id )
-		
-	end
+
+	ply:AddCash( tbl.Price )
+	ply:RemoveFromShipment( id )
 
 end
 
-concommand.Add( "inv_sell", SellItem )
+concommand.Add( "inv_refund", SellbackItem )
 
 function OrderShipment( ply, cmd, args )
 
