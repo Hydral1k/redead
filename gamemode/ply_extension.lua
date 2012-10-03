@@ -923,7 +923,7 @@ function meta:SendShipment()
 	self:Notice( "Your shipment is due in " .. math.Round( droptime ) .. " seconds", GAMEMODE.Colors.Green )
 	
 	local prop = ents.Create( "sent_dropflare" )
-	prop:SetPos( self:GetItemDropPos() )
+	prop:SetPos( self:GetPos() + Vector(0,0,10) )
 	prop:SetDieTime( droptime )
 	prop:Spawn()
 	

@@ -114,7 +114,7 @@ function FUNC_OPENSUITCASE( ply, id )
 	
 	else
 	
-		ply:AddCash( math.random(1,10) )
+		ply:AddCash( math.random(2,10) )
 		
 	end
 	

@@ -554,13 +554,26 @@ function GM:EventThink()
 
 	if not GAMEMODE.RandomEvent then
 	
-		GAMEMODE.RandomEvent = CurTime() + ( 60 * math.Rand( 3.5, 6.5 ) )
+		GAMEMODE.RandomEvent = CurTime() + ( 60 * math.Rand( 3.5, 9.5 ) )
 	
 	end
 	
 	if GAMEMODE.RandomEvent and GAMEMODE.RandomEvent < CurTime() then
 		
 		local ev = event.GetRandom()
+		
+		while ev.Type == EVENT_WEATHER and GAMEMODE.Weather do
+		
+			ev = event.GetRandom()
+		
+		end
+		
+		if ev.Type == EVENT_WEATHER then
+		
+			GAMEMODE.Weather = true
+		
+		end
+		
 		ev.Start()
 	
 		GAMEMODE.Event = ev

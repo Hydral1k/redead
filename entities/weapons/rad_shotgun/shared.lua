@@ -42,7 +42,7 @@ SWEP.Primary.NumShots		= 8
 SWEP.Primary.Cone			= 0.085
 SWEP.Primary.Delay			= 0.500
 
-SWEP.Primary.ClipSize		= 2
+SWEP.Primary.ClipSize		= 5
 SWEP.Primary.Automatic		= false
 
 SWEP.MinShellDelay = 0.5

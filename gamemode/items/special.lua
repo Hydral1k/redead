@@ -29,7 +29,7 @@ end
 
 item.Register( { 
 	Name = "Anti-Rad", 
-	Description = "Radiation poisoning medication.",
+	Description = "Releives all radiation poisoning.",
 	Stackable = true, 
 	Type = ITEM_SPECIAL,
 	Weight = 0.15, 
@@ -43,7 +43,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "Respirator", 
-	Description = "Filters out hazardous chemicals and radiation.",
+	Description = "Filters out chemicals and radiation.",
 	Stackable = true, 
 	Type = ITEM_SPECIAL,
 	Weight = 1.75, 
@@ -56,7 +56,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "Sonar Module", 
-	Description = "Improves your radar detection range and speed.",
+	Description = "Improves your radar detection range.",
 	Stackable = true, 
 	Type = ITEM_SPECIAL,
 	Weight = 0.75, 
@@ -70,7 +70,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "Flare", 
-	Description = "Emits a bright red light for a short duration of time.",
+	Description = "Emits a bright red light.",
 	Stackable = true, 
 	Type = ITEM_SPECIAL,
 	Weight = 0.35, 
