@@ -59,7 +59,7 @@ item.Register( {
 	Amount = 20,
 	PickupFunction = FUNC_AMMO,
 	DropFunction = FUNC_DROPAMMO,
-	CamPos = Vector(17,12,10),
+	CamPos = Vector(21,15,8),
 	CamOrigin = Vector(0,0,4)
 } )
 

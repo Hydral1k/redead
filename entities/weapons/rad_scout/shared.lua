@@ -6,7 +6,6 @@ end
 
 if CLIENT then
 
-	SWEP.ViewModelFOV		= 74
 	SWEP.ViewModelFlip		= true
 	
 	SWEP.PrintName = "Steyr Scout"

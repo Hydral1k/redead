@@ -6,7 +6,6 @@ end
 
 if CLIENT then
 
-	SWEP.ViewModelFOV		= 74
 	SWEP.ViewModelFlip		= true
 	
 	SWEP.PrintName = "Winchester 1887"
@@ -123,7 +122,7 @@ function SWEP:ShootEffects()
 		
 		local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ]
 	
-		timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() WorldSound( table.Random( tbl.Wavs ), self.Owner:GetPos(), 75, tbl.Pitch ) end )
+		timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() sound.Play( table.Random( tbl.Wavs ), self.Owner:GetPos(), 75, tbl.Pitch ) end )
 		
 	end
 	
@@ -173,7 +172,7 @@ function SWEP:Reload()
 		self.Weapon:SendWeaponAnim( ACT_VM_RELOAD )
 		self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 		
-		self.Weapon:SetClip1( self.Weapon:Clip1() + 1 )
+		//self.Weapon:SetClip1( self.Weapon:Clip1() + 1 )
 		
 	end
 	

@@ -14,7 +14,7 @@ if CLIENT then
 	SWEP.DrawCrosshair		= false
 	SWEP.CSMuzzleFlashes	= true
 
-	SWEP.ViewModelFOV		= 74
+	SWEP.ViewModelFOV		= 75
 	SWEP.ViewModelFlip		= true
 	
 	SWEP.PrintName = "BASE WEAPON"
@@ -716,7 +716,7 @@ function SWEP:BulletPenetration( attacker, tr, dmginfo, bounce )
 		
 		if SERVER and tr.MatType != MAT_FLESH then
 	
-			WorldSound( table.Random( GAMEMODE.Ricochet ), tr.HitPos, 100, math.random(90,120) )
+			sound.Play( table.Random( GAMEMODE.Ricochet ), tr.HitPos, 100, math.random(90,120) )
 	
 		end
 		

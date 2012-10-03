@@ -5,8 +5,6 @@ if SERVER then
 end
 
 if CLIENT then
-
-	SWEP.ViewModelFOV		= 74
 	
 	SWEP.PrintName = "VX-5 Experimental Weapon"
 	SWEP.IconLetter = "m"

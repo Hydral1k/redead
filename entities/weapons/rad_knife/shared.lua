@@ -6,7 +6,6 @@ end
 
 if CLIENT then
 
-	SWEP.ViewModelFOV		= 72
 	SWEP.ViewModelFlip		= false
 	
 	SWEP.PrintName = "Knife"

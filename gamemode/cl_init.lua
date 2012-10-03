@@ -766,7 +766,7 @@ function GM:HUDPaint()
 	
 	end
 	
-	if not LocalPlayer():Alive() or LocalPlayer():Team() == TEAM_UNASSIGNED or GAMEMODE:ElementsVisible() then return end
+	if not LocalPlayer():Alive() or LocalPlayer():Team() == TEAM_UNASSIGNED then return end //or GAMEMODE:ElementsVisible() then return end
 	
 	local xlen = 200
 	local ylen = 25

@@ -188,7 +188,7 @@ function GM:RebuildOptions( tbl, style, count )
 					btn:SetText( "Buy  " .. v )
 				end
 				
-				btn:SetFunction( function() RunConsoleCommand( "inv_buy", tbl.ID, v ) GAMEMODE:AddToCart( tbl, v ) end )
+				btn:SetFunction( function() if LocalPlayer():GetNWInt( "Cash", 0 ) >= tbl.Price * v then RunConsoleCommand( "inv_buy", tbl.ID, v ) GAMEMODE:AddToCart( tbl, v ) end end )
 				
 				table.insert( GAMEMODE.OptionPanels, btn )
 				

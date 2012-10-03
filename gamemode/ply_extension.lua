@@ -918,7 +918,7 @@ function meta:SendShipment()
 		
 	end
 	
-	local droptime = 10 + ( table.Count( self.Shipment ) * 0.5 )
+	local droptime = 12 + ( table.Count( self.Shipment ) * 0.5 )
 	
 	self:Notice( "Your shipment is due in " .. math.Round( droptime ) .. " seconds", GAMEMODE.Colors.Green )
 	
@@ -940,8 +940,9 @@ function meta:SendShipment()
 	end
 	
 	local tr = util.TraceLine( util.GetPlayerTrace( self, Vector(0,0,1) ) )
+	local ship = self:GetShipment()
 	
-	timer.Simple( droptime + 1, function() DropBox( self, tr.HitPos + Vector(0,0,-100), self.Shipment ) end )
+	timer.Simple( droptime + 1, function() DropBox( self, tr.HitPos + Vector(0,0,-100), ship ) end )
 	
 	self.Shipment = {}
 

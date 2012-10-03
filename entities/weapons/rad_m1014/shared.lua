@@ -6,7 +6,6 @@ end
 
 if CLIENT then
 
-	SWEP.ViewModelFOV		= 74
 	SWEP.ViewModelFlip		= true
 	
 	SWEP.PrintName = "M1014 Shotgun"
@@ -38,7 +37,7 @@ SWEP.Primary.Sound			= Sound( "weapons/shotgun/shotgun_fire6.wav" )
 SWEP.Primary.Recoil			= 9.5
 SWEP.Primary.Damage			= 30
 SWEP.Primary.NumShots		= 8
-SWEP.Primary.Cone			= 0.090
+SWEP.Primary.Cone			= 0.080
 SWEP.Primary.Delay			= 0.320
 
 SWEP.Primary.ClipSize		= 8

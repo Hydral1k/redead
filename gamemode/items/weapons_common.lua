@@ -282,7 +282,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "M3 Super 90", 
+	Name = "SPAS 12", 
 	Description = "Useful for crowd control.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
@@ -290,13 +290,13 @@ item.Register( {
 	Weight = 7, 
 	Price = 80,
 	Rarity = 0.80,
-	Model = "models/weapons/w_shot_m3super90.mdl",
-	Weapon = "rad_m3",
+	Model = "models/weapons/w_shotgun.mdl",
+	Weapon = "rad_spas12",
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,42,5),
-	CamOrigin = Vector(8,0,2)
+	CamPos = Vector(0,-34,0),
+	CamOrigin = Vector(0,0,0)
 } )
 
 item.Register( { 

@@ -6,15 +6,15 @@ end
 
 if CLIENT then
 
-	SWEP.ViewModelFOV		= 74
-	SWEP.ViewModelFlip		= true
+	SWEP.ViewModelFOV		= 55
+	SWEP.ViewModelFlip		= false
 	
-	SWEP.PrintName = "M3 Super 90"
+	SWEP.PrintName = "SPAS-12"
 	SWEP.IconLetter = "k"
 	SWEP.Slot = 3
 	SWEP.Slotpos = 3
 	
-	killicon.AddFont( "rad_m3", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) )
+	killicon.AddFont( "rad_spas12", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) )
 	
 end
 
@@ -22,27 +22,33 @@ SWEP.HoldType = "shotgun"
 
 SWEP.Base = "rad_base"
 
-SWEP.ViewModel = "models/weapons/v_shot_m3super90.mdl"
+SWEP.ViewModel = "models/weapons/v_shotgun.mdl"
 SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
 
-SWEP.SprintPos = Vector(-0.6026, -2.715, 0.0137)
-SWEP.SprintAng = Vector(-3.4815, -21.9362, 0.0001)
+//SWEP.SprintPos = Vector(-0.6026, -2.715, 0.0137)
+//SWEP.SprintAng = Vector(-3.4815, -21.9362, 0.0001)
+SWEP.SprintPos = Vector (1.4752, 0.0296, -3.577)
+SWEP.SprintAng = Vector (5.8948, 20.2814, 0)
 
-SWEP.IronPos = Vector (5.7266, -2.9373, 3.3522)
-SWEP.IronAng = Vector (0.1395, -0.0055, -0.4603)
+//SWEP.IronPos = Vector (5.7266, -2.9373, 3.3522)
+//SWEP.IronAng = Vector (0.1395, -0.0055, -0.4603)
+SWEP.IronPos = Vector (-9.0334, -9.1619, 3.1545)
+SWEP.IronAng = Vector (1.0735, -0.0021, 2.0703)
+
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "Buckshot"
 
 SWEP.Primary.Sound			= Sound( "Weapon_Shotgun.Double" )
-SWEP.Primary.Pump           = Sound( "Weapon_M3.Pump" )
+SWEP.Primary.Pump           = Sound( "Weapon_Shotgun.Special1" )
+SWEP.Primary.ReloadSound    = Sound( "Weapon_Shotgun.Reload" )
 SWEP.Primary.Recoil			= 9.5
 SWEP.Primary.Damage			= 30
 SWEP.Primary.NumShots		= 8
 SWEP.Primary.Cone			= 0.080
 SWEP.Primary.Delay			= 0.500
 
-SWEP.Primary.ClipSize		= 6
+SWEP.Primary.ClipSize		= 8
 SWEP.Primary.Automatic		= false
 
 SWEP.Primary.ShellType = SHELL_SHOTGUN
@@ -166,7 +172,7 @@ function SWEP:Reload()
 		self.Weapon:SendWeaponAnim( ACT_VM_RELOAD )
 		self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 		
-		self.Weapon:SetClip1( self.Weapon:Clip1() + 1 )
+		//self.Weapon:SetClip1( self.Weapon:Clip1() + 1 )
 		
 	end
 	
@@ -183,7 +189,7 @@ function SWEP:PumpIt()
 	
 		local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ]
 	
-		timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() WorldSound( table.Random( tbl.Wavs ), self.Owner:GetPos(), 75, tbl.Pitch ) end )
+		timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() sound.Play( table.Random( tbl.Wavs ), self.Owner:GetPos(), 75, tbl.Pitch ) end )
 	
 	end
 	
@@ -237,6 +243,9 @@ function SWEP:Think()
 			
 			// Add ammo
 			self.Weapon:SetClip1( self.Weapon:Clip1() + 1 )
+			
+			// Sound
+			self.Weapon:EmitSound( self.Primary.ReloadSound, 100, math.random(90,110) )
 			
 		end
 		

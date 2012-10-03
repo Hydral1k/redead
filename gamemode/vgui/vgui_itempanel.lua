@@ -38,9 +38,13 @@ function PANEL:OnMousePressed()
 		
 		if self.StashStyle == "Buy" then
 			
-			RunConsoleCommand( "inv_buy", self.ID, 1 )
-			GAMEMODE:AddToCart( self.ItemTable, 1 )
-			//SaleScreen:AddItems( self.ID, 1 )
+			if LocalPlayer():GetNWInt( "Cash", 0 ) >= self.ItemTable.Price then
+			
+				RunConsoleCommand( "inv_buy", self.ID, 1 )
+				GAMEMODE:AddToCart( self.ItemTable, 1 )
+				//SaleScreen:AddItems( self.ID, 1 )
+				
+			end
 			
 		end
 		
