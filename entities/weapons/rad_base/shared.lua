@@ -79,7 +79,7 @@ SWEP.MinShellDelay = 0.3
 SWEP.MaxShellDelay = 0.6
 
 SWEP.FalloffDistances = {}
-SWEP.FalloffDistances[ "Sniper" ] = { Range = 5000, Falloff = 8000 }
+SWEP.FalloffDistances[ "Sniper" ] = { Range = 3500, Falloff = 8000 }
 SWEP.FalloffDistances[ "Rifle" ] = { Range = 2000, Falloff = 2000 }
 SWEP.FalloffDistances[ "SMG" ] = { Range = 1500, Falloff = 1500 }
 SWEP.FalloffDistances[ "Pistol" ] = { Range = 1000, Falloff = 500 }

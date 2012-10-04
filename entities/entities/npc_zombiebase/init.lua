@@ -560,7 +560,7 @@ function ENT:Think()
 							local dir = ( self.AttackDoor:GetPos() - self.Entity:GetPos() ):Normalize()
 							local phys = prop:GetPhysicsObject()
 							
-							if IsValid( phys ) then
+							if IsValid( phys ) and dir then
 							
 								phys:ApplyForceCenter( dir * phys:GetMass() * 800 )
 

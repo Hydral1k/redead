@@ -278,7 +278,7 @@ item.Register( {
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
 	CamPos = Vector(0,-50,5),
-	CamOrigin = Vector(3,0,2)
+	CamOrigin = Vector(3,0,1)
 } )
 
 item.Register( { 
