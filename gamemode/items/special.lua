@@ -14,7 +14,7 @@ function FUNC_ANTIRAD( ply, id, client )
 
 end
 
-function FUNC_FLARE( ply, id, client, icon )
+--[[function FUNC_FLARE( ply, id, client, icon )
 
 	if icon then return "icon16/lightbulb.png" end
 	if client then return "Ignite" end
@@ -25,7 +25,7 @@ function FUNC_FLARE( ply, id, client, icon )
 	prop:SetPos( ply:GetItemDropPos() )
 	prop:Spawn()
 
-end
+end]]
 
 item.Register( { 
 	Name = "Anti-Rad", 
@@ -68,7 +68,7 @@ item.Register( {
 	CamOrigin = Vector(0,1,-1)		
 } )
 
-item.Register( { 
+--[[item.Register( { 
 	Name = "Flare", 
 	Description = "Emits a bright red light.",
 	Stackable = true, 
@@ -80,6 +80,4 @@ item.Register( {
 	Functions = { FUNC_FLARE },
 	CamPos = Vector(15,6,5),
 	CamOrigin = Vector(0,0,0)		
-} )
-
-
+} )]]

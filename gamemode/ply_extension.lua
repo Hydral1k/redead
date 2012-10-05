@@ -306,6 +306,8 @@ function meta:AddRadiation( num )
 
 	if self:Team() != TEAM_ARMY then return end
 	
+	if self:HasItem( "models/items/combine_rifle_cartridge01.mdl" ) and num > 0 then return end
+	
 	if num > 0 then
 	
 		self.PoisonFade = CurTime() + 30
@@ -317,8 +319,6 @@ function meta:AddRadiation( num )
 		self:NoticeOnce( "Radiation sickness will fade over time", GAMEMODE.Colors.Blue, 5, 4 )
 		
 	end
-
-	if self:HasItem( "models/items/combine_rifle_cartridge01.mdl" ) and num > 0 then return end
 
 	self:SetRadiation( self:GetRadiation() + num ) 
 	
@@ -905,7 +905,6 @@ function meta:SendShipment()
 	if not self:GetShipment()[1] then
 	
 		self:Notice( "You haven't ordered any shipments", GAMEMODE.Colors.Red ) 
-		
 		return
 	
 	end
@@ -913,8 +912,14 @@ function meta:SendShipment()
 	if self:IsIndoors() then 
 	
 		self:Notice( "You can't order shipments while indoors", GAMEMODE.Colors.Red ) 
-	
 		return 
+		
+	end
+	
+	if GAMEMODE.RadioBlock and GAMEMODE.RadioBlock > CurTime() then
+		
+		self:Notice( "Radio communications are offline", GAMEMODE.Colors.Red )
+		return
 		
 	end
 	

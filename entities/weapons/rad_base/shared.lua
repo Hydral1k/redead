@@ -36,9 +36,9 @@ SWEP.ViewModel	= "models/weapons/v_pistol.mdl"
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 
 SWEP.SprintPos = Vector(0,0,0)
-SWEP.SprintAng = Vector(0,0,0)
+SWEP.SprintAng = Vector(1,0,0)
 
-SWEP.IronPos = Vector(0,0,0)
+SWEP.IronPos = Vector(1,0,0)
 SWEP.IronAng = Vector(0,0,0)
 
 SWEP.ZoomModes = { 0, 50, 10 }
@@ -59,7 +59,7 @@ SWEP.Primary.Delay			= 0.150
 SWEP.Primary.ClipSize		= 50
 SWEP.Primary.DefaultClip	= 99999
 SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo			= "pistol"
+SWEP.Primary.Ammo			= "Pistol"
 
 SWEP.Secondary.Sound        = Sound( "weapons/zoom.wav" )
 SWEP.Secondary.Delay  		= 0.5

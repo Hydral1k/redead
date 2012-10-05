@@ -17,7 +17,7 @@ if CLIENT then
 	
 end
 
-SWEP.HoldType = "pistol"
+SWEP.HoldType = "revolver"
 
 SWEP.Base = "rad_base"
 

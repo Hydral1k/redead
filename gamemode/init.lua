@@ -50,7 +50,7 @@ AddCSLuaFile( 'vgui/vgui_scroller.lua' )
 util.AddNetworkString( "InventorySynch" )
 util.AddNetworkString( "StashSynch" )
 util.AddNetworkString( "StatsSynch" )
-util.AddNetworkString( "InventorySynch" )
+util.AddNetworkString( "ItemPlacerSynch" )
 
 function GM:Initialize()
 	
@@ -248,7 +248,7 @@ function GM:LoadAllEnts()
 						
 					end
 					
-					timer.Simple( c * 0.1, spawnent )
+					timer.Simple( c * 0.1, function() spawnent() end )
 					
 				end
 			
@@ -273,7 +273,7 @@ function GM:LoadAllEnts()
 						
 						end
 					
-						timer.Simple( c * 0.1, spawnent )
+						timer.Simple( c * 0.1, function() spawnent() end )
 						
 					else
 					
@@ -1344,6 +1344,13 @@ function GM:ShowTeam( ply )
 			
 			else
 		
+				if GAMEMODE.RadioBlock and GAMEMODE.RadioBlock > CurTime() then
+		
+					ply:Notice( "Radio communications are offline", GAMEMODE.Colors.Red )
+					return
+		
+				end
+		
 				GAMEMODE.SpecialTrader:OnUsed( ply )
 				
 			end
@@ -1355,6 +1362,13 @@ function GM:ShowTeam( ply )
 				GAMEMODE.Trader:OnExit( ply )
 			
 			else
+			
+				if GAMEMODE.RadioBlock and GAMEMODE.RadioBlock > CurTime() then
+		
+					ply:Notice( "Radio communications are offline", GAMEMODE.Colors.Red )
+					return
+				
+				end
 		
 				GAMEMODE.Trader:OnUsed( ply )
 				

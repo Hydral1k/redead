@@ -6,6 +6,8 @@ end
 
 if CLIENT then
 	
+	SWEP.ViewModelFlip = false
+	
 	SWEP.PrintName = "VX-5 Experimental Weapon"
 	SWEP.IconLetter = "m"
 	SWEP.Slot = 4
@@ -19,11 +21,11 @@ SWEP.HoldType = "ar2"
 
 SWEP.Base = "rad_base"
 
-SWEP.ViewModel = "models/weapons/v_smg_p90.mdl"
-SWEP.WorldModel = "models/weapons/w_smg_p90.mdl"
+SWEP.ViewModel = "models/weapons/v_rif_famas.mdl"
+SWEP.WorldModel = "models/weapons/w_rif_famas.mdl"
 
-SWEP.SprintPos = Vector (-2.3999, -8.8621, -1.3655)
-SWEP.SprintAng = Vector (35.187, -44.8601, -25.4546)
+SWEP.SprintPos = Vector (4.9288, -2.4157, 2.2032)
+SWEP.SprintAng = Vector (0.8736, 40.1165, 28.0526)
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "Prototype"
@@ -31,7 +33,7 @@ SWEP.IronsightsFOV = 60
 
 SWEP.Gore = Sound( "npc/roller/mine/rmine_explode_shock1.wav" )
 
-SWEP.Primary.Sound			= Sound( "Weapon_SMG1.Single" )
+SWEP.Primary.Sound			= Sound( "Weapon_famas.Single" )
 SWEP.Primary.Sound2			= Sound( "npc/scanner/scanner_electric2.wav" )
 SWEP.Primary.Recoil			= 15.5
 SWEP.Primary.Damage			= 350
