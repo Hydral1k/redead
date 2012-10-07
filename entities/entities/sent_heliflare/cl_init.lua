@@ -26,13 +26,13 @@ function ENT:Think()
 		self.Smoke = CurTime() + 0.2
 	
 		local particle = self.Emitter:Add( "particles/smokey", self.Entity:GetPos() + self.Entity:GetRight() * 5 )
-		particle:SetVelocity( VectorRand() * 5 + WindVector )
+		particle:SetVelocity( VectorRand() * 8 + WindVector )
 		particle:SetDieTime( math.Rand( 4.0, 8.0 ) )
 		particle:SetStartAlpha( 100 )
 		particle:SetEndAlpha( 0 )
-		particle:SetStartSize( 2 )
-		particle:SetEndSize( math.random( 60, 120 ) )
-		particle:SetGravity( Vector( 0, 0, 20 ) + WindVector * 1.5 )
+		particle:SetStartSize( 1 )
+		particle:SetEndSize( math.random( 50, 150 ) )
+		particle:SetGravity( Vector( 0, 0, 25 ) + WindVector * 1.5 )
 		
 		local col = math.random( 50, 100 )
 		particle:SetColor( col + 150, col, col )
@@ -69,10 +69,7 @@ function ENT:Think()
 	
 end
 
-local matFlare = Material( "sprites/light_glow02" )
-
-//matFlare:SetMaterialInt( "$spriterendermode", 9 )
-//matFlare:SetMaterialInt( "$illumfactor", 8 )
+local matFlare = Material( "sprites/flareglow" )
 
 function ENT:Draw()
 
@@ -81,7 +78,7 @@ function ENT:Draw()
 	if self.Entity:GetNWFloat( "BurnDelay", 9000 ) > CurTime() then return end
 	
 	render.SetMaterial( matFlare )
-	render.DrawSprite( self.Entity:GetPos() + self.Entity:GetRight() * 5, 150, 150, Color( 255, 50, 50, 255 ) ) 
+	render.DrawSprite( self.Entity:GetPos(), 170, 170, Color( 255, 50, 50, 255 ) ) 
 	
 end
 

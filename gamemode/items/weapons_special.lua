@@ -2,7 +2,7 @@
 // This is the ID given to any weapon item for SPECIAL
 ITEM_WPN_SPECIAL = 10
 
-function FUNC_PLANTBOMB( ply, id, client )
+--[[function FUNC_PLANTBOMB( ply, id, client )
 
 	if client then return "Arm" end
 	
@@ -20,7 +20,7 @@ function FUNC_PLANTBOMB( ply, id, client )
 	bomb:SetOwner( ply )
 	bomb:Spawn()
 
-end
+end]]
 
 item.Register( { 
 	Name = "HE Grenade", 
@@ -59,21 +59,6 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "Timed Explosives", 
-	Description = "This is a homemade Composition-C explosive.",
-	Stackable = true, 
-	Type = ITEM_WPN_SPECIAL,
-	TypeOverride = "sent_droppedgun",
-	Weight = 3, 
-	Price = 10,
-	Rarity = 0.80,
-	Model = "models/weapons/w_c4.mdl",
-	Functions = { FUNC_PLANTBOMB },
-	CamPos = Vector(-12,-2,0),
-	CamOrigin = Vector(0,5,0)
-} )
-
-item.Register( { 
 	Name = "M249", 
 	Description = "A belt-fed support machine gun.",
 	Stackable = false, 
@@ -108,3 +93,18 @@ item.Register( {
 	CamPos = Vector(0,55,5),
 	CamOrigin = Vector(12,0,2)
 } )
+
+--[[item.Register( { 
+	Name = "Timed Explosives", 
+	Description = "This is a homemade timed explosive.",
+	Stackable = true, 
+	Type = ITEM_WPN_SPECIAL,
+	TypeOverride = "sent_droppedgun",
+	Weight = 3, 
+	Price = 10,
+	Rarity = 0.80,
+	Model = "models/weapons/w_c4.mdl",
+	Functions = { FUNC_PLANTBOMB },
+	CamPos = Vector(-12,-2,0),
+	CamOrigin = Vector(0,5,0)
+} )]]

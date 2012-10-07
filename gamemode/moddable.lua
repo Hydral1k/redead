@@ -106,11 +106,11 @@ GM.ZombieLogos[CLASS_BANSHEE] = "nuke/redead/zomb_banshee"
 GM.ZombieLogos[CLASS_CONTAGION] = "nuke/redead/zomb_zombie"
 GM.ZombieLogos[CLASS_LEAPER] = "nuke/redead/zomb_zombie"
 	
-// Weight Limits (lbs)
+// Weight Limits (lbs) - obsolete
 
-GM.OptimalWeight = 20 // If your weight is less than this then you gain stamina faster.
-GM.MaxWeight = 35     // If your weight is higher than this then you run slower. 
-GM.WeightCap = 40     // If your weight is higher than this then you run at a snail's pace.
+//GM.OptimalWeight = 20 // If your weight is less than this then you gain stamina faster.
+//GM.MaxWeight = 35     // If your weight is higher than this then you run slower. 
+//GM.WeightCap = 40     // If your weight is higher than this then you run at a snail's pace.
 
 // The individual waves and the list of zombies that will spawn. ( more waves means a longer match )
 

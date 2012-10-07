@@ -48,6 +48,14 @@ function EVENT:Think()
 					
 					end
 					
+				else
+				
+					if math.random(1,6) == 1 then
+
+						v:EmitSound( table.Random( GAMEMODE.Geiger ), 100, math.random(120,140) )
+					
+					end	
+				
 				end
 			
 			end

@@ -29,7 +29,7 @@ function GM:Move( ply, mv )
 
 	if ply:Team() == TEAM_ARMY then
 
-		if ply:GetNWFloat( "Weight", 0 ) > GAMEMODE.MaxWeight then
+		--[[if ply:GetNWFloat( "Weight", 0 ) > GAMEMODE.MaxWeight then
 		
 			local scale = 1 - ( math.Clamp( ply:GetNWFloat( "Weight", 0 ), GAMEMODE.MaxWeight, GAMEMODE.WeightCap ) - GAMEMODE.MaxWeight ) / ( GAMEMODE.WeightCap - GAMEMODE.MaxWeight )
 			
@@ -37,9 +37,9 @@ function GM:Move( ply, mv )
 			
 			return self.BaseClass:Move( ply, mv )
 			
-		end
+		end]]
 		
-		if ply:GetNWFloat( "Stamina", 0 ) < 5 then
+		if ply:GetNWFloat( "Stamina", 0 ) <= 5 then
 		
 			mv:SetMaxSpeed( 110 )
 		

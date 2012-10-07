@@ -8,7 +8,7 @@ if CLIENT then
 	
 	SWEP.ViewModelFlip = false
 	
-	SWEP.PrintName = "VX-5 Experimental Weapon"
+	SWEP.PrintName = "FAMAS PBW-75"
 	SWEP.IconLetter = "m"
 	SWEP.Slot = 4
 	SWEP.Slotpos = 2
@@ -29,7 +29,8 @@ SWEP.SprintAng = Vector (0.8736, 40.1165, 28.0526)
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "Prototype"
-SWEP.IronsightsFOV = 60
+SWEP.Laser = true
+//SWEP.IronsightsFOV = 60
 
 SWEP.Gore = Sound( "npc/roller/mine/rmine_explode_shock1.wav" )
 

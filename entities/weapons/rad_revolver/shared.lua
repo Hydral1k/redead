@@ -6,6 +6,7 @@ end
 
 if CLIENT then
 
+	SWEP.ViewModelFOV = 55
 	SWEP.ViewModelFlip = false
 	
 	SWEP.PrintName = "Colt Python"
@@ -44,3 +45,32 @@ SWEP.Primary.ClipSize		= 6
 SWEP.Primary.Automatic		= false
 
 SWEP.Primary.ShellType = SHELL_57
+
+function SWEP:ShootEffects()	
+
+	if SERVER then
+	
+		self.Owner:ViewBounce( self.Primary.Recoil )  
+		
+	end
+	
+	self.Owner:MuzzleFlash()								
+	self.Owner:SetAnimation( PLAYER_ATTACK1 )	
+	
+	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) 
+	
+	if CLIENT then return end
+
+	local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ] 
+	local pos = self.Owner:GetPos()
+	
+	//timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() sound.Play( table.Random( tbl.Wavs ), pos, 75, tbl.Pitch ) end )
+	
+	--[[local ed = EffectData()
+	ed:SetOrigin( self.Owner:GetShootPos() )
+	ed:SetEntity( self.Weapon )
+	ed:SetAttachment( self.Weapon:LookupAttachment( "2" ) )
+	ed:SetScale( ( self.Primary.ShellType or SHELL_9MM ) )
+	util.Effect( "weapon_shell", ed, true, true )]]
+	
+end

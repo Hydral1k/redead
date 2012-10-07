@@ -6,6 +6,7 @@ end
 
 if CLIENT then
 
+	SWEP.ViewModelFOV = 55
 	SWEP.ViewModelFlip = false
 	
 	SWEP.PrintName = "CMP-250"
@@ -35,12 +36,14 @@ SWEP.AmmoType = "SMG"
 SWEP.FirstShot = true
 
 SWEP.Primary.Sound			= Sound( "Weapon_smg1.Single" )
+SWEP.Primary.Sound2			= Sound( "Weapon_smg1.Burst" )
+SWEP.Primary.ReloadSound    = Sound( "Weapon_smg1.reload" )
 SWEP.Primary.Recoil			= 11.5
 SWEP.Primary.Damage			= 25
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Cone			= 0.040
 SWEP.Primary.Delay			= 0.550
-SWEP.Primary.ShotDelay      = 0.045
+SWEP.Primary.ShotDelay      = 0.055
 
 SWEP.Primary.ClipSize		= 20
 SWEP.Primary.Automatic		= true
@@ -58,17 +61,19 @@ function SWEP:PrimaryAttack()
 	
 	if self.FirstShot then
 	
+		self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(95,105) )
 		self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.ShotDelay )
+		self.AutoShoot = CurTime() + self.Primary.ShotDelay
 	
 	else
 	
+		self.Owner:EmitSound( self.Primary.Sound2, 100, math.random(95,105) )
 		self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 	
 	end
 	
 	self.FirstShot = !self.FirstShot
 
-	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(95,105) )
 	self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone, self.Weapon:GetZoomMode() )
 	self.Weapon:TakePrimaryAmmo( 1 )
 	self.Weapon:ShootEffects()
@@ -83,6 +88,40 @@ function SWEP:PrimaryAttack()
 	
 		self.Owner:AddAmmo( self.AmmoType, -1 )
 		
+	end
+
+end
+
+function SWEP:DoReload()
+
+	local time = self.Weapon:StartWeaponAnim( ACT_VM_RELOAD )
+	
+	self.Weapon:SetNextPrimaryFire( CurTime() + time + 0.080 )
+	self.Weapon:EmitSound( self.Primary.ReloadSound )
+	
+	self.ReloadTime = CurTime() + time
+
+end
+
+function SWEP:ReloadThink()
+
+	if self.AutoShoot and self.AutoShoot <= CurTime() then
+	
+		self.AutoShoot = nil
+		
+		if not self.Owner:KeyDown( IN_ATTACK ) then
+		
+			self.Weapon:PrimaryAttack()
+			
+		end
+	
+	end
+
+	if self.ReloadTime and self.ReloadTime <= CurTime() then
+	
+		self.ReloadTime = nil
+		self.Weapon:SetClip1( self.Primary.ClipSize )
+	
 	end
 
 end

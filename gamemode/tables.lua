@@ -338,6 +338,21 @@ GM.Moans = { "vo/npc/male01/moan01.wav",
 "vo/npc/male01/startle01.wav",
 "vo/npc/male01/startle02.wav" }
 
+GM.Thunder = { "ambient/weather/thunder1.wav",
+"ambient/weather/thunder2.wav",
+"ambient/weather/thunder3.wav",
+"ambient/weather/thunder4.wav",
+"ambient/weather/thunder5.wav",
+"ambient/weather/thunder6.wav",
+"ambient/atmosphere/thunder1.wav",
+"ambient/atmosphere/thunder2.wav",
+"ambient/atmosphere/thunder3.wav",
+"ambient/atmosphere/thunder4.wav",
+"ambient/water/distant_wave1.wav",
+"ambient/water/distant_wave2.wav",
+"ambient/water/distant_wave3.wav",
+"ambient/levels/streetwar/city_battle17.wav" }
+
 GM.Corpses = {"models/gibs/fast_zombie_torso.mdl",
 "models/gibs/fast_zombie_legs.mdl",
 "models/humans/charple02.mdl",

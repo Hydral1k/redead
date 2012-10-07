@@ -12,6 +12,7 @@ include( 'tables.lua' )
 include( 'boneanimlib.lua' )
 include( 'sh_boneanimlib.lua' )
 include( 'ply_anims.lua' )
+include( 'weather.lua' )
 
 AddCSLuaFile( 'sh_boneanimlib.lua' )
 AddCSLuaFile( 'cl_animeditor.lua' )
@@ -30,6 +31,7 @@ AddCSLuaFile( 'cl_init.lua' )
 AddCSLuaFile( 'cl_postprocess.lua' )
 AddCSLuaFile( 'cl_scoreboard.lua' )
 AddCSLuaFile( 'tables.lua' )
+AddCSLuaFile( 'weather.lua' )
 AddCSLuaFile( 'vgui/vgui_panelbase.lua' )
 AddCSLuaFile( 'vgui/vgui_dialogue.lua' )
 AddCSLuaFile( 'vgui/vgui_shopmenu.lua' )
@@ -51,6 +53,7 @@ util.AddNetworkString( "InventorySynch" )
 util.AddNetworkString( "StashSynch" )
 util.AddNetworkString( "StatsSynch" )
 util.AddNetworkString( "ItemPlacerSynch" )
+util.AddNetworkString( "WeatherSynch" )
 
 function GM:Initialize()
 	
@@ -96,9 +99,18 @@ function GM:Initialize()
 	
 	timer.Simple( length + 5, function() GAMEMODE:CheckGameOver( true ) end )
 	
+	GAMEMODE:WeatherInit()
+	
 end
 
 function GM:InitPostEntity()	
+
+	--[[GAMEMODE.Weather = ents.Create( "env_skypaint" )
+	GAMEMODE.Weather:SetKeyValue( "drawstars", "1" )
+	GAMEMODE.Weather:SetKeyValue( "starfade", "1" )
+	GAMEMODE.Weather:SetKeyValue( "starspeed", "0.03" )
+	GAMEMODE.Weather:SetKeyValue( "startexture", "skybox/clouds" )
+	GAMEMODE.Weather:Spawn()]]
 
 	GAMEMODE.Trader = ents.Create( "info_trader" )
 	GAMEMODE.Trader:Spawn()
@@ -678,6 +690,7 @@ function GM:Think()
 		GAMEMODE:EventThink()
 		GAMEMODE:LootThink()
 		GAMEMODE:WaveThink()
+		GAMEMODE:WeatherThink()
 		GAMEMODE:CheckGameOver( false )
 		GAMEMODE.NextGameThink = CurTime() + 1
 		

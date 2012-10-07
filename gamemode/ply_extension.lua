@@ -86,20 +86,16 @@ end
 function meta:RadioSound( vtype, override )
 
 	if not self:Alive() then return end
-		
-	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do 
 	
-		if ( ( v.RadioTimer or 0 ) < CurTime() or override ) and v != self then
+	if ( ( self.RadioTimer or 0 ) < CurTime() or override ) then
+	
+		local sound = table.Random( GAMEMODE.Radio[ vtype ] )
 		
-			local sound = table.Random( GAMEMODE.Radio[ vtype ] )
-		
-			v:ClientSound( table.Random( GAMEMODE.VoiceStart ), math.random( 90, 110 ) )
-			timer.Simple( 0.2, function() if IsValid( v ) and v:Alive() then v:ClientSound( sound, 90 ) end end )
-			timer.Simple( SoundDuration( sound ) + math.Rand( 0.6, 0.8 ), function() if IsValid( v ) and v:Alive() then v:ClientSound( table.Random( GAMEMODE.VoiceEnd ), math.random( 90, 110 ) ) end end )
+		self:EmitSound( table.Random( GAMEMODE.VoiceStart ), math.random( 90, 110 ) )
+		timer.Simple( 0.2, function() if IsValid( self ) and self:Alive() then self:EmitSound( sound, 90 ) end end )
+		timer.Simple( SoundDuration( sound ) + math.Rand( 0.6, 0.8 ), function() if IsValid( self ) and self:Alive() then self:EmitSound( table.Random( GAMEMODE.VoiceEnd ), math.random( 90, 110 ) ) end end )
 				
-			v.RadioTimer = CurTime() + SoundDuration( sound ) + 1
-	
-		end
+		self.RadioTimer = CurTime() + SoundDuration( sound ) + 1
 	
 	end
 
@@ -110,13 +106,13 @@ function meta:VoiceThink()
 	if ( self.VoiceTbl[ VO_IDLE ] or 0 ) < CurTime() then
 	
 		self:RadioSound( VO_IDLE )
-		self.VoiceTbl[ VO_IDLE ] = CurTime() + math.Rand( 20, 60 )
+		self.VoiceTbl[ VO_IDLE ] = CurTime() + math.Rand( 30, 120 )
 	
 	end
 	
 	if ( self.VoiceTbl[ VO_ALERT ] or 0 ) < CurTime() then
 	
-		self.VoiceTbl[ VO_ALERT ] = CurTime() + math.Rand( 20, 60 )
+		self.VoiceTbl[ VO_ALERT ] = CurTime() + math.Rand( 30, 120 )
 	
 		for k,v in pairs( ents.FindByClass( "npc_zombie*" ) ) do
 		
@@ -133,15 +129,15 @@ function meta:VoiceThink()
 end
 
 function meta:GetWeight()
-	return self:GetNWFloat( "Weight", 0 ) 
+	return 0//self:GetNWFloat( "Weight", 0 ) 
 end
 
 function meta:SetWeight( num )
-	self:SetNWFloat( "Weight", num )
+	//self:SetNWFloat( "Weight", num )
 end
 
 function meta:AddWeight( num )
-	self:SetWeight( self:GetWeight() + num ) 
+	//self:SetWeight( self:GetWeight() + num ) 
 end
 
 function meta:GetAmmo( ammotype )
@@ -287,7 +283,7 @@ function meta:GetStamina()
 end
 
 function meta:SetStamina( num )
-	self:SetNWInt( "Stamina", math.Clamp( num, 0, 100 ) )
+	self:SetNWInt( "Stamina", math.Clamp( num, 0, 150 ) )
 end
 
 function meta:AddStamina( num )
@@ -515,7 +511,7 @@ function meta:OnSpawn()
 		self:SetMaxHealth( 150 )
 		self:SetHealth( 150 )
 		
-		self:SetStamina( 100 )
+		self:SetStamina( 150 )
 		
 		self:SetWalkSpeed( GAMEMODE.WalkSpeed )
 		self:SetRunSpeed( GAMEMODE.RunSpeed )
@@ -832,40 +828,30 @@ function meta:Think()
 	end
 	
 	if ( self.StamTime or 0 ) < CurTime() then 
+	
+		self.StamTime = CurTime() + 1.0
 		
-		if self:GetStamina() < 10 and ( self:KeyDown( IN_SPEED ) and self:GetVelocity():Length() > 1 ) then
-		
-			self.StamTime = CurTime() + 2.5
-		
-		end
-		
-		if self:KeyDown( IN_SPEED ) and self:GetVelocity():Length() > 1 and self:GetWeight() < GAMEMODE.MaxWeight then
+		if self:KeyDown( IN_SPEED ) and self:GetVelocity():Length() > 1 then
 			
-			self:AddStamina( -2 )
-			self.StamTime = CurTime() + 0.5
+			self:AddStamina( -1 )
+			self.StamTime = CurTime() + 0.4
 		
-		elseif self:GetWeight() < GAMEMODE.OptimalWeight and self:GetRadiation() < 1 then
-		
-			self:AddStamina( 2 )
-			self.StamTime = CurTime() + 2.0
-			
-			if self:GetPlayerClass() == CLASS_SCOUT then
-			
-				self.StamTime = CurTime() + 1.5
-			
-			end
-			
-		elseif self:GetWeight() < GAMEMODE.MaxWeight and self:GetRadiation() < 1 then
+		elseif self:GetRadiation() < 1 then
 		
 			self:AddStamina( 1 )
-			self.StamTime = CurTime() + 2.0
-			
+		
 			if self:GetPlayerClass() == CLASS_SCOUT then
 			
-				self.StamTime = CurTime() + 1.5
+				self.StamTime = CurTime() + 0.8
 			
 			end
-		
+						
+			if self:GetStamina() <= 10 then
+			
+				self.StamTime = CurTime() + 2.0
+			
+			end
+			
 		end
 	
 	end

@@ -8,6 +8,7 @@ include( 'shared.lua' )
 include( 'enums.lua' )
 include( 'moddable.lua' )
 include( 'tables.lua' )
+include( 'weather.lua' )
 include( 'cl_notice.lua' )
 include( 'cl_hudstains.lua' )
 include( 'cl_targetid.lua' )
@@ -33,6 +34,7 @@ include( 'vgui/vgui_sidebutton.lua' )
 include( 'vgui/vgui_scroller.lua' )
 
 CV_RagdollVision = CreateClientConVar( "cl_redead_ragdoll_vision", "1", true, false )
+CV_Density = CreateClientConVar( "cl_redead_rain_density", "1.0", true, false )
 
 function GM:Initialize()
 	
@@ -78,6 +80,8 @@ function GM:Initialize()
 	matBlood = Material( "radbox/img_blood" )
 	matRadiation = Material( "radbox/img_radiation" )
 	matInfection = Material( "radbox/img_infect" )
+	
+	GAMEMODE:WeatherInit()
 	
 end
 
@@ -175,6 +179,7 @@ end
 
 function GM:Think()
 
+	GAMEMODE:ProcessWeather()
 	GAMEMODE:FadeRagdolls()
 	GAMEMODE:GoreRagdolls()
 	//GAMEMODE:SpawnRagdolls()
@@ -550,19 +555,16 @@ function DrawBar( x, y, w, h, value, maxvalue, icon, colorlight, colordark )
 	surface.SetMaterial( icon ) 
 	surface.DrawTexturedRect( x, y + 1, h - 1, h - 2 ) 
 	
-	x = x + h + 2
+	x = x + h + 4
+	
+	local w = 5 + maxvalue * 2
 	
 	draw.RoundedBox( 4, x, y, w, h, Color( 0, 0, 0, 180 ) )
 	
-	local maxlen = ( value / maxvalue ) * w
-	local i = 3
+	for i=1, value do
 	
-	while i < maxlen - 2 do
-	
-		draw.RoundedBox( 0, x + i, y + 3, 2, h - 6, colordark )
-		draw.RoundedBox( 0, x + i, y + 3, 2, ( h * 0.5 ) - 3, colorlight )
-		
-		i = i + 4
+		draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, h - 6, colordark )
+		draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * 0.5 ) - 3, colorlight )
 	
 	end
 
@@ -640,6 +642,8 @@ function GM:GetHealthColor()
 end
 
 function GM:HUDPaint()
+
+	GAMEMODE:PaintWeather()
 
 	if GetGlobalBool( "GameOver", false ) then return end
 	
@@ -777,7 +781,7 @@ function GM:HUDPaint()
 	
 	ypos = ScrH() - 10 - ylen * 2
 	
-	DrawBar( xpos, ypos, xlen, ylen, LocalPlayer():GetNWInt( "Stamina", 0 ), 100, matStamina, Color( 40, 80, 225, 255 ), Color( 20, 40, 175, 255 ) )
+	DrawBar( xpos, ypos, xlen, ylen, LocalPlayer():GetNWInt( "Stamina", 0 ), 150, matStamina, Color( 40, 80, 225, 255 ), Color( 20, 40, 175, 255 ) )
 	
 	local tbl = GAMEMODE:GetAfflictions()
 	

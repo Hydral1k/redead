@@ -29,7 +29,9 @@ SWEP.SprintAng = Vector(4.4604, -47.001, 6.8488)
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "SMG"
-SWEP.IronsightsFOV = 60
+SWEP.Laser = true
+SWEP.LaserOffset = Vector(0,0,2.1)
+//SWEP.IronsightsFOV = 60
 
 SWEP.Primary.Sound			= Sound( "Weapon_p90.Single" )
 SWEP.Primary.Recoil			= 7.5

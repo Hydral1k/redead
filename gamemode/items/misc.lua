@@ -240,7 +240,7 @@ item.Register( {
 	CamOrigin = Vector(0,0,-1)	
 } )
 
-item.Register( { 
+--[[item.Register( { 
 	Name = "Human Skull", 
 	Description = "This human skull looks pretty old. You decided to name it Murray.",
 	Stackable = true, 
@@ -308,4 +308,4 @@ item.Register( {
 	Functions = { },
 	CamPos = Vector(8,8,5),
 	CamOrigin = Vector(0,0,2.5)	
-} )
+} )]]

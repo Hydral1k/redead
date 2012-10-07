@@ -79,3 +79,15 @@ function SWEP:PrimaryAttack()
 	end
 
 end
+
+function SWEP:ReloadThink()
+
+	if self.ReloadTime and self.ReloadTime <= CurTime() then
+	
+		self.ReloadTime = nil
+		self.Weapon:SetClip1( self.Primary.ClipSize )
+		self.Weapon:SendWeaponAnim( ACT_VM_IDLE )
+	
+	end
+
+end

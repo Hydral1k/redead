@@ -57,17 +57,21 @@ SWEP.Primary.Cone			= 0.025
 SWEP.Primary.Delay			= 0.150
 
 SWEP.Primary.ClipSize		= 50
-SWEP.Primary.DefaultClip	= 99999
+SWEP.Primary.DefaultClip	= 200
 SWEP.Primary.Automatic		= false
 SWEP.Primary.Ammo			= "Pistol"
 
 SWEP.Secondary.Sound        = Sound( "weapons/zoom.wav" )
+SWEP.Secondary.Laser        = Sound( "weapons/ar2/ar2_empty.wav" )
 SWEP.Secondary.Delay  		= 0.5
 
 SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo			= "none"
+
+SWEP.Laser = false
+SWEP.LaserOffset = Vector(0,0,0)
 
 SWEP.HolsterMode = false
 SWEP.HolsterTime = 0
@@ -282,6 +286,8 @@ end
 
 function SWEP:Think()	
 
+	self.Weapon:ReloadThink()
+
 	if self.Owner:GetVelocity():Length() > 0 then
 	
 		if self.Owner:KeyDown( IN_SPEED ) and self.Owner:GetNWFloat( "Weight", 0 ) < 50 then
@@ -371,7 +377,7 @@ end
 
 function SWEP:Reload()
 
-	if self.Weapon:Clip1() == self.Primary.ClipSize or self.HolsterMode then return end
+	if self.Weapon:Clip1() == self.Primary.ClipSize or self.HolsterMode or self.ReloadTime then return end
 	
 	if self.Owner:GetNWInt( "Ammo"..self.AmmoType, 0 ) < 1 then 
 	
@@ -393,8 +399,57 @@ function SWEP:Reload()
 		
 	end
 
-	self.Weapon:DefaultReload( ACT_VM_RELOAD )
+	self.Weapon:DoReload()
 	
+end
+
+function SWEP:StartWeaponAnim( anim )
+		
+	if IsValid( self.Owner ) then
+	
+		local vm = self.Owner:GetViewModel()
+	
+		local idealSequence = self:SelectWeightedSequence( anim )
+		local nextSequence = self:FindTransitionSequence( self.Weapon:GetSequence(), idealSequence )
+		
+		//vm:RemoveEffects( EF_NODRAW )
+		//vm:SetPlaybackRate( pbr )
+
+		if nextSequence > 0 then
+		
+			vm:SendViewModelMatchingSequence( nextSequence )
+			
+		else
+		
+			vm:SendViewModelMatchingSequence( idealSequence )
+			
+		end
+
+		return vm:SequenceDuration( vm:GetSequence() )
+		
+	end	
+	
+end
+
+function SWEP:DoReload()
+
+	local time = self.Weapon:StartWeaponAnim( ACT_VM_RELOAD )
+	
+	self.Weapon:SetNextPrimaryFire( CurTime() + time + 0.080 )
+	
+	self.ReloadTime = CurTime() + time
+
+end
+
+function SWEP:ReloadThink()
+
+	if self.ReloadTime and self.ReloadTime <= CurTime() then
+	
+		self.ReloadTime = nil
+		self.Weapon:SetClip1( self.Primary.ClipSize )
+	
+	end
+
 end
 
 function SWEP:CanSecondaryAttack()
@@ -419,7 +474,7 @@ end
 
 function SWEP:CanPrimaryAttack()
 
-	if self.HolsterMode or self.LastRunFrame > CurTime() then return false end
+	if self.HolsterMode or self.ReloadTime or self.LastRunFrame > CurTime() then return false end
 	
 	if self.Owner:GetNWInt( "Ammo"..self.AmmoType, 0 ) < 1 then 
 	
@@ -431,7 +486,7 @@ function SWEP:CanPrimaryAttack()
 	if self.Weapon:Clip1() <= 0 then
 	
 		self.Weapon:SetNextPrimaryFire( CurTime() + 0.5 )
-		self.Weapon:DefaultReload( ACT_VM_RELOAD )
+		self.Weapon:DoReload()
 		
 		if self.Weapon:GetZoomMode() != 1 then
 		
@@ -494,7 +549,7 @@ function SWEP:PrimaryAttack()
 	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(95,105) )
 	self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone, self.Weapon:GetZoomMode() )
-	self.Weapon:TakePrimaryAmmo( 1 )
+	self.Weapon:SetClip1( self.Weapon:Clip1() - 1 )
 	self.Weapon:ShootEffects()
 	
 	if self.Weapon:GetZoomMode() > 1 then
@@ -515,15 +570,23 @@ function SWEP:SecondaryAttack()
 
 	if not self.Weapon:CanSecondaryAttack() then return end
 	
+	self.Weapon:SetNextSecondaryFire( CurTime() + 0.25 )
+	
 	if not self.IsSniper then
+	
+		if self.Laser then
+		
+			self.Weapon:ToggleLaser()
+			
+			return
+			
+		end
 	
 		self.Weapon:SetIron( !self.InIron )
 	
 		return
 	
 	end
-	
-	self.Weapon:SetNextSecondaryFire( CurTime() + 0.25 );
 	
 	if SERVER then
 		
@@ -543,6 +606,13 @@ function SWEP:SecondaryAttack()
 	
 	self.Weapon:EmitSound( self.Secondary.Sound )
 	
+end
+
+function SWEP:ToggleLaser()
+
+	self.Weapon:EmitSound( self.Secondary.Laser )
+	self.Weapon:SetNWBool( "Laser", !self.Weapon:GetNWBool( "Laser", false ) )
+
 end
 
 function SWEP:AdjustMouseSensitivity()
@@ -726,7 +796,7 @@ end
 
 function SWEP:ShouldNotDraw()
 
-	if IsValid( self.Owner:GetVehicle() ) then
+	if IsValid( self.Owner:GetVehicle() ) or self.Weapon:GetNWBool( "Laser", false ) then
 	
 		return true
 	
@@ -742,14 +812,88 @@ if CLIENT then
 	SWEP.CrossGreen = CreateClientConVar( "crosshair_g", 255, true, false )
 	SWEP.CrossBlue = CreateClientConVar( "crosshair_b", 255, true, false )
 	SWEP.CrossAlpha = CreateClientConVar( "crosshair_a", 255, true, false )
+	
+	SWEP.DotMat = Material( "Sprites/light_glow02_add_noz" )
+	SWEP.LasMat = Material( "sprites/bluelaser1" )
 
 end
 
 SWEP.CrosshairScale = 1
 
+function SWEP:LaserDraw()
+
+	local vm = self.Owner:GetViewModel()
+	
+	if IsValid( vm ) then
+	
+		local idx = vm:LookupAttachment( "1" )
+		
+		if idx == 0 then idx = vm:LookupAttachment( "muzzle" ) end
+		
+		local trace = util.GetPlayerTrace( ply )
+		local tr = util.TraceLine( trace )
+		local tbl = vm:GetAttachment( idx )
+		
+		local pos = tr.HitPos
+		
+		if vm:GetSequence() != ACT_VM_IDLE then
+			
+			self.AngDiff = ( tbl.Ang - self.LastGoodAng ):Forward()
+			
+			trace = {}
+			trace.start = tbl.Pos or Vector(0,0,0)
+			trace.endpos = trace.start + ( ( EyeAngles() + self.AngDiff ):Forward() * 99999 )
+			trace.filter = { self.Owner, self.Weapon }
+		
+			local tr2 = util.TraceLine( trace )
+			
+			pos = tr2.HitPos
+			
+		else
+		
+			self.LastGoodAng = tbl.Ang
+		
+		end
+		
+		cam.Start3D( EyePos(), EyeAngles() )
+		
+			local dir = ( tbl.Ang ):Forward()
+			local start = tbl.Pos
+	
+			render.SetMaterial( self.LasMat )
+			
+			for i=0,254 do
+			
+				render.DrawBeam( start, start + dir * 5, 2, 0, 12, Color( 255, 0, 0, 255 - i ) )
+				
+				start = start + dir * 5
+				
+			end
+				
+			local dist = tr.HitPos:Distance( EyePos() )
+			local size = math.Rand( 6, 7 )
+			local dotsize = dist / size ^ 2
+			
+			render.SetMaterial( self.DotMat )
+			render.DrawQuadEasy( pos, ( EyePos() - tr.HitPos ):GetNormal(), dotsize, dotsize, Color( 255, 0, 0, 255 ), 0 )
+			
+		cam.End3D()
+		
+	end	
+
+end
+
 function SWEP:DrawHUD()
 
 	if self.Weapon:ShouldNotDraw() then return end
+	
+	if self.Laser and self.Weapon:GetNWBool( "Laser", false ) then
+	
+		//self.Weapon:LaserDraw()
+		
+		return
+	
+	end
 
 	if not self.IsSniper and not self.Owner:GetNWBool( "InIron", false ) then
 	
