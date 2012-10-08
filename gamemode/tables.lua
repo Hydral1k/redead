@@ -339,6 +339,11 @@ GM.Moans = { "vo/npc/male01/moan01.wav",
 "vo/npc/male01/startle01.wav",
 "vo/npc/male01/startle02.wav" }
 
+GM.Choppers = { "ambient/overhead/hel1.wav",
+"ambient/overhead/hel2.wav",
+"ambient/machines/heli_pass1.wav",
+"ambient/machines/heli_pass2.wav" }
+
 GM.Thunder = { "ambient/weather/thunder1.wav",
 "ambient/weather/thunder2.wav",
 "ambient/weather/thunder3.wav",

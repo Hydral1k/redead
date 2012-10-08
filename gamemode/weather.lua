@@ -4,7 +4,7 @@ GM.Weather.Rain = 0
 GM.Weather.Thunder = 0
 GM.Weather.Lightning = 0
 GM.Weather.Wind = 0
-GM.Weather.TransitionTime = 10 // 1 minute for weather transitions
+GM.Weather.TransitionTime = 60 // 1 minute for weather transitions
 
 GM.Weather.New = {}
 GM.Weather.New.Rain = 0
@@ -27,8 +27,6 @@ function GM:WeatherInit()
 	if CLIENT then
 	
 		RainEmitter = ParticleEmitter( Vector(0,0,0) )
-	
-	else
 	
 	end
 
@@ -240,11 +238,11 @@ function GM:PaintWeather()
 	
 		if GAMEMODE.PlayerIsIndoors then
 		
-			GAMEMODE.RainRefract = math.Approach( ( GAMEMODE.RainRefract or 0 ), 0, 0.001 )
+			GAMEMODE.RainRefract = math.Approach( ( GAMEMODE.RainRefract or 0 ), 0, 0.0002 )
 		
 		else
 	
-			GAMEMODE.RainRefract = math.Approach( ( GAMEMODE.RainRefract or 0 ), 0.08 * GAMEMODE.Weather.Rain, 0.001 )
+			GAMEMODE.RainRefract = math.Approach( ( GAMEMODE.RainRefract or 0 ), 0.01 * GAMEMODE.Weather.Rain, 0.0001 )
 			
 		end
 		

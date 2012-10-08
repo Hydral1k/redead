@@ -49,13 +49,13 @@ function GM:Initialize()
 	DeathScreenTime = 0
 	DeathScreenScale = 0
 	HeartBeat = 0
-	ArmAngle = 0
-	ArmSpeed = 70
-	BlipTime = 2.0
-	FadeDist = 0.3 // radar vars
-	MaxDist = 1500
-	PosTable = {}
-	RadarEntTable = {}
+	//ArmAngle = 0
+	//ArmSpeed = 70
+	//BlipTime = 2.0
+	//FadeDist = 0.3 // radar vars
+	//MaxDist = 1500
+	//PosTable = {}
+	//RadarEntTable = {}
 	TimeSeedTable = {}
 	
 	surface.CreateFont ( "DeathFont", { size = 34, weight = 200, antialias = true, additive = true, font = "Graffiare" } )
@@ -70,10 +70,10 @@ function GM:Initialize()
 	surface.CreateFont ( "AmmoFontSmall", { size = 12, weight = 300, antialias = true, additive = true, font = "Verdana" } )
 	surface.CreateFont ( "TargetIDFont", { size = 12, weight = 200, antialias = true, additive = true, font = "Verdana" } )
 
-	matRadar = Material( "radbox/radar" )
-	matArm = Material( "radbox/radar_arm" )
-	matArrow = Material( "radbox/radar_arrow" )
-	matNoise = Material( "radbox/nvg_noise" )
+	//matRadar = Material( "radbox/radar" )
+	//matArm = Material( "radbox/radar_arm" )
+	//matArrow = Material( "radbox/radar_arrow" )
+	//matNoise = Material( "radbox/nvg_noise" )
 	
 	matHealth = Material( "radbox/img_health" )
 	matStamina = Material( "radbox/img_stamina" )
