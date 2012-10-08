@@ -228,9 +228,9 @@ function GM:LoadAllEnts()
 
 	MsgN( "Loading stored entity data..." )
 
-	local glondry = glon.decode( file.Read( "redead/" .. string.lower( game.GetMap() ) .. ".txt" ) )
+	local glondry = glon.decode( file.Read( "redead/" .. string.lower( game.GetMap() ) .. ".txt", "DATA" ) )
 	
-	if not glondry then return end
+	if not glondry then MsgN( "*** WARNING ***\nThis map has no ReDead configuration data! Errors may occur!" ) return end
 	
 	for k,v in pairs( glondry ) do
 	
