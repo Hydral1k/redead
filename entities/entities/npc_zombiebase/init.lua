@@ -397,6 +397,12 @@ function ENT:DoIgnite( att )
 
 	if self.Entity:OnFire() then return end
 	
+	if IsValid( att ) and att:IsPlayer() and att:Team() == TEAM_ARMY then
+	
+		att:AddStat( "Igniter" )
+	
+	end
+	
 	self.FireTime = CurTime() + 5
 	self.FireAttacker = att
 	self.FireSound = true

@@ -8,7 +8,7 @@ function PANEL:Init()
 	
 	self.Items = {}
 	
-	for k,v in pairs( GAMEMODE.ClassNames ) do
+	for k,v in pairs( GAMEMODE.ZombieNames ) do
 
 		local desc = GAMEMODE.ZombieDescriptions[k] or "TEH"
 		local logo = GAMEMODE.ZombieLogos[k] or "brick/brick_model"
@@ -16,7 +16,7 @@ function PANEL:Init()
 		local button = vgui.Create( "DImageButton", self )
 		button:SetImage( logo )
 		button:SetSize( 100, 100 )
-		button.OnMousePressed = function() RunConsoleCommand( "changeclass", k ) self:Remove() end
+		button.OnMousePressed = function() RunConsoleCommand( "changeclass", k ) surface.PlaySound( "npc/zombie/claw_strike1.wav" ) self:Remove() end
 		button.ID = id
 
 		local label = vgui.Create( "DLabel", self )

@@ -11,7 +11,7 @@ GM.ShopDesc = "A HAPPY CUSTOMER IS A DEAD ONE!"
 
 // Team names 
 
-GM.ArmyTeamName = "Containment Team 3"
+GM.ArmyTeamName = "Containment Team Delta"
 GM.ZombieTeamName = "The Undead"
 
 // Death Screen text shit

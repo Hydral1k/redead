@@ -179,7 +179,7 @@ end
 
 function GM:SaveAllEnts()
 
-	MsgN( "Saving toxsin entity data..." )
+	MsgN( "Saving ReDead entity data..." )
 
 	local enttbl = {
 		info_player_zombie = {},
@@ -220,7 +220,7 @@ function GM:SaveAllEnts()
 		
 	end
 	
-	file.Write( "toxsin/" .. string.lower( game.GetMap() ) .. ".txt", glon.encode( enttbl ) )
+	file.Write( "redead/" .. string.lower( game.GetMap() ) .. ".txt", glon.encode( enttbl ) )
 
 end
 
@@ -433,7 +433,7 @@ function GM:SpawnEvac()
 		
 		if #loot < 1 then
 		
-			print( "Your map is not configured for ToxSin, shithead!" )
+			MsgN( "ERROR: Map not configured properly." )
 			
 			return
 		
@@ -515,8 +515,8 @@ function GM:LootThink()
 	
 	if num > 0 then
 	
-		local tbl = { ITEM_FOOD, ITEM_SUPPLY, ITEM_LOOT, ITEM_AMMO, ITEM_MISC, ITEM_SPECIAL, ITEM_WPN_COMMON, ITEM_WPN_SPECIAL }
-		local chancetbl = { 0.95,    0.70,        0.35,      0.60,     0.50,       0.05,           0.02,           0.01 }
+		local tbl = { ITEM_SUPPLY, ITEM_LOOT, ITEM_AMMO, ITEM_MISC, ITEM_SPECIAL, ITEM_WPN_COMMON, ITEM_WPN_SPECIAL }
+		local chancetbl = { 0.60,     0.80,      0.70,     0.95,       0.05,           0.02,           0.01 }
 		
 		for i=1, num do
 			
@@ -528,7 +528,7 @@ function GM:LootThink()
 			while rnd > chancetbl[ choice ] do
 					
 				rnd = math.Rand(0,1)
-				choice = math.random(1,6)
+				choice = math.random( 1, table.Count( tbl ) ) 
 					
 			end
 				
@@ -1021,14 +1021,8 @@ function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 		else
 		
 			ent:ViewBounce( 25 )
-			ent:VoiceSound( table.Random( GAMEMODE.Pain ) )
+			ent:RadioSound( VO_PAIN )
 			ent:DrawBlood()
-			
-			if math.random(1,5) == 1 then
-			
-				ent:RadioSound( VO_PAIN )
-			
-			end
 		
 		end
 		
@@ -1203,7 +1197,8 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 		
 		end
 	
-		ply:VoiceSound( table.Random( GAMEMODE.Death ) )
+		//ply:VoiceSound( table.Random( GAMEMODE.Death ) )
+		ply:RadioSound( VO_DEATH )
 		ply:ClientSound( table.Random( GAMEMODE.DeathMusic ) )
 		ply:SetTeam( TEAM_ZOMBIES )
 		

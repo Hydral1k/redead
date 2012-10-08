@@ -236,7 +236,7 @@ function GM:Think()
 		
 	end
 	
-	if Inv_HasItem( "models/gibs/shield_scanner_gib1.mdl" ) then
+	--[[if Inv_HasItem( "models/gibs/shield_scanner_gib1.mdl" ) then
 	
 		MaxDist = 2200
 		ArmSpeed = 90
@@ -323,7 +323,7 @@ function GM:Think()
 			
 		end
 		
-	end
+	end]]
 	
 end
 
@@ -827,7 +827,7 @@ function GM:HUDPaint()
 	
 	DrawCash( ScrW() - 110, ScrH() - ypos, 105, 30, string.upper( LocalPlayer():GetNWInt( "Cash", 0 ) .. "  " .. GAMEMODE.CurrencyName .. "s" ) )
 	
-	local radius = 200 
+	--[[local radius = 200 
 	local centerx = ScrW() - ( radius / 2 ) - 20
 	local centery = 20 + ( radius / 2 )
 	
@@ -930,7 +930,7 @@ function GM:HUDPaint()
 		surface.SetMaterial( matArrow )
 		surface.DrawTexturedRectRotated( centerx, centery, radius, radius, ang.y )
 		
-	end
+	end]]
 	
 end
 

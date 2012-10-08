@@ -722,7 +722,7 @@ function meta:Think()
 		if self:Team() == TEAM_ARMY then
 
 			local dmginfo = DamageInfo()
-			dmginfo:SetDamage( 2 )
+			dmginfo:SetDamage( math.random(1,5) )
 			dmginfo:SetDamageType( DMG_BURN ) 
 			dmginfo:SetAttacker( self )
 		
@@ -1277,8 +1277,6 @@ function meta:OnDeath()
 	self:StopAllLuaAnimations( 0.2 )
 
 	if self:Team() == TEAM_ARMY then
-	
-		self:RadioSound( VO_DEATH )
 
 		if IsValid( self.Stash ) then
 		

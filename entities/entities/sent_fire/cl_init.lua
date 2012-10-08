@@ -7,8 +7,19 @@ function ENT:Initialize()
 	
 	self.SmokeTime = 0
 	self.LightTime = 0
-	self.PosTbl = {}
 	
+	self.Entity:DoTraces()
+	
+	print("START POS" , self.Entity:GetPos() )
+
+end
+
+function ENT:DoTraces()
+
+	if self.Entity:GetPos() == Vector(0,0,0) then return end
+	
+	self.PosTbl = {}
+
 	for i=-30,30 do
 	
 		for j=-30,30 do
@@ -22,9 +33,9 @@ function ENT:Initialize()
 			trace.start = tr.HitPos
 			trace.endpos = trace.start + Vector( 0, 0, -2000 )
 			
-			tr = util.TraceLine( trace )
+			local tr2 = util.TraceLine( trace )
 			
-			table.insert( self.PosTbl, { Pos = tr.HitPos, Scale = ( ( 30 - math.abs(i) ) + ( 30 - math.abs(j) ) ) / 60 } )
+			table.insert( self.PosTbl, { Pos = tr2.HitPos, Scale = ( ( 30 - math.abs( i ) ) + ( 30 - math.abs( j ) ) ) / 60 } )
 			
 		end
 		
@@ -33,6 +44,14 @@ function ENT:Initialize()
 end
 
 function ENT:Think()
+
+	if not self.PosTbl then
+	
+		self.Entity:DoTraces()
+		
+		if not self.PosTbl then return end
+	
+	end
 
 	local tbl = table.Random( self.PosTbl )
 	
