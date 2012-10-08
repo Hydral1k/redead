@@ -33,7 +33,7 @@ function PANEL:Init()
 	self.Awards[13] ={ x, w, "Cum Dumpster:", "was infected by zombies the most.", function() return self:GetStatMax( "Infections" ) end, "infections", "ambient/voices/cough1.wav", true }
 	self.Awards[14] ={ x, w, "Accident Prone:", "took the most damage from zombies.", function() return self:GetStatMax( "Damage" ) end, "damage", "bot/pain2.wav" }
 	self.Awards[15] ={ x, w, "Piss Poor:", "spent the least " .. GAMEMODE.CurrencyName .. "s.", function() return self:GetStatMin( "Spent" ) end, GAMEMODE.CurrencyName .. "s spent", "bot/i_got_nothing.wav" }
-	self.Awards[16] ={ x, w, "Martyr:", "was the first human to die.", function() return self:GetStatMax( "Martyr" ) end, "sacrifice made", "nuke/gore/carnage04.wav", true }
+	self.Awards[16] ={ x, w, "Martyr:", "was the first human to die.", function() return self:GetStatMax( "Martyr" ) end, "sacrifice made", "npc/crow/alert1.wav", true }
 	self.Awards[17] ={ x, w, "Roleplayer:", "did jack shit.", function() return self:GetWorstPlayer() end, "kills", "ambient/sheep.wav" }
 	
 end

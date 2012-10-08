@@ -71,9 +71,6 @@ function ENT:OnDamageEnemy( enemy )
 end
 
 function ENT:OnDeath( dmginfo )
-
-	self.Entity:SpawnRagdoll( "models/Zombie/Classic_torso.mdl", self.Entity:GetPos() + Vector(0,0,50) )
-	self.Entity:SetModel( self.Legs )
 	
 	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do
 	
@@ -102,4 +99,111 @@ function ENT:OnDeath( dmginfo )
 	
 	end
 
+end
+
+function ENT:DoDeath( dmginfo )
+
+	if self.Dying then return end
+	
+	self.Dying = true
+	self.RemoveTimer = CurTime() + 0.3
+	
+	self.Entity:SetNPCState( NPC_STATE_DEAD )
+	//self.Entity:SetSchedule( SCHED_DIE_RAGDOLL )
+	
+	self.Entity:OnDeath( dmginfo )
+	self.Entity:SpawnRagdoll( "models/Zombie/Classic_torso.mdl", self.Entity:GetPos() + Vector(0,0,50) )
+	
+	if dmginfo then
+		
+		local ent1 = self.Entity:GetHighestDamager()
+		local tbl = self.Entity:GetHighestDamagers()
+		
+		if IsValid( ent1 ) then
+		
+			if math.random(1,40) == 1 then
+		
+				ent1:RadioSound( VO_TAUNT )
+				
+			end
+			
+			ent1:AddCash( 2 )
+			ent1:AddFrags( 1 )
+			
+			local dist = math.floor( ent1:GetPos():Distance( self.Entity:GetPos() ) / 8 )
+			
+			if dist > ent1:GetStat( "Longshot" ) then
+			
+				ent1:SetStat( "Longshot", dist )
+			
+			end
+			
+			if dmginfo:IsExplosionDamage() then
+			
+				self.Entity:EmitSound( table.Random( GAMEMODE.GoreSplash ), 90, math.random( 60, 80 ) )
+				
+				local effectdata = EffectData()
+				effectdata:SetOrigin( self.Entity:GetPos() + Vector(0,0,20) )
+				util.Effect( "body_gib", effectdata, true, true )
+				
+				local ed = EffectData()
+				ed:SetOrigin( self.Entity:GetPos() )
+				util.Effect( "gore_explosion", ed, true, true )
+				
+				self.Entity:SpawnRagdoll( self.Legs )
+				
+				ent1:AddStat( "Explode" )
+			
+			elseif ent1:HasShotgun() and ent1:GetPos():Distance( self.Entity:GetPos() ) < 100 then
+			
+				self.Entity:EmitSound( table.Random( GAMEMODE.GoreSplash ), 90, math.random( 60, 80 ) )
+				
+				local effectdata = EffectData()
+				effectdata:SetOrigin( self.Entity:GetPos() + Vector(0,0,20) )
+				util.Effect( "body_gib", effectdata, true, true )
+				
+				self.Entity:SpawnRagdoll( self.Legs )
+				
+				ent1:AddStat( "Meat" )
+			
+			elseif self.HeadshotEffects and self.Entity:GetHeadshotter( ent1 ) then
+			
+				self.Entity:EmitSound( table.Random( GAMEMODE.GoreSplash ), 90, math.random( 90, 110 ) )
+				
+				local effectdata = EffectData()
+				effectdata:SetOrigin( self.Entity:GetPos() + Vector(0,0,40) )
+				util.Effect( "head_gib", effectdata, true, true )
+				
+				self.Entity:SpawnRagdoll( self.Legs )
+				
+				umsg.Start( "Headless" )
+				umsg.Vector( self.Entity:GetPos() )
+				umsg.End()
+			
+			else
+			
+				self.Entity:VoiceSound( self.VoiceSounds.Death )
+				self.Entity:SpawnRagdoll( self.Legs )
+			
+			end
+		
+		end
+		
+		if tbl then
+		
+			for k,v in pairs( tbl ) do
+			
+				if IsValid( v ) and v != ent1 then
+				
+					v:AddCash( 1 )
+					v:AddStat( "Assist" )
+				
+				end
+			
+			end
+		
+		end
+	
+	end
+	
 end

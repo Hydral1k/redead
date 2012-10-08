@@ -1006,8 +1006,12 @@ function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 	
 	if ent:IsPlayer() and ent:Team() == TEAM_ARMY and IsValid( attacker ) and ( attacker:IsNPC() or ( ( attacker:IsPlayer() and attacker:Team() == TEAM_ZOMBIES ) or ( attacker:IsPlayer() and attacker == ent ) ) ) then
 	
-		ent:NoticeOnce( "Your health has dropped below 30%", GAMEMODE.Colors.Red, 5 )
-		ent:NoticeOnce( "Health doesn't regenerate when below 30%", GAMEMODE.Colors.Blue, 5, 2 )
+		if ent:Health() <= 50 then
+	
+			ent:NoticeOnce( "Your health has dropped below 30%", GAMEMODE.Colors.Red, 5 )
+			ent:NoticeOnce( "Health doesn't regenerate when below 30%", GAMEMODE.Colors.Blue, 5, 2 )
+			
+		end
 	
 		if dmginfo:IsDamageType( DMG_BURN ) then
 	
@@ -1047,6 +1051,10 @@ function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 		
 		end
 		
+	elseif ent:IsPlayer() and ent:Team() == TEAM_ZOMBIES and IsValid( attacker ) and attacker:IsPlayer() then
+	
+		sound.Play( table.Random( GAMEMODE.GoreBullet ), ent:GetPos() + Vector(0,0,50), 75, math.random( 90, 110 ), 0.5 )
+	
 	end
 	
 	return self.BaseClass:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )

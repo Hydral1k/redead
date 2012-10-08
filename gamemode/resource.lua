@@ -8,7 +8,7 @@ resource.AddFile( "sound/nuke/redead/lastminute.mp3" )
 
 for i=1,10 do
 
-	resource.AddFile( "materials/toxsin/Blood" .. i .. ".vmt" )
+	resource.AddFile( "materials/nuke/blood/Blood" .. i .. ".vmt" )
 
 end
 
@@ -22,8 +22,7 @@ for i=1,4 do
 	
 end
 
-local include_sound = { "warning",
-"heartbeat",
+local include_sound = { "heartbeat",
 "geiger_1",
 "geiger_2",
 "geiger_3",
@@ -35,21 +34,10 @@ local include_sound = { "warning",
 "gore/blood01",
 "gore/blood02",
 "gore/blood03",
-"gore/carnage01",
-"gore/carnage02",
-"gore/carnage03",
-"gore/carnage04",
-"gore/carnage05",
-"gore/die01",
-"gore/die02",
-"gore/die03",
-"gore/die04",
-"gore/die05",
-"gore/pain01",
-"gore/pain02",
-"gore/pain03",
-"gore/pain04",
-"gore/pain05",
+"gore/flesh01",
+"gore/flesh02",
+"gore/flesh03",
+"gore/flesh04",
 "redead/attack_1",
 "redead/attack_2",
 "redead/attack_3",
@@ -123,13 +111,6 @@ local include_mat = { "models/weapons/v_models/shot_m3super91/shot_m3super91_nor
 "nuke/redead/allyvision",
 "nuke/gore1",
 "nuke/gore2",
-"radbox/radar_arm",
-"radbox/radar_arrow",
-"radbox/menu_quest",
-"radbox/menu_loot",
-"radbox/menu_trade",
-"radbox/menu_cancel",
-"radbox/nvg_noise",
 "radbox/img_radiation",
 "radbox/img_blood",
 "radbox/img_health",
@@ -160,6 +141,7 @@ local include_model = { "weapons/v_shot_m3super91",
 "Zed/malezed_08",
 "Zed/weapons/v_undead",
 "Zed/weapons/v_ghoul",
+"Zed/weapons/v_wretch",
 "Zed/weapons/v_banshee" }
 
 for k,v in pairs( include_model ) do

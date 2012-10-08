@@ -41,6 +41,10 @@ end
 
 function ENT:Explode()
 
+	if self.Exploded then return end
+	
+	self.Exploded = true
+
 	local ed = EffectData()
 	ed:SetOrigin( self.Entity:GetPos() )
 	util.Effect( "Explosion", ed, true, true )

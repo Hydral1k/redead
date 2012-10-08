@@ -258,13 +258,13 @@ GM.Burning = { "player/pl_burnpain1.wav",
 
 GM.BurnFlesh = Sound( "general.burningflesh" )
 
-GM.AxeHit = {"nuke/weapon/hit01.wav", 
+GM.AxeHit = { "nuke/weapon/hit01.wav", 
 "nuke/weapon/hit02.wav", 
 "nuke/weapon/hit03.wav", 
 "nuke/weapon/hit04.wav", 
-"nuke/weapon/hit05.wav"}
+"nuke/weapon/hit05.wav" }
 
-GM.GoreSplash = {"nuke/gore/blood01.wav", 
+GM.GoreSplash = { "nuke/gore/blood01.wav", 
 "nuke/gore/blood02.wav", 
 "nuke/gore/blood03.wav",
 "npc/antlion_grub/squashed.wav" }
@@ -281,31 +281,36 @@ GM.GoreSplat = { "physics/flesh/flesh_squishy_impact_hard1.wav",
 "ambient/levels/canals/toxic_slime_gurgle5.wav",
 "ambient/levels/canals/toxic_slime_gurgle8.wav"}
 
-GM.Drill = {"npc/dog/dog_servo6.wav",
+GM.GoreBullet = { "nuke/gore/flesh01.wav",
+"nuke/gore/flesh02.wav",
+"nuke/gore/flesh03.wav",
+"nuke/gore/flesh04.wav" } 
+
+GM.Drill = { "npc/dog/dog_servo6.wav",
 "npc/dog/dog_servo7.wav",
 "npc/dog/dog_servo10.wav",
-"npc/dog/dog_servo12.wav"}
+"npc/dog/dog_servo12.wav" }
 
-GM.WoodHammer = {"physics/wood/wood_plank_impact_hard2.wav",
+GM.WoodHammer = { "physics/wood/wood_plank_impact_hard2.wav",
 "physics/wood/wood_plank_impact_hard3.wav",
-"physics/wood/wood_plank_impact_hard4.wav"}
+"physics/wood/wood_plank_impact_hard4.wav" }
 
-GM.Ricochet = {"weapons/fx/rics/ric1.wav",
+GM.Ricochet = { "weapons/fx/rics/ric1.wav",
 "weapons/fx/rics/ric2.wav",
 "weapons/fx/rics/ric3.wav",
 "weapons/fx/rics/ric4.wav",
-"weapons/fx/rics/ric5.wav"}
+"weapons/fx/rics/ric5.wav" }
 
-GM.Geiger = {"nuke/geiger_1.wav",
+GM.Geiger = { "nuke/geiger_1.wav",
 "nuke/geiger_2.wav",
 "nuke/geiger_3.wav",
 "nuke/geiger_4.wav",
 "nuke/geiger_5.wav",
 "nuke/geiger_6.wav",
 "nuke/geiger_7.wav",
-"nuke/geiger_8.wav"}
+"nuke/geiger_8.wav" }
 
-GM.RadioBeep = {"ambient/levels/prison/radio_random1.wav",
+GM.RadioBeep = { "ambient/levels/prison/radio_random1.wav",
 "ambient/levels/prison/radio_random2.wav",
 "ambient/levels/prison/radio_random3.wav",
 "ambient/levels/prison/radio_random4.wav",
@@ -313,16 +318,16 @@ GM.RadioBeep = {"ambient/levels/prison/radio_random1.wav",
 "ambient/levels/prison/radio_random6.wav",
 "ambient/levels/prison/radio_random7.wav",
 "ambient/levels/prison/radio_random8.wav",
-"ambient/levels/prison/radio_random9.wav"}
+"ambient/levels/prison/radio_random9.wav" }
 
-GM.AmbientScream = {"ambient/levels/prison/inside_battle_antlion3.wav",
+GM.AmbientScream = { "ambient/levels/prison/inside_battle_antlion3.wav",
 "npc/combine_gunship/gunship_moan.wav",
 "ambient/creatures/town_zombie_call1.wav",
 "ambient/creatures/town_moan1.wav",
 "ambient/creatures/town_child_scream1.wav",
 "ambient/creatures/town_scared_sob1.wav",
 "ambient/creatures/town_scared_sob2.wav",
-"ambient/creatures/town_scared_breathing1.wav"}
+"ambient/creatures/town_scared_breathing1.wav" }
 
 GM.Coughs = { "ambient/voices/cough1.wav",
 "ambient/voices/cough2.wav",

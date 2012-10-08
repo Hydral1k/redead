@@ -142,7 +142,6 @@ function ENT:DoDeath( dmginfo )
 			
 			if dmginfo:IsExplosionDamage() then
 			
-				self.Entity:SetModel( table.Random( GAMEMODE.Corpses ) )
 				self.Entity:EmitSound( table.Random( GAMEMODE.GoreSplash ), 90, math.random( 60, 80 ) )
 				
 				local effectdata = EffectData()
@@ -153,7 +152,7 @@ function ENT:DoDeath( dmginfo )
 				ed:SetOrigin( self.Entity:GetPos() )
 				util.Effect( "gore_explosion", ed, true, true )
 				
-				self.Entity:SpawnRagdoll()
+				self.Entity:SpawnRagdoll( table.Random( GAMEMODE.Corpses ) )
 				
 				ent1:AddStat( "Explode" )
 			
@@ -186,7 +185,6 @@ function ENT:DoDeath( dmginfo )
 			else
 			
 				self.Entity:VoiceSound( self.VoiceSounds.Death )
-				
 				self.Entity:SpawnRagdoll()
 			
 			end
@@ -298,6 +296,10 @@ function ENT:OnTakeDamage( dmginfo )
 	
 		dmginfo:ScaleDamage( 1.75 )
 	
+	else
+	
+		sound.Play( table.Random( GAMEMODE.GoreBullet ), self.Entity:GetPos() + Vector(0,0,50), 75, math.random( 90, 110 ), 1.0 )
+	
 	end
 	
 	self.Entity:SetHealth( math.Clamp( self.Entity:Health() - dmginfo:GetDamage(), 0, 1000 ) )
@@ -350,7 +352,7 @@ end
 
 function ENT:CanTarget( v )
 
-	return ( ( v:IsPlayer() and v:Alive() and v:GetObserverMode() == OBS_MODE_NONE ) or ( v:IsNPC() and not v:IsZombie() ) )
+	return ( ( v:IsPlayer() and v:Alive() and v:GetObserverMode() == OBS_MODE_NONE and v:Team() == TEAM_ARMY ) or ( v:IsNPC() and not v:IsZombie() ) )
 
 end
 
