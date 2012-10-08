@@ -339,7 +339,7 @@ function GM:GetHighlightedUnits()
 
 end
 
-function GM:PreDrawHalosTEH()
+function GM:PreDrawHalos()
 
 	if GetGlobalBool( "GameOver", false ) then return end
 
