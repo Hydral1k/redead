@@ -105,14 +105,23 @@ function meta:VoiceThink()
 
 	if ( self.VoiceTbl[ VO_IDLE ] or 0 ) < CurTime() then
 	
-		self:RadioSound( VO_IDLE )
-		self.VoiceTbl[ VO_IDLE ] = CurTime() + math.Rand( 30, 120 )
+		if GAMEMODE.EvacAlert then
+		
+			self:RadioSound( VO_EVAC )
+		
+		else
+	
+			self:RadioSound( VO_IDLE )
+			
+		end
+		
+		self.VoiceTbl[ VO_IDLE ] = CurTime() + math.Rand( 120, 240 )
 	
 	end
 	
 	if ( self.VoiceTbl[ VO_ALERT ] or 0 ) < CurTime() then
 	
-		self.VoiceTbl[ VO_ALERT ] = CurTime() + math.Rand( 30, 120 )
+		self.VoiceTbl[ VO_ALERT ] = CurTime() + math.Rand( 120, 240 )
 	
 		for k,v in pairs( ents.FindByClass( "npc_zombie*" ) ) do
 		
@@ -482,6 +491,9 @@ end
 function meta:OnSpawn()
 
 	self.VoiceTbl = {}
+	self.VoiceTbl[ VO_IDLE ] = CurTime() + math.random( 30, 60 )
+	self.VoiceTbl[ VO_ALERT ] = CurTime() + math.random( 30, 60 )
+	
 	self:SetRadiation( 0 )
 	self:SetInfected( false )
 	self:SetBleeding( false )
@@ -750,9 +762,9 @@ function meta:Think()
 			
 			if rand == 1 then
 			
-				rand = math.random(1,3)
+				rand = math.random(1,4)
 				
-				if rand == 2 then
+				if rand == 1 then
 				
 					self:VoiceSound( table.Random( GAMEMODE.Coughs ), 100, math.random( 90, 100 ) )
 				
@@ -760,6 +772,7 @@ function meta:Think()
 				
 				self:ViewBounce( math.random(10,15) )
 				self:AddHealth( -5 )
+				self:AddStamina( -1 )
 				
 			end
 			
@@ -781,13 +794,13 @@ function meta:Think()
 	
 		if ( self.HealTime or 0 ) < CurTime() then // health and stamina regen
 
-			self.HealTime = CurTime() + 2.5
+			self.HealTime = CurTime() + 3.0
 			
 			if self:IsBleeding() then
 			
-				self:AddHealth( -1 )
+				self:AddHealth( -2 )
 				
-				if self:Health() < 75 and math.random(1,2) == 1 then
+				if self:Health() < 75 and math.random(1,4) == 1 then
 				
 					self:VoiceSound( table.Random( GAMEMODE.Moans ), 100, math.random( 90, 100 ) )
 				
@@ -833,8 +846,8 @@ function meta:Think()
 		
 		if self:KeyDown( IN_SPEED ) and self:GetVelocity():Length() > 1 then
 			
-			self:AddStamina( -1 )
-			self.StamTime = CurTime() + 0.4
+			self:AddStamina( -2 )
+			self.StamTime = CurTime() + 0.35
 		
 		elseif self:GetRadiation() < 1 then
 		
@@ -842,13 +855,13 @@ function meta:Think()
 		
 			if self:GetPlayerClass() == CLASS_SCOUT then
 			
-				self.StamTime = CurTime() + 0.8
+				self.StamTime = CurTime() + 0.85
 			
 			end
 						
 			if self:GetStamina() <= 10 then
 			
-				self.StamTime = CurTime() + 2.0
+				self.StamTime = CurTime() + 1.75
 			
 			end
 			
@@ -1256,6 +1269,7 @@ end
 function meta:OnDeath()
 
 	umsg.Start( "DeathScreen", self )
+	umsg.Short( self:Team() )
 	umsg.End()
 	
 	self.NextSpawn = CurTime() + 15

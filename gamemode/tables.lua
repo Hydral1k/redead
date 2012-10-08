@@ -1,7 +1,7 @@
 
 GM.Radio = {}
 
-GM.Radio[ VO_DEATH ] = {"bot/aah.wav",
+GM.Radio[ VO_DEATH ] = { "bot/aah.wav",
 "bot/help.wav",
 "bot/need_help.wav",
 "bot/need_help2.wav",
@@ -16,9 +16,9 @@ GM.Radio[ VO_DEATH ] = {"bot/aah.wav",
 "bot/pain10.wav",
 "bot/the_commander_is_down.wav",
 "bot/the_commander_is_down_repeat.wav",
-"bot/weve_lost_the_commander.wav"}
+"bot/weve_lost_the_commander.wav" }
 
-GM.Radio[ VO_PAIN ] = {"bot/cut_it_out.wav",
+GM.Radio[ VO_PAIN ] = { "bot/cut_it_out.wav",
 "bot/hey.wav",
 "bot/hey2.wav",
 "bot/i_cant_see.wav",
@@ -48,9 +48,9 @@ GM.Radio[ VO_PAIN ] = {"bot/cut_it_out.wav",
 "bot/what_happened.wav",
 "bot/what_have_you_done.wav",
 "bot/whoa.wav",
-"bot/yikes.wav"}
+"bot/yikes.wav" }
 
-GM.Radio[ VO_TAUNT ] = {"bot/affirmative.wav",
+GM.Radio[ VO_TAUNT ] = { "bot/affirmative.wav",
 "bot/all_clear_here.wav",
 "bot/alright.wav",
 "bot/alright2.wav",
@@ -137,9 +137,9 @@ GM.Radio[ VO_TAUNT ] = {"bot/affirmative.wav",
 "bot/yea_baby.wav",
 "bot/yea_ok.wav",
 "bot/yesss.wav",
-"bot/yesss2.wav"}
+"bot/yesss2.wav" }
 
-GM.Radio[ VO_ALERT ] = {"bot/alright_lets_do_this.wav",
+GM.Radio[ VO_ALERT ] = { "bot/alright_lets_do_this.wav",
 "bot/attacking.wav",
 "bot/attacking_enemies.wav",
 "bot/aw_hell.wav",
@@ -179,26 +179,17 @@ GM.Radio[ VO_ALERT ] = {"bot/alright_lets_do_this.wav",
 "bot/uh_oh.wav",
 "bot/where_are_they.wav",
 "bot/where_could_they_be.wav",
-"bot/you_heard_the_man_lets_go.wav"}
+"bot/you_heard_the_man_lets_go.wav" }
 
-GM.Radio[ VO_IDLE ] = {"bot/ahh_negative.wav",
+GM.Radio[ VO_IDLE ] = { "bot/ahh_negative.wav",
 "bot/all_quiet.wav",
 "bot/anyone_see_anything.wav",
 "bot/anyone_see_them.wav",
 "bot/area_clear.wav",
 "bot/far_side.wav",
-"bot/guarding_the_escape_zone.wav",
-"bot/guarding_the_escape_zone2.wav",
-"bot/heading_to_the_escape_zone.wav",
-"bot/heading_to_the_rescue_zone.wav",
 "bot/ill_go_too.wav",
 "bot/im_coming.wav",
-"bot/im_going_to_cover_the_escape_zone.wav",
-"bot/im_going_to_keep_an_eye_on_the_escape.wav",
-"bot/im_going_to_keep_an_eye_on_the_rescue.wav",
 "bot/im_going_to_wait_here.wav",
-"bot/im_going_to_watch_the_escape_zone.wav",
-"bot/im_going_to_watch_the_rescue_zone.wav",
 "bot/im_gonna_hang_back.wav",
 "bot/im_waiting_here.wav",
 "bot/im_with_you.wav",
@@ -223,10 +214,20 @@ GM.Radio[ VO_IDLE ] = {"bot/ahh_negative.wav",
 "bot/on_my_way2.wav",
 "bot/report_in_team.wav",
 "bot/reporting_in.wav",
-"bot/rescue_zone.wav",
-"bot/theres_nobody_home.wav",
+"bot/theres_nobody_home.wav" }
+
+GM.Radio[ VO_EVAC ] = { "bot/guarding_the_escape_zone.wav",
+"bot/guarding_the_escape_zone2.wav",
+"bot/heading_to_the_escape_zone.wav",
+"bot/heading_to_the_rescue_zone.wav",
+"bot/im_going_to_cover_the_escape_zone.wav",
+"bot/im_going_to_keep_an_eye_on_the_escape.wav",
+"bot/im_going_to_keep_an_eye_on_the_rescue.wav",
+"bot/im_going_to_watch_the_escape_zone.wav",
+"bot/im_going_to_watch_the_rescue_zone.wav",
 "bot/watching_the_escape_route.wav",
-"bot/watching_the_escape_zone.wav"}
+"bot/watching_the_escape_zone.wav",
+"bot/rescue_zone.wav" }
 
 GM.VoiceStart = { "npc/metropolice/vo/off1.wav",
 "npc/metropolice/vo/off4.wav" }
@@ -350,8 +351,29 @@ GM.Thunder = { "ambient/weather/thunder1.wav",
 "ambient/atmosphere/thunder4.wav",
 "ambient/water/distant_wave1.wav",
 "ambient/water/distant_wave2.wav",
-"ambient/water/distant_wave3.wav",
 "ambient/levels/streetwar/city_battle17.wav" }
+
+GM.Wind = { "ambient/water/distant_wave3.wav",
+"ambient/wind/wind_hit1.wav",
+"ambient/wind/wind_hit2.wav",
+"ambient/wind/wind_hit3.wav",
+"ambient/wind/wind_med1.wav",
+"ambient/wind/wind_med2.wav",
+"ambient/wind/wind_moan1.wav",
+"ambient/wind/wind_moan2.wav",
+"ambient/wind/wind_moan4.wav",
+"ambient/wind/wind_snippet1.wav",
+"ambient/wind/wind_snippet2.wav",
+"ambient/wind/wind_snippet3.wav",
+"ambient/wind/wind_snippet4.wav",
+"ambient/wind/wind_snippet5.wav",
+"ambient/wind/windgust.wav",
+"ambient/wind/windgust_strong.wav",
+"ambient/wind/smallgust.wav",
+"ambient/wind/smallgust2.wav",
+"ambient/wind/wind_gust_2.wav",
+"ambient/wind/wind_gust_8.wav",
+"ambient/wind/wind_gust_10.wav" }
 
 GM.Corpses = {"models/gibs/fast_zombie_torso.mdl",
 "models/gibs/fast_zombie_legs.mdl",

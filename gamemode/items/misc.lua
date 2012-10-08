@@ -93,11 +93,130 @@ function FUNC_SPACEBEER( ply, id, client, icon )
 	
 	ply:RemoveFromInventory( id )
 	ply:EmitSound( table.Random{ "npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav" }, 100, math.random( 90, 110 ) )
-	ply:Notice( "+10 Drunkness", GAMEMODE.Colors.Red )
+	ply:Notice( "+15 Drunkness", GAMEMODE.Colors.Red )
 	
 	umsg.Start( "Drunk", ply )
-    umsg.Short( 10 )
+    umsg.Short( 15 )
 	umsg.End()
+
+end
+
+function FUNC_UNMUTAGEN( ply, id, client, icon )
+
+	if icon then return "icon16/pill.png" end
+	if client then return "Inject" end
+	
+	ply:RemoveFromInventory( id )
+	ply:EmitSound( "Weapon_SMG1.Special1" )
+	
+	local tbl = {}
+	local inc = 0
+	
+	for i=1,math.random(1,3) do
+	
+		local rand = math.random(1,6)
+		
+		while table.HasValue( tbl, rand ) do
+		
+			rand = math.random(1,6)
+		
+		end
+		
+		table.insert( tbl, rand )
+		
+		if rand == 1 then
+		
+			ply:Notice( "You feel extremely nauseous", GAMEMODE.Colors.Red, 5, inc * 2 )
+		
+			umsg.Start( "Drunk", ply )
+			umsg.Short( 20 )
+			umsg.End()
+		
+		elseif rand == 2 then
+		
+			local rad = math.random(2,5)
+		
+			if math.random(1,2) == 1 then
+		
+				ply:Notice( "+" .. rad .. " Radiation", GAMEMODE.Colors.Red, 5, inc * 2 )
+				ply:AddRadiation( rad )
+				
+			else
+			
+				ply:Notice( "-" .. rad .. " Radiation", GAMEMODE.Colors.Green, 5, inc * 2 )
+				ply:AddRadiation( -rad )
+			
+			end
+		
+		elseif rand == 3 then
+		
+			if math.random(1,2) == 1 then
+		
+				if ply:IsInfected() then
+		
+					ply:Notice( "Your infection has been cured", GAMEMODE.Colors.Green, 5, inc * 2 )
+					ply:SetInfected( false )
+					
+				end
+				
+			else
+			
+				if not ply:IsInfected() then
+			
+					ply:Notice( "You were infected by the drug", GAMEMODE.Colors.Red, 5, inc * 2 )
+					ply:SetInfected( true )
+					
+				end
+			
+			end
+		
+		elseif rand == 4 then
+		
+			if math.random(1,2) == 1 then
+		
+				ply:Notice( "You feel exhausted", GAMEMODE.Colors.Red, 5, inc * 2 )
+				ply:AddStamina( -50 )
+				
+			else
+			
+				ply:Notice( "+20 Stamina", GAMEMODE.Colors.Green, 5, inc * 2 )
+				ply:AddStamina( 20 )
+			
+			end
+		
+		elseif rand == 5 then
+		
+			ply:Notice( "Your body begins to ache", GAMEMODE.Colors.Red, 5, inc * 2 )
+			
+			local dmg = math.random(2,5)
+			
+			ply:AddHealth( dmg * -10 )
+			
+			if math.random(1,20) == 1 then
+			
+				local dietime = math.random( 30, 120 )
+			
+				timer.Simple( dietime - 5, function() ply:Notice( "You feel a sharp pain in your chest", GAMEMODE.Colors.Red, 5 ) end )
+				timer.Simple( dietime, function() ply:Kill() end )
+			
+			end
+		
+		elseif rand == 6 then
+		
+			ply:Notice( "Your legs begin to feel weak", GAMEMODE.Colors.Red, 5, inc * 2 )
+			ply:SetWalkSpeed( GAMEMODE.WalkSpeed - 80 )
+			ply:SetRunSpeed( GAMEMODE.RunSpeed - 80 )
+			
+			local legtime = math.random( 20, 60 )
+			
+			timer.Simple( legtime - 5, function() if IsValid( ply ) and ply:Team() == TEAM_ARMY then ply:Notice( "Your legs start to feel better", GAMEMODE.Colors.Green, 5 ) end end )
+			timer.Simple( legtime, function() if IsValid( ply ) and ply:Team() == TEAM_ARMY then ply:SetWalkSpeed( GAMEMODE.WalkSpeed ) ply:SetRunSpeed( GAMEMODE.RunSpeed ) end end )
+		
+		end
+		
+		inc = inc + 1
+		
+	end
 
 end
 
@@ -185,6 +304,20 @@ item.Register( {
 } )
 
 item.Register( { 
+	Name = "Unstable Mutagen", 
+	Description = "Prototype drug which may cure the infection.",
+	Stackable = true, 
+	Type = ITEM_LOOT,
+	Weight = 0.30, 
+	Price = 50,
+	Rarity = 0.95,
+	Model = "models/healthvial.mdl",
+	Functions = { FUNC_UNMUTAGEN },
+	CamPos = Vector(-16,0,8),
+	CamOrigin = Vector(0,0,5)	
+} )
+
+item.Register( { 
 	Name = "Beer", 
 	Description = "Restores 15 stamina.",
 	Stackable = true, 
@@ -205,7 +338,7 @@ item.Register( {
 	Type = ITEM_LOOT,
 	Weight = 0.30, 
 	Price = 5,
-	Rarity = 0.95,
+	Rarity = 0.85,
 	Model = "models/props_junk/glassjug01.mdl",
 	Functions = { FUNC_SPACEBEER },
 	CamPos = Vector(19,0,6),

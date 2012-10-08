@@ -80,6 +80,12 @@ function GM:RandomizeWeather( force )
 		if math.random(1,5) > 1 then
 	
 			GAMEMODE.Weather.New[k] = math.Rand(0,1)
+			
+			if math.random(1,5) == 1 then
+			
+				GAMEMODE.Weather.New[k] = 1
+			
+			end
 		
 		end
 	
@@ -97,7 +103,7 @@ function GM:RandomizeWeather( force )
 	
 	end
 	
-	if count == 4 or math.random(1,15) == 1 then
+	if count == 4 or math.random(1,10) == 1 then
 	
 		GAMEMODE.Weather.New.Rain = 1
 		GAMEMODE.Weather.New.Thunder = 1
@@ -188,6 +194,7 @@ function GM:ProcessWeather()
 	GAMEMODE:RainThink()
 	GAMEMODE:ThunderThink()
 	GAMEMODE:LightningThink()
+	GAMEMODE:WindThink()
 
 	if GAMEMODE.Weather.Transition then
 	
@@ -241,14 +248,14 @@ function GM:PaintWeather()
 			
 		end
 		
+		if GAMEMODE.RainRefract == 0 then return end
+		
 		render.UpdateScreenEffectTexture()
 
 		RainMat:SetFloat( "$envmap", 0 )
 		RainMat:SetFloat( "$envmaptint", 0 )
 		RainMat:SetFloat( "$refractamount", GAMEMODE.RainRefract )
 		RainMat:SetInt( "$ignorez", 1 )
-
-		if GAMEMODE.RainRefract == 0 then return end
 		
 		render.SetMaterial( RainMat )
 		render.DrawScreenQuad()
@@ -423,6 +430,19 @@ function GM:LightningThink()
         GAMEMODE.SkyMat[4] = Material("skybox/" .. skyname .. "rt")
         GAMEMODE.SkyMat[5] = Material("skybox/" .. skyname .. "bk")
         GAMEMODE.SkyMat[6] = Material("skybox/" .. skyname .. "ft")
+		
+		GAMEMODE.OldSky = {}
+		GAMEMODE.LitUp = {}
+		
+		skyname = "sky_day01_01"
+		
+		GAMEMODE.NewSky = {}
+		GAMEMODE.NewSky[1] = Material("skybox/" .. skyname .. "up")
+        GAMEMODE.NewSky[2] = Material("skybox/" .. skyname .. "dn")
+        GAMEMODE.NewSky[3] = Material("skybox/" .. skyname .. "lf")
+        GAMEMODE.NewSky[4] = Material("skybox/" .. skyname .. "rt")
+        GAMEMODE.NewSky[5] = Material("skybox/" .. skyname .. "bk")
+        GAMEMODE.NewSky[6] = Material("skybox/" .. skyname .. "ft")
                                         
 	end
 	
@@ -430,19 +450,19 @@ function GM:LightningThink()
 	
 		if not GAMEMODE.FlashInterval then
 		
-			GAMEMODE.FlashInterval = CurTime() + math.Rand( 1, 3 )
-			GAMEMODE.FlashTime = CurTime() + math.Rand( 0, 0.3 )
+			GAMEMODE.FlashInterval = CurTime() + math.Rand( 1.0, 2.5 )
+			GAMEMODE.FlashTime = CurTime() + math.Rand( 0, 0.2 )
 			GAMEMODE.FlashToggle = CurTime() + math.Rand( 0, 0.8 )
 			
-			sound.Play( table.Random( GAMEMODE.Thunder ), LocalPlayer():GetPos(), 150, math.random( 80, 110 ), 0.2 )
+			sound.Play( table.Random( GAMEMODE.Thunder ), LocalPlayer():GetShootPos(), 150, math.random( 80, 110 ), 0.2 )
 		
 		end
 		
-		GAMEMODE:LightUpSky( GAMEMODE.FlashTime > CurTime() )
+		GAMEMODE:LightUpSky( GAMEMODE.FlashTime >= CurTime() )
 		
 		if GAMEMODE.FlashToggle < CurTime() then
 		
-			GAMEMODE.FlashTime = CurTime() + math.Rand( 0, 0.3 )
+			GAMEMODE.FlashTime = CurTime() + math.Rand( 0, 0.2 )
 			GAMEMODE.FlashToggle = CurTime() + math.Rand( 0, 0.8 )
 		
 		end
@@ -451,6 +471,7 @@ function GM:LightningThink()
 		
 			GAMEMODE.FlashInterval = nil
 			GAMEMODE.NextLightning = CurTime() + math.random( 4, 8 + ( 1.0 - GAMEMODE.Weather.Lightning ) * 50 ) 
+			GAMEMODE:LightUpSky( false )
 		
 		end
 	
@@ -464,7 +485,14 @@ function GM:LightUpSky( bool )
 	
 		for k,v in pairs( GAMEMODE.SkyMat ) do
 	
-			v:SetInt( "$fullbright", 1 )
+			if not GAMEMODE.LitUp[k] then
+	
+				GAMEMODE.OldSky[k] = v:GetTexture( "$basetexture" )
+				GAMEMODE.LitUp[k] = true
+				
+				v:SetTexture( "$basetexture", GAMEMODE.NewSky[k]:GetTexture( "$basetexture" ) )
+			
+			end
 		
 		end
 	
@@ -472,9 +500,38 @@ function GM:LightUpSky( bool )
 	
 		for k,v in pairs( GAMEMODE.SkyMat ) do
 	
-			v:SetInt( "$fullbright", 0 )
+			if GAMEMODE.LitUp and GAMEMODE.LitUp[k] then
+	
+				GAMEMODE.LitUp[k] = false
+				
+				v:SetTexture( "$basetexture", GAMEMODE.OldSky[k] )
+				
+			end
 		
 		end
+	
+	end
+
+end
+
+function GM:WindThink()
+
+	if GAMEMODE.Weather.Wind == 0 then return end
+	
+	if ( GAMEMODE.NextWind or 0 ) < CurTime() then 
+		
+		local vol = math.max( GAMEMODE.Weather.Wind, 0.2 )
+		local snd = table.Random( GAMEMODE.Wind )
+		
+		if GAMEMODE.PlayerIsIndoors then
+		
+			vol = 0.1
+		
+		end
+		
+		sound.Play( snd, LocalPlayer():GetShootPos(), 150, math.random( 80, 110 ), vol )
+		
+		GAMEMODE.NextWind = CurTime() + math.random( 1, SoundDuration( snd ) + ( 1.0 - GAMEMODE.Weather.Wind ) * 30 + math.Rand( -2, 2 ) )
 	
 	end
 
@@ -496,7 +553,7 @@ function GM:ThunderThink()
 		
 		end
 		
-		sound.Play( table.Random( GAMEMODE.Thunder ), LocalPlayer():GetPos(), 150, math.random( 80, 110 ), vol )
+		sound.Play( table.Random( GAMEMODE.Thunder ), LocalPlayer():GetShootPos(), 150, math.random( 80, 110 ), vol )
 	
 	end
 

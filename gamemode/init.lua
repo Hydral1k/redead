@@ -81,7 +81,7 @@ function GM:Initialize()
 	
 	timer.Simple( 110, function() GAMEMODE:PickLord( true ) end )
 	
-	timer.Simple( length - 60, function() for k,v in pairs( player.GetAll() ) do v:ClientSound( GAMEMODE.LastMinute ) v:Notice( "The evac chopper is en route", GAMEMODE.Colors.White, 5 ) end end )
+	timer.Simple( length - 60, function() GAMEMODE.EvacAlert = true for k,v in pairs( player.GetAll() ) do v:ClientSound( GAMEMODE.LastMinute ) v:Notice( "The evac chopper is en route", GAMEMODE.Colors.White, 5 ) end end )
 	
 	timer.Simple( length - 40, function() 
 									for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do 
@@ -1024,7 +1024,7 @@ function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 			ent:VoiceSound( table.Random( GAMEMODE.Pain ) )
 			ent:DrawBlood()
 			
-			if math.random(1,3) == 1 then
+			if math.random(1,5) == 1 then
 			
 				ent:RadioSound( VO_PAIN )
 			

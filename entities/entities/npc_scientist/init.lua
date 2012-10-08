@@ -132,6 +132,18 @@ function ENT:OnDeath( dmginfo )
 		prop:Spawn()
 	
 	end
+	
+	if math.random(1,10) == 1 then
+	
+		local model = table.Random{ "models/healthvial.mdl", "models/items/healthkit.mdl" }
+	
+		local prop = ents.Create( "prop_physics" )
+		prop:SetPos( self.Entity:GetPos() + Vector(0,0,30) + VectorRand() * 5 )
+		prop:SetModel( model )
+		prop:SetCollisionGroup( COLLISION_GROUP_WEAPON )
+		prop:Spawn()
+	
+	end
 
 end
 

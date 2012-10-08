@@ -16,6 +16,7 @@ VO_PAIN = 2
 VO_TAUNT = 3
 VO_ALERT = 4
 VO_IDLE = 5
+VO_EVAC = 6
 
 // Class types for humans
 

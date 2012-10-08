@@ -7,7 +7,7 @@ EVENT.Types = {}
 EVENT.Types[1] = "rain"
 EVENT.Types[2] = "thunder"
 EVENT.Types[3] = "lightning"
-EVENT.Types[4] = "wind"
+EVENT.Types[4] = "strong winds"
 
 function EVENT:Start()
 

@@ -122,7 +122,7 @@ function ENT:DoDeath( dmginfo )
 		
 		if IsValid( ent1 ) then
 		
-			if math.random(1,10) == 1 then
+			if math.random(1,40) == 1 then
 		
 				ent1:RadioSound( VO_TAUNT )
 				

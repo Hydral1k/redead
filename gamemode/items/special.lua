@@ -2,10 +2,10 @@
 // This is the ID given to any item that is a SPECIALIST supply
 ITEM_SPECIAL = 3
 
-function FUNC_ANTIRAD( ply, id, client )
+function FUNC_ANTIRAD( ply, id, client, icon )
 
 	if icon then return "icon16/pill.png" end
-	if client then return "Use" end
+	if client then return "Inject" end
 	
 	ply:RemoveFromInventory( id )
 	ply:EmitSound( "Weapon_SMG1.Special1" )
@@ -35,10 +35,10 @@ item.Register( {
 	Weight = 0.15, 
 	Price = 15,
 	Rarity = 0.30,
-	Model = "models/healthvial.mdl",
+	Model = "models/props_lab/jar01b.mdl",
 	Functions = { FUNC_ANTIRAD },
-	CamPos = Vector(-16,0,8),
-	CamOrigin = Vector(0,0,5)	
+	CamPos = Vector(-17,-9,0),
+	CamOrigin = Vector(0,0,-1)	
 } )
 
 item.Register( { 

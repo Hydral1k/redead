@@ -547,7 +547,7 @@ function GM:SpawnRagdolls()
 	
 end
 
-function DrawBar( x, y, w, h, value, maxvalue, icon, colorlight, colordark )
+function DrawBar( x, y, w, h, value, maxvalue, icon, colorlight, colordark, hp )
 
 	draw.RoundedBox( 4, x - 1, y, h + 1, h, Color( 0, 0, 0, 180 ) )
 	
@@ -564,7 +564,22 @@ function DrawBar( x, y, w, h, value, maxvalue, icon, colorlight, colordark )
 	for i=1, value do
 	
 		draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, h - 6, colordark )
-		draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * 0.5 ) - 3, colorlight )
+		
+		if hp then
+		
+			if i % 6 == 0 or ( i + 1 ) % 6 == 0 or ( i + 2 ) % 6 == 0 then
+				
+				draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * ( math.sin( CurTime() * 3 + i ) * 0.2 + 0.5 ) ) - 3, colorlight )
+				
+			end
+		
+			draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * 0.4 ) - 3, colorlight )
+		
+		else
+		
+			draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * ( math.sin( ( CurTime() * 0.1 + i * 0.5 ) ) * ( math.sin( CurTime() ) * 0.15 ) + 0.5 ) ) - 3, colorlight )
+			
+		end
 	
 	end
 
@@ -764,7 +779,7 @@ function GM:HUDPaint()
 			
 			end
 			
-			draw.SimpleText( "DEATH IS A BITCH, AIN'T IT", "DeathFont", ScrW() * 0.5, ScrH() * 0.9, Color( 255, 0, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+			draw.SimpleText( DeathScreenText or "POOP", "DeathFont", ScrW() * 0.5, ScrH() * 0.9, Color( 255, 0, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
 		
 		end
 	
@@ -777,11 +792,11 @@ function GM:HUDPaint()
 	local xpos = 5
 	local ypos = ScrH() - 5 - ylen
 	
-	DrawBar( xpos, ypos, xlen, ylen, LocalPlayer():Health(), 150, matHealth, Color( 225, 40, 40, 255 ), Color( 175, 20, 20, 255 ) )
+	DrawBar( xpos, ypos, xlen, ylen, LocalPlayer():Health(), 150, matHealth, Color( 225, 40, 40, 255 ), Color( 175, 20, 20, 255 ), true )
 	
 	ypos = ScrH() - 10 - ylen * 2
 	
-	DrawBar( xpos, ypos, xlen, ylen, LocalPlayer():GetNWInt( "Stamina", 0 ), 150, matStamina, Color( 40, 80, 225, 255 ), Color( 20, 40, 175, 255 ) )
+	DrawBar( xpos, ypos, xlen, ylen, LocalPlayer():GetNWInt( "Stamina", 0 ), 150, matStamina, Color( 40, 80, 225, 255 ), Color( 20, 40, 175, 255 ), false )
 	
 	local tbl = GAMEMODE:GetAfflictions()
 	
@@ -973,8 +988,11 @@ usermessage.Hook( "ScreamHit", ScreamHit )
 
 function DeathScreen( msg )
 
+	local dteam = msg:ReadShort()
+
 	DeathScreenScale = 0
 	DeathScreenTime = CurTime() + 15
+	DeathScreenText = table.Random( GAMEMODE.DeathScreenText[ dteam or TEAM_ARMY ] )
 	
 end
 usermessage.Hook( "DeathScreen", DeathScreen )

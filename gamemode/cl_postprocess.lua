@@ -121,7 +121,7 @@ function GM:RenderScreenspaceEffects()
 	
 	DrawColorModify( MixedColorMod )
 	DrawLaser()
-	//DrawPlayerRenderEffects()
+	DrawPlayerRenderEffects()
 	
 end
 
@@ -182,7 +182,7 @@ function RotateAroundCoord( x, y, speed, dist )
 end
 
 local MaterialVision = Material( "toxsin/allyvision" )
-local MaterialItem = Material( "toxsin/allyvision" )
+//local MaterialItem = Material( "toxsin/allyvision" )
 
 function DrawPlayerRenderEffects()
 	
@@ -192,7 +192,7 @@ function DrawPlayerRenderEffects()
 	
 	cam.Start3D( EyePos(), EyeAngles() )
 	
-	if IsValid( TargetedEntity ) and table.HasValue( ValidTargetEnts, TargetedEntity:GetClass() ) then
+	--[[if IsValid( TargetedEntity ) and table.HasValue( ValidTargetEnts, TargetedEntity:GetClass() ) then // halos replaced this
 	
 		if TargetedEntity:GetPos():Distance( LocalPlayer():GetPos() ) < 500 then
 		
@@ -216,11 +216,11 @@ function DrawPlayerRenderEffects()
 		
 		end
 	
-	end
+	end]]
 	
-	for k,v in pairs( player.GetAll() ) do
+	for k,v in pairs( GAMEMODE:GetHighlightedUnits() ) do
 		
-		if ( v:IsPlayer() and v:Alive() and v != LocalPlayer() and v:Team() == TEAM_ARMY ) then
+		if ( v:IsPlayer() and v:Alive() and v != LocalPlayer() ) or v:IsNPC() then
 			
 			local scale = ( math.Clamp( v:GetPos():Distance( LocalPlayer():GetPos() ), 500, 3000 ) - 500 ) / 2500
 
@@ -345,7 +345,7 @@ function GM:PreDrawHalos()
 
 	if LocalPlayer():Team() != TEAM_ZOMBIES and LocalPlayer():Team() != TEAM_ARMY then return end
 	
-	for k,v in pairs( GAMEMODE:GetHighlightedUnits() ) do
+	--[[for k,v in pairs( GAMEMODE:GetHighlightedUnits() ) do
 		
 		if ( ( v:IsPlayer() and v:Alive() and v != LocalPlayer() ) or ( v:IsNPC() and not v.Ragdolled ) ) then
 		
@@ -356,11 +356,11 @@ function GM:PreDrawHalos()
 		
 				if LocalPlayer():Team() == TEAM_ARMY then
 				
-					halo.Add( {v}, Color( 0, 200, 200, 200 * scale ), 2, 2, 1, 1, true ) // removed till garry fixes
+					//halo.Add( {v}, Color( 0, 200, 200, 200 * scale ), 2, 2, 1, 1, true ) // removed till garry optimizes this
 				
 				else
 				
-					--halo.Add( {v}, Color( 200, 0, 0, 200 * scale ), 2, 2, 1, 1, false )
+					//halo.Add( {v}, Color( 200, 0, 0, 200 * scale ), 2, 2, 1, 1, false )
 				
 				end
 				
@@ -368,7 +368,7 @@ function GM:PreDrawHalos()
 
 		end
 		
-	end
+	end]]
 	
 	if LocalPlayer():Team() == TEAM_ARMY then
 	
@@ -414,7 +414,7 @@ function GM:CalcView( ply, origin, angle, fov )
 	
 	if scale > 0 and LocalPlayer():Alive() then
 	
-		wobble = 0.3 * scale
+		wobble = scale * 0.3
 		
 	end
 	
@@ -425,7 +425,7 @@ function GM:CalcView( ply, origin, angle, fov )
 		if ( DrunkTimer or 0 ) < CurTime() then
 		
 			Drunkness = math.Clamp( Drunkness - 1, 0, 20 )
-			DrunkTimer = CurTime() + 10
+			DrunkTimer = CurTime() + 15
 		
 		end
 		
@@ -440,7 +440,7 @@ function GM:CalcView( ply, origin, angle, fov )
 		
 	end
 	
-	ViewWobble = math.Approach( ViewWobble - 0.05 * FrameTime(), wobble, FrameTime() * 0.25 ) 
+	ViewWobble = math.Approach( ViewWobble, wobble, FrameTime() * 0.1 ) 
 	
 	if ply:Alive() then
 	
