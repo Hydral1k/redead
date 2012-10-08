@@ -92,8 +92,8 @@ function meta:RadioSound( vtype, override )
 		local sound = table.Random( GAMEMODE.Radio[ vtype ] )
 		
 		self:EmitSound( table.Random( GAMEMODE.VoiceStart ), math.random( 90, 110 ) )
-		timer.Simple( 0.2, function() if IsValid( self ) and self:Alive() then self:EmitSound( sound, 90 ) end end )
-		timer.Simple( SoundDuration( sound ) + math.Rand( 0.6, 0.8 ), function() if IsValid( self ) and self:Alive() then self:EmitSound( table.Random( GAMEMODE.VoiceEnd ), math.random( 90, 110 ) ) end end )
+		timer.Simple( 0.2, function() if IsValid( self ) then self:EmitSound( sound, 90 ) end end )
+		timer.Simple( SoundDuration( sound ) + math.Rand( 0.6, 0.8 ), function() if IsValid( self ) then self:EmitSound( table.Random( GAMEMODE.VoiceEnd ), math.random( 90, 110 ) ) end end )
 				
 		self.RadioTimer = CurTime() + SoundDuration( sound ) + 1
 	
@@ -350,7 +350,7 @@ function meta:SetInfected( bool )
 	
 		self:NoticeOnce( "You have been infected by the undead", GAMEMODE.Colors.Red, 5 )
 		self:NoticeOnce( "You can cure infection with the antidote", GAMEMODE.Colors.Blue, 5, 2 )
-		self:NoticeOnce( "The antidote location is marked on the radar", GAMEMODE.Colors.Blue, 5, 4 )
+		self:NoticeOnce( "The antidote location is marked on your screen", GAMEMODE.Colors.Blue, 5, 4 )
 		
 		self:AddStat( "Infections" )
 	
@@ -387,34 +387,6 @@ end
 
 function meta:ViewBounce( scale )
 	self:ViewPunch( Angle( math.Rand( -0.2, -0.1 ) * scale, math.Rand( -0.05, 0.05 ) * scale, 0 ) )
-end
-
-function meta:SetRadarStaticTarget( ent )
-
-	self:SetDTEntity( 0, ent )
-	
-	umsg.Start( "StaticTarget", self )
-	
-	if ent == NULL then
-	
-		umsg.Vector( Vector(0,0,0) )
-		
-	else
-	
-		umsg.Vector( ent:GetPos() )
-	
-	end
-	
-	umsg.End()
-	
-end
-
-function meta:SetRadarTarget( ent )
-	self:SetDTEntity( 0, ent )
-end
-
-function meta:GetRadarTarget()
-	return self:GetDTEntity( 0 ) or NULL
 end
 
 function meta:SetPlayerClass( num )
@@ -772,7 +744,7 @@ function meta:Think()
 				
 				self:ViewBounce( math.random(10,15) )
 				self:AddHealth( -5 )
-				self:AddStamina( -1 )
+				self:AddStamina( -2 )
 				
 			end
 			
@@ -806,7 +778,7 @@ function meta:Think()
 				
 				end
 			
-			elseif not self:IsBleeding() and self:GetRadiation() < 1 then // health regen only works if you arent affected by anything
+			elseif not self:IsBleeding() and self:GetRadiation() < 1 and self:Health() > 50 then // health regen only works if you arent affected by anything and >50 hp
 			
 				self:AddHealth( 1 )
 			
@@ -846,22 +818,24 @@ function meta:Think()
 		
 		if self:KeyDown( IN_SPEED ) and self:GetVelocity():Length() > 1 then
 			
-			self:AddStamina( -2 )
-			self.StamTime = CurTime() + 0.35
+			self:AddStamina( -1 )
+			self.StamTime = CurTime() + 0.2
 		
 		elseif self:GetRadiation() < 1 then
 		
 			self:AddStamina( 1 )
-		
+			
 			if self:GetPlayerClass() == CLASS_SCOUT then
-			
+				
 				self.StamTime = CurTime() + 0.85
-			
+				
 			end
 						
-			if self:GetStamina() <= 10 then
+			if self:GetStamina() <= 50 then
 			
-				self.StamTime = CurTime() + 1.75
+				self.StamTime = CurTime() + 1.35
+				self:NoticeOnce( "Your stamina has dropped below 30%", GAMEMODE.Colors.Red, 5 )
+				self:NoticeOnce( "Stamina replenishes slower when below 30%", GAMEMODE.Colors.Blue, 5, 2 )
 			
 			end
 			
@@ -1345,6 +1319,10 @@ function meta:OnDeath()
 			local ed = EffectData()
 			ed:SetOrigin( self.Entity:GetPos() )
 			util.Effect( "puke_explosion", ed, true, true )
+		
+		elseif self:GetPlayerClass() == CLASS_LEAPER then
+		
+			self:SetModel( "models/player/zombiefast.mdl" )
 		
 		end
 	

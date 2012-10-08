@@ -19,7 +19,7 @@ if CLIENT then
 end
 
 SWEP.Base = "rad_z_base"
-
+SWEP.HoldType = "zombie"
 SWEP.ViewModel = "models/Zed/weapons/v_ghoul.mdl"
 
 SWEP.Taunt = {"npc/zombie/zombie_voice_idle1.wav",
@@ -43,7 +43,7 @@ SWEP.Die = { "npc/zombie/zombie_die1.wav",
 
 SWEP.Primary.Sound			= Sound( "npc/zombie/zombie_pain1.wav" )
 SWEP.Primary.Recoil			= 3.5
-SWEP.Primary.Damage			= 50
+SWEP.Primary.Damage			= 45
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Delay			= 1.800
 

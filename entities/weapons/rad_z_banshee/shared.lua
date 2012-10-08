@@ -32,7 +32,7 @@ SWEP.Primary.Hit            = Sound( "npc/antlion/shell_impact3.wav" )
 SWEP.Primary.HitFlesh		= Sound( "npc/antlion/foot4.wav" )
 SWEP.Primary.Sound			= Sound( "npc/zombie/zo_attack1.wav" )
 SWEP.Primary.Recoil			= 3.5
-SWEP.Primary.Damage			= 60
+SWEP.Primary.Damage			= 25
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Delay			= 1.800
 
@@ -198,7 +198,9 @@ function SWEP:MeleeTrace( dmg )
 						prop:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 						prop:Spawn()
 						
-						local dir = ( ent:GetPos() - self.Owner:GetPos() ):Normalize()
+						local dir = ( ent:GetPos() - self.Owner:GetPos() )
+						dir = ( dir or VectorRand() ):Normalize() 
+						
 						local phys = prop:GetPhysicsObject()
 						
 						if IsValid( phys ) then

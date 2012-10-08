@@ -18,12 +18,11 @@ if CLIENT then
 	
 end
 
-SWEP.HoldType = "slam"
-
 SWEP.Base = "rad_z_base"
+SWEP.HoldType = "slam"
+SWEP.ViewModel = "models/Zed/weapons/v_wretch.mdl"
 
 SWEP.Taunt = { "npc/fast_zombie/fz_frenzy1.wav",
-"npc/fast_zombie/fz_scream1.wav",
 "npc/barnacle/barnacle_pull1.wav",
 "npc/barnacle/barnacle_pull2.wav",
 "npc/barnacle/barnacle_pull3.wav",
@@ -32,18 +31,61 @@ SWEP.Taunt = { "npc/fast_zombie/fz_frenzy1.wav",
 SWEP.Die = { "npc/fast_zombie/fz_alert_close1.wav",
 "npc/fast_zombie/fz_alert_far1.wav" }
 
+SWEP.Scream = Sound( "npc/fast_zombie/fz_scream1.wav" )
+
 SWEP.Primary.Hit            = Sound( "npc/zombie/claw_strike1.wav" )
 SWEP.Primary.HitFlesh		= Sound( "npc/zombie/claw_strike2.wav" )
 SWEP.Primary.Sound			= Sound( "npc/fast_zombie/wake1.wav" )
 SWEP.Primary.Miss           = Sound( "npc/zombie/claw_miss1.wav" )
 SWEP.Primary.Recoil			= 3.5
-SWEP.Primary.Damage			= 20
+SWEP.Primary.Damage			= 15
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Delay			= 1.300
 
 SWEP.Primary.ClipSize		= 1
 SWEP.Primary.Automatic		= true
 
+SWEP.JumpTime = 0
+
+function SWEP:Deploy()
+
+	self.Owner:DrawWorldModel( false )
+	
+	if SERVER then
+	
+		self.Weapon:NoobHelp()
+	
+	end
+	
+	return true
+
+end
+
+function SWEP:Think()	
+
+	if self.ThinkTime != 0 and self.ThinkTime < CurTime() then
+	
+		self.Weapon:MeleeTrace( self.Primary.Damage )
+		
+		self.ThinkTime = 0
+	
+	end
+	
+	if CLIENT then return end
+	
+	if self.JumpTime < CurTime() and self.Owner:KeyDown( IN_SPEED ) then
+	
+		local vec = self.Owner:GetAimVector()
+		vec.z = math.Clamp( vec.z, 0.25, 0.75 )
+	
+		self.JumpTime = CurTime() + 8
+	
+		self.Owner:SetVelocity( vec * 1000 )
+		self.Owner:EmitSound( self.Scream, 100, math.random( 90, 110 ) )
+	
+	end
+
+end
 
 function SWEP:NoobHelp()
 
@@ -57,7 +99,7 @@ function SWEP:MeleeTrace( dmg )
 	
 	if CLIENT then return end
 	
-	self.Weapon:SetNWString( "CurrentAnim", "zattack" .. math.random(1,3) )
+	//self.Weapon:SetNWString( "CurrentAnim", "zattack" .. math.random(1,3) )
 	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 	
 	local pos = self.Owner:GetShootPos()
@@ -131,7 +173,9 @@ function SWEP:MeleeTrace( dmg )
 						prop:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 						prop:Spawn()
 						
-						local dir = ( ent:GetPos() - self.Owner:GetPos() ):Normalize()
+						local dir = ( ent:GetPos() - self.Owner:GetPos() )
+						dir = ( dir or VectorRand() ):Normalize() 
+						
 						local phys = prop:GetPhysicsObject()
 						
 						if IsValid( phys ) then

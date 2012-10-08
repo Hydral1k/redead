@@ -45,6 +45,10 @@ function GM:Move( ply, mv )
 		
 		end
 	
+	elseif ply:GetModel() == "models/zombie/fast.mdl" or ply:GetModel() == "models/player/zombie_classic.mdl" then
+	
+		mv:SetSideSpeed( 0 )
+	
 	end
 	
 	return self.BaseClass:Move( ply, mv )
@@ -59,6 +63,74 @@ function GM:PlayerNoClip( pl, on )
 	
 	return false
 	
+end
+
+function GM:CalcMainActivity( ply, vel )
+
+	if ply:Team() == TEAM_ZOMBIES and ply:GetModel() == "models/zombie/fast.mdl" then
+	
+		local act = ACT_IDLE
+		
+		if ply:GetVelocity():Length() > 0 then
+
+			act = ACT_RUN
+
+		end
+		
+		if not ply:OnGround() then
+
+			act = ACT_JUMP //ACT_MELEE_ATTACK1
+
+		end
+
+		return act, -1
+	
+	end
+
+    self.BaseClass:CalcMainActivity( ply, vel )
+
+end
+
+function GM:UpdateAnimation( ply, vel, speed )
+
+	if ply:Team() == TEAM_ZOMBIES and ply:GetModel() == "models/zombie/fast.mdl" then
+
+		if CLIENT then
+
+			if ply:GetPoseParameter( "aim_yaw" ) == 0 then
+
+				local ang = ply:EyeAngles()
+
+				ply:SetRenderAngles( ang )
+
+			end
+
+		end
+		
+		if ply:OnGround() then
+
+			if ply:KeyDown( IN_BACK ) then
+
+				ply:SetPlaybackRate( -1.0 )
+
+			else
+
+				ply:SetPlaybackRate( 1.0 )
+
+			end
+
+		else
+
+			ply:SetPlaybackRate( 0.2 )
+
+		end
+		
+		if ply:GetVelocity():Length() > 0 then return end
+		
+	end
+
+	self.BaseClass:UpdateAnimation( ply, vel, speed )
+
 end
 
 function IncludeItems()

@@ -65,7 +65,7 @@ function GM:GetEntityID( ent )
 		
 	elseif ent:GetClass() == "npc_scientist" then
 	
-		TargetedName = "Researcher"
+		TargetedName = "Field Researcher"
 		TargetedEntity = ent
 		TargetedTime = CurTime() + 5
 		TargetedDist = Vector( 0, 0, 40 )
@@ -75,8 +75,22 @@ function GM:GetEntityID( ent )
 		TargetedName = ent:Name()
 		TargetedEntity = ent
 		TargetedTime = CurTime() + 5
-		TargetedDist = Vector( 0, 0, 38 )
+		TargetedDist = Vector( 0, 0, 45 )
 	
+	end
+	
+end
+
+function GM:HUDTraces()
+
+	local tr = util.TraceLine( util.GetPlayerTrace( LocalPlayer() ) )
+	
+	GAMEMODE.LastTraceEnt = tr.Entity
+
+	if IsValid( GAMEMODE.LastTraceEnt ) and GAMEMODE.LastTraceEnt:GetPos():Distance( LocalPlayer():GetPos() ) < 800 then
+	
+		GAMEMODE:GetEntityID( GAMEMODE.LastTraceEnt )
+		
 	end
 	
 end
@@ -86,14 +100,6 @@ function GM:HUDDrawTargetID()
 	if not IsValid( LocalPlayer() ) then return end
 	
 	if not LocalPlayer():Alive() or LocalPlayer():Team() == TEAM_ZOMBIES then return end
-	
-	local tr = util.TraceLine( util.GetPlayerTrace( LocalPlayer() ) )
-	
-	if IsValid( tr.Entity ) and tr.Entity:GetPos():Distance( LocalPlayer():GetPos() ) < 1000 then
-	
-		GAMEMODE:GetEntityID( tr.Entity )
-		
-	end
 	
 	if IsValid( TargetedEntity ) and TargetedTime > CurTime() then
 	

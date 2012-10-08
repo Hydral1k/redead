@@ -33,7 +33,7 @@ item.Register( {
 	Stackable = true, 
 	Type = ITEM_SPECIAL,
 	Weight = 0.15, 
-	Price = 15,
+	Price = 10,
 	Rarity = 0.30,
 	Model = "models/props_lab/jar01b.mdl",
 	Functions = { FUNC_ANTIRAD },
@@ -54,7 +54,7 @@ item.Register( {
 	CamOrigin = Vector(0,0,0)	
 } )
 
-item.Register( { 
+--[[item.Register( { 
 	Name = "Sonar Module", 
 	Description = "Improves your radar detection range.",
 	Stackable = true, 
@@ -68,7 +68,7 @@ item.Register( {
 	CamOrigin = Vector(0,1,-1)		
 } )
 
---[[item.Register( { 
+item.Register( { 
 	Name = "Flare", 
 	Description = "Emits a bright red light.",
 	Stackable = true, 

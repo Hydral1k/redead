@@ -416,8 +416,7 @@ function GM:RespawnAntidote()
 	
 	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do
 	
-		v:Notice( "An antidote resupply has been marked on the radar", GAMEMODE.Colors.White, 5 )
-		v:SetRadarStaticTarget( ent )
+		v:Notice( "The antidote resupply location has changed", GAMEMODE.Colors.White, 5 )
 	
 	end
 
@@ -453,12 +452,6 @@ function GM:SpawnEvac()
 	local evac = ents.Create( "point_evac" )
 	evac:SetPos( pos )
 	evac:Spawn()
-	
-	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do
-	
-		v:SetRadarStaticTarget( evac )
-	
-	end
 
 end
 
@@ -773,7 +766,6 @@ function GM:PlayerSpawn( pl )
 	pl:NoticeOnce( "Press F1 to view the help menu", GAMEMODE.Colors.Blue, 5, 15 )
 	pl:NoticeOnce( "Press F2 to buy items and weapons", GAMEMODE.Colors.Blue, 5, 17 )
 	pl:NoticeOnce( "Press F3 to activate the panic button", GAMEMODE.Colors.Blue, 5, 19 )
-	pl:SetRadarStaticTarget( GAMEMODE.Antidote or NULL )
 	pl:InitializeInventory()
 	pl:OnSpawn()
 	pl:OnLoadout()
@@ -1014,6 +1006,9 @@ function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 	
 	if ent:IsPlayer() and ent:Team() == TEAM_ARMY and IsValid( attacker ) and ( attacker:IsNPC() or ( ( attacker:IsPlayer() and attacker:Team() == TEAM_ZOMBIES ) or ( attacker:IsPlayer() and attacker == ent ) ) ) then
 	
+		ent:NoticeOnce( "Your health has dropped below 30%", GAMEMODE.Colors.Red, 5 )
+		ent:NoticeOnce( "Health doesn't regenerate when below 30%", GAMEMODE.Colors.Blue, 5, 2 )
+	
 		if dmginfo:IsDamageType( DMG_BURN ) then
 	
 			ent:ViewBounce( 30 )
@@ -1028,7 +1023,7 @@ function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 		
 		if ent:GetPlayerClass() == CLASS_COMMANDO then
 		
-			dmginfo:ScaleDamage( GetConVar( "sv_redead_dmg_scale" ):GetFloat() * 0.8 )
+			dmginfo:ScaleDamage( GetConVar( "sv_redead_dmg_scale" ):GetFloat() * 0.85 )
 		
 		else
 		

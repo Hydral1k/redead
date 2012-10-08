@@ -62,6 +62,7 @@ function GM:Initialize()
 	surface.CreateFont ( "AmmoFont", { size = 28, weight = 200, antialias = true, additive = true, font = "Graffiare" } )
 	surface.CreateFont ( "CashFont", { size = 22, weight = 200, antialias = true, additive = true, font = "Graffiare" } )
 	surface.CreateFont ( "InventoryFont", { size = 20, weight = 150, antialias = true, additive = true, font = "Graffiare" } )
+	surface.CreateFont ( "HudMarker", { size = 20, weight = 200,antialias = true, additive = true, font = "Graffiare" } )
 	surface.CreateFont ( "ZombieHud", { size = 24, weight = 500, antialias = true, additive = true, font = "Typenoksidi" } )
 	surface.CreateFont ( "ShopBig", { size = 22, weight = 500,  antialias = true, additive = true, font = "Typenoksidi" } )
 	surface.CreateFont ( "ShopSmall", { size = 16, weight = 400, antialias = true, additive = true, font = "Typenoksidi" } )
@@ -91,7 +92,7 @@ GM.HelpText = { "<html><body style=\"background-color:DimGray;\">",
 "To toggle your inventory, press your spawn menu button (default Q) or use your quick inventory weapon. Right click an item in your inventory to interact with it. To interact with dropped items, press your USE key (default E) on them.<br><br>",
 "<b>Purchasing Items:</b> Press F2 to purchase and order items to be airdropped to you. You can only order items outdoors.<br><br>",
 "<b>The Panic Button:</b> Press F3 to activate the panic button. It automatically detects your ailments and attempts to fix them using what you have in your inventory.<br><br>",
-"<b>The HUD:</b> The radar marks the position of many things. Blue dots are loot bags. White dots are important items. Red dots are enemies. Green dots are friendly units.",
+"<b>The HUD:</b> The location of important locations and items are marked on your screen. Some objectives are highlighted through walls.",
 "If you have radiation poisoning, an icon indicating the severity of the poisoning will appear on the bottom left of your screen. An icon will also appear if you are bleeding or infected.<br><br>",
 "<b>Evacuation:</b> At the end of the round, a helicopter will come to rescue the humans. Run to the evac zone marked on your radar to be rescued.<br><br>",
 "<b>The Infection:</b> The common undead will infect you when they hit you. To cure infection, go to the antidote and press your USE key to access it. The antidote location is always marked on the radar.<br><br>",
@@ -139,7 +140,7 @@ function GM:ShowZombieClasses()
 	if IsValid( self.Classes ) then return end
 	
 	self.Classes = vgui.Create( "ZombieClassPicker" )
-	self.Classes:SetSize( 415, 370 )
+	self.Classes:SetSize( 415, 475 )
 	self.Classes:Center()
 	self.Classes:MakePopup()
 
@@ -182,6 +183,7 @@ function GM:Think()
 	GAMEMODE:ProcessWeather()
 	GAMEMODE:FadeRagdolls()
 	GAMEMODE:GoreRagdolls()
+	GAMEMODE:HUDTraces()
 	//GAMEMODE:SpawnRagdolls()
 	
 	if GetGlobalBool( "GameOver", false ) and not EndScreenShown then
@@ -563,21 +565,29 @@ function DrawBar( x, y, w, h, value, maxvalue, icon, colorlight, colordark, hp )
 	
 	for i=1, value do
 	
+		local grn = colorlight.g
+		
+		if i <= 50 then
+		
+			grn = grn + 50
+	
+		end
+	
 		draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, h - 6, colordark )
 		
 		if hp then
 		
 			if i % 6 == 0 or ( i + 1 ) % 6 == 0 or ( i + 2 ) % 6 == 0 then
 				
-				draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * ( math.sin( CurTime() * 3 + i ) * 0.2 + 0.5 ) ) - 3, colorlight )
+				draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * ( math.sin( CurTime() * 3 + i ) * 0.2 + 0.5 ) ) - 3, Color( colorlight.r, grn, colorlight.b ) )
 				
 			end
 		
-			draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * 0.4 ) - 3, colorlight )
+			draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * 0.4 ) - 3, Color( colorlight.r, grn, colorlight.b ) )
 		
 		else
 		
-			draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * ( math.sin( ( CurTime() * 0.1 + i * 0.5 ) ) * ( math.sin( CurTime() ) * 0.15 ) + 0.5 ) ) - 3, colorlight )
+			draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * ( math.sin( ( CurTime() * 0.1 + i * 0.5 ) ) * ( math.sin( CurTime() * 2 ) * 0.15 ) + 0.5 ) ) - 3, Color( colorlight.r, grn, colorlight.b ) )
 			
 		end
 	
@@ -656,6 +666,42 @@ function GM:GetHealthColor()
 
 end
 
+function GM:DrawMarkers()
+
+	local tbl = ents.FindByClass( "sent_heliflare" )
+	tbl = table.Add( tbl, ents.FindByClass( "sent_antidote" ) )
+
+	for k,v in pairs( tbl ) do
+	
+		local sc = v:GetPos():ToScreen()
+		
+		if sc.visible then
+		
+			local text = "antidote"
+			local offset = ( v:GetPos() + Vector(0,0,80) ):ToScreen()
+			local dist = v:GetPos():Distance( LocalPlayer():GetPos() )
+			local maxdist = 1600
+		
+			if v:GetClass() == "sent_heliflare" then
+			
+				text = "evac  zone"
+				offset = ( v:GetPos() + Vector(0,0,40) ):ToScreen()
+				maxdist = 600
+			
+			end
+			
+			local alpha = math.Clamp( dist - maxdist, 0, 200 ) / 200
+			
+			sc.y = sc.y + ( offset.y - sc.y )
+		
+			draw.SimpleText( text, "HudMarker", sc.x, sc.y, Color( 255, 255, 255, alpha * 255 ), TEXT_ALIGN_CENTER )
+			
+		end
+	
+	end
+
+end
+
 function GM:HUDPaint()
 
 	GAMEMODE:PaintWeather()
@@ -687,7 +733,7 @@ function GM:HUDPaint()
 				
 				end
 				
-				draw.SimpleText( "DEATH IS A BITCH, AIN'T IT", "DeathFont", ScrW() * 0.5, ScrH() * 0.9, Color( 255, 0, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+				draw.SimpleText( DeathScreenText or "POOP", "DeathFont", ScrW() * 0.5, ScrH() * 0.9, Color( 255, 0, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
 			
 			end
 	
@@ -749,13 +795,6 @@ function GM:HUDPaint()
 	
 	end
 	
-	if ShopMenu and LocalPlayer():Alive() then
-	
-		//draw.SimpleTextOutlined( GAMEMODE.ShopName, "ShopBig", ScrW() * 0.5, ScrH() * 0.1, Color( 255, 0, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0,0,0,255) )
-		//draw.SimpleTextOutlined( GAMEMODE.ShopDesc, "ShopSmall", ScrW() * 0.5, ScrH() * 0.1 + 30, Color( 255, 0, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, Color(0,0,0,255) )
-	
-	end
-
 	GAMEMODE:HUDDrawTargetID()
 	
 	if not LocalPlayer():Alive() and LocalPlayer():Team() != TEAM_UNASSIGNED then
@@ -787,16 +826,20 @@ function GM:HUDPaint()
 	
 	if not LocalPlayer():Alive() or LocalPlayer():Team() == TEAM_UNASSIGNED then return end //or GAMEMODE:ElementsVisible() then return end
 	
+	GAMEMODE:DrawMarkers()
+	
 	local xlen = 200
 	local ylen = 25
 	local xpos = 5
 	local ypos = ScrH() - 5 - ylen
 	
-	DrawBar( xpos, ypos, xlen, ylen, LocalPlayer():Health(), 150, matHealth, Color( 225, 40, 40, 255 ), Color( 175, 20, 20, 255 ), true )
+	DrawBar( xpos, ypos, xlen, ylen, LocalPlayer():Health(), 150, matHealth, Color( 225, 50, 50, 255 ), Color( 175, 25, 25, 255 ), true )
 	
 	ypos = ScrH() - 10 - ylen * 2
 	
-	DrawBar( xpos, ypos, xlen, ylen, LocalPlayer():GetNWInt( "Stamina", 0 ), 150, matStamina, Color( 40, 80, 225, 255 ), Color( 20, 40, 175, 255 ), false )
+	local stam = LocalPlayer():GetNWInt( "Stamina", 0 )
+	
+	DrawBar( xpos, ypos, xlen, ylen, stam, 150, matStamina, Color( 50, 100, 225, 255 ), Color( 25, 50, 175, 255 ), false )
 	
 	local tbl = GAMEMODE:GetAfflictions()
 	
@@ -934,7 +977,7 @@ function GM:HUDPaint()
 	
 end
 
-function IsOnRadar( ent )
+--[[function IsOnRadar( ent )
 
 	for k,v in pairs( PosTable ) do
 	
@@ -946,7 +989,7 @@ function IsOnRadar( ent )
 	
 	end
 
-end
+end]]
 
 function GM:HUDWeaponPickedUp( wep )
 
@@ -969,6 +1012,24 @@ function GM:HUDPaintBackground()
 end
 
 function GM:CreateMove( cmd )
+
+	if LocalPlayer():Team() == TEAM_ZOMBIES then
+	
+		for k,v in pairs{ IN_MOVELEFT, IN_MOVERIGHT, IN_LEFT, IN_RIGHT, IN_DUCK, IN_JUMP } do
+		
+			if cmd:GetButtons() & v > 0 then
+			
+				if not ( v == IN_JUMP and LocalPlayer():GetModel() == "models/zombie/fast.mdl" ) then
+			
+					cmd:SetButtons( cmd:GetButtons() - v )
+					
+				end
+				
+			end
+		
+		end
+	
+	end
 
 end
 

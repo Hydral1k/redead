@@ -46,7 +46,8 @@ function ENT:VoiceSound( tbl )
 
 	self.VoiceTime = CurTime() + 1.5
 	
-	self.Entity:EmitSound( Sound( table.Random( tbl ) ), 100, ( self.SoundOverride or math.random( 90, 100 ) ) )
+	//self.Entity:EmitSound( Sound(  ), 100, ( self.SoundOverride or math.random( 90, 100 ) ) )
+	sound.Play( table.Random( tbl ), self.Entity:GetPos() + Vector(0,0,50), 75, ( self.SoundOverride or math.random( 90, 100 ) ), 0.7 )
 	
 end
 

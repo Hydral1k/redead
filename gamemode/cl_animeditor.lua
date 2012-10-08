@@ -462,8 +462,8 @@ function AnimationEditorOn()
 	end
 	
 	
-	local close = vgui.Create("DSysButton")
-	close:SetType("close")
+	local close = vgui.Create("DButton")
+	//close:SetType("close")
 	close.DoClick = function(slf) AnimationEditorOff() end
 	close:SetSize(16,16)
 	close:SetPos(4,4)

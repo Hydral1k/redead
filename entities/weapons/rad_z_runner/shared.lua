@@ -36,7 +36,7 @@ SWEP.Primary.HitFlesh		= Sound( "npc/zombie/claw_strike2.wav" )
 SWEP.Primary.Sound			= Sound( "npc/fast_zombie/idle1.wav" )
 SWEP.Primary.Miss           = Sound( "npc/zombie/claw_miss1.wav" )
 SWEP.Primary.Recoil			= 3.5
-SWEP.Primary.Damage			= 40
+SWEP.Primary.Damage			= 35
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Delay			= 1.500
 

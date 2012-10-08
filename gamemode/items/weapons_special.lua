@@ -23,42 +23,6 @@ ITEM_WPN_SPECIAL = 10
 end]]
 
 item.Register( { 
-	Name = "HE Grenade", 
-	Description = "The fuse lasts 3 seconds.",
-	Stackable = true, 
-	Type = ITEM_WPN_SPECIAL,
-	TypeOverride = "sent_droppedgun",
-	Weight = 1, 
-	Price = 5,
-	Rarity = 0.20,
-	Model = "models/weapons/w_eq_fraggrenade_thrown.mdl",
-	Weapon = "rad_grenade",
-	Functions = { FUNC_DROPWEAPON },
-	PickupFunction = FUNC_GRABWEAPON,
-	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(1,10,4),
-	CamOrigin = Vector(0,0,1)
-} )
-
-item.Register( { 
-	Name = "Incendiary Grenade", 
-	Description = "These grenades ignite a small area.",
-	Stackable = true, 
-	Type = ITEM_WPN_SPECIAL,
-	TypeOverride = "sent_droppedgun",
-	Weight = 1, 
-	Price = 8,
-	Rarity = 0.20,
-	Model = "models/weapons/w_eq_flashbang.mdl",
-	Weapon = "rad_incendiarygrenade",
-	Functions = { FUNC_DROPWEAPON },
-	PickupFunction = FUNC_GRABWEAPON,
-	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(3,11,1),
-	CamOrigin = Vector(0,0,-1)
-} )
-
-item.Register( { 
 	Name = "M249", 
 	Description = "A belt-fed support machine gun.",
 	Stackable = false, 
@@ -92,6 +56,42 @@ item.Register( {
 	DropFunction = FUNC_REMOVEWEAPON,
 	CamPos = Vector(0,55,5),
 	CamOrigin = Vector(12,0,2)
+} )
+
+item.Register( { 
+	Name = "HE Grenade", 
+	Description = "The fuse lasts 3 seconds.",
+	Stackable = true, 
+	Type = ITEM_WPN_SPECIAL,
+	TypeOverride = "sent_droppedgun",
+	Weight = 1, 
+	Price = 5,
+	Rarity = 0.20,
+	Model = "models/weapons/w_eq_fraggrenade_thrown.mdl",
+	Weapon = "rad_grenade",
+	Functions = { FUNC_DROPWEAPON },
+	PickupFunction = FUNC_GRABWEAPON,
+	DropFunction = FUNC_REMOVEWEAPON,
+	CamPos = Vector(1,10,4),
+	CamOrigin = Vector(0,0,1)
+} )
+
+item.Register( { 
+	Name = "Incendiary Grenade", 
+	Description = "These grenades ignite a small area.",
+	Stackable = true, 
+	Type = ITEM_WPN_SPECIAL,
+	TypeOverride = "sent_droppedgun",
+	Weight = 1, 
+	Price = 8,
+	Rarity = 0.20,
+	Model = "models/weapons/w_eq_flashbang.mdl",
+	Weapon = "rad_incendiarygrenade",
+	Functions = { FUNC_DROPWEAPON },
+	PickupFunction = FUNC_GRABWEAPON,
+	DropFunction = FUNC_REMOVEWEAPON,
+	CamPos = Vector(3,11,1),
+	CamOrigin = Vector(0,0,-1)
 } )
 
 --[[item.Register( { 

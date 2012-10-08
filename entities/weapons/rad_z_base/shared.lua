@@ -71,7 +71,7 @@ function SWEP:Holster()
 
 	if SERVER then
 	
-		self.Owner:EmitSound( table.Random( self.Die ), 100, math.random(90,110) )
+		self.Owner:EmitSound( table.Random( self.Die ), 100, math.random(90,110) ) 
 	
 	end
 	
@@ -202,7 +202,9 @@ function SWEP:MeleeTrace( dmg )
 						prop:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 						prop:Spawn()
 						
-						local dir = ( ent:GetPos() - self.Owner:GetPos() ):Normalize()
+						local dir = ( ent:GetPos() - self.Owner:GetPos() )
+						dir = ( dir or VectorRand() ):Normalize() 
+						
 						local phys = prop:GetPhysicsObject()
 						
 						if IsValid( phys ) then

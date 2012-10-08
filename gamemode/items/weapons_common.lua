@@ -210,7 +210,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "MAC 10", 
+	Name = "MAC-10", 
 	Description = "A compact SMG that packs a kick.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
@@ -264,7 +264,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "HK MP5", 
+	Name = "MP5", 
 	Description = "A well-rounded, reliable SMG.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
@@ -282,7 +282,7 @@ item.Register( {
 } )
 
 item.Register( { // fuck this gun
-	Name = "HK UMP45", 
+	Name = "UMP45", 
 	Description = "Size isn't everything.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
@@ -300,8 +300,8 @@ item.Register( { // fuck this gun
 } )
 
 item.Register( { 
-	Name = "FN P90", 
-	Description = "A deadly SMG with a large magazine.",
+	Name = "FN P90 LV", 
+	Description = "A powerful SMG with a large magazine.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
@@ -336,7 +336,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "SPAS 12", 
+	Name = "SPAS-12", 
 	Description = "Useful for crowd control.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
@@ -390,7 +390,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "FAMAS PBW-75", 
+	Name = "FAMAS PBW-5", 
 	Description = "An experimental particle beam weapon.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
@@ -408,7 +408,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "SG 552", 
+	Name = "SG552", 
 	Description = "Comes with a free scope.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
@@ -444,7 +444,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "M1014 Shotgun", 
+	Name = "M1014", 
 	Description = "Turn everything into ground beef.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,

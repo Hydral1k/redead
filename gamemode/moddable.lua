@@ -11,7 +11,7 @@ GM.ShopDesc = "A HAPPY CUSTOMER IS A DEAD ONE!"
 
 // Team names 
 
-GM.ArmyTeamName = "Containment Team Delta"
+GM.ArmyTeamName = "Unit 9"
 GM.ZombieTeamName = "The Undead"
 
 // Death Screen text shit
@@ -27,7 +27,7 @@ GM.DeathScreenText[ TEAM_ARMY ] = { "DEATH IS A BITCH, AIN'T IT",
 
 GM.DeathScreenText[ TEAM_ZOMBIES ] = { "DEATH IS ONLY THE BEGINNING",
 "GET UP AND TRY AGAIN",
-"THERE IS NO ROOM LEFT IN HELL FOR YOU",
+"YOU'RE RAVEN FOOD",
 "IF AT FIRST YOU DON'T SUCCEED... DIE, DIE AGAIN",
 "LIFE IS OVERRATED",
 "REST IS FOR THE LIVING" }
@@ -53,8 +53,8 @@ GM.ClassWeapons[CLASS_ENGINEER] = "models/weapons/w_pist_fiveseven.mdl"
 GM.ZombieModels = {}
 GM.ZombieModels[CLASS_RUNNER] = "models/player/corpse1.mdl"
 GM.ZombieModels[CLASS_BANSHEE] = "models/player/charple01.mdl"
-GM.ZombieModels[CLASS_CONTAGION] = "models/player/classic.mdl"
-GM.ZombieModels[CLASS_LEAPER] = "models/player/zombiefast.mdl"
+GM.ZombieModels[CLASS_CONTAGION] = "models/player/zombie_classic.mdl"
+GM.ZombieModels[CLASS_LEAPER] = "models/zombie/fast.mdl"
 
 GM.ZombieWeapons = {}
 GM.ZombieWeapons[CLASS_RUNNER] = "rad_z_runner"
@@ -104,7 +104,7 @@ GM.ZombieLogos = {}
 GM.ZombieLogos[CLASS_RUNNER] = "nuke/redead/zomb_corpse"
 GM.ZombieLogos[CLASS_BANSHEE] = "nuke/redead/zomb_banshee"
 GM.ZombieLogos[CLASS_CONTAGION] = "nuke/redead/zomb_zombie"
-GM.ZombieLogos[CLASS_LEAPER] = "nuke/redead/zomb_zombie"
+GM.ZombieLogos[CLASS_LEAPER] = "nuke/redead/zomb_corpse"
 	
 // Weight Limits (lbs) - obsolete
 

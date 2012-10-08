@@ -13,10 +13,7 @@ GM.Radio[ VO_DEATH ] = { "bot/aah.wav",
 "bot/pain5.wav",
 "bot/pain8.wav",
 "bot/pain9.wav",
-"bot/pain10.wav",
-"bot/the_commander_is_down.wav",
-"bot/the_commander_is_down_repeat.wav",
-"bot/weve_lost_the_commander.wav" }
+"bot/pain10.wav" }
 
 GM.Radio[ VO_PAIN ] = { "bot/cut_it_out.wav",
 "bot/hey.wav",
@@ -227,7 +224,10 @@ GM.Radio[ VO_EVAC ] = { "bot/guarding_the_escape_zone.wav",
 "bot/im_going_to_watch_the_rescue_zone.wav",
 "bot/watching_the_escape_route.wav",
 "bot/watching_the_escape_zone.wav",
-"bot/rescue_zone.wav" }
+"bot/rescue_zone.wav",
+"bot/the_commander_is_down.wav",
+"bot/the_commander_is_down_repeat.wav",
+"bot/weve_lost_the_commander.wav" }
 
 GM.VoiceStart = { "npc/metropolice/vo/off1.wav",
 "npc/metropolice/vo/off4.wav" }
@@ -235,7 +235,7 @@ GM.VoiceStart = { "npc/metropolice/vo/off1.wav",
 GM.VoiceEnd = { "npc/combine_soldier/vo/off1.wav",
 "npc/combine_soldier/vo/off2.wav" }
 
-GM.Pain = {"nuke/gore/pain01.wav", 
+--[[GM.Pain = {"nuke/gore/pain01.wav", 
 "nuke/gore/pain02.wav", 
 "nuke/gore/pain03.wav", 
 "nuke/gore/pain04.wav",
@@ -250,7 +250,7 @@ GM.Death = {"nuke/gore/die01.wav",
 "nuke/gore/carnage02.wav", 
 "nuke/gore/carnage03.wav", 
 "nuke/gore/carnage04.wav",
-"nuke/gore/carnage05.wav"}
+"nuke/gore/carnage05.wav"}]]
 
 GM.Burning = { "player/pl_burnpain1.wav",
 "player/pl_burnpain2.wav",
