@@ -11,7 +11,7 @@ if CLIENT then
 	
 	SWEP.PrintName = "CMP-250"
 	SWEP.IconLetter = "f"
-	SWEP.Slot = 2
+	SWEP.Slot = 3
 	SWEP.Slotpos = 1
 	
 	killicon.AddFont( "rad_cmp", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
@@ -38,7 +38,7 @@ SWEP.FirstShot = true
 SWEP.Primary.Sound			= Sound( "Weapon_smg1.Single" )
 SWEP.Primary.Sound2			= Sound( "Weapon_smg1.Burst" )
 SWEP.Primary.ReloadSound    = Sound( "Weapon_smg1.reload" )
-SWEP.Primary.Recoil			= 11.5
+SWEP.Primary.Recoil			= 9.5
 SWEP.Primary.Damage			= 25
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Cone			= 0.040

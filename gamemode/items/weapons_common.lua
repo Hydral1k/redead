@@ -54,7 +54,7 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 3, 
-	Price = 30,
+	Price = 35,
 	Rarity = 0.95,
 	Model = "models/weapons/w_hammer.mdl",
 	Weapon = "rad_hammer",
@@ -162,8 +162,8 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 3, 
-	Price = 40,
-	Rarity = 0.50,
+	Price = 45,
+	Rarity = 0.40,
 	Model = "models/weapons/w_pist_elite_single.mdl",
 	Weapon = "rad_berettas",
 	Functions = { FUNC_DROPWEAPON },
@@ -180,7 +180,7 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 4, 
-	Price = 35,
+	Price = 50,
 	Rarity = 0.70,
 	Model = "models/weapons/w_pist_deagle.mdl",
 	Weapon = "rad_deagle",
@@ -198,7 +198,7 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 4, 
-	Price = 35,
+	Price = 50,
 	Rarity = 0.70,
 	Model = "models/weapons/w_357.mdl",
 	Weapon = "rad_revolver",
@@ -216,7 +216,7 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 4, 
-	Price = 45,
+	Price = 55,
 	Rarity = 0.25,
 	Model = "models/weapons/w_smg_mac10.mdl",
 	Weapon = "rad_mac10",
@@ -225,60 +225,6 @@ item.Register( {
 	DropFunction = FUNC_REMOVEWEAPON,
 	CamPos = Vector(0,22,5),
 	CamOrigin = Vector(5,0,0)
-} )
-
-item.Register( { 
-	Name = "TMP", 
-	Description = "A silent but deadly SMG.",
-	Stackable = false, 
-	Type = ITEM_WPN_COMMON,
-	TypeOverride = "sent_droppedgun",
-	Weight = 4, 
-	Price = 50,
-	Rarity = 0.25,
-	Model = "models/weapons/w_smg_tmp.mdl",
-	Weapon = "rad_tmp",
-	Functions = { FUNC_DROPWEAPON },
-	PickupFunction = FUNC_GRABWEAPON,
-	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,24,5),
-	CamOrigin = Vector(10,0,0)
-} )
-
-item.Register( { 
-	Name = "CMP-250", 
-	Description = "An experimental burst-fire SMG.",
-	Stackable = false, 
-	Type = ITEM_WPN_COMMON,
-	TypeOverride = "sent_droppedgun",
-	Weight = 4, 
-	Price = 50,
-	Rarity = 0.25,
-	Model = "models/weapons/w_smg1.mdl",
-	Weapon = "rad_cmp",
-	Functions = { FUNC_DROPWEAPON },
-	PickupFunction = FUNC_GRABWEAPON,
-	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,27,0),
-	CamOrigin = Vector(-1,0,-1)
-} )
-
-item.Register( { 
-	Name = "MP5", 
-	Description = "A well-rounded, reliable SMG.",
-	Stackable = false, 
-	Type = ITEM_WPN_COMMON,
-	TypeOverride = "sent_droppedgun",
-	Weight = 6, 
-	Price = 55,
-	Rarity = 0.50,
-	Model = "models/weapons/w_smg_mp5.mdl",
-	Weapon = "rad_mp5",
-	Functions = { FUNC_DROPWEAPON },
-	PickupFunction = FUNC_GRABWEAPON,
-	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,37,5),
-	CamOrigin = Vector(5,0,2)
 } )
 
 item.Register( { // fuck this gun
@@ -300,21 +246,21 @@ item.Register( { // fuck this gun
 } )
 
 item.Register( { 
-	Name = "FN P90 LV", 
-	Description = "A powerful SMG with a large magazine.",
+	Name = "CMP-250", 
+	Description = "An experimental burst-fire SMG.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 4, 
-	Price = 45,
+	Price = 65,
 	Rarity = 0.25,
-	Model = "models/weapons/w_smg_p90.mdl",
-	Weapon = "rad_p90",
+	Model = "models/weapons/w_smg1.mdl",
+	Weapon = "rad_cmp",
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,32,5),
-	CamOrigin = Vector(3,0,0)
+	CamPos = Vector(0,27,0),
+	CamOrigin = Vector(-1,0,-1)
 } )
 
 item.Register( { 
@@ -324,7 +270,7 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 6, 
-	Price = 60,
+	Price = 70,
 	Rarity = 0.40,
 	Model = "models/weapons/w_annabelle.mdl",
 	Weapon = "rad_shotgun",
@@ -336,13 +282,67 @@ item.Register( {
 } )
 
 item.Register( { 
+	Name = "TMP", 
+	Description = "A silent but deadly SMG.",
+	Stackable = false, 
+	Type = ITEM_WPN_COMMON,
+	TypeOverride = "sent_droppedgun",
+	Weight = 4, 
+	Price = 75,
+	Rarity = 0.25,
+	Model = "models/weapons/w_smg_tmp.mdl",
+	Weapon = "rad_tmp",
+	Functions = { FUNC_DROPWEAPON },
+	PickupFunction = FUNC_GRABWEAPON,
+	DropFunction = FUNC_REMOVEWEAPON,
+	CamPos = Vector(0,24,5),
+	CamOrigin = Vector(10,0,0)
+} )
+
+item.Register( { 
+	Name = "MP5", 
+	Description = "A well-rounded, reliable SMG.",
+	Stackable = false, 
+	Type = ITEM_WPN_COMMON,
+	TypeOverride = "sent_droppedgun",
+	Weight = 6, 
+	Price = 80,
+	Rarity = 0.50,
+	Model = "models/weapons/w_smg_mp5.mdl",
+	Weapon = "rad_mp5",
+	Functions = { FUNC_DROPWEAPON },
+	PickupFunction = FUNC_GRABWEAPON,
+	DropFunction = FUNC_REMOVEWEAPON,
+	CamPos = Vector(0,37,5),
+	CamOrigin = Vector(5,0,2)
+} )
+
+item.Register( { 
+	Name = "FN P90 LV", 
+	Description = "A powerful SMG with a large magazine.",
+	Stackable = false, 
+	Type = ITEM_WPN_COMMON,
+	TypeOverride = "sent_droppedgun",
+	Weight = 4, 
+	Price = 85,
+	Rarity = 0.25,
+	Model = "models/weapons/w_smg_p90.mdl",
+	Weapon = "rad_p90",
+	Functions = { FUNC_DROPWEAPON },
+	PickupFunction = FUNC_GRABWEAPON,
+	DropFunction = FUNC_REMOVEWEAPON,
+	CamPos = Vector(0,32,5),
+	CamOrigin = Vector(3,0,0)
+} )
+
+item.Register( { 
 	Name = "SPAS-12", 
 	Description = "Useful for crowd control.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 7, 
-	Price = 80,
+	Price = 90,
 	Rarity = 0.80,
 	Model = "models/weapons/w_shotgun.mdl",
 	Weapon = "rad_spas12",
@@ -360,7 +360,7 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 8, 
-	Price = 90,
+	Price = 100,
 	Rarity = 0.90,
 	Model = "models/weapons/w_rif_galil.mdl",
 	Weapon = "rad_galil",
@@ -378,7 +378,7 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 7, 
-	Price = 130,
+	Price = 110,
 	Rarity = 0.90,
 	Model = "models/weapons/w_rif_ak47.mdl",
 	Weapon = "rad_ak47",
@@ -396,7 +396,7 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 9, 
-	Price = 150,
+	Price = 130,
 	Rarity = 0.80,
 	Model = "models/weapons/w_rif_famas.mdl",
 	Weapon = "rad_experimental",
@@ -426,13 +426,31 @@ item.Register( {
 } )
 
 item.Register( { 
+	Name = "Steyr Scout", 
+	Description = "A bolt-action sniper rifle.",
+	Stackable = false, 
+	Type = ITEM_WPN_COMMON,
+	TypeOverride = "sent_droppedgun",
+	Weight = 9, 
+	Price = 170,
+	Rarity = 0.80,
+	Model = "models/weapons/w_snip_scout.mdl",
+	Weapon = "rad_scout",
+	Functions = { FUNC_DROPWEAPON },
+	PickupFunction = FUNC_GRABWEAPON,
+	DropFunction = FUNC_REMOVEWEAPON,
+	CamPos = Vector(0,45,5),
+	CamOrigin = Vector(10,0,0)
+} )
+
+item.Register( { 
 	Name = "G3 SG1", 
 	Description = "An automatic sniper rifle.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 9, 
-	Price = 170,
+	Price = 190,
 	Rarity = 0.90,
 	Model = "models/weapons/w_snip_g3sg1.mdl",
 	Weapon = "rad_g3",
@@ -443,39 +461,4 @@ item.Register( {
 	CamOrigin = Vector(7,0,2)
 } )
 
-item.Register( { 
-	Name = "M1014", 
-	Description = "Turn everything into ground beef.",
-	Stackable = false, 
-	Type = ITEM_WPN_COMMON,
-	TypeOverride = "sent_droppedgun",
-	Weight = 7, 
-	Price = 180,
-	Rarity = 0.90,
-	Model = "models/weapons/w_shot_xm1014.mdl",
-	Weapon = "rad_m1014",
-	Functions = { FUNC_DROPWEAPON },
-	PickupFunction = FUNC_GRABWEAPON,
-	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,34,5),
-	CamOrigin = Vector(12,0,2)
-} )
-
-item.Register( { 
-	Name = "Steyr Scout", 
-	Description = "A bolt-action sniper rifle.",
-	Stackable = false, 
-	Type = ITEM_WPN_COMMON,
-	TypeOverride = "sent_droppedgun",
-	Weight = 9, 
-	Price = 190,
-	Rarity = 0.80,
-	Model = "models/weapons/w_snip_scout.mdl",
-	Weapon = "rad_scout",
-	Functions = { FUNC_DROPWEAPON },
-	PickupFunction = FUNC_GRABWEAPON,
-	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,45,5),
-	CamOrigin = Vector(10,0,0)
-} )
 

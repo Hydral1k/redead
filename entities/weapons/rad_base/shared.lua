@@ -280,6 +280,8 @@ end
 
 function SWEP:Holster()
 	
+	self.Entity:SetIron( false )
+	
 	return true
 
 end

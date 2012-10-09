@@ -23,13 +23,31 @@ ITEM_WPN_SPECIAL = 10
 end]]
 
 item.Register( { 
+	Name = "M1014", 
+	Description = "Turn everything into ground beef.",
+	Stackable = false, 
+	Type = ITEM_WPN_SPECIAL,
+	TypeOverride = "sent_droppedgun",
+	Weight = 7, 
+	Price = 160,
+	Rarity = 0.90,
+	Model = "models/weapons/w_shot_xm1014.mdl",
+	Weapon = "rad_m1014",
+	Functions = { FUNC_DROPWEAPON },
+	PickupFunction = FUNC_GRABWEAPON,
+	DropFunction = FUNC_REMOVEWEAPON,
+	CamPos = Vector(0,34,5),
+	CamOrigin = Vector(12,0,2)
+} )
+
+item.Register( { 
 	Name = "M249", 
 	Description = "A belt-fed support machine gun.",
 	Stackable = false, 
 	Type = ITEM_WPN_SPECIAL,
 	TypeOverride = "sent_droppedgun",
 	Weight = 10, 
-	Price = 150,
+	Price = 180,
 	Rarity = 0.90,
 	Model = "models/weapons/w_mach_m249para.mdl",
 	Weapon = "rad_m249",

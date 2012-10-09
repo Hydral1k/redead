@@ -38,7 +38,7 @@ SWEP.AmmoType = "Sniper"
 
 SWEP.Primary.Sound			= Sound( "Weapon_G3SG1.Single" )
 SWEP.Primary.Recoil			= 5.5
-SWEP.Primary.Damage			= 75
+SWEP.Primary.Damage			= 100
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Cone			= 0.002
 SWEP.Primary.Delay			= 0.380
