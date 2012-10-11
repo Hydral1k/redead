@@ -1,6 +1,5 @@
 
-resource.AddFile( "materials/radbox/radar.vmt" )
-resource.AddFile( "materials/radbox/radar_back.vtf" )
+resource.AddFile( "materials/sprites/flareglow.vmt" )
 resource.AddFile( "resource/fonts/Graffiare.ttf" )
 resource.AddFile( "resource/fonts/typenoksidi.ttf" )
 resource.AddFile( "models/Zed/male_shared.mdl" )
@@ -108,6 +107,7 @@ local include_mat = { "models/weapons/v_models/shot_m3super91/shot_m3super91_nor
 "nuke/redead/zomb_zombie",
 "nuke/redead/zomb_corpse",
 "nuke/redead/zomb_banshee",
+"nuke/redead/zomb_leaper",
 "nuke/redead/allyvision",
 "nuke/gore1",
 "nuke/gore2",

@@ -104,7 +104,7 @@ GM.ZombieLogos = {}
 GM.ZombieLogos[CLASS_RUNNER] = "nuke/redead/zomb_corpse"
 GM.ZombieLogos[CLASS_BANSHEE] = "nuke/redead/zomb_banshee"
 GM.ZombieLogos[CLASS_CONTAGION] = "nuke/redead/zomb_zombie"
-GM.ZombieLogos[CLASS_LEAPER] = "nuke/redead/zomb_corpse"
+GM.ZombieLogos[CLASS_LEAPER] = "nuke/redead/zomb_leaper"
 	
 // Weight Limits (lbs) - obsolete
 

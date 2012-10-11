@@ -712,9 +712,9 @@ function meta:Think()
 	
 		if ( self.HealTime or 0 ) < CurTime() then
 
-			self.HealTime = CurTime() + 2.5
+			self.HealTime = CurTime() + 1.5
 			
-			self:AddHealth( 2 )
+			self:AddHealth( 1 )
 			
 		end
 		
@@ -724,78 +724,39 @@ function meta:Think()
 	
 	self:VoiceThink()
 	
-	if self:IsInfected() then // infection overrides health regen 
-	
-		if ( self.InfectionTime or 0 ) < CurTime() then
-			
-			self.InfectionTime = CurTime() + 2
-			
-			local rand = math.random(1,5)
-			
-			if rand == 1 then
-			
-				rand = math.random(1,4)
-				
-				if rand == 1 then
-				
-					self:VoiceSound( table.Random( GAMEMODE.Coughs ), 100, math.random( 90, 100 ) )
-				
-				end
-				
-				self:ViewBounce( math.random(10,15) )
-				self:AddHealth( -5 )
-				self:AddStamina( -2 )
-				
-			end
-			
-			if self:IsBleeding() then // infection also makes you bleed out slightly faster
-			
-				self:AddHealth( -1 )
-				
-				if self:Health() < 75 and rand == 2 then
-				
-					self:VoiceSound( table.Random( GAMEMODE.Moans ), 100, math.random( 90, 100 ) )
-				
-				end
-				
-			end
-			
-		end
-	
-	else
-	
-		if ( self.HealTime or 0 ) < CurTime() then // health and stamina regen
+	if ( self.HealTime or 0 ) < CurTime() then // health regen - affected by bleeding and infection
 
-			self.HealTime = CurTime() + 3.0
+		self.HealTime = CurTime() + 3.0
+		
+		if self:IsInfected() and math.random(1,5) == 1 then
+		
+			self:AddStamina( -3 )
+			self:ViewBounce( math.random( 10, 15 ) )
+			self:VoiceSound( table.Random( GAMEMODE.Coughs ), 100, math.random( 90, 100 ) )
+		
+		end
 			
-			if self:IsBleeding() then
+		if self:IsBleeding() then
 			
-				self:AddHealth( -2 )
-				
-				if self:Health() < 75 and math.random(1,4) == 1 then
-				
-					self:VoiceSound( table.Random( GAMEMODE.Moans ), 100, math.random( 90, 100 ) )
-				
-				end
+			self:AddHealth( -1 )
+			self.HealTime = CurTime() + 2.5
 			
-			elseif not self:IsBleeding() and self:GetRadiation() < 1 and self:Health() > 50 then // health regen only works if you arent affected by anything and >50 hp
+		elseif not self:IsBleeding() and not self:IsInfected() and self:GetRadiation() < 1 and self:Health() > 50 then // health regen only works if you arent affected by anything and >50 hp
 			
-				self:AddHealth( 1 )
-			
-			end
+			self:AddHealth( 1 )
 		
 		end
 	
 	end
 	
-	if ( self.PoisonTime or 0 ) < CurTime() then // radiation is completely independent of infection
+	if ( self.PoisonTime or 0 ) < CurTime() then // radiation 
 	
 		self.PoisonTime = CurTime() + 1.5
 	
 		if self:GetRadiation() > 0 then
 			
-			local paintbl = { 0, 0, -1, -2, -3 }
-			local stamtbl = { -1, -2, -3, -3, -4 }
+			local paintbl = { 0, 0, -1, -2, -2 }
+			local stamtbl = { -1, -2, -2, -2, -3 }
 		
 			self:AddHealth( paintbl[ self:GetRadiation() ] )
 			self:AddStamina( stamtbl[ self:GetRadiation() ] )
@@ -831,11 +792,20 @@ function meta:Think()
 				
 			end
 						
-			if self:GetStamina() <= 50 then
+			if self:GetStamina() <= 50 or self:IsInfected() then
 			
 				self.StamTime = CurTime() + 1.35
-				self:NoticeOnce( "Your stamina has dropped below 30%", GAMEMODE.Colors.Red, 5 )
-				self:NoticeOnce( "Stamina replenishes slower when below 30%", GAMEMODE.Colors.Blue, 5, 2 )
+				
+				if self:IsInfected() then
+				
+					self:NoticeOnce( "The infection slows your stamina regeneration", GAMEMODE.Colors.Red, 5 )
+				
+				else
+				
+					self:NoticeOnce( "Your stamina has dropped below 30%", GAMEMODE.Colors.Red, 5 )
+					self:NoticeOnce( "Stamina replenishes slower when below 30%", GAMEMODE.Colors.Blue, 5, 2 )
+					
+				end
 			
 			end
 			

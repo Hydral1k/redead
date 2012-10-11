@@ -336,14 +336,6 @@ GM.Coughs = { "ambient/voices/cough1.wav",
 "ambient/voices/citizen_beaten3.wav",
 "ambient/voices/citizen_beaten4.wav" }
 
-GM.Moans = { "vo/npc/male01/moan01.wav",
-"vo/npc/male01/moan02.wav",
-"vo/npc/male01/moan03.wav",
-"vo/npc/male01/moan04.wav",
-"vo/npc/male01/moan05.wav",
-"vo/npc/male01/startle01.wav",
-"vo/npc/male01/startle02.wav" }
-
 GM.Choppers = { "ambient/overhead/hel1.wav",
 "ambient/overhead/hel2.wav",
 "ambient/machines/heli_pass1.wav",
