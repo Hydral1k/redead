@@ -988,7 +988,7 @@ function GM:PlayerUse( ply, entity )
 	
 end
 
-function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
+function GM:EntityTakeDamage( ent, dmginfo )
 
 	if ent:GetClass() == "prop_physics" and ent:IsOnFire() then
 	
@@ -1003,6 +1003,8 @@ function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 		return
 		
 	end
+	
+	local attacker = dmginfo:GetAttacker()
 	
 	if ent:IsPlayer() and ent:Team() == TEAM_ARMY and IsValid( attacker ) and ( attacker:IsNPC() or ( ( attacker:IsPlayer() and attacker:Team() == TEAM_ZOMBIES ) or ( attacker:IsPlayer() and attacker == ent ) ) ) then
 	
@@ -1053,11 +1055,11 @@ function GM:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
 		
 	elseif ent:IsPlayer() and ent:Team() == TEAM_ZOMBIES and IsValid( attacker ) and attacker:IsPlayer() then
 	
-		sound.Play( table.Random( GAMEMODE.GoreBullet ), ent:GetPos() + Vector(0,0,50), 75, math.random( 90, 110 ), 0.5 )
+		sound.Play( table.Random( GAMEMODE.GoreBullet ), ent:GetPos() + Vector(0,0,50), 75, math.random( 90, 110 ), 0.8 )
 	
 	end
 	
-	return self.BaseClass:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
+	return self.BaseClass:EntityTakeDamage( ent, dmginfo )
 	
 end
 
@@ -1325,7 +1327,7 @@ end
 
 function GM:ShowHelp( ply )
 
-	//ply:SendLua( "GAMEMODE:ShowHelp()" ) - obsolete?
+	ply:SendLua( "GAMEMODE:ShowHelp()" ) 
 
 end
 

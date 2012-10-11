@@ -28,7 +28,7 @@ function PANEL:Init()
 	self:EnableHorizontal( false )
 	self:SetAutoSize( false )
 	self:SetDrawBackground( true )
-	self:SetBottomUp( false )
+	//self:SetBottomUp( false )
 	self:SetNoSizing( false )
 	
 	self:SetMouseInputEnabled( true )

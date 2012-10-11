@@ -5,7 +5,7 @@ include('shared.lua')
 
 for k,v in pairs{ 4, 6, 8 } do
 
-	util.PrecacheModel( "models/Zed/malezed_0" .. v .. ".mdl" )
+	util.PrecacheModel( "models/zed/malezed_0" .. v .. ".mdl" )
 	
 end
 
@@ -50,7 +50,7 @@ ENT.SoundOverride = 85
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Zed/malezed_0" .. table.Random{ 4, 6, 8 } .. ".mdl" )
+	self.Entity:SetModel( "models/zed/malezed_0" .. ( math.random( 2, 4 ) * 2 ) .. ".mdl" )
 	
 	self.Entity:SetHullSizeNormal()
 	self.Entity:SetHullType( HULL_HUMAN )

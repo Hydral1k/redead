@@ -704,13 +704,13 @@ end
 
 function GM:HUDPaint()
 
-	GAMEMODE:PaintWeather()
-
 	if GetGlobalBool( "GameOver", false ) then return end
 	
 	if LocalPlayer():IsFrozen() then return end
 	
 	if LocalPlayer():Team() == TEAM_ZOMBIES then
+	
+		GAMEMODE:PaintWeather()
 	
 		if not LocalPlayer():Alive() then
 		
@@ -869,7 +869,8 @@ function GM:HUDPaint()
 	end
 	
 	DrawCash( ScrW() - 110, ScrH() - ypos, 105, 30, string.upper( LocalPlayer():GetNWInt( "Cash", 0 ) .. "  " .. GAMEMODE.CurrencyName .. "s" ) )
-	
+
+	GAMEMODE:PaintWeather()
 	--[[local radius = 200 
 	local centerx = ScrW() - ( radius / 2 ) - 20
 	local centery = 20 + ( radius / 2 )
