@@ -7,7 +7,7 @@ ENT.HitSound = Sound( "Metal_Box.ImpactHard" )
 ENT.Model = Model( "models/props_phx/misc/potato_launcher_explosive.mdl" )
 ENT.Damage = 150
 ENT.Radius = 350
-ENT.Speed = 3000
+ENT.Speed = 3500
 
 function ENT:Initialize()
 

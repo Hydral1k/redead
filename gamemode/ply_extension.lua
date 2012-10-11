@@ -730,7 +730,8 @@ function meta:Think()
 		
 		if self:IsInfected() and math.random(1,5) == 1 then
 		
-			self:AddStamina( -3 )
+			self:AddStamina( -2 )
+			self:AddHealth( -2 )
 			self:ViewBounce( math.random( 10, 15 ) )
 			self:VoiceSound( table.Random( GAMEMODE.Coughs ), 100, math.random( 90, 100 ) )
 		

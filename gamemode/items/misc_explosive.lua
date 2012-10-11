@@ -20,7 +20,7 @@ function FUNC_DROPOXYGEN( ply, id, drop )
 	if not drop then return end
 
 	local oxy = ents.Create( "sent_oxygen" )
-	oxy:SetSpeed( 500 )
+	oxy:SetSpeed( 10 )
 	oxy:SetPos( ply:GetItemDropPos() )
 	oxy:SetAngles( ply:GetAimVector():Angle() )
 	oxy:Spawn()
