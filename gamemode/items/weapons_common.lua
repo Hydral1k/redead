@@ -354,13 +354,31 @@ item.Register( {
 } )
 
 item.Register( { 
+	Name = "Steyr Scout", 
+	Description = "A bolt-action sniper rifle.",
+	Stackable = false, 
+	Type = ITEM_WPN_COMMON,
+	TypeOverride = "sent_droppedgun",
+	Weight = 9, 
+	Price = 100,
+	Rarity = 0.80,
+	Model = "models/weapons/w_snip_scout.mdl",
+	Weapon = "rad_scout",
+	Functions = { FUNC_DROPWEAPON },
+	PickupFunction = FUNC_GRABWEAPON,
+	DropFunction = FUNC_REMOVEWEAPON,
+	CamPos = Vector(0,45,5),
+	CamOrigin = Vector(10,0,0)
+} )
+
+item.Register( { 
 	Name = "IMI Galil", 
 	Description = "Lower accuracy, larger magazine.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 8, 
-	Price = 100,
+	Price = 110,
 	Rarity = 0.90,
 	Model = "models/weapons/w_rif_galil.mdl",
 	Weapon = "rad_galil",
@@ -378,7 +396,7 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 7, 
-	Price = 110,
+	Price = 130,
 	Rarity = 0.90,
 	Model = "models/weapons/w_rif_ak47.mdl",
 	Weapon = "rad_ak47",
@@ -396,7 +414,7 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 9, 
-	Price = 130,
+	Price = 150,
 	Rarity = 0.80,
 	Model = "models/weapons/w_rif_famas.mdl",
 	Weapon = "rad_experimental",
@@ -414,7 +432,7 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 8, 
-	Price = 150,
+	Price = 170,
 	Rarity = 0.90,
 	Model = "models/weapons/w_rif_sg552.mdl",
 	Weapon = "rad_sg552",
@@ -423,24 +441,6 @@ item.Register( {
 	DropFunction = FUNC_REMOVEWEAPON,
 	CamPos = Vector(0,40,5),
 	CamOrigin = Vector(6,0,0)
-} )
-
-item.Register( { 
-	Name = "Steyr Scout", 
-	Description = "A bolt-action sniper rifle.",
-	Stackable = false, 
-	Type = ITEM_WPN_COMMON,
-	TypeOverride = "sent_droppedgun",
-	Weight = 9, 
-	Price = 170,
-	Rarity = 0.80,
-	Model = "models/weapons/w_snip_scout.mdl",
-	Weapon = "rad_scout",
-	Functions = { FUNC_DROPWEAPON },
-	PickupFunction = FUNC_GRABWEAPON,
-	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,45,5),
-	CamOrigin = Vector(10,0,0)
 } )
 
 item.Register( { 
