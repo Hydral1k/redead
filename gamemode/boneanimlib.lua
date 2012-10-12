@@ -1,6 +1,11 @@
+if CLIENT then return end
 
+include("sh_boneanimlib.lua")
+AddCSLuaFile("cl_boneanimlib.lua")
+AddCSLuaFile("sh_boneanimlib.lua")
 
--- These are unreliable. All Lua animations should be set on both the client and server (predicted).
+// These are unreliable. All Lua animations should be set on both the client and server (predicted).
+
 do
 local meta = FindMetaTable("Entity")
 if not meta then return end

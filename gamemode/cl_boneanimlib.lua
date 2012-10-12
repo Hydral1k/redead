@@ -1,5 +1,9 @@
 if SERVER then return end
 
+include("sh_boneanimlib.lua")
+
+local ANIMATIONFADEOUTTIME = 0.1
+
 usermessage.Hook("resetluaanim", function(um)
 	local ent = um:ReadEntity()
 	local anim = um:ReadString()
@@ -62,9 +66,9 @@ local function AdvanceFrame(tGestureTable, tFrameData)
 	tGestureTable.FrameDelta = tGestureTable.FrameDelta + FrameTime() * tFrameData.FrameRate * tGestureTable.TimeScale
 	if tGestureTable.FrameDelta > 1 then
 		tGestureTable.Frame = tGestureTable.Frame + 1
-		tGestureTable.FrameDelta = tGestureTable.FrameDelta - 1
+		tGestureTable.FrameDelta = math.min(1, tGestureTable.FrameDelta - 1)
 		if tGestureTable.Frame > #tGestureTable.FrameData then
-			tGestureTable.Frame = tGestureTable.RestartFrame or 1
+			tGestureTable.Frame = math.min(tGestureTable.RestartFrame or 1, #tGestureTable.FrameData)
 
 			return true
 		end
@@ -100,10 +104,11 @@ local function DoCurrentFrame(tGestureTable, tFrameData, iCurFrame, pl, fAmount,
 			iBoneID = pl:LookupBone(iBoneID)
 		end
 
-		local vCurBonePos, aCurBoneAng = pl:GetBonePosition(iBoneID)
-		if vCurBonePos then
-			local mBoneMatrix = pl:GetBoneMatrix(iBoneID)
-			if mBoneMatrix and (not tBoneInfo.Callback or not tBoneInfo.Callback(pl, mBoneMatrix, iBoneID, vCurBonePos, aCurBoneAng, fFrameDelta, fPower)) then
+		local mBoneMatrix = pl:GetBoneMatrix(iBoneID)
+		if mBoneMatrix then
+			local vCurBonePos, aCurBoneAng = mBoneMatrix:GetTranslation(), mBoneMatrix:GetAngles()
+			--if iBoneID == 0 then aCurBoneAng = pl:EyeAngles() aCurBoneAng.pitch = 0 end -- This makes it so origin bones aren't wonky and you can safely use them to move the model.
+			if not tBoneInfo.Callback or not tBoneInfo.Callback(pl, mBoneMatrix, iBoneID, vCurBonePos, aCurBoneAng, fFrameDelta, fPower) then
 				local vUp = aCurBoneAng:Up()
 				local vRight = aCurBoneAng:Right()
 				local vForward = aCurBoneAng:Forward()
@@ -111,7 +116,7 @@ local function DoCurrentFrame(tGestureTable, tFrameData, iCurFrame, pl, fAmount,
 					mBoneMatrix:Translate((tBoneInfo.MU * vUp + tBoneInfo.MR * vRight + tBoneInfo.MF * vForward) * fAmount)
 					mBoneMatrix:Rotate(Angle(tBoneInfo.RR, tBoneInfo.RU, tBoneInfo.RF) * fAmount)
 				else
-					if tGestureTable.FrameData[iCurFrame - 2] and tGestureTable.FrameData[iCurFrame + 1] then -- Cubic
+					--[[if tGestureTable.FrameData[iCurFrame - 2] and tGestureTable.FrameData[iCurFrame + 1] then -- Cubic
 						local bi0 = GetFrameBoneInfo(pl, tGestureTable, iCurFrame - 2, iBoneID)
 						local bi1 = GetFrameBoneInfo(pl, tGestureTable, iCurFrame - 1, iBoneID)
 						local bi3 = GetFrameBoneInfo(pl, tGestureTable, iCurFrame + 1, iBoneID)
@@ -121,11 +126,11 @@ local function DoCurrentFrame(tGestureTable, tFrameData, iCurFrame, pl, fAmount,
 																Angle(tBoneInfo.RR, tBoneInfo.RU, tBoneInfo.RF),
 																Angle(bi3.RR, bi3.RU, bi3.RF),
 																fFrameDelta) * fPower)
-					else -- Cosine
+					else]] -- Cosine
 						local bi1 = GetFrameBoneInfo(pl, tGestureTable, iCurFrame - 1, iBoneID)
 						mBoneMatrix:Translate(CosineInterpolation(bi1.MU * vUp + bi1.MR * vRight + bi1.MF * vForward, tBoneInfo.MU * vUp + tBoneInfo.MR * vRight + tBoneInfo.MF * vForward, fFrameDelta) * fPower)
 						mBoneMatrix:Rotate(CosineInterpolation(Angle(bi1.RR, bi1.RU, bi1.RF), Angle(tBoneInfo.RR, tBoneInfo.RU, tBoneInfo.RF), fFrameDelta) * fPower)
-					end
+					--end
 				end
 
 				pl:SetBoneMatrix(iBoneID, mBoneMatrix)
@@ -136,14 +141,34 @@ end
 
 local function LuaBuildBonePositions(pl, iNumBones, iNumPhysBones)
 	local tLuaAnimations = pl.LuaAnimations
-	for sGestureName, tGestureTable in pairs( tLuaAnimations or {} ) do
+	for sGestureName, tGestureTable in pairs(tLuaAnimations) do
 		local iCurFrame = tGestureTable.Frame
 		local tFrameData = tGestureTable.FrameData[iCurFrame]
 		local fFrameDelta = tGestureTable.FrameDelta
 		local fDieTime = tGestureTable.DieTime
 		local fPower = tGestureTable.Power
-		if fDieTime and fDieTime - 0.1 <= CurTime() then
-			fPower = fPower * (fDieTime - CurTime()) * 10
+		if fDieTime and fDieTime - ANIMATIONFADEOUTTIME <= CurTime() then
+			fPower = fPower * (fDieTime - CurTime()) / ANIMATIONFADEOUTTIME
+		end
+		local fAmount = fPower * fFrameDelta
+
+		DoCurrentFrame(tGestureTable, tFrameData, iCurFrame, pl, fAmount, fFrameDelta, fPower, tGestureTable.Type == TYPE_POSTURE)
+		if tGestureTable.DisplayCallback then
+			tGestureTable.DisplayCallback(pl, sGestureName, tGestureTable, iCurFrame, tFrameData, fFrameDelta, fPower)
+		end
+	end
+end
+
+local function ProcessAnimations(pl)
+	local tLuaAnimations = pl.LuaAnimations
+	for sGestureName, tGestureTable in pairs(tLuaAnimations) do
+		local iCurFrame = tGestureTable.Frame
+		local tFrameData = tGestureTable.FrameData[iCurFrame]
+		local fFrameDelta = tGestureTable.FrameDelta
+		local fDieTime = tGestureTable.DieTime
+		local fPower = tGestureTable.Power
+		if fDieTime and fDieTime - ANIMATIONFADEOUTTIME <= CurTime() then
+			fPower = fPower * (fDieTime - CurTime()) / ANIMATIONFADEOUTTIME
 		end
 		local fAmount = fPower * fFrameDelta
 
@@ -155,8 +180,6 @@ local function LuaBuildBonePositions(pl, iNumBones, iNumPhysBones)
 			end
 
 			if tGestureTable.Type == TYPE_GESTURE then
-				DoCurrentFrame(tGestureTable, tFrameData, iCurFrame, pl, fAmount, fFrameDelta, fPower)
-
 				if AdvanceFrame(tGestureTable, tFrameData) then
 					pl:StopLuaAnimation(sGestureName)
 				end
@@ -165,25 +188,26 @@ local function LuaBuildBonePositions(pl, iNumBones, iNumPhysBones)
 					fFrameDelta = math.min(1, fFrameDelta + FrameTime() * (1 / tGestureTable.TimeToArrive))
 					tGestureTable.FrameDelta = fFrameDelta
 				end
-
-				DoCurrentFrame(tGestureTable, tFrameData, iCurFrame, pl, fAmount, fFrameDelta, fPower, true)
-			else -- Sequences and stances are the same except stances don't get the reference pose set every UpdateAnimation.
-				DoCurrentFrame(tGestureTable, tFrameData, iCurFrame, pl, fAmount, fFrameDelta, fPower)
-
+			else
 				AdvanceFrame(tGestureTable, tFrameData)
-			end
-
-			if tGestureTable.Callback then
-				tGestureTable.Callback(pl, sGestureName, tGestureTable, iCurFrame, tFrameData, fFrameDelta, fPower)
 			end
 		end
 	end
 end
 
-hook.Add("UpdateAnimation", "LuaAnimationSequenceReset", function(pl)
-	if pl.InSequence then
-		pl:SetSequence("reference")
+hook.Add("Think", "BoneAnimThink", function()
+	for _, pl in pairs(player.GetAll()) do
+		if pl.LuaAnimations and pl:IsValid() then
+			ProcessAnimations(pl)
+		end
 	end
+end)
+
+hook.Add("CalcMainActivity", "LuaAnimationSequence", function(pl)
+	if pl.InSequence then
+		pl:ResetInSequence()
+		return 0, 0
+	end	
 end)
 
 local meta = _R["Entity"]
@@ -272,21 +296,28 @@ function meta:DettachBonePositionsHook()
 	end
 end
 
-function meta:ResetLuaAnimationProperties()
+function meta:ResetInSequence()
 	local anims = self.LuaAnimations
-	if anims and table.Count(anims) > 0 then
-		self:AttachBonePositionsHook()
-
-		local insequence
+	if anims then
 		for sAnimation, tAnimTab in pairs(anims) do
-			if tAnimTab.Type == TYPE_SEQUENCE or tAnimTab.UseReferencePose then
-				insequence = true
-				break
+			if tAnimTab.Type == TYPE_SEQUENCE and (not tAnimTab.DieTime or CurTime() < tAnimTab.DieTime - ANIMATIONFADEOUTTIME) or tAnimTab.UseReferencePose then
+				self.InSequence = true
+				return
 			end
 		end
 
-		self.InSequence = insequence
+		self.InSequence = nil
+	end
+end
+
+function meta:ResetLuaAnimationProperties()
+	local anims = self.LuaAnimations
+	if anims and table.Count(anims) > 0 then
+		self:SetIK(false)
+		self:AttachBonePositionsHook()
+		self:ResetInSequence()
 	else
+		--self:SetIK(true)
 		self:DettachBonePositionsHook()
 		self.LuaAnimations = nil
 		self.InSequence = nil
@@ -305,8 +336,9 @@ function meta:StopLuaAnimation(sAnimation, fTime)
 			end
 		else
 			anims[sAnimation] = nil
-			self:ResetLuaAnimationProperties()
 		end
+
+		self:ResetLuaAnimationProperties()
 	end
 end
 

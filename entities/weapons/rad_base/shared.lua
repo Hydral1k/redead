@@ -30,7 +30,7 @@ if CLIENT then
 	
 end
 
-SWEP.HoldType = "ar2"
+SWEP.HoldType = "pistol"
 
 SWEP.ViewModel	= "models/weapons/v_pistol.mdl"
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"

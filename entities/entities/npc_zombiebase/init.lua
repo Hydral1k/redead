@@ -296,7 +296,7 @@ function ENT:OnTakeDamage( dmginfo )
 	
 		dmginfo:ScaleDamage( 1.75 )
 	
-	else
+	elseif not self.Entity:OnFire() then
 	
 		sound.Play( table.Random( GAMEMODE.GoreBullet ), self.Entity:GetPos() + Vector(0,0,50), 75, math.random( 90, 110 ), 1.0 )
 	

@@ -1,7 +1,9 @@
 --[[
 
 Bone Animations Library
-Created by William "JetBoom" Moodhe 
+Created by William "JetBoom" Moodhe (williammoodhe@gmail.com / www.noxiousnet.com)
+Because I wanted custom, dynamic animations.
+Give credit or reference if used in your creations.
 
 ]]
 
@@ -45,6 +47,336 @@ function RegisterLuaAnimation(sName, tInfo)
 	Animations[sName] = tInfo
 end
 
+-- This copies a potential FrameData table from an entity. It's pretty experimental but can be used to copy real animations in to lua animations.
+-- Only viable for making custom sequences or perhaps copying animations from one model to another.
+local bonehierarchy = {
+	[1] = {"ValveBiped.Bip01", -1},
+	[2] = {"ValveBiped.Bip01_Pelvis", 1},
+	[3] = {"ValveBiped.Bip01_L_Thigh", 2},
+	[4] = {"ValveBiped.Bip01_L_Calf", 3},
+	[5] = {"ValveBiped.Bip01_L_Foot", 4},
+	[6] = {"ValveBiped.Bip01_L_Toe0", 5},
+	[7] = {"ValveBiped.Bip01_R_Thigh", 2},
+	[8] = {"ValveBiped.Bip01_R_Calf", 7},
+	[9] = {"ValveBiped.Bip01_R_Foot", 8},
+	[10] = {"ValveBiped.Bip01_R_Toe0", 9},
+	[11] = {"ValveBiped.Bip01_Spine", 1},
+	[12] = {"ValveBiped.Bip01_Spine1", 11},
+	[13] = {"ValveBiped.Bip01_Spine2", 12},
+	[14] = {"ValveBiped.Bip01_Spine4", 13},
+	[15] = {"ValveBiped.Bip01_Neck1", 14},
+	[16] = {"ValveBiped.Bip01_Head1", 15},
+	[17] = {"ValveBiped.Bip01_L_Clavicle", 14},
+	[18] = {"ValveBiped.Bip01_L_UpperArm", 17},
+	[19] = {"ValveBiped.Bip01_L_Forearm", 18},
+	[20] = {"ValveBiped.Bip01_L_Hand", 19},
+	[21] = {"ValveBiped.Bip01_L_Finger2", 20},
+	[22] = {"ValveBiped.Bip01_L_Finger21", 21},
+	[23] = {"ValveBiped.Bip01_L_Finger22", 22},
+	[24] = {"ValveBiped.Bip01_L_Finger1", 20},
+	[25] = {"ValveBiped.Bip01_L_Finger11", 24},
+	[26] = {"ValveBiped.Bip01_L_Finger12", 25},
+	[27] = {"ValveBiped.Bip01_L_Finger0", 20},
+	[28] = {"ValveBiped.Bip01_L_Finger01", 27},
+	[29] = {"ValveBiped.Bip01_L_Finger02", 28},
+	[30] = {"ValveBiped.Bip01_R_Clavicle", 14},
+	[31] = {"ValveBiped.Bip01_R_UpperArm", 30},
+	[32] = {"ValveBiped.Bip01_R_Forearm", 31},
+	[33] = {"ValveBiped.Bip01_R_Hand", 32},
+	[34] = {"ValveBiped.Bip01_R_Finger2", 33},
+	[35] = {"ValveBiped.Bip01_R_Finger21", 34},
+	[36] = {"ValveBiped.Bip01_R_Finger22", 35},
+	[37] = {"ValveBiped.Bip01_R_Finger1", 33},
+	[38] = {"ValveBiped.Bip01_R_Finger11", 37},
+	[39] = {"ValveBiped.Bip01_R_Finger12", 38},
+	[40] = {"ValveBiped.Bip01_R_Finger0", 33},
+	[41] = {"ValveBiped.Bip01_R_Finger01", 40},
+	[42] = {"ValveBiped.Bip01_R_Finger02", 41}
+}
+
+local absoluteangles = {
+		["valvebiped.bip01_r_upperarm"] = 
+				Angle(49.711448669434,
+				-94.168640136719,
+				176.81544494629)
+		,
+		["valvebiped.bip01_l_upperarm"] = 
+				Angle(49.711971282959,
+				94.169876098633,
+				3.1844043731689)
+		,
+		["valvebiped.bip01_neck1"] = 
+				
+				Angle(-55,
+				0,
+				90)
+		,
+		["valvebiped.bip01_spine1"] = 
+			
+				Angle(-85,
+				180,
+				90)
+		,
+		["valvebiped.bip01_r_foot"] = 
+				
+				Angle(33.5,
+				-3,
+				-90)
+		,
+		["valvebiped.bip01_spine2"] = 
+				
+				Angle(-90,
+				0,
+				-90)
+		,
+		["valvebiped.bip01_l_toe0"] = 
+				
+				Angle(0,
+				3,
+				-90)
+		,
+		["valvebiped.bip01_spine"] = 
+				
+				Angle(-86.7,
+				180,
+				90)
+		,
+		["valvebiped.bip01_head1"] = 
+				
+				Angle(-80.2,
+				0,
+				90)
+		,
+		["valvebiped.bip01_l_hand"] = 
+				
+				Angle(43.64,
+				92.4,
+				92)
+		,
+		["valvebiped.bip01_r_thigh"] = 
+				
+				Angle(87,
+				-174,
+				95.752479553223)
+		,
+		["valvebiped.bip01_r_forearm"] = 
+				
+				Angle(49,
+				-90,
+				-180)
+		,
+		["valvebiped.bip01_l_calf"] = 
+				
+				Angle(85,
+				176.5,
+				86)
+		,
+		["valvebiped.bip01_r_hand"] = 
+				
+				Angle(43.649658203125,
+				-92.428482055664,
+				88.468475341797)
+		,
+		["valvebiped.bip01_r_calf"] = 
+				
+				Angle(85.057647705078,
+				-176.53114318848,
+				93.478614807129)
+		,
+		["valvebiped.bip01_l_thigh"] = 
+				
+				Angle(87.011680603027,
+				174.25263977051,
+				84.247940063477)
+		,
+		["valvebiped.bip01_r_clavicle"] = 
+				Angle(16,
+				-90,
+				84)
+		,
+		["valvebiped.bip01_spine4"] = 
+				
+				Angle(-78,
+				0,
+				-90)
+		,
+		["valvebiped.bip01_l_forearm"] = 
+				
+				Angle(50,
+				90,
+				0)
+		,
+		["valvebiped.bip01_l_clavicle"] = 
+				
+				Angle(15,
+				90,
+				92)
+		,
+		["valvebiped.bip01_r_toe0"] = 
+				Angle(0,
+				-3,
+				-94)
+		,
+		["valvebiped.bip01_l_foot"] = 
+				
+				Angle(33.485752105713,
+				2.9971539974213,
+				-90)
+}
+
+function GetBoneParent(bonename)
+	local lowername = string.lower(bonename)
+	for k, v in pairs(bonehierarchy) do
+		if string.lower(v[1]) == lowername then
+			local parentid = v[2]
+			if bonehierarchy[parentid] then
+				return bonehierarchy[parentid][1]
+			end
+		end
+	end
+end
+
+function GetBoneParentID(boneid)
+	local v = bonehierarchy[boneid]
+	if v then
+		return v[2]
+	end
+end
+
+--[[function GetRelativeBoneAngles(ent, bonename,
+								parentangles)
+
+	local boneindex = ent:LookupBone(bonename)
+	if not boneindex then return parentangles end
+	local matrix = ent:GetBoneMatrix(boneindex)
+	if not matrix then return parentangles end
+
+	local ang = matrix:GetAngles()
+
+	if parentangles then
+		ang = ang - parentangles
+	end
+
+	local parent = GetBoneParent(bonename)
+	if not parent or parent == bonename then return ang end
+
+	return GetRelativeBoneAngles(ent, parent, ang)
+end]]
+
+-- Gets angles relative to the parent's angles.
+function GetRelativeBoneAngles(ent, bonename)
+	local boneindex = ent:LookupBone(bonename)
+	if not boneindex then return parentangles end
+	local matrix = ent:GetBoneMatrix(boneindex)
+	if not matrix then return parentangles end
+	local parent = GetBoneParentID(boneindex)
+	if not parent or parent == boneindex then
+		return Angle(0, 0, 0) -- No parent? Just return these angles.
+	end
+
+	local parentmatrix = ent:GetBoneMatrix(parentmatrix)
+	if not parentmatrix then
+		return Angle(0, 0, 0)
+	end
+
+	local ang = (matrix:GetTranslation() - parentmatrix:GetTranslation()):Angle()
+	ang.roll = matrix:GetAngles().roll
+	return ang
+end
+
+--[[function GetRelativeBoneAngles(ent, bonename)
+	local boneindex = ent:LookupBone(bonename)
+	if not boneindex then return parentangles end
+	local matrix = ent:GetBoneMatrix(boneindex)
+	if not matrix then return parentangles end
+
+	local parent = GetBoneParentID(boneindex)
+	if not parent or parent == boneindex then
+		return matrix:GetAngles() -- No parent? Just return these angles.
+	end
+
+	local parentmatrix = ent:GetBoneMatrix(parentmatrix)
+	if not parentmatrix then
+		return matrix:GetAngles()
+	end
+
+	local parentangles = parentmatrix:GetAngles() - (absoluteangles[string.lower(ent:GetBoneName(parent) or "")] or Angle(0, 0, 0))
+
+	return matrix:GetAngles() - parentangles
+end]]
+
+function CopyFrameData(ent)
+	local framedata = {BoneInfo = {}, FrameRate = 1}
+
+	for i=1, ent:GetBoneCount() - 1 do -- Bone 0 is not needed.
+		local matrix = ent:GetBoneMatrix(i)
+		if matrix then
+			local bonename = ent:GetBoneName(i)
+			local relangles = GetRelativeBoneAngles(ent, bonename)
+			if relangles then
+				local tab = {}
+			
+				tab.RR = relangles.pitch
+				tab.RU = relangles.yaw
+				tab.RF = relangles.roll
+
+				framedata.BoneInfo[bonename] = tab
+			end
+		end
+	end
+
+	return framedata
+end
+
+RegisterLuaAnimation('aaaa2', {
+	FrameData = {
+		{
+			BoneInfo = {
+				['ValveBiped.Bip01_Spine'] = {
+					RU = 30,
+					RR = 30
+				},
+				['ValveBiped.Bip01_Head1'] = {
+				}
+			},
+			FrameRate = 1
+		},
+		{
+			BoneInfo = {
+				['ValveBiped.Bip01_Spine'] = {
+					RU = -30,
+					RR = -30
+				},
+				['ValveBiped.Bip01_Head1'] = {
+					RF = 102
+				}
+			},
+			FrameRate = 1
+		},
+		{
+			BoneInfo = {
+				['ValveBiped.Bip01_Head1'] = {
+					RF = -227
+				},
+				['ValveBiped.Bip01_Spine'] = {
+				}
+			},
+			FrameRate = 1
+		},
+		{
+			BoneInfo = {
+				['ValveBiped.Bip01_Head1'] = {
+					RF = 128
+				},
+				['ValveBiped.Bip01_Spine'] = {
+				}
+			},
+			FrameRate = 1
+		}
+	},
+	RestartFrame = 1,
+	Type = TYPE_STANCE
+})
 /* EXAMPLES!
 
 -- If your animation is only used on one model, use numbers instead of bone names (cache the lookup).

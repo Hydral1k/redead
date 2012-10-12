@@ -1,4 +1,13 @@
+require("glon")
 
+hook.Add("Initialize", "cl_animeditor_initialize", function()
+	surface.CreateFont("DefaultFontVerySmall", {font = "tahoma", size = 10, weight = 0, antialias = false})
+	surface.CreateFont("DefaultFontSmall", {font = "tahoma", size = 11, weight = 0, antialias = false})
+	surface.CreateFont("DefaultFontSmallDropShadow", {font = "tahoma", size = 11, weight = 0, shadow = true, antialias = false})
+	surface.CreateFont("DefaultFont", {font = "tahoma", size = 13, weight = 500, antialias = false})
+	surface.CreateFont("DefaultFontBold", {font = "tahoma", size = 13, weight = 1000, antialias = false})
+	surface.CreateFont("DefaultFontLarge", {font = "tahoma", size = 16, weight = 0, antialias = false})
+end)
 
 local boneList = {}
 
@@ -95,11 +104,11 @@ local function PaintTopBar()
 	local wide = ScrW()
 	draw.RoundedBox(0,0,0,wide,26,Color(0,0,0,255))
 	draw.RoundedBox(0,1,1,wide-2,24,Color(50,50,50,255))
-	draw.SimpleText("Lua Animation Editor (API by JetBoom)","Default",25,13,Color(255,255,255,255),0,1)
+	draw.SimpleText("Lua Animation Editor","DefaultFont",25,13,Color(255,255,255,255),0,1)
 	if type(animName ) == "string" then
-		draw.SimpleText("Working On: ("..animName..")","Default",wide*0.5,13,Color(255,255,255,255),1,1)
+		draw.SimpleText("Working On: ("..animName..")","DefaultFont",wide*0.5,13,Color(255,255,255,255),1,1)
 	else
-		draw.SimpleText("No Animation Loaded!","Default",wide*0.5,13,Color(255,255,255,255),1,1)
+		draw.SimpleText("No Animation Loaded!","DefaultFont",wide*0.5,13,Color(255,255,255,255),1,1)
 	end
 	
 	
@@ -110,7 +119,7 @@ local function PaintTopBar()
 			if boneID then
 				local matrix = LocalPlayer():GetBoneMatrix(boneID)
 				local vec = matrix:GetTranslation()
-				local ang = matrix:GetAngle()
+				local ang = matrix:GetAngles()
 
 				local upDir = ang:Up()*20
 				local rightDir = ang:Right()*20
@@ -229,17 +238,15 @@ function NewAnimation()
 	local type = form:ComboBox("Animation Type")
 	type:SetTall(100)
 	
-	type:AddItem("TYPE_GESTURE").Num = TYPE_GESTURE
-	type:AddItem("TYPE_POSTURE").Num = TYPE_POSTURE
-	type:AddItem("TYPE_STANCE").Num = TYPE_STANCE
-	type:AddItem("TYPE_SEQUENCE").Num = TYPE_SEQUENCE
+	type:AddChoice("TYPE_GESTURE", TYPE_GESTURE)
+	type:AddChoice("TYPE_POSTURE", TYPE_POSTURE)
+	type:AddChoice("TYPE_STANCE", TYPE_STANCE)
+	type:AddChoice("TYPE_SEQUENCE", TYPE_SEQUENCE, true)
 	local help = form:Help("Select your options")
 	local begin = form:Button("Begin")
 	begin.DoClick = function()
-	
-	
 		animName = entry:GetValue()
-		animType = type:GetSelected().Num
+		animType = _G[type:GetText()]
 		
 		if animName == "" then help:SetText("Write a name for this animation") return end
 		if !animType then help:SetText("Select a valid animation type!") return end
@@ -262,7 +269,7 @@ function LoadAnimation()
 	
 	for i,v in pairs(GetLuaAnimations()) do
 		if i != "editortest" && i != "editingAnim" && !string.find(i,"subPosture_") then --anim editor uses this internally
-			box:AddItem(i)
+			box:AddChoice(i)
 		end
 	end
 	
@@ -272,7 +279,7 @@ function LoadAnimation()
 	button:SetText("Load Animation")
 	button.DoClick = function()
 	
-		animName = box:GetSelected():GetValue()
+		animName = box:GetText()
 		animationData = GetLuaAnimations()[animName]
 		animType = animationData.Type
 		frame:Remove()
@@ -293,8 +300,8 @@ function LoadAnimationFromFile()
 	local box = vgui.Create("DComboBox",frame)
 	box:SetMultiple(false)
 	box:StretchToParent(5,25,5,35)
-	for i,v in pairs(file.Find("animations/*.txt")) do
-		box:AddItem(string.sub(v,1,-5))
+	for i,v in pairs(file.Find("animations/*.txt", "DATA")) do
+		box:AddChoice(string.sub(v,1,-5))
 	end
 	
 	local button = vgui.Create("DButton",frame)
@@ -303,9 +310,9 @@ function LoadAnimationFromFile()
 	button:SetText("Load Animation")
 	button.DoClick = function()
 	
-		local name = box:GetSelected():GetValue()
+		local name = box:GetText()
 		
-		local str = file.Read("animations/"..name..".txt")
+		local str = file.Read("animations/"..name..".txt", "DATA")
 		if !str then return end
 		local success,t = pcall(glon.decode,str)
 		if !success then 
@@ -327,8 +334,8 @@ end
 function RegisterAll()
 
 
-	for i,v in pairs(file.Find("animations/*.txt")) do
-		local str = file.Read("animations/"..string.sub(v,1,-5)..".txt")
+	for i,v in pairs(file.Find("animations/*.txt", "DATA")) do
+		local str = file.Read("animations/"..string.sub(v,1,-5)..".txt", "DATA")
 		if !str then return end
 		local success,t = pcall(glon.decode,str)
 		if !success then 
@@ -435,9 +442,6 @@ local function FixMouse()
 	end
 end
 
-CV_XOFFSET = CreateClientConVar( "cl_animate_offset_p", "0", true, false )
-CV_YOFFSET = CreateClientConVar( "cl_animate_offset_y", "0", true, false )
-CV_ZOFFSET = CreateClientConVar( "cl_animate_offset_r", "0", true, false )
 
 function AnimationEditorView(pl,origin,angles,fov)
 
@@ -456,6 +460,8 @@ end
 
 
 function AnimationEditorOn()
+	if not LocalPlayer():IsSuperAdmin() and not game.SinglePlayer() then return end
+
 	if animating then AnimationEditorOff() return end
 	for i,v in pairs(animEditorPanels) do 
 		v:Remove()
@@ -463,7 +469,7 @@ function AnimationEditorOn()
 	
 	
 	local close = vgui.Create("DButton")
-	//close:SetType("close")
+	close:SetText("C")
 	close.DoClick = function(slf) AnimationEditorOff() end
 	close:SetSize(16,16)
 	close:SetPos(4,4)
@@ -564,35 +570,39 @@ function MAIN:Init()
 	distSlider:SetValue(200)
 	distSlider.OnValueChanged = function(s,v) camDist = v end
 	
-	local boneSet = self:MultiChoice("Bone Set")
+	local boneSet = self:ComboBox("Bone Set")
 	for i,v in pairs(boneList) do
 		boneSet:AddChoice(i)
 	end
 	boneSet:SetText(selectedBoneSet)
-	boneSet:SetEditable(false)
 	boneSet.OnSelect = function(s,i,v,d) selectedBoneSet = v self:RefreshBoneSet() end
+
 	self.bones = self:ComboBox("Selected Bone")
 	self.bones:SetTall(200)
-	self.bones:SetMultiple(false)
-	self:RefreshBoneSet()
-		
-	
-	
-	timer.Simple(0.01,function() self:SetPos(ScrW()-200,ScrH()-self:GetTall()-timeLine:GetTall()) end)
+	--self.bones:SetMultiple(false)
+	self.bones.OnSelect = function(me, index, value, data)
+		selectedBone = value
+		sliders:SetFrameData()
+	end
 
+	self:RefreshBoneSet()
+
+	timer.Simple(0.01, function() self:SetPos(ScrW()-200,ScrH()-self:GetTall()-timeLine:GetTall()) end)
 end
 
-
 function MAIN:RefreshBoneSet()
-	if !boneList[selectedBoneSet] then return end
+	if not boneList[selectedBoneSet] then return end
+
 	self.bones:Clear()
-	for i,v in pairs(boneList[selectedBoneSet]) do
-		self.bones:AddItem(v).DoClick = function(s) selectedBone = s:GetValue() sliders:SetFrameData() end
+
+	for i, v in pairs(boneList[selectedBoneSet]) do
+		--self.bones:AddItem(v).DoClick = function(s) selectedBone = s:GetValue() sliders:SetFrameData() end
+		local id = self.bones:AddChoice(v)
 	end
 end
 
+vgui.Register("MainSettings", MAIN, "DForm")
 
-vgui.Register("MainSettings",MAIN,"DForm")
 local firstPass = true
 local TIMELINE = {}
 function TIMELINE:Init()
@@ -655,7 +665,7 @@ function TIMELINE:Init()
 		for i=previousSecond,previousSecond+s:GetWide(),secondDistance/4 do
 			if i-XPos > 0 && i-XPos < ScrW() then
 				local sec = i/secondDistance
-				draw.SimpleText(sec,"DefaultSmall",i-XPos,6,Color(0,0,0,255),1,1)
+				draw.SimpleText(sec,"DefaultFontSmall",i-XPos,6,Color(0,0,0,255),1,1)
 			end
 		end
 	
@@ -823,14 +833,14 @@ function TIMELINE:LoadSubAnimation(name)
 					local leftStart = total-XPos
 					draw.RoundedBox(0,leftStart,0,v,self:GetTall(),col)
 					
-					draw.SimpleText(name,"DefaultSmall",leftStart+20,5,Color(0,0,0,255),0,3)
-					draw.SimpleText(i,"DefaultSmall",total-XPos+5,5,Color(0,0,0,255),0,3)
+					draw.SimpleText(name,"DefaultFontSmall",leftStart+20,5,Color(0,0,0,255),0,3)
+					draw.SimpleText(i,"DefaultFontSmall",total-XPos+5,5,Color(0,0,0,255),0,3)
 					local rightBound = leftStart+v
 					if restart != 1 && restart == i then
-						draw.SimpleText("Restart","DefaultSmall",rightBound-30,5,Color(0,0,0,255),2,3)
+						draw.SimpleText("Restart","DefaultFontSmall",rightBound-30,5,Color(0,0,0,255),2,3)
 					end
 					if start != 1 && start == i then
-						draw.SimpleText("Start","DefaultSmall",rightBound-25,5,Color(0,0,0,255),0,3)
+						draw.SimpleText("Start","DefaultFontSmall",rightBound-25,5,Color(0,0,0,255),0,3)
 					end
 					total = total + v
 
@@ -881,9 +891,11 @@ function TIMELINE:GetAnimationTime()
 	local globalAnims = GetLuaAnimations()
 	local startIndex = 1
 	
-	for i=startIndex,table.getn(animationData.FrameData) do
-		local v = animationData.FrameData[i]
-		tempTime = tempTime+(1/(v.FrameRate or 1))
+	if animationData and animationData.FrameData then
+		for i=startIndex, #animationData.FrameData do
+			local v = animationData.FrameData[i]
+			tempTime = tempTime+(1/(v.FrameRate or 1))
+		end
 	end
 	
 
@@ -989,12 +1001,12 @@ function KEYFRAME:Paint()
 		surface.SetDrawColor(255,0,0,255)
 		surface.DrawOutlinedRect(1,1,self:GetWide()-2,self:GetTall()-2)
 	end
-	draw.SimpleText(self:GetAnimationIndex(),"DefaultSmall",5,5,Color(0,0,0,255),0,3)
+	draw.SimpleText(self:GetAnimationIndex(),"DefaultFontSmall",5,5,Color(0,0,0,255),0,3)
 	if self.RestartPos then
-		draw.SimpleText("Restart","DefaultSmall",self:GetWide()-30,5,Color(0,0,0,255),2,3)
+		draw.SimpleText("Restart","DefaultFontSmall",self:GetWide()-30,5,Color(0,0,0,255),2,3)
 	end
 	if self.StartPos then
-		draw.SimpleText("Start","DefaultSmall",self:GetWide()-25,5,Color(0,0,0,255),0,3)
+		draw.SimpleText("Start","DefaultFontSmall",self:GetWide()-25,5,Color(0,0,0,255),0,3)
 	end
 end
 function KEYFRAME:OnMousePressed(mc)
@@ -1127,33 +1139,33 @@ function SLIDERS:Init()
 	self.Sliders.MU.OnValueChanged = function(s,v) self:OnSliderChanged("MU",v) end
 	self.Sliders.MU.Label:SetTextColor(Color(0,0,255,255))
 	
-	local oldEnter = self.Sliders.MU.Wang.TextEntry.OnEnter
-	self.Sliders.MU.Wang.TextEntry.OnEnter = function(s) self:OnSliderChanged("MU",self.Sliders.MU.Wang.TextEntry:GetValue()) self.Sliders.MU.Slider:InvalidateLayout() oldEnter(s) end
+	local oldEnter = self.Sliders.MU.Wang.OnEnter
+	self.Sliders.MU.Wang.OnEnter = function(s) self:OnSliderChanged("MU",self.Sliders.MU.Wang:GetValue()) self.Sliders.MU.Slider:InvalidateLayout() oldEnter(s) end
 	
 	self.Sliders.MR = self:NumSlider("Translate RIGHT", nil, -100, 100, 0 )
 	self.Sliders.MR.OnValueChanged = function(s,v) self:OnSliderChanged("MR",v) end
 	self.Sliders.MR.Label:SetTextColor(Color(255,0,0,255))
-	self.Sliders.MR.Wang.TextEntry.OnEnter = function(s) self:OnSliderChanged("MR",self.Sliders.MR.Wang.TextEntry:GetValue()) self.Sliders.MR.Slider:InvalidateLayout() oldEnter(s) end
+	self.Sliders.MR.Wang.OnEnter = function(s) self:OnSliderChanged("MR",self.Sliders.MR.Wang:GetValue()) self.Sliders.MR.Slider:InvalidateLayout() oldEnter(s) end
 	
 	self.Sliders.MF = self:NumSlider("Translate FORWARD", nil, -100, 100, 0 )
 	self.Sliders.MF.OnValueChanged = function(s,v) self:OnSliderChanged("MF",v) end
 	self.Sliders.MF.Label:SetTextColor(Color(0,255,0,255))
-	self.Sliders.MF.Wang.TextEntry.OnEnter = function(s) self:OnSliderChanged("MF",self.Sliders.MF.Wang.TextEntry:GetValue()) self.Sliders.MF.Slider:InvalidateLayout() oldEnter(s) end
+	self.Sliders.MF.Wang.OnEnter = function(s) self:OnSliderChanged("MF",self.Sliders.MF.Wang:GetValue()) self.Sliders.MF.Slider:InvalidateLayout() oldEnter(s) end
 		
 	self.Sliders.RU = self:NumSlider("Rotate UP", nil, -360, 360, 0 )
 	self.Sliders.RU.OnValueChanged = function(s,v) self:OnSliderChanged("RU",v) end
 	self.Sliders.RU.Label:SetTextColor(Color(0,255,0,255))
-	self.Sliders.RU.Wang.TextEntry.OnEnter = function(s) self:OnSliderChanged("RU",self.Sliders.RU.Wang.TextEntry:GetValue()) self.Sliders.RU.Slider:InvalidateLayout() oldEnter(s) end
+	self.Sliders.RU.Wang.OnEnter = function(s) self:OnSliderChanged("RU",self.Sliders.RU.Wang:GetValue()) self.Sliders.RU.Slider:InvalidateLayout() oldEnter(s) end
 	
 	self.Sliders.RR = self:NumSlider("Rotate RIGHT", nil, -360, 360, 0 )
 	self.Sliders.RR.OnValueChanged = function(s,v) self:OnSliderChanged("RR",v) end
 	self.Sliders.RR.Label:SetTextColor(Color(255,0,0,255))
-	self.Sliders.RR.Wang.TextEntry.OnEnter = function(s) self:OnSliderChanged("RR",self.Sliders.RR.Wang.TextEntry:GetValue()) self.Sliders.RR.Slider:InvalidateLayout() oldEnter(s) end
+	self.Sliders.RR.Wang.OnEnter = function(s) self:OnSliderChanged("RR",self.Sliders.RR.Wang:GetValue()) self.Sliders.RR.Slider:InvalidateLayout() oldEnter(s) end
 	
 	self.Sliders.RF = self:NumSlider("Rotate FORWARD", nil, -360, 360, 0 )
 	self.Sliders.RF.OnValueChanged = function(s,v) self:OnSliderChanged("RF",v) end
 	self.Sliders.RF.Label:SetTextColor(Color(0,0,255,255))
-	self.Sliders.RF.Wang.TextEntry.OnEnter = function(s) self:OnSliderChanged("RF",self.Sliders.RF.Wang.TextEntry:GetValue()) self.Sliders.RF.Slider:InvalidateLayout() oldEnter(s) end
+	self.Sliders.RF.Wang.OnEnter = function(s) self:OnSliderChanged("RF",self.Sliders.RF.Wang:GetValue()) self.Sliders.RF.Slider:InvalidateLayout() oldEnter(s) end
 	self:GetParent():MakePopup()
 	--self:GetParent():KillFocus()
 	--self:GetParent():SetKeyboardInputEnabled(false)
@@ -1218,6 +1230,14 @@ function SUBANIMS:Init()
 	self.AnimList:StretchToParent(5,25,5,30)
 	self:SetTitle("Sub Animations")
 	self.SelectedAnim = ""
+	self.AnimList.OnSelect = function(me, id, value, data)
+		self.SelectedAnim = value
+		if subAnimationsLoaded[value] then
+			self.AddButton:SetText("Remove Animation")
+		else
+			self.AddButton:SetText("Add Animation")
+		end
+	end
 	
 	self.AddButton = vgui.Create("DButton",self)
 	self.AddButton:SetPos(5,self:GetTall()-25)
@@ -1240,7 +1260,8 @@ function SUBANIMS:Refresh()
 		
 		--no need to show these
 		if i != "editortest" && i != animName && i != "editingAnim" && !string.find(i,"subPosture_") then
-			local item = self.AnimList:AddItem(i)
+			local item = self.AnimList:AddChoice(i)
+			--[[local item = self.AnimList:AddItem(i)
 			item.DoClick = function() 
 				self.SelectedAnim = i
 				if subAnimationsLoaded[i] then
@@ -1249,7 +1270,7 @@ function SUBANIMS:Refresh()
 					self.AddButton:SetText("Add Animation")
 				end
 					
-			end
+			end]]
 		end
 	end
 	
