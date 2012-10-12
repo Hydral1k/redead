@@ -181,7 +181,7 @@ end
 
 function meta:GetStats()
 
-	return self.Stats
+	return self.Stats or {}
 
 end
 

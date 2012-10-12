@@ -56,19 +56,19 @@ SWEP.Primary.NumShots		= 1
 SWEP.Primary.Cone			= 0.025
 SWEP.Primary.Delay			= 0.150
 
+SWEP.Primary.Ammo			= "Pistol"
 SWEP.Primary.ClipSize		= 50
 SWEP.Primary.DefaultClip	= 200
 SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo			= "Pistol"
 
 SWEP.Secondary.Sound        = Sound( "weapons/zoom.wav" )
 SWEP.Secondary.Laser        = Sound( "weapons/ar2/ar2_empty.wav" )
 SWEP.Secondary.Delay  		= 0.5
 
+SWEP.Secondary.Ammo			= "none"
 SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo			= "none"
 
 SWEP.Laser = false
 SWEP.LaserOffset = Vector(0,0,0)
