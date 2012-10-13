@@ -144,10 +144,11 @@ function GM:InitPostEntity()
 	end
 	
 	for k,v in pairs( ents.FindByClass( "prop_phys*" ) ) do
-	
+		
+		local tbl = item.GetByModel( v:GetModel() )
 		local phys = v:GetPhysicsObject()
 		
-		if IsValid( phys ) and phys:GetMass() <= 5 then
+		if tbl or ( IsValid( phys ) and phys:GetMass() <= 3 ) then
 		
 			v:Remove()
 		
@@ -310,7 +311,7 @@ function GM:AddToZombieList( ply )
 
 	if team.NumPlayers( TEAM_ZOMBIES ) > 0 then 
 	
-		ply:Notice( "You cannot volunteer to be the zombie lord", GAMEMODE.Colors.Red, 5 )
+		ply:Notice( "You cannot be the zombie lord now", GAMEMODE.Colors.Red, 5 )
 	
 		return
 	

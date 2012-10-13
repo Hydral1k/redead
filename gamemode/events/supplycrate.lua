@@ -8,6 +8,8 @@ function EVENT:Start()
 	local spawns = ents.FindByClass( "info_lootspawn" )
 	local loot = table.Random( spawns )
 	
+	if not IsValid( loot ) then MsgN( "ERROR: Unable to locate loot spawns. Map not configured?" ) return end
+	
 	local ent = ents.Create( "sent_bonuscrate" )
 	ent:SetPos( loot:GetPos() + Vector(0,0,10) )
 	ent:Spawn()
