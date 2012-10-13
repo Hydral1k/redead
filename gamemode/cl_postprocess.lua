@@ -181,7 +181,7 @@ function RotateAroundCoord( x, y, speed, dist )
 
 end
 
-local MaterialVision = Material( "toxsin/allyvision" )
+local MaterialVision = Material( "nuke/redead/allyvision" )
 //local MaterialItem = Material( "toxsin/allyvision" )
 
 function DrawPlayerRenderEffects()
@@ -258,7 +258,7 @@ function DrawPlayerRenderEffects()
 
 end
 
-DotMat = Material( "Sprites/light_glow02_add_noz" )
+DotMat = Material( "sprites/light_glow02_add_noz" )
 LasMat = Material( "sprites/bluelaser1" )
 
 function DrawLaser()

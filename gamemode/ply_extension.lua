@@ -550,6 +550,7 @@ function meta:OnLoadout()
 
 	if self:Team() == TEAM_ARMY then
 
+		self:GiveAmmo( 200, "Pistol" )
 		self:Give( "rad_knife" )
 		self:Give( "rad_inv" )
 
