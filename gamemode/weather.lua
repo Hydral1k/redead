@@ -415,7 +415,18 @@ end
 
 function GM:LightningThink()
 
-	if GAMEMODE.Weather.Lightning == 0 then return end
+	if GAMEMODE.Weather.Lightning == 0 then
+
+		if GAMEMODE.NextLightning and GAMEMODE.NextLightning > CurTime() then
+		
+			GAMEMODE:LightUpSky( false )
+			GAMEMODE.NextLightning = 0
+		
+		end
+	
+		return 
+	
+	end
 
 	local skyname = GetGlobalString( "SkyName" )
 	
