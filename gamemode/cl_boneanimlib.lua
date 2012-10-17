@@ -210,6 +210,7 @@ hook.Add("CalcMainActivity", "LuaAnimationSequence", function(pl)
 	end	
 end)
 
+local _R = debug.getregistry()
 local meta = _R["Entity"]
 function meta:ResetLuaAnimation(sAnimation, fDieTime, fPower, fTimeScale)
 	local animtable = Animations[sAnimation]

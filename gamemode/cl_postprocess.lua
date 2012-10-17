@@ -17,6 +17,10 @@ ColorModify[ "$pp_colour_mulb" ] 		= 0
 
 MixedColorMod = {}
 
+function GM:DOFThink()
+
+end
+
 function GM:RenderScreenspaceEffects()
 
 	local approach = FrameTime() * 0.05
@@ -381,12 +385,12 @@ function GM:PreDrawHalos()
 			
 		end
 		
-		for k,v in pairs( ents.FindByClass( "sent_antidote" ) ) do
+		if IsValid( GAMEMODE.ClientAntidote ) then
 		
-			local dist = math.Clamp( v:GetPos():Distance( LocalPlayer():GetPos() ), 250, 500 ) - 250
+			local dist = math.Clamp( GAMEMODE.ClientAntidote:GetPos():Distance( LocalPlayer():GetPos() ), 250, 500 ) - 250
 			local scale = dist / 250
 			
-			halo.Add( {v}, Color( 0, 200, 0, 200 * scale ), 2, 2, 1, 1, true )
+			halo.Add( {GAMEMODE.ClientAntidote}, Color( 0, 200, 0, 200 * scale ), 2, 2, 1, 1, true )
 		
 		end
 	

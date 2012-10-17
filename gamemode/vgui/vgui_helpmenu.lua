@@ -3,13 +3,13 @@ local PANEL = {}
 PANEL.Text = { "<html><body style=\"background-color:DimGray;\">",
 "<p style=\"font-family:tahoma;color:red;font-size:25;text-align:center\"><b>READ THIS!</b></p>",
 "<p style=\"font-family:verdana;color:black;font-size:10px;text-align:left\"><b>The Inventory System:</b> ",
-"To toggle your inventory, press your spawn menu button (default Q) or use your quick inventory weapon. Right click an item in your inventory to interact with it. To interact with dropped items, press your USE key (default E) on them.<br><br>",
+"To toggle your inventory, press your spawn menu button (default Q). Click an item in your inventory to interact with it. To interact with dropped items, press your USE key (default E) on them.<br><br>",
 "<b>Purchasing Items:</b> Press F2 to purchase and order items to be airdropped to you. You can only order items outdoors.<br><br>",
 "<b>The Panic Button:</b> Press F3 to activate the panic button. It automatically detects your ailments and attempts to fix them using what you have in your inventory.<br><br>",
-"<b>The HUD:</b> The radar marks the position of many things. Blue dots are loot bags. White dots are important items. Red dots are enemies. Green dots are friendly units.",
+"<b>The HUD:</b> The location of important locations and items are marked on your screen. Your teammates are highlighted through walls, as well as the antidote.",
 "If you have radiation poisoning, an icon indicating the severity of the poisoning will appear on the bottom left of your screen. An icon will also appear if you are bleeding or infected.<br><br>",
-"<b>Evacuation:</b> At the end of the round, a helicopter will come to rescue the humans. Run to the evac zone to be rescued.<br><br>",
-"<b>The Infection:</b> The common undead will infect you when they hit you. To cure infection, go to the antidote and press your USE key to access it. The antidote location is always marked on the radar.<br><br>",
+"<b>Evacuation:</b> At the last minute of the round, a helicopter will come to rescue your squad. Run to the evac zone marked on your HUD to be rescued.<br><br>",
+"<b>The Infection:</b> The common undead will infect you when they hit you. To cure infection, go to the antidote and press your USE key to access it. The antidote location is always marked on your HUD.<br><br>",
 "<b>The Zombie Lord:</b> If there are more than 8 players then a zombie lord will be chosen. If the zombie lord manages to fill their blood meter, they will respawn as a human with a special reward.<br><br>",
 "<b>Radiation:</b> Radiation is visually unnoticeable. When near radiation, your handheld geiger counter will make sounds indicating how close you are to a radioactive deposit. Radiation poisoning is cured by vodka or Anti-Rad.<br><br>" }
 
@@ -18,13 +18,13 @@ PANEL.ButtonText = { "Holy Shit I Don't Care",
 "That's A Lot Of Words",
 "I'd Rather Just Whine For Help",
 "Just Wanna Play Video Games",
-"I Literally Cannot Read Words",
+"Who Gives A Shit?",
 "Help Menus Are For Nerds",
 "I Thought This Was A Roleplay Server",
-"I'm Gay As Fuck In My Pink Jeep Truck",
+"How I Shoot Zobies",
 "How Do I Buy Wepon",
-"HEY GUYS WHERE IS THE ANTIDOTE this game suck",
-"im gay",
+"HEY GUYS WHERES ANTIDOTE this game suck",
+"WHERE MY INVENTOREY",
 "TL;DR",
 "FUCK OFF" }
 
@@ -54,7 +54,7 @@ function PANEL:Init()
 		if LocalPlayer():Team() != TEAM_UNASSIGNED then return end
 		
 		local classmenu = vgui.Create( "ClassPicker" )
-		classmenu:SetSize( 415, 370 )
+		classmenu:SetSize( 415, 475 )
 		classmenu:Center()
 		classmenu:MakePopup()
 		
@@ -89,7 +89,7 @@ function PANEL:Paint()
 	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 0, 0, 0, 255 ) )
 	draw.RoundedBox( 4, 1, 1, self:GetWide() - 2, self:GetTall() - 2, Color( 150, 150, 150, 150 ) )
 	
-	draw.SimpleText( "ToxSin Help Menu", "ItemDisplayFont", self:GetWide() * 0.5, 10, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+	draw.SimpleText( "Help Menu", "ItemDisplayFont", self:GetWide() * 0.5, 10, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
 
 end
 

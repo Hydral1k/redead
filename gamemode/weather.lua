@@ -351,7 +351,7 @@ function GM:RainThink()
 				
 			end
 			
-			GAMEMODE.RainNoise:ChangeVolume( GAMEMODE.RainVolume )
+			GAMEMODE.RainNoise:ChangeVolume( GAMEMODE.RainVolume, GAMEMODE.RainVolume )
 	
 		end
 	

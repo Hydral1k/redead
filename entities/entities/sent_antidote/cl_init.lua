@@ -3,6 +3,8 @@ include('shared.lua')
 
 function ENT:Initialize()
 
+	GAMEMODE.ClientAntidote = self.Entity
+
 end
 
 function ENT:Think()
@@ -17,7 +19,7 @@ function ENT:Draw()
 	
 end
 	
-	--[[local scale = ( math.Clamp( self.Entity:GetPos():Distance( LocalPlayer():GetPos() ), 500, 3000 ) - 500 ) / 2500
+--[[local scale = ( math.Clamp( self.Entity:GetPos():Distance( LocalPlayer():GetPos() ), 500, 3000 ) - 500 ) / 2500
 	
 	local eyenorm = self.Entity:GetPos() - EyePos()
 	local dist = eyenorm:Length()

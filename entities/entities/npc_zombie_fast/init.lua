@@ -39,7 +39,7 @@ function ENT:Initialize()
 	
 	self.Entity:SetSolid( SOLID_BBOX ) 
 	self.Entity:SetMoveType( MOVETYPE_STEP )
-	self.Entity:CapabilitiesAdd( CAP_MOVE_GROUND | CAP_INNATE_MELEE_ATTACK1 | CAP_MOVE_JUMP | CAP_MOVE_CLIMB )
+	self.Entity:CapabilitiesAdd( bit.bor( CAP_MOVE_GROUND, CAP_INNATE_MELEE_ATTACK1, CAP_MOVE_JUMP, CAP_MOVE_CLIMB ) )
 	
 	self.Entity:SetMaxYawSpeed( 5000 )
 	self.Entity:SetHealth( 100 )

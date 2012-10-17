@@ -86,19 +86,6 @@ function GM:Initialize()
 	
 end
 
-GM.HelpText = { "<html><body style=\"background-color:DimGray;\">",
-"<p style=\"font-family:tahoma;color:red;font-size:25;text-align:center\"><b>READ THIS!</b></p>",
-"<p style=\"font-family:verdana;color:black;font-size:10px;text-align:left\"><b>The Inventory System:</b> ",
-"To toggle your inventory, press your spawn menu button (default Q) or use your quick inventory weapon. Right click an item in your inventory to interact with it. To interact with dropped items, press your USE key (default E) on them.<br><br>",
-"<b>Purchasing Items:</b> Press F2 to purchase and order items to be airdropped to you. You can only order items outdoors.<br><br>",
-"<b>The Panic Button:</b> Press F3 to activate the panic button. It automatically detects your ailments and attempts to fix them using what you have in your inventory.<br><br>",
-"<b>The HUD:</b> The location of important locations and items are marked on your screen. Some objectives are highlighted through walls.",
-"If you have radiation poisoning, an icon indicating the severity of the poisoning will appear on the bottom left of your screen. An icon will also appear if you are bleeding or infected.<br><br>",
-"<b>Evacuation:</b> At the end of the round, a helicopter will come to rescue the humans. Run to the evac zone marked on your radar to be rescued.<br><br>",
-"<b>The Infection:</b> The common undead will infect you when they hit you. To cure infection, go to the antidote and press your USE key to access it. The antidote location is always marked on the radar.<br><br>",
-"<b>The Zombie Lord:</b> If there are more than 8 players then a zombie lord will be chosen. If the zombie lord manages to fill their blood meter, they will respawn as a human with a special reward.<br><br>",
-"<b>Radiation:</b> Radiation is visually unnoticeable. When near radiation, your handheld geiger counter will make sounds indicating how close you are to a radioactive deposit. Radiation poisoning is cured by vodka or Anti-Rad.<br><br>" }
-
 function GM:GetHelpHTML()
 
 	local str = ""
@@ -128,10 +115,12 @@ end
 
 function GM:ShowClasses()
 
-	local classmenu = vgui.Create( "ClassPicker" )
+	--[[local classmenu = vgui.Create( "ClassPicker" )
 	classmenu:SetSize( 415, 475 )
 	classmenu:Center()
-	classmenu:MakePopup()
+	classmenu:MakePopup()]]
+	
+	GAMEMODE:ShowHelp()
 
 end
 
@@ -1018,7 +1007,7 @@ function GM:CreateMove( cmd )
 	
 		for k,v in pairs{ IN_MOVELEFT, IN_MOVERIGHT, IN_LEFT, IN_RIGHT, IN_DUCK, IN_JUMP } do
 		
-			if cmd:GetButtons() & v > 0 then
+			if bit.band( cmd:GetButtons(), v ) > 0 then
 			
 				if not ( v == IN_JUMP and LocalPlayer():GetModel() == "models/zombie/fast.mdl" ) then
 			

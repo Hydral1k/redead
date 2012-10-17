@@ -26,7 +26,7 @@ function ENT:Initialize()
 	
 	self.Entity:SetSolid( SOLID_BBOX ) 
 	self.Entity:SetMoveType( MOVETYPE_STEP )
-	self.Entity:CapabilitiesAdd( CAP_MOVE_GROUND | CAP_INNATE_MELEE_ATTACK1 ) 
+	self.Entity:CapabilitiesAdd( bit.bor( CAP_MOVE_GROUND, CAP_INNATE_MELEE_ATTACK1 ) ) 
 	
 	self.Entity:SetMaxYawSpeed( 5000 )
 	self.Entity:SetHealth( 100 )
@@ -352,13 +352,13 @@ end
 
 function ENT:CanTarget( v )
 
-	return ( ( v:IsPlayer() and v:Alive() and v:GetObserverMode() == OBS_MODE_NONE and v:Team() == TEAM_ARMY ) or ( v:IsNPC() and not v:IsZombie() ) )
+	return ( ( v:IsPlayer() and v:Alive() and v:GetObserverMode() == OBS_MODE_NONE ) or ( v:IsNPC() and not v:IsZombie() ) )
 
 end
 
 function ENT:UpdateEnemy( enemy )
 
-	if IsValid( enemy ) and self.Entity:CanTarget( enemy ) then
+	if IsValid( enemy ) then
 		
 		self:SetEnemy( enemy, true ) 
 		self:UpdateEnemyMemory( enemy, enemy:GetPos() ) 
