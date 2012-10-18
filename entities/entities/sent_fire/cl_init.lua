@@ -9,8 +9,6 @@ function ENT:Initialize()
 	self.LightTime = 0
 	
 	self.Entity:DoTraces()
-	
-	print("START POS" , self.Entity:GetPos() )
 
 end
 

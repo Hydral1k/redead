@@ -352,7 +352,7 @@ end
 
 function ENT:CanTarget( v )
 
-	return ( ( v:IsPlayer() and v:Alive() and v:GetObserverMode() == OBS_MODE_NONE ) or ( v:IsNPC() and not v:IsZombie() ) )
+	return ( ( v:IsPlayer() and v:Alive() and v:GetObserverMode() == OBS_MODE_NONE and v:Team() == TEAM_ARMY ) or ( v:IsNPC() and not v:IsZombie() ) )
 
 end
 
