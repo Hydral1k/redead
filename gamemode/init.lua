@@ -1,6 +1,4 @@
 
-require( "glon" ) 
-
 include( 'resource.lua' )
 include( 'enums.lua' )
 include( 'items.lua' )
@@ -105,13 +103,6 @@ end
 
 function GM:InitPostEntity()	
 
-	--[[GAMEMODE.Weather = ents.Create( "env_skypaint" )
-	GAMEMODE.Weather:SetKeyValue( "drawstars", "1" )
-	GAMEMODE.Weather:SetKeyValue( "starfade", "1" )
-	GAMEMODE.Weather:SetKeyValue( "starspeed", "0.03" )
-	GAMEMODE.Weather:SetKeyValue( "startexture", "skybox/clouds" )
-	GAMEMODE.Weather:Spawn()]]
-
 	GAMEMODE.Trader = ents.Create( "info_trader" )
 	GAMEMODE.Trader:Spawn()
 	
@@ -180,7 +171,7 @@ end
 
 function GM:SaveAllEnts()
 
-	MsgN( "Saving ReDead entity data..." )
+	MsgN( "Saving ReDead map config data..." )
 
 	local enttbl = {
 		info_player_zombie = {},
@@ -221,19 +212,20 @@ function GM:SaveAllEnts()
 		
 	end
 	
-	file.Write( "redead/" .. string.lower( game.GetMap() ) .. ".txt", glon.encode( enttbl ) )
+	file.Write( "redead/" .. string.lower( game.GetMap() ) .. "_json.txt", util.TableToJSON( enttbl ) )
 
 end
 
 function GM:LoadAllEnts()
 
-	MsgN( "Loading stored entity data..." )
+	MsgN( "Loading ReDead map config data..." )
 
-	local glondry = glon.decode( file.Read( "redead/" .. string.lower( game.GetMap() ) .. ".txt", "DATA" ) )
+	local read = file.Read( "redead/" .. string.lower( game.GetMap() ) .. "_json.txt", "DATA" )
+	local config = util.JSONToTable( read )
 	
-	if not glondry then MsgN( "*** WARNING ***\nThis map has no ReDead configuration data! Errors may occur!" ) return end
+	if not config then MsgN( "*** WARNING ***\nThis map has no ReDead configuration data! Errors may occur!" ) return end
 	
-	for k,v in pairs( glondry ) do
+	for k,v in pairs( config ) do
 	
 		if v[1] then
 		
@@ -1176,13 +1168,13 @@ function GM:OnDamagedByExplosion( ply, dmginfo )
 	
 end
 
-function GM:PlayerDeathThink( pl )
+function GM:PlayerDeathThink( ply )
 
-	if pl.NextSpawn and pl.NextSpawn > CurTime() then return end
+	if ply.NextSpawn and ply.NextSpawn > CurTime() then return end
 	
-	if pl:KeyDown( IN_JUMP ) or pl:KeyDown( IN_ATTACK ) or pl:KeyDown( IN_ATTACK2 ) then
+	if ply:KeyDown( IN_JUMP ) or ply:KeyDown( IN_ATTACK ) or ply:KeyDown( IN_ATTACK2 ) then
 
-		pl:Spawn()
+		ply:Spawn()
 		
 	end
 	

@@ -111,17 +111,17 @@ function ENT:SelectSchedule()
 		
 			local slot = math.random( 1, 5 )
 		
-			--[[local attack = ai_schedule.New( "Beatdown" )
+			local attack = ai_schedule.New( "Beatdown" )
 			attack:EngTask( "TASK_STOP_MOVING", 0 )
 			attack:EngTask( "TASK_FACE_ENEMY", 0 )
-			attack:AddTask( "PlaySequence", { Name = self.AttackAnims[slot], Speed = self.AnimSpeeds[slot] } )]]
+			attack:AddTask( "PlaySequence", { Name = self.AttackAnims[slot], Speed = self.AnimSpeeds[slot] } )
 			
-			local attack = ai_schedule.New( "Beatdown" )
+			--[[local attack = ai_schedule.New( "Beatdown" )
 			local task = ai_task.New()
 			task:InitEngine( "TASK_STOP_MOVING", 0 )
 			task:InitEngine( "TASK_FACE_ENEMY", 0 )
 			task:InitFunctionName( "TaskStart_PlaySequence", "Task_PlaySequence", { Name = self.AttackAnims[slot], Speed = self.AnimSpeeds[slot] } )
-			attack.TaskCount = table.insert( attack.Tasks, task )
+			attack.TaskCount = table.insert( attack.Tasks, task )]]
 			
 			self.Entity:StartSchedule( attack ) 
 			self.Entity:VoiceSound( self.VoiceSounds.Attack )

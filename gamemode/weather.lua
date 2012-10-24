@@ -242,7 +242,7 @@ function GM:PaintWeather()
 		
 		else
 	
-			GAMEMODE.RainRefract = math.Approach( ( GAMEMODE.RainRefract or 0 ), 0.01 * GAMEMODE.Weather.Rain, 0.0001 )
+			GAMEMODE.RainRefract = math.Approach( ( GAMEMODE.RainRefract or 0 ), 0.06 * GAMEMODE.Weather.Rain, 0.0001 )
 			
 		end
 		

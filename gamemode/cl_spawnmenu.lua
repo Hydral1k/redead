@@ -21,6 +21,18 @@ function GM:CreateElement( name )
 
 end
 
+function GM:ClearElements()
+
+	for k,v in pairs( GAMEMODE.Elements ) do
+	
+		v:Remove()
+		
+	end
+	
+	GAMEMODE.Elements = {}
+
+end
+
 function GM:AddToCart( tbl, amt )
 
 	for i=1,amt do
@@ -115,18 +127,6 @@ function GM:ClearCart()
 		end
 		
 	end
-
-end
-
-function GM:ClearElements()
-
-	for k,v in pairs( GAMEMODE.Elements ) do
-	
-		v:Remove()
-		
-	end
-	
-	GAMEMODE.Elements = {}
 
 end
 
