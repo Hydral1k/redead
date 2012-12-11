@@ -1,6 +1,6 @@
 if SERVER then
 
-	AddCSLuaFile("shared.lua")
+	AddCSLuaFile( "shared.lua" )
 	
 end
 
@@ -17,7 +17,7 @@ if CLIENT then
 	
 end
 
-SWEP.HoldType = "slam"
+SWEP.HoldType = "knife"
 
 SWEP.Base = "rad_base"
 
@@ -50,8 +50,6 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:PrimaryAttack()
-
-	self.Owner:SetLuaAnimation( "shank" )
 	
 	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 	self.Weapon:MeleeTrace( self.Primary.Damage )

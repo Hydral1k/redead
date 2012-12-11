@@ -25,7 +25,7 @@ function EFFECT:Init( data )
 	
 		phys:Wake()
 		phys:SetMass( 100 )
-		phys:AddAngleVelocity( Angle( math.random(-200,200), math.random(-200,200), math.random(-200,200) ) )
+		phys:AddAngleVelocity( VectorRand() * 500 )
 		phys:SetMaterial( "gmod_silent" )
 		
 		if scale < 2 then

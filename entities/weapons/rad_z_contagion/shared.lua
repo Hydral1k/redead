@@ -61,8 +61,7 @@ function SWEP:MeleeTrace( dmg )
 	self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
 	
 	if CLIENT then return end
-	
-	self.Weapon:SetNWString( "CurrentAnim", "zattack" .. math.random(1,3) )
+
 	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 	
 	local pos = self.Owner:GetShootPos()

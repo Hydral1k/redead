@@ -1,8 +1,4 @@
 
-include( 'sh_boneanimlib.lua' )
-include( 'cl_boneanimlib.lua' )
-include( 'cl_animeditor.lua' )
-include( 'ply_anims.lua' )
 include( 'items.lua' )
 include( 'shared.lua' )
 include( 'enums.lua' )

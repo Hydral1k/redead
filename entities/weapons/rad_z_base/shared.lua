@@ -1,6 +1,6 @@
 if SERVER then
 
-	AddCSLuaFile("shared.lua")
+	AddCSLuaFile( "shared.lua" )
 	
 end
 
@@ -22,7 +22,7 @@ SWEP.HoldType = "slam"
 
 SWEP.Base = "rad_base"
 
-SWEP.ViewModel = "models/Zed/weapons/v_undead.mdl"
+SWEP.ViewModel = "models/zed/weapons/v_undead.mdl"
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "Knife"
@@ -54,7 +54,6 @@ end
 
 function SWEP:Deploy()
 
-	self.Owner:SetLuaAnimation( "zstance" )
 	self.Owner:DrawWorldModel( false )
 	
 	if SERVER then
@@ -92,8 +91,6 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:PrimaryAttack()
-
-	self.Owner:SetLuaAnimation( self.Weapon:GetNWString( "CurrentAnim", "zattack1" ) )
 	
 	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(90,110) )
 	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )

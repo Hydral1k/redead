@@ -106,8 +106,6 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:PrimaryAttack()
-
-	self.Owner:SetLuaAnimation( self.Weapon:GetNWString( "CurrentAnim", "zattack1" ) )
 	
 	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(130,150) )
 	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
@@ -122,7 +120,6 @@ function SWEP:MeleeTrace( dmg )
 	
 	if CLIENT then return end
 	
-	self.Weapon:SetNWString( "CurrentAnim", "zattack" .. math.random(1,3) )
 	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 	
 	local pos = self.Owner:GetShootPos()
