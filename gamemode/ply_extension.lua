@@ -1220,8 +1220,6 @@ function meta:OnDeath()
 	umsg.End()
 	
 	self.NextSpawn = CurTime() + 15
-	
-	self:StopAllLuaAnimations( 0.2 )
 
 	if self:Team() == TEAM_ARMY then
 
