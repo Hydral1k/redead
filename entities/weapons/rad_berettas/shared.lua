@@ -50,9 +50,9 @@ SWEP.Primary.ShellType = SHELL_9MM
 
 function SWEP:ShootEffects()	
 
-	if SERVER then
+	if IsFirstTimePredicted() then
 	
-		self.Owner:ViewBounce( self.Primary.Recoil )  
+		self.Owner:ViewPunch( Angle( math.Rand( -0.2, -0.1 ) * self.Primary.Recoil, math.Rand( -0.05, 0.05 ) * self.Primary.Recoil, 0 ) )
 		
 	end
 	
@@ -68,15 +68,6 @@ function SWEP:ShootEffects()
 		self.AnimPos = 1
 	
 	end
-	
-	if CLIENT then return end
-
-	local ed = EffectData()
-	ed:SetOrigin( self.Owner:GetShootPos() )
-	ed:SetEntity( self.Weapon )
-	ed:SetAttachment( self.Weapon:LookupAttachment( tostring( self.AnimPos + 2 ) ) )
-	ed:SetScale( ( self.Primary.ShellType or SHELL_9MM ) )
-	util.Effect( "weapon_shell", ed, true, true )
 	
 end
 

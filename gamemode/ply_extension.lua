@@ -287,6 +287,10 @@ function meta:ResetHeadshots()
 
 end
 
+function meta:ViewBounce( scale )
+    self:ViewPunch( Angle( math.Rand( -0.2, -0.1 ) * scale, math.Rand( -0.05, 0.05 ) * scale, 0 ) )
+end
+
 function meta:GetStamina()
 	return self:GetNWInt( "Stamina", 0 ) 
 end
@@ -383,10 +387,6 @@ end
 
 function meta:IsBleeding()
 	return self:GetNWBool( "Bleeding", false )
-end
-
-function meta:ViewBounce( scale )
-	self:ViewPunch( Angle( math.Rand( -0.2, -0.1 ) * scale, math.Rand( -0.05, 0.05 ) * scale, 0 ) )
 end
 
 function meta:SetPlayerClass( num )
@@ -656,7 +656,7 @@ function meta:DropLoot()
 	end
 	
 	ent:SetPos( self:GetPos() + Vector(0,0,25) )
-	ent:SetAngles( self:GetForward() )
+	ent:SetAngles( self:GetForward():Angle() )
 	ent:SetRemoval( 60 * 5 )
 	ent:Spawn()
 	ent:SetCash( self:GetCash() )

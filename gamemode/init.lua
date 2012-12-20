@@ -214,9 +214,24 @@ function GM:LoadAllEnts()
 	MsgN( "Loading ReDead map config data..." )
 
 	local read = file.Read( "redead/" .. string.lower( game.GetMap() ) .. "_json.txt", "DATA" )
+	
+	if not read then
+	
+		MsgN( "ERROR: No ReDead map config data found!" )
+		
+		return
+	
+	end
+	
 	local config = util.JSONToTable( read )
 	
-	if not config then MsgN( "*** WARNING ***\nThis map has no ReDead configuration data! Errors may occur!" ) return end
+	if not config then 
+	
+		MsgN( "ERROR: No ReDead map config data found!" ) 
+		
+		return 
+		
+	end
 	
 	MsgN( "Loaded ReDead map config data successfully!" )
 	

@@ -62,7 +62,7 @@ function FUNC_MUTAGEN( ply, id, client, icon )
 	
 	if ply:IsInfected() then
 		
-		ply:Notice( "Your infection has been cured", GAMEMODE.Colors.Green, 5, inc * 2 )
+		ply:Notice( "Your infection has been cured", GAMEMODE.Colors.Green, 5, 0 )
 		ply:SetInfected( false )
 					
 	end

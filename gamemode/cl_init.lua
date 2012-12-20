@@ -204,10 +204,8 @@ function GM:Think()
 
 	if not LocalPlayer():Alive() and GAMEMODE:ElementsVisible() then
 	
-		InventoryScreen:SetVisible( false )
-		InfoScreen:SetVisible( false )
-		PlayerScreen:SetVisible( false )
-		StashScreen:SetVisible( false )
+		GAMEMODE:ClearElements()
+		
 		gui.EnableScreenClicker( false )
 		
 	end

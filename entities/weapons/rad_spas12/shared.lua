@@ -120,9 +120,9 @@ end
 
 function SWEP:ShootEffects()	
 
-	if SERVER then
+	if IsFirstTimePredicted() then
 	
-		self.Owner:ViewBounce( self.Primary.Recoil )  
+		self.Owner:ViewPunch( Angle( math.Rand( -0.2, -0.1 ) * self.Primary.Recoil, math.Rand( -0.05, 0.05 ) * self.Primary.Recoil, 0 ) )
 		
 	end
 	

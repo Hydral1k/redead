@@ -150,23 +150,15 @@ function FUNC_UNMUTAGEN( ply, id, client, icon )
 		
 		elseif rand == 3 then
 		
-			if math.random(1,2) == 1 then
+			if ply:IsInfected() then
 		
-				if ply:IsInfected() then
-		
-					ply:Notice( "Your infection has been cured", GAMEMODE.Colors.Green, 5, inc * 2 )
-					ply:SetInfected( false )
-					
-				end
+				ply:Notice( "Your infection has been cured", GAMEMODE.Colors.Green, 5, inc * 2 )
+				ply:SetInfected( false )
 				
 			else
 			
-				if not ply:IsInfected() then
-			
-					ply:Notice( "You were infected by the drug", GAMEMODE.Colors.Red, 5, inc * 2 )
-					ply:SetInfected( true )
-					
-				end
+				ply:Notice( "You were infected by the drug", GAMEMODE.Colors.Red, 5, inc * 2 )
+				ply:SetInfected( true )
 			
 			end
 		

@@ -183,7 +183,7 @@ net.Receive( "WeatherSynch", function( len )
 	GAMEMODE.Weather.Transition = true
 	GAMEMODE.Weather.Inc = 0
 	
-	PrintTable( GAMEMODE.Weather.New )
+	//PrintTable( GAMEMODE.Weather.New )
 	
 end )
 
@@ -232,6 +232,8 @@ end
 
 RainMat = Material( "models/shadertest/shader3" )
 
+GM.MaxRainRefract = 0.01
+
 function GM:PaintWeather()
 
 	if GAMEMODE.Weather.Rain > 0 then
@@ -242,7 +244,7 @@ function GM:PaintWeather()
 		
 		else
 	
-			GAMEMODE.RainRefract = math.Approach( ( GAMEMODE.RainRefract or 0 ), 0.06 * GAMEMODE.Weather.Rain, 0.0001 )
+			GAMEMODE.RainRefract = math.Approach( ( GAMEMODE.RainRefract or 0 ), GAMEMODE.MaxRainRefract * GAMEMODE.Weather.Rain, 0.0001 )
 			
 		end
 		

@@ -228,7 +228,7 @@ function PANEL:AddAward( ypos, pos, width, title, desc, ply, amt, append, sound,
 	surface.PlaySound( sound )
 
 	self.YPos = self.YPos + 31
-	self.Wait = CurTime() + 1.0
+	self.Wait = CurTime() + 1.5
 
 	table.insert( self.DrawTbl, { X = pos + 2, Y = ypos + 5, Text = title, Style = TEXT_ALIGN_LEFT, Font = "EndGame" } )
 	
