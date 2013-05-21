@@ -1073,7 +1073,7 @@ usermessage.Hook( "Gibbed", Gibbed )
 
 function Headless( msg )
 
-	table.insert( HeadlessTbl, { Pos = msg:ReadVector(), Time = CurTime() + 0.5 } )
+	table.insert( HeadlessTbl, { Pos = msg:ReadVector(), Time = CurTime() + 0.3 } )
 
 end
 usermessage.Hook( "Headless", Headless )

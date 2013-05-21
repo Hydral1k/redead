@@ -248,7 +248,7 @@ function GM:PaintWeather()
 			
 		end
 		
-		if GAMEMODE.RainRefract == 0 then return end
+		if GAMEMODE.RainRefract == 0 or GAMEMODE.Weather.Rain < 0.5 then return end
 		
 		render.UpdateScreenEffectTexture()
 
@@ -396,11 +396,11 @@ function GM:SpawnRain( amt )
 		local len = math.random( 40, 80 )
 		
 		local particle = RainEmitter:Add( "particle/Water/WaterDrop_001a", pos )			
-		particle:SetVelocity( Vector( 0, 0, math.random( -800, -700 ) ) + WindVector * ( 1 + math.sin( CurTime() * 0.1 ) ) )
+		particle:SetVelocity( Vector( 0, 0, math.random( -900, -800 ) ) + WindVector * ( 1 + math.sin( CurTime() * 0.1 ) ) )
 		particle:SetLifeTime( 0 )
 		particle:SetDieTime( 10 )
-		particle:SetStartAlpha( 50 )
-		particle:SetEndAlpha( 50 )
+		particle:SetStartAlpha( 20 )
+		particle:SetEndAlpha( 20 )
 		particle:SetStartSize( 2.0 )
 		particle:SetEndSize( math.Rand( 3.0, 4.0 + GAMEMODE.Weather.Rain ) )
 		particle:SetStartLength( len )
