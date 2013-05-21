@@ -6,5 +6,52 @@
 	"menusystem"	"1"
 	"settings"
 	{
-	}
+		1
+		{
+			"name"		"sv_redead_max_zombies"
+			"text"		"Max NPCs:"
+			"help"		"The maximum number of zombie NPCs."
+			"type"		"Numeric"
+			"default"	"45"
+		}
+		2
+		{
+			"name"		"sv_redead_zombies_per_player"
+			"text"		"Zombies per player:"
+			"help"		"Number of NPCs to spawn per player."
+			"type"		"Numeric"
+			"default"	"5"
+		}
+		3
+		{
+			"name"		"sv_redead_wave_length"
+			"text"		"Wave time:"
+			"help"		"Length of each wave in minutes."
+			"type"		"Numeric"
+			"default"	"4"
+		}
+		4
+		{
+			"name"		"sv_redead_wave_time"
+			"text"		"Wave delay:"
+			"help"		"Delay between each wave in seconds."
+			"type"		"Numeric"
+			"default"	"25"
+		}
+		5
+		{
+			"name"		"sv_redead_team_dmg"
+			"text"		"Team damage:"
+			"help"		"Friendly fire."
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+		6
+		{
+			"name"		"sv_redead_dmg_scale"
+			"text"		"Damage scale:"
+			"help"		"Bullet damage scale."
+			"type"		"Numeric"
+			"default"	"1.0"
+		}
 }
