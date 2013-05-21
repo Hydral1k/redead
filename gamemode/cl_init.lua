@@ -444,24 +444,11 @@ function GM:GoreRagdolls()
 	
 	for c,d in pairs( HeadlessTbl ) do
 	
-		local ent = GAMEMODE:GetNearestEnt( d.Pos, 30, tbl )
+		local ent = GAMEMODE:GetNearestEnt( d.Pos, 50, tbl )
 		
 		if IsValid( ent ) and not ent.IsHeadless then
-			
-			function ent:BuildBonePositions( numbones, num ) 
-				
-				local bone = 6
-				local matrix = self:GetBoneMatrix( bone )
-					
-				if matrix then
-				
-					matrix:Scale( Vector(0,0,0) )
-					self:SetBoneMatrix( bone, matrix )
-						
-				end
-					
-			end
-				
+	
+			ent:ManipulateBoneScale( 6, Vector( 0.001, 0.001, 0.001 ) )
 			ent.IsHeadless = true
 			
 			table.remove( HeadlessTbl, c )
@@ -1073,7 +1060,7 @@ usermessage.Hook( "Gibbed", Gibbed )
 
 function Headless( msg )
 
-	table.insert( HeadlessTbl, { Pos = msg:ReadVector(), Time = CurTime() + 0.3 } )
+	table.insert( HeadlessTbl, { Pos = msg:ReadVector(), Time = CurTime() + 0.5 } )
 
 end
 usermessage.Hook( "Headless", Headless )
