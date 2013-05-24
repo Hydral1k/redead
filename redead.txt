@@ -54,4 +54,5 @@
 			"type"		"Numeric"
 			"default"	"1.0"
 		}
+	}
 }

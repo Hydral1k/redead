@@ -1,4 +1,5 @@
 
+include( 'map_defaults.lua' )
 include( 'resource.lua' )
 include( 'enums.lua' )
 include( 'items.lua' )
