@@ -2,6 +2,7 @@
 {
 	"base"		"base"
 	"title"		"ReDead"
+	"workshopid"	"147208196"
 	"maps"		"^rd_"
 	"menusystem"	"1"
 	"settings"
