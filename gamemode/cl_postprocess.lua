@@ -124,8 +124,8 @@ function GM:RenderScreenspaceEffects()
 	end
 	
 	DrawColorModify( MixedColorMod )
-	DrawLaser()
 	DrawPlayerRenderEffects()
+	DrawLaser()
 	
 end
 
@@ -269,7 +269,7 @@ function DrawLaser()
 
 	if LocalPlayer():Team() != TEAM_ARMY then return end
 	
-	local vm = LocalPlayer():GetViewModel()
+	local vm = LocalPlayer():GetViewModel( 0 )
 	
 	if not IsValid( vm ) then return end
 	
@@ -281,15 +281,66 @@ function DrawLaser()
 		
 	if idx == 0 then idx = vm:LookupAttachment( "muzzle" ) end
 		
-	local trace = util.GetPlayerTrace( LocalPlayer() )
+	--[[local trace = util.GetPlayerTrace( LocalPlayer() )
 	local tr = util.TraceLine( trace )
 	local tbl = vm:GetAttachment( idx )
 		
-	local pos = tr.HitPos
+	local pos = tr.HitPos]]
+	
+	local look = LocalPlayer():EyeAngles()
+	local dir = look:Forward()
+	local tbl = vm:GetAttachment( idx )
+	local ang = tbl.Ang
+	local offset = wep.LaserOffset
+						
+	ang:RotateAroundAxis( look:Up(), ( offset.p or 0 ) )
+	ang:RotateAroundAxis( look:Forward(), ( offset.r or 0 ) )
+	ang:RotateAroundAxis( look:Right(), ( offset.y or 0 ) )
+						
+	local forward = ang:Forward()
+	//lasforward = tbl.Ang:Forward()
+						
+	forward = forward * wep.LaserScale
+						
+	dir = dir +	forward
+	
+	local trace = {}
+	trace.start = LocalPlayer():GetShootPos()
+					
+	trace.endpos = trace.start + dir * 9000
+	trace.filter = { LocalPlayer(), weap, lp }
+	trace.mask = MASK_SOLID
+					
+	local tr = util.TraceLine( trace )
+											
+	local dist = math.Clamp( tr.HitPos:Distance( EyePos() ), 0, 500 )
+	local size = math.Rand( 2, 4 ) + ( dist / 500 ) * 6
+	local col = Color( 255, 0, 0, 255 )
+					
+	--[[if v == lp and IsValid( GAMEMODE.TargetEnt ) and GAMEMODE.TargetEnt:IsPlayer() and GAMEMODE.TargetEnt:Team() == TEAM_HUMAN then
+					
+		size = size + math.Rand( 0.5, 2.0 ) 
+						
+	elseif v != lp then
+					
+		size = math.Rand( 0, 1 ) + ( dist / 500 ) * 6
+					
+	end]]
+					
+	if ( wep.LastRunFrame or  0 ) > CurTime() then return end
+					
+	cam.Start3D( EyePos(), EyeAngles() )
+					
+		local norm = ( EyePos() - tr.HitPos ):GetNormal()
+					
+		render.SetMaterial( DotMat )
+		render.DrawQuadEasy( tr.HitPos + norm * size, norm, size, size, col, 0 )
 		
-	if vm:GetSequence() != ACT_VM_IDLE then
+	cam.End3D()
+		
+	--[[if vm:GetSequence() != ACT_VM_IDLE then
 			
-		wep.AngDiff = ( tbl.Ang - ( wep.LastGoodAng or Angle(0,0,0) ) ):Forward()
+		wep.AngDiff = ( tbl.Ang - ( wep.LastGoodAng or Angle(0,0,0) ) )//:Forward()
 			
 		trace = {}
 		trace.start = EyePos() or Vector(0,0,0)
@@ -304,11 +355,11 @@ function DrawLaser()
 		
 		wep.LastGoodAng = tbl.Ang
 		
-	end
+	end]]
 		
-	cam.Start3D( EyePos(), EyeAngles() )
+	--[[cam.Start3D( EyePos(), EyeAngles() )
 		
-		--[[local dir = ( tbl.Ang + Angle(0,90,0) ):Forward()
+		local dir = ( tbl.Ang + Angle(0,90,0) ):Forward()
 		dir.z = EyeAngles():Forward().z
 		
 		local start = tbl.Pos + ( dir * -5 ) + wep.LaserOffset
@@ -321,7 +372,7 @@ function DrawLaser()
 				
 			start = start + dir * 0.2
 				
-		end]]
+		end
 				
 		local dist = tr.HitPos:Distance( EyePos() )
 		local size = math.Rand( 7, 8 )
@@ -330,7 +381,7 @@ function DrawLaser()
 		render.SetMaterial( DotMat )
 		render.DrawQuadEasy( pos, ( EyePos() - tr.HitPos ):GetNormal(), dotsize, dotsize, Color( 255, 0, 0, 255 ), 0 )
 			
-	cam.End3D()	
+	cam.End3D()	]]
 
 end
 

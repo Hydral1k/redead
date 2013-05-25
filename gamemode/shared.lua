@@ -11,6 +11,7 @@ CreateConVar( "sv_redead_wave_length", "4", { FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR
 CreateConVar( "sv_redead_wave_time", "25", { FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_SERVER_CAN_EXECUTE }, "Controls the delay between zombie group spawning. (def 25 seconds)" )
 CreateConVar( "sv_redead_team_dmg", "0", { FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_SERVER_CAN_EXECUTE }, "Controls whether teammates can hurt eachother. (def 0)" )
 CreateConVar( "sv_redead_dmg_scale", "1", { FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_SERVER_CAN_EXECUTE }, "Controls bullet damage scaling. (def 1.0)" )
+CreateConVar( "sv_redead_setup_time", "60", { FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_SERVER_CAN_EXECUTE }, "How much time before the first wave? (def 60 seconds)" )
 
 TEAM_ARMY = 1
 TEAM_ZOMBIES = 2

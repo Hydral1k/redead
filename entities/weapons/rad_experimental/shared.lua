@@ -30,6 +30,8 @@ SWEP.SprintAng = Vector (0.8736, 40.1165, 28.0526)
 SWEP.IsSniper = false
 SWEP.AmmoType = "Prototype"
 SWEP.Laser = true
+SWEP.LaserOffset = Angle( -90, -0.9, 0 )
+SWEP.LaserScale = 0.25
 //SWEP.IronsightsFOV = 60
 
 SWEP.Gore = Sound( "npc/roller/mine/rmine_explode_shock1.wav" )

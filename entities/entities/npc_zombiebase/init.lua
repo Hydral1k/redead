@@ -152,7 +152,9 @@ function ENT:DoDeath( dmginfo )
 				ed:SetOrigin( self.Entity:GetPos() )
 				util.Effect( "gore_explosion", ed, true, true )
 				
-				self.Entity:SpawnRagdoll( table.Random( GAMEMODE.Corpses ) )
+				local corpse = table.Random( GAMEMODE.Corpses )
+				
+				self.Entity:SpawnRagdoll( corpse )
 				
 				ent1:AddStat( "Explode" )
 			

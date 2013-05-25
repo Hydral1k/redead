@@ -55,5 +55,13 @@
 			"type"		"Numeric"
 			"default"	"1.0"
 		}
+		7
+		{
+			"name"		"sv_redead_setup_time"
+			"text"		"Setup Time:"
+			"help"		"Time before first wave."
+			"type"		"Numeric"
+			"default"	"60"
+		}
 	}
 }

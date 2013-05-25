@@ -552,7 +552,7 @@ function meta:OnLoadout()
 
 		self:GiveAmmo( 200, "Pistol" )
 		self:Give( "rad_knife" )
-		self:Give( "rad_inv" )
+		//self:Give( "rad_inv" )
 
 		local gun = ents.Create( "prop_physics" )
 		gun:SetPos( self:GetPos() )

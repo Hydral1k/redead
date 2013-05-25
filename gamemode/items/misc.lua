@@ -213,8 +213,6 @@ function FUNC_UNMUTAGEN( ply, id, client, icon )
 end
 
 function FUNC_OPENSUITCASE( ply, id )
-
-	local tbl = item.GetByID( id )
 	
 	ply:Notice( "You found some " .. GAMEMODE.CurrencyName .. "s", GAMEMODE.Colors.Green )
 	ply:EmitSound( Sound( "Chain.ImpactSoft" ) )
@@ -232,6 +230,89 @@ function FUNC_OPENSUITCASE( ply, id )
 	return false
 
 end
+
+function FUNC_OPENBOX( ply, id )
+
+	local tbl = { ITEM_SUPPLY, ITEM_AMMO, ITEM_MISC, ITEM_SPECIAL, ITEM_WPN_COMMON, ITEM_WPN_SPECIAL }
+	local chancetbl = { 0.60,     0.20,     0.50,        0.20,           0.05,           0.02 }
+	
+	local rnd = math.Rand(0,1)
+	local choice = math.random( 1, table.Count( tbl ) ) 
+				
+	while rnd > chancetbl[ choice ] do
+					
+		rnd = math.Rand(0,1)
+		choice = math.random( 1, table.Count( tbl ) ) 
+					
+	end
+	
+	local rand = item.RandomItem( tbl[choice] )
+	
+	ply:AddIDToInventory( rand.ID )
+	
+	return false
+
+end
+
+item.Register( { 
+	Name = "Cardboard Box", 
+	CollisionOverride = true,
+	Type = ITEM_LOOT,
+	Rarity = 0.95,
+	Model = "models/props_junk/cardboard_box001a.mdl", 
+	PickupFunction = FUNC_OPENBOX,
+	Functions = {}
+} )
+
+item.Register( { 
+	Name = "Cardboard Box", 
+	CollisionOverride = true,
+	Type = ITEM_LOOT,
+	Rarity = 0.95,
+	Model = "models/props_junk/cardboard_box001b.mdl", 
+	PickupFunction = FUNC_OPENBOX,
+	Functions = {}
+} )
+
+item.Register( { 
+	Name = "Cardboard Box", 
+	CollisionOverride = true,
+	Type = ITEM_LOOT,
+	Rarity = 0.95,
+	Model = "models/props_junk/cardboard_box002a.mdl", 
+	PickupFunction = FUNC_OPENBOX,
+	Functions = {}
+} )
+
+item.Register( { 
+	Name = "Cardboard Box", 
+	CollisionOverride = true,
+	Type = ITEM_LOOT,
+	Rarity = 0.95,
+	Model = "models/props_junk/cardboard_box002b.mdl", 
+	PickupFunction = FUNC_OPENBOX,
+	Functions = {}
+} )
+
+item.Register( { 
+	Name = "Cardboard Box", 
+	CollisionOverride = true,
+	Type = ITEM_LOOT,
+	Rarity = 0.95,
+	Model = "models/props_junk/cardboard_box003a.mdl", 
+	PickupFunction = FUNC_OPENBOX,
+	Functions = {}
+} )
+
+item.Register( { 
+	Name = "Cardboard Box", 
+	CollisionOverride = true,
+	Type = ITEM_LOOT,
+	Rarity = 0.95,
+	Model = "models/props_junk/cardboard_box003b.mdl", 
+	PickupFunction = FUNC_OPENBOX,
+	Functions = {}
+} )
 
 item.Register( { 
 	Name = "Suitcase", 

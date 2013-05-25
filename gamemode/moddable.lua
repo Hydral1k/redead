@@ -212,7 +212,6 @@ GM.SpawnChance[ "npc_zombie_normal" ] = 0.2 // 20% chance
 GM.SpawnChance[ "npc_zombie_fast" ] = 0.4
 GM.SpawnChance[ "npc_zombie_poison" ] = 0.3
 
-GM.WaitTime = 45           // How much time (in seconds) do players have before the first wave spawns?
 GM.RadiationAmount = 0.6   // How much of the radiation on the map should be disabled on map startup? ( 0.6 means 60% will be disabled ) - OBSOLETE?
 GM.MaxLoot = 0.35          // Maximum amount of loot to be generated ( 0.05 means 5% of the info_lootspawns will have loot at them. )
 

@@ -49,7 +49,7 @@ util.AddNetworkString( "WeatherSynch" )
 
 function GM:Initialize()
 	
-	GAMEMODE.NextZombieThink = CurTime() + GAMEMODE.WaitTime
+	GAMEMODE.NextZombieThink = CurTime() + GetConVar( "sv_redead_setup_time" ):GetInt()
 	GAMEMODE.RandomLoot = {}
 	GAMEMODE.PlayerIDs = {}
 	GAMEMODE.Lords = {}
@@ -114,7 +114,7 @@ function GM:InitPostEntity()
 	
 	for k,v in pairs( ents.FindByClass( "prop_phys*" ) ) do
 	
-		if string.find( v:GetModel(), "explosive" ) or string.find( v:GetModel(), "propane" ) or string.find( v:GetModel(), "gascan" ) then
+		if string.find( v:GetModel(), "explosive" ) or string.find( v:GetModel(), "propane" ) or string.find( v:GetModel(), "gascan" ) or string.find( v:GetModel(), "gib" ) then
 		
 			table.insert( badshit, v )
 		
