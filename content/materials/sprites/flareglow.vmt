@@ -1,0 +1,10 @@
+"Sprite"
+{
+	"$spriteorientation" "vp_parallel"
+	"$spriteorigin" "[ 0.50 0.50 ]"
+	"$basetexture" "sprites/glow03"
+	"$additive" "1"
+	//"$ignorez" "1"
+	"$spriterendermode" "9"
+	"$illumfactor" "8"
+}

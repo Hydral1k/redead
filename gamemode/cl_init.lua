@@ -544,8 +544,9 @@ function DrawBar( x, y, w, h, value, maxvalue, icon, colorlight, colordark, hp )
 		end
 	
 		draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, h - 6, colordark )
+		draw.RoundedBox( 0, 1 + x + i * 2, y + 3 + ( h * 0.2 ), 1, h - 6 - ( h * 0.4 ), Color( colorlight.r, grn, colorlight.b ) )
 		
-		if hp then
+		--[[if hp then
 		
 			if i % 6 == 0 or ( i + 1 ) % 6 == 0 or ( i + 2 ) % 6 == 0 then
 				
@@ -559,7 +560,7 @@ function DrawBar( x, y, w, h, value, maxvalue, icon, colorlight, colordark, hp )
 		
 			draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * ( math.sin( ( CurTime() * 0.1 + i * 0.5 ) ) * ( math.sin( CurTime() * 2 ) * 0.15 ) + 0.5 ) ) - 3, Color( colorlight.r, grn, colorlight.b ) )
 			
-		end
+		end]]
 	
 	end
 

@@ -65,7 +65,9 @@ function GM:PlayerNoClip( pl, on )
 	
 end
 
-function GM:CalcMainActivity( ply, vel )
+// this is fucking up player anims
+
+--[[function GM:CalcMainActivity( ply, vel )
 
 	if ply:Team() == TEAM_ZOMBIES and ply:GetModel() == "models/zombie/fast.mdl" then
 	
@@ -88,7 +90,7 @@ function GM:CalcMainActivity( ply, vel )
 	end
 
     self.BaseClass:CalcMainActivity( ply, vel )
-
+	
 end
 
 function GM:UpdateAnimation( ply, vel, speed )
@@ -131,7 +133,7 @@ function GM:UpdateAnimation( ply, vel, speed )
 
 	self.BaseClass:UpdateAnimation( ply, vel, speed )
 
-end
+end]] 
 
 function IncludeItems()
 	

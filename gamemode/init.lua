@@ -1446,7 +1446,7 @@ function GM:PanicButton( ply )
 	
 	end
 	
-	ply:Notice( "Panic button didn't detect any ailments", GAMEMODE.Colors.Red )
+	ply:Notice( "Panic button did not detect any usable items", GAMEMODE.Colors.Red )
 	ply:ClientSound( "items/suitchargeno1.wav" )
 
 end

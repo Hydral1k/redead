@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\axe"
+	"$surfaceprop" "Wood_Plank"
+}

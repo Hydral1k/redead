@@ -1,0 +1,9 @@
+"UnlitGeneric"
+{
+	"$translucent" "1"
+	"$basetexture" "toxsin/noise01"
+	"$vertexcolor" "1"
+	"$vertexalpha" "1"
+	"$nolod" "1"
+	"$ignorez" "1"
+}
