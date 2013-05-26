@@ -37,7 +37,7 @@ SWEP.Primary.Sound			= Sound( "Weapon_UMP45.Single" )
 SWEP.Primary.Recoil			= 6.5
 SWEP.Primary.Damage			= 22
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Cone			= 0.045
+SWEP.Primary.Cone			= 0.040
 SWEP.Primary.Delay			= 0.100
 
 SWEP.Primary.ClipSize		= 25
