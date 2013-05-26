@@ -108,7 +108,6 @@ function SWEP:MeleeTrace( dmg )
 			ent:TakeDamage( dmg * 2, self.Owner, self.Weapon )
 			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
 			
-			self.Owner:AddStat( "Knife" )
 			self.Owner:DrawBlood()
 			
 			local ed = EffectData()
@@ -120,7 +119,6 @@ function SWEP:MeleeTrace( dmg )
 			ent:TakeDamage( dmg, self.Owner, self.Weapon )
 			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
 			
-			self.Owner:AddStat( "Knife" )
 			self.Owner:DrawBlood()
 			
 			local ed = EffectData()

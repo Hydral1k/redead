@@ -355,8 +355,11 @@ function SWEP:MeleeTrace( dmg )
 			ent:TakeDamage( dmg * 2, self.Owner, self.Weapon )
 			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
 			
-			self.Owner:AddStat( "Knife" )
 			self.Owner:DrawBlood()
+			
+			local ed = EffectData()
+			ed:SetOrigin( trace.HitPos )
+			util.Effect( "BloodImpact", ed, true, true )
 			
 		elseif string.find( ent:GetClass(), "npc" ) then
 		
@@ -364,7 +367,11 @@ function SWEP:MeleeTrace( dmg )
 			ent:TakeDamage( dmg, self.Owner, self.Weapon )
 			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
 			
-			self.Owner:AddStat( "Knife" )
+			self.Owner:DrawBlood()
+			
+			local ed = EffectData()
+			ed:SetOrigin( trace.HitPos )
+			util.Effect( "BloodImpact", ed, true, true )
 		
 		elseif !ent:IsPlayer() then 
 		

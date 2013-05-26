@@ -169,6 +169,13 @@ function ENT:DoDeath( dmginfo )
 				self.Entity:SpawnRagdoll( self.Legs )
 				
 				ent1:AddStat( "Meat" )
+				
+			elseif ent1:HasMelee() then
+				
+				self.Entity:VoiceSound( self.VoiceSounds.Death )
+				self.Entity:SpawnRagdoll()
+				
+				ent1:AddStat( "Knife" )
 			
 			elseif self.HeadshotEffects and self.Entity:GetHeadshotter( ent1 ) then
 			

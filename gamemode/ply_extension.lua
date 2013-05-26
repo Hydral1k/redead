@@ -246,6 +246,24 @@ function meta:AddCash( num )
 	
 end
 
+function meta:HasMelee()
+
+	local wep = self:GetActiveWeapon()
+	
+	if IsValid( wep ) then
+	
+		if wep.WorldModel == "models/weapons/w_hammer.mdl" or wep.WorldModel == "models/weapons/w_knife_t.mdl" or wep.WorldModel == "models/weapons/w_axe.mdl" then
+		
+			return true
+		
+		end
+	
+	end
+	
+	return false
+
+end
+
 function meta:HasShotgun()
 
 	local wep = self:GetActiveWeapon()

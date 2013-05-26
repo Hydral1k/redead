@@ -21,12 +21,12 @@ function PANEL:Init()
 	self.Awards[1] = { x, w, "Grey Matter:", "got the most headshots.", function() return self:GetStatMax( "Headshot" ) end, "zombie craniums", "player/headshot1.wav" }
 	self.Awards[2] = { x, w, "Silent Partner:", "got the most kill assists.", function() return self:GetStatMax( "Assist" ) end, "assists", "weapons/357/357_spin1.wav" }
 	self.Awards[3] = { x, w, "Longshot:", "got the longest distance kill.", function() return self:GetStatMax( "Longshot" ) end, "feet", "weapons/fx/nearmiss/bulletLtoR05.wav" }
-	self.Awards[4] = { x, w, "Meat Grinder:", "killed the most zombies with a shotgun.", function() return self:GetStatMax( "Meat" ) end, "zombies butchered", "nuke/gore/blood01.wav", true }
+	self.Awards[4] = { x, w, "Big Game Hunter:", "killed the most zombies with a shotgun.", function() return self:GetStatMax( "Meat" ) end, "zombies poached", "nuke/gore/blood01.wav", true }
 	self.Awards[5] = { x, w, "Crazy Ivan:", "killed the most zombies with explosives.", function() return self:GetStatMax( "Explode" ) end, "unidentified bodies", "weapons/underwater_explode3.wav", true }
 	self.Awards[6] = { x, w, "Firebug:", "ignited the most zombies.", function() return self:GetStatMax( "Igniter" ) end, "crispy zombies", "ambient/fire/mtov_flame2.wav", true }
 	self.Awards[7] = { x, w, "Shoplifter:", "looted the most items.", function() return self:GetStatMax( "Loot" ) end, "items taken", "items/itempickup.wav" }
 	self.Awards[8] = { x, w, "Broke The Bank:", "bought the most expensive weapon.", function() return self:GetStatMax( "Pricey" ) end, GAMEMODE.CurrencyName .. "s spent", "ambient/office/coinslot1.wav" }
-	self.Awards[9] = { x, w, "Come At Me Bro:", "butchered the most zombies with a melee weapon.", function() return self:GetStatMax( "Knife" ) end, "melee kills", "weapons/knife/knife_hit2.wav", true }
+	self.Awards[9] = { x, w, "Meat Grinder:", "butchered the most zombies with a melee weapon.", function() return self:GetStatMax( "Knife" ) end, "melee kills", "weapons/knife/knife_hit2.wav", true }
 	self.Awards[10] ={ x, w, "Get To Ze Choppa:", "was the first to reach the evacuation zone.", function() return self:GetStatMax( "Evac" ) end, "Arnold Schwarzenegger impression", "ambient/machines/spinup.wav", true }
 	self.Awards[11] ={ x, w, "Meet The Engineer:", "built the most barricades.", function() return self:GetStatMax( "Wood" ) end, "barricades built", "npc/dog/dog_servo6.wav", true }
 	self.Awards[12] ={ x, w, "Brain Munch:", "killed the most humans.", function() return self:GetStatMax( "ZedKills" ) end, "brains eaten", "npc/zombie/zombie_voice_idle2.wav", true }

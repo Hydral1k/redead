@@ -60,7 +60,7 @@ end
 
 function SWEP:SecondaryAttack()
 
-	self.Weapon:SetNextSecondaryFire( CurTime() + 5 )
+	self.Weapon:SetNextSecondaryFire( CurTime() + 8 )
 	
 	if SERVER then
 	
