@@ -1149,11 +1149,11 @@ function GM:ScalePlayerDamage( ply, hitgroup, dmginfo )
 		
 	elseif hitgroup == HITGROUP_STOMACH then
 	
-		dmginfo:ScaleDamage( 0.75 * GetConVar( "sv_redead_dmg_scale" ):GetFloat() ) 
+		dmginfo:ScaleDamage( 1.25 * GetConVar( "sv_redead_dmg_scale" ):GetFloat() ) 
 		
 	else
 	
-		dmginfo:ScaleDamage( 0.25 * GetConVar( "sv_redead_dmg_scale" ):GetFloat() )
+		dmginfo:ScaleDamage( 0.50 * GetConVar( "sv_redead_dmg_scale" ):GetFloat() )
 		
 	end
 	
