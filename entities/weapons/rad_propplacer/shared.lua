@@ -334,7 +334,7 @@ if CLIENT then
 		local frame = vgui.Create( "PanelBase" )
 		frame:SetSize( 300, 370 )
 		frame:Center()
-		frame:ShowCloseButton( false )
+		//frame:ShowCloseButton( false )
 		
 		local plist = vgui.Create( "DPanelList", frame )
 		plist:SetPos( 15, 15 )
