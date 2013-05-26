@@ -32,9 +32,9 @@ GM.DeathScreenText[ TEAM_ZOMBIES ] = { "DEATH IS ONLY THE BEGINNING",
 "LIFE IS OVERRATED",
 "REST IS FOR THE LIVING" }
 
-// Amount of damage that the zombie lord needs to deal before he is redeemed
-
-GM.RedemptionDamage = 450
+GM.RedemptionDamage = 450  // Amount of damage that the zombie lord needs to deal before he is redeemed
+GM.RadiationAmount = 0.6   // How much of the radiation on the map should be disabled on map startup? ( 0.6 means 60% will be disabled ) - OBSOLETE?
+GM.MaxLoot = 0.35          // Maximum amount of loot to be generated ( 0.05 means 5% of the info_lootspawns will have loot at them. )
 
 // Player class models + weapons + item loadouts
 
@@ -50,6 +50,7 @@ GM.ClassWeapons[CLASS_COMMANDO] = "models/weapons/w_pistol.mdl"
 GM.ClassWeapons[CLASS_SPECIALIST] = "models/weapons/w_pist_p228.mdl"
 GM.ClassWeapons[CLASS_ENGINEER] = "models/weapons/w_pist_fiveseven.mdl"
 
+GM.ClassLoadouts = {}
 GM.ClassLoadouts[CLASS_SCOUT] = { ITEM_MISC, ITEM_SUPPLY, ITEM_SUPPLY }
 GM.ClassLoadouts[CLASS_COMMANDO] = { ITEM_MISC, ITEM_SUPPLY, ITEM_SUPPLY }
 GM.ClassLoadouts[CLASS_SPECIALIST] = { ITEM_SPECIAL, ITEM_SUPPLY, ITEM_SUPPLY }
@@ -232,7 +233,4 @@ GM.SpawnChance[ "npc_zombie_common" ] = 1.0 // 100% chance
 GM.SpawnChance[ "npc_zombie_normal" ] = 0.2 // 20% chance
 GM.SpawnChance[ "npc_zombie_fast" ] = 0.4
 GM.SpawnChance[ "npc_zombie_poison" ] = 0.3
-
-GM.RadiationAmount = 0.6   // How much of the radiation on the map should be disabled on map startup? ( 0.6 means 60% will be disabled ) - OBSOLETE?
-GM.MaxLoot = 0.35          // Maximum amount of loot to be generated ( 0.05 means 5% of the info_lootspawns will have loot at them. )
 

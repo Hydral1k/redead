@@ -1299,7 +1299,7 @@ function meta:OnDeath()
 			end
 	
 			local ed = EffectData()
-			ed:SetOrigin( self.Entity:GetPos() )
+			ed:SetOrigin( self:GetPos() )
 			util.Effect( "puke_explosion", ed, true, true )
 		
 		elseif self:GetPlayerClass() == CLASS_LEAPER then
