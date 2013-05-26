@@ -53,7 +53,7 @@ GM.ClassWeapons[CLASS_ENGINEER] = "models/weapons/w_pist_fiveseven.mdl"
 GM.ClassLoadouts[CLASS_SCOUT] = { ITEM_MISC, ITEM_SUPPLY, ITEM_SUPPLY }
 GM.ClassLoadouts[CLASS_COMMANDO] = { ITEM_MISC, ITEM_SUPPLY, ITEM_SUPPLY }
 GM.ClassLoadouts[CLASS_SPECIALIST] = { ITEM_SPECIAL, ITEM_SUPPLY, ITEM_SUPPLY }
-GM.ClassLoadouts[CLASS_ENGINEER] = { ITEM_FOOD }
+GM.ClassLoadouts[CLASS_ENGINEER] = { ITEM_MISC }
 
 GM.ZombieModels = {}
 GM.ZombieModels[CLASS_RUNNER] = "models/player/corpse1.mdl"
