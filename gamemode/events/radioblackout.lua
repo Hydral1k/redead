@@ -7,7 +7,7 @@ EVENT.Times = { 30, 60, 90 }
 
 function EVENT:Start()
 	
-	local num = math.random(1,4)
+	local num = math.random(1,3)
 	
 	GAMEMODE.RadioBlock = CurTime() + EVENT.Times[ num ]
 	
