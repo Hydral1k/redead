@@ -19,7 +19,7 @@ if CLIENT then
 end
 
 SWEP.Base = "rad_z_base"
-SWEP.HoldType = "zombie"
+
 SWEP.ViewModel = "models/Zed/weapons/v_ghoul.mdl"
 
 SWEP.Taunt = {"npc/zombie/zombie_voice_idle1.wav",
