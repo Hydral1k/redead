@@ -199,8 +199,9 @@ function SWEP:MeleeTrace( dmg )
 						prop:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 						prop:Spawn()
 						
-						local dir = ( ent:GetPos() - self.Owner:GetPos() )
-						dir = ( dir or VectorRand() ):Normalize() 
+						local dir = ( ent:GetPos() - self.Owner:GetShootPos() )
+						dir = dir or Vector()
+						dir:Normalize()
 						
 						local phys = prop:GetPhysicsObject()
 						

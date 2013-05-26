@@ -98,6 +98,10 @@ function GM:Initialize()
 	
 end
 
+GM.WoodLocations = {}
+GM.WoodCount = 1
+GM.WoodPercent = 1
+
 function GM:InitPostEntity()	
 
 	GAMEMODE.Trader = ents.Create( "info_trader" )
@@ -122,6 +126,22 @@ function GM:InitPostEntity()
 			table.insert( badshit, v )
 		
 		end
+		
+		local phys = v:GetPhysicsObject()
+		
+		if IsValid( phys ) and table.HasValue( { "wood", "wood_crate", "wood_furniture", "default" }, phys:GetMaterial() ) and phys:GetMass() > 8 then
+		
+			table.insert( GAMEMODE.WoodLocations, { Pos = v:GetPos(), Ang = v:GetAngles(), Model = v:GetModel() } )
+			
+			GAMEMODE.WoodCount = GAMEMODE.WoodCount + 1
+			
+			if phys:IsAsleep() then
+			
+				phys:Wake()
+			
+			end
+		
+		end
 	
 	end
 
@@ -130,6 +150,8 @@ function GM:InitPostEntity()
 		v:Remove()
 	
 	end
+	
+	GAMEMODE.WoodPercent = math.floor( table.Count( ents.FindByClass( "prop_phys*" ) ) * GAMEMODE.WoodPercentage )
 	
 	for k,v in pairs( ents.FindByClass( "prop_phys*" ) ) do
 		
@@ -543,6 +565,7 @@ function GM:LootThink()
 				
 			local loot = ents.Create( proptype )
 			loot:SetPos( pos + Vector(0,0,5) )
+			loot:SetAngles( VectorRand():Angle() )
 			loot:SetModel( rand.Model )
 			loot:Spawn()
 			loot.RandomLoot = true
@@ -556,6 +579,36 @@ function GM:LootThink()
 			
 			table.insert( GAMEMODE.RandomLoot, loot )
 			
+		end
+	
+	end
+
+end
+
+function GM:WoodThink()
+
+	if GAMEMODE.WoodCount < GAMEMODE.WoodPercent then
+	
+		local tbl = table.Random( GAMEMODE.WoodLocations ) 
+		local prop = ents.Create( "prop_physics" )
+		prop:SetPos( tbl.Pos )
+		prop:SetAngles( tbl.Ang )
+		prop:SetModel( tbl.Model )
+		prop:Spawn()
+		
+		GAMEMODE.WoodCount = GAMEMODE.WoodCount + 1
+	
+	elseif GAMEMODE.WoodCount > GAMEMODE.WoodPercent then
+	
+		local ent = table.Random( ents.FindByClass( "prop_phys*" ) )
+		local phys = ent:GetPhysicsObject()
+		
+		if IsValid( phys ) and not ent.IsItem and table.HasValue( { "wood", "wood_crate", "wood_furniture", "default" }, phys:GetMaterial() ) and phys:GetMass() > 8 then
+		
+			ent:Remove()
+			
+			GAMEMODE.WoodCount = GAMEMODE.WoodCount - 1
+		
 		end
 	
 	end
@@ -689,6 +742,7 @@ function GM:Think()
 		GAMEMODE:RespawnAntidote()
 		GAMEMODE:EventThink()
 		GAMEMODE:LootThink()
+		GAMEMODE:WoodThink()
 		GAMEMODE:WaveThink()
 		GAMEMODE:WeatherThink()
 		GAMEMODE:CheckGameOver( false )
@@ -946,6 +1000,8 @@ function GM:PropBreak( att, prop )
 			ent:SetModel( "models/props_debris/wood_chunk04a.mdl" )
 			ent:Spawn()
 			ent.IsItem = true
+			
+			GAMEMODE.WoodCount = GAMEMODE.WoodCount - 1
 		
 		end
 	

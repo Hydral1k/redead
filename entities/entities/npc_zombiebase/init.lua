@@ -266,7 +266,7 @@ function ENT:GetHighestDamagers()
 
 	for k,v in pairs( self.DmgTable ) do
 	
-		if IsValid( k ) then
+		if IsValid( k ) and k:IsPlayer() then
 
 			table.insert( tbl, k )
 		

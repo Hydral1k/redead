@@ -201,6 +201,12 @@ end
 
 function meta:GetStat( name )
 
+	if not self.Stats then
+	
+		self:InitStats()
+	
+	end
+
 	return self.Stats[ name ] or 0
 	
 end
