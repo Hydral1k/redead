@@ -8,4 +8,8 @@ function PLAYER:GetHandsModel()
 
 end
 
+function PLAYER:Spawn()
+
+end
+
 player_manager.RegisterClass( "player_army", PLAYER, "player_default" )

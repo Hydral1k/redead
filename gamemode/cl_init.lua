@@ -200,6 +200,8 @@ function GM:Think()
 	
 		StartMenuShown = true
 		GAMEMODE:ShowClasses()
+		
+		player_manager.SetPlayerClass( LocalPlayer(), "player_army" )
 	
 	end
 
@@ -448,8 +450,10 @@ function GM:GoreRagdolls()
 		local ent = GAMEMODE:GetNearestEnt( d.Pos, 50, tbl )
 		
 		if IsValid( ent ) and not ent.IsHeadless then
-	
-			ent:ManipulateBoneScale( 6, Vector( 0.1, 0.1, 0.1 ) ) //this doesnt work?
+			
+			ent:ManipulateBoneScale( 6, Vector( 0.01, 0.01, 0.01 ) ) 
+			ent:ManipulateBoneScale( 6, Vector( 0.001, 0.001, 0.001 ) ) 
+			
 			ent.IsHeadless = true
 			
 			table.remove( HeadlessTbl, c )

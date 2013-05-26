@@ -24,7 +24,7 @@ SWEP.Base = "rad_base"
 
 SWEP.UseHands = true
 
-SWEP.ViewModel	= "models/weapons/v_smg1.mdl"
+SWEP.ViewModel	= "models/weapons/c_smg1.mdl"
 SWEP.WorldModel = "models/weapons/w_smg1.mdl"
 
 SWEP.IronPos = Vector (-6.39, -0.5168, 1.8135)

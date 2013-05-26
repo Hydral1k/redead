@@ -22,7 +22,9 @@ SWEP.HoldType = "shotgun"
 
 SWEP.Base = "rad_base"
 
-SWEP.ViewModel = "models/weapons/v_shotgun.mdl"
+SWEP.UseHands = true
+
+SWEP.ViewModel = "models/weapons/c_shotgun.mdl"
 SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
 
 //SWEP.SprintPos = Vector(-0.6026, -2.715, 0.0137)

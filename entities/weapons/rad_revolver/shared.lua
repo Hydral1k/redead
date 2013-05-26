@@ -6,7 +6,7 @@ end
 
 if CLIENT then
 
-	SWEP.ViewModelFOV = 55
+	SWEP.ViewModelFOV = 75
 	SWEP.ViewModelFlip = false
 	
 	SWEP.PrintName = "Colt Python"
@@ -24,7 +24,7 @@ SWEP.Base = "rad_base"
 
 SWEP.UseHands = true
 
-SWEP.ViewModel	= "models/weapons/v_357.mdl"
+SWEP.ViewModel	= "models/weapons/c_357.mdl"
 SWEP.WorldModel = "models/weapons/w_357.mdl"
 
 SWEP.IronPos = Vector (-5.7334, -0.3277, 2.3208)
@@ -38,7 +38,7 @@ SWEP.AmmoType = "Pistol"
 
 SWEP.Primary.Sound			= Sound( "Weapon_357.Single" )
 SWEP.Primary.Recoil			= 13.5
-SWEP.Primary.Damage			= 50
+SWEP.Primary.Damage			= 55
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Cone			= 0.030
 SWEP.Primary.Delay			= 0.900

@@ -70,7 +70,7 @@ function GM:Initialize()
 	 
 	end
 	
-	timer.Simple( GAMEMODE.WaitTime, function() for k,v in pairs( player.GetAll() ) do v:Notice( "The undead onslaught has begun", GAMEMODE.Colors.White, 5 ) end end )
+	timer.Simple( GetConVar( "sv_redead_setup_time" ):GetInt(), function() for k,v in pairs( player.GetAll() ) do v:Notice( "The undead onslaught has begun", GAMEMODE.Colors.White, 5 ) end end )
 	
 	timer.Simple( 90, function() GAMEMODE:PickLord() end )
 	
@@ -773,6 +773,23 @@ function GM:PlayerSpawn( pl )
 	GAMEMODE:RespawnAntidote()
 	
 	player_manager.SetPlayerClass( pl, "player_army" )
+	
+	local oldhands = pl:GetHands()
+	
+	if IsValid( oldhands ) then
+	
+		oldhands:Remove()
+		
+	end
+
+	local hands = ents.Create( "gmod_hands" )
+	
+	if IsValid( hands ) then
+	
+		hands:DoSetup( pl )
+		hands:Spawn()
+		
+	end	
 	
 	pl:NoticeOnce( "Press F1 to view the help menu", GAMEMODE.Colors.Blue, 5, 15 )
 	pl:NoticeOnce( "Press F2 to buy items and weapons", GAMEMODE.Colors.Blue, 5, 17 )
