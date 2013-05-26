@@ -36,7 +36,7 @@ GM.DeathScreenText[ TEAM_ZOMBIES ] = { "DEATH IS ONLY THE BEGINNING",
 
 GM.RedemptionDamage = 450
 
-// Player class models + weapons
+// Player class models + weapons + item loadouts
 
 GM.ClassModels = {}
 GM.ClassModels[CLASS_SCOUT] = "models/player/riot.mdl"
@@ -49,6 +49,11 @@ GM.ClassWeapons[CLASS_SCOUT] = "models/weapons/w_pist_glock18.mdl" // use world 
 GM.ClassWeapons[CLASS_COMMANDO] = "models/weapons/w_pistol.mdl"
 GM.ClassWeapons[CLASS_SPECIALIST] = "models/weapons/w_pist_p228.mdl"
 GM.ClassWeapons[CLASS_ENGINEER] = "models/weapons/w_pist_fiveseven.mdl"
+
+GM.ClassLoadouts[CLASS_SCOUT] = { ITEM_MISC, ITEM_SUPPLY, ITEM_SUPPLY }
+GM.ClassLoadouts[CLASS_COMMANDO] = { ITEM_MISC, ITEM_SUPPLY, ITEM_SUPPLY }
+GM.ClassLoadouts[CLASS_SPECIALIST] = { ITEM_SPECIAL, ITEM_SUPPLY, ITEM_SUPPLY }
+GM.ClassLoadouts[CLASS_ENGINEER] = { ITEM_FOOD }
 
 GM.ZombieModels = {}
 GM.ZombieModels[CLASS_RUNNER] = "models/player/corpse1.mdl"

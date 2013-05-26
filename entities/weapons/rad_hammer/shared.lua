@@ -210,7 +210,7 @@ function SWEP:SecondaryAttack()
 	
 	if ( self.SecondDelay or 0 ) < CurTime() and self.Weapon:GetNWBool( "BuildMode", false ) then
 	
-		self.SecondDelay = CurTime() + 0.5
+		self.SecondDelay = CurTime() + 0.25
 		self.BuildAng = self.BuildAng + 45
 		
 		if self.BuildAng == 360 then

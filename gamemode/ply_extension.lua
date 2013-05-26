@@ -554,13 +554,7 @@ end
 
 function meta:GetItemLoadout()
 
-	if self:GetPlayerClass() == CLASS_ENGINEER then
-	
-		return { ITEM_SUPPLY }
-	
-	end
-
-	return { ITEM_FOOD, ITEM_SUPPLY, ITEM_SUPPLY }
+	return GAMEMODE.ClassLoadouts[ self:GetPlayerClass() ]
 
 end
 
@@ -747,7 +741,7 @@ function meta:Think()
 
 		self.HealTime = CurTime() + 3.0
 		
-		if self:IsInfected() and math.random(1,5) == 1 then
+		if self:IsInfected() and math.random(1,4) == 1 then
 		
 			self:AddStamina( -2 )
 			self:AddHealth( -2 )

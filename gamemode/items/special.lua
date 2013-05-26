@@ -34,7 +34,7 @@ item.Register( {
 	Type = ITEM_SPECIAL,
 	Weight = 0.15, 
 	Price = 10,
-	Rarity = 0.30,
+	Rarity = 0.20,
 	Model = "models/props_lab/jar01b.mdl",
 	Functions = { FUNC_ANTIRAD },
 	CamPos = Vector(-17,-9,0),

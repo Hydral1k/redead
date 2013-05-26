@@ -61,10 +61,10 @@ function FUNC_MOONSHINE( ply, id, client, icon )
 	ply:EmitSound( table.Random{ "npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav" }, 100, math.random( 90, 110 ) )
 	ply:AddRadiation( -1 )
 	ply:Notice( "-1 Radiation", GAMEMODE.Colors.Green )
-	ply:Notice( "+4 Drunkness", GAMEMODE.Colors.Red )
+	ply:Notice( "+5 Drunkness", GAMEMODE.Colors.Red )
 	
 	umsg.Start( "Drunk", ply )
-    umsg.Short( 4 )
+    umsg.Short( 5 )
 	umsg.End()
 
 end
@@ -76,7 +76,7 @@ function FUNC_BEER( ply, id, client, icon )
 	
 	ply:RemoveFromInventory( id )
 	ply:EmitSound( table.Random{ "npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav" }, 100, math.random( 90, 110 ) )
-	ply:AddStamina( 10 )
+	ply:AddStamina( 15 )
 	ply:Notice( "+15 Stamina", GAMEMODE.Colors.Green )
 	ply:Notice( "+2 Drunkness", GAMEMODE.Colors.Red )
 	
@@ -341,7 +341,7 @@ item.Register( {
 	Type = ITEM_MISC,
 	Weight = 1.50, 
 	Price = 15,
-	Rarity = 0.10,
+	Rarity = 0.15,
 	Model = "models/props_debris/wood_chunk04a.mdl",
 	Functions = {},
 	CamPos = Vector(42,15,0),
@@ -397,7 +397,7 @@ item.Register( {
 	Type = ITEM_LOOT,
 	Weight = 0.30, 
 	Price = 5,
-	Rarity = 0.80,
+	Rarity = 0.50,
 	Model = "models/props_junk/glassbottle01a.mdl",
 	Functions = { FUNC_BEER },
 	CamPos = Vector(16,12,1),
