@@ -1222,7 +1222,6 @@ end
 function GM:DoPlayerDeath( ply, attacker, dmginfo )
 
 	ply:OnDeath()
-	ply:CreateRagdoll()
 
 	if ply:Team() == TEAM_ARMY then
 	
@@ -1271,6 +1270,8 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 		util.Effect( "gore_explosion", ed, true, true )
 	
 	end
+	
+	ply:CreateRagdoll()
 	
 end
 
