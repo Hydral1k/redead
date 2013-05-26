@@ -22,6 +22,8 @@ SWEP.HoldType = "revolver"
 
 SWEP.Base = "rad_base"
 
+SWEP.UseHands = true
+
 SWEP.ViewModel	= "models/weapons/v_357.mdl"
 SWEP.WorldModel = "models/weapons/w_357.mdl"
 

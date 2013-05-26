@@ -31,6 +31,7 @@ if CLIENT then
 end
 
 SWEP.HoldType = "pistol"
+SWEP.UseHands = true
 
 SWEP.ViewModel	= "models/weapons/v_pistol.mdl"
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"

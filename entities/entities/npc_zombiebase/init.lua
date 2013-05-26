@@ -129,7 +129,7 @@ function ENT:DoDeath( dmginfo )
 				
 			end
 			
-			ent1:AddCash( 2 )
+			ent1:AddCash( GAMEMODE.KillValues[ self.Entity:GetClass() ] )
 			ent1:AddFrags( 1 )
 			
 			local dist = math.floor( ent1:GetPos():Distance( self.Entity:GetPos() ) / 8 )
@@ -199,7 +199,7 @@ function ENT:DoDeath( dmginfo )
 			
 				if IsValid( v ) and v != ent1 then
 				
-					v:AddCash( 1 )
+					v:AddCash( GAMEMODE.AssistValues[ self.Entity:GetClass() ] )
 					v:AddStat( "Assist" )
 				
 				end

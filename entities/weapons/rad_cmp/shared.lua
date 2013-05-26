@@ -22,6 +22,8 @@ SWEP.HoldType = "smg"
 
 SWEP.Base = "rad_base"
 
+SWEP.UseHands = true
+
 SWEP.ViewModel	= "models/weapons/v_smg1.mdl"
 SWEP.WorldModel = "models/weapons/w_smg1.mdl"
 

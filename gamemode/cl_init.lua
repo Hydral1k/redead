@@ -1,4 +1,5 @@
 
+include( 'default_player.lua' )
 include( 'items.lua' )
 include( 'shared.lua' )
 include( 'enums.lua' )

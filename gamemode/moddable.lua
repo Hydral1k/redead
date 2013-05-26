@@ -52,7 +52,7 @@ GM.ClassWeapons[CLASS_ENGINEER] = "models/weapons/w_pist_fiveseven.mdl"
 
 GM.ZombieModels = {}
 GM.ZombieModels[CLASS_RUNNER] = "models/player/corpse1.mdl"
-GM.ZombieModels[CLASS_BANSHEE] = "models/player/charple01.mdl"
+GM.ZombieModels[CLASS_BANSHEE] = "models/player/charple.mdl"
 GM.ZombieModels[CLASS_CONTAGION] = "models/player/zombie_classic.mdl"
 GM.ZombieModels[CLASS_LEAPER] = "models/zombie/fast.mdl"
 
@@ -63,9 +63,9 @@ GM.ZombieWeapons[CLASS_CONTAGION] = "rad_z_contagion"
 GM.ZombieWeapons[CLASS_LEAPER] = "rad_z_leaper"
 
 GM.ZombieHealth = {}
-GM.ZombieHealth[CLASS_RUNNER] = 125
-GM.ZombieHealth[CLASS_BANSHEE] = 150
-GM.ZombieHealth[CLASS_CONTAGION] = 225
+GM.ZombieHealth[CLASS_RUNNER] = 100
+GM.ZombieHealth[CLASS_BANSHEE] = 100
+GM.ZombieHealth[CLASS_CONTAGION] = 200
 GM.ZombieHealth[CLASS_LEAPER] = 50
 
 GM.ZombieSpeed = {}
@@ -199,7 +199,23 @@ GM.HeadshotCombos[15] = 5
 GM.HeadshotCombos[20] = 15
 GM.HeadshotCombos[50] = 25
 
-// human movespeeds
+// Point values
+
+GM.KillValues = {}
+GM.KillValues[ "npc_zombie_common" ] = 2
+GM.KillValues[ "npc_zombie_fast" ] = 2
+GM.KillValues[ "npc_zombie_normal" ] = 3
+GM.KillValues[ "npc_zombie_poison" ] = 3
+
+GM.AssistValues = {}
+GM.AssistValues[ "npc_zombie_common" ] = 1
+GM.AssistValues[ "npc_zombie_fast" ] = 1
+GM.AssistValues[ "npc_zombie_normal" ] = 1
+GM.AssistValues[ "npc_zombie_poison" ] = 2
+
+GM.PlayerZombieKillValue = 3
+
+// Human movespeeds
 
 GM.WalkSpeed = 175 
 GM.RunSpeed = 250
