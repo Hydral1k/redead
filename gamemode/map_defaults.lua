@@ -15,11 +15,12 @@ local data = {
 
 }
 
+file.CreateDir( "redead" )
+
 for k,v in pairs( maps ) do
 	
 	if not file.Exists( v, "DATA" ) then
 
-		file.CreateDir( "redead" )
 		file.Write( v, data[k] )
 	
 	end
