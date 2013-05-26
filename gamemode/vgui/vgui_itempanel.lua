@@ -107,13 +107,25 @@ function PANEL:MouseMenu()
 			
 		elseif self.StashStyle == "Buy" then
 		
-			menu:AddOption( self.StashStyle, function() RunConsoleCommand( "inv_buy", self.ID, 1 ) SaleScreen:AddItems( self.ID, 1 ) end )
+			menu:AddOption( self.StashStyle, function() if LocalPlayer():GetNWInt( "Cash", 0 ) >= self.ItemTable.Price then
+			
+				RunConsoleCommand( "inv_buy", self.ID, 1 )
+				GAMEMODE:AddToCart( self.ItemTable, 1 )
+				//SaleScreen:AddItems( self.ID, 1 )
+				
+			end end )
 			
 			local submenu = menu:AddSubMenu( "Buy Multiple" )
 				
 			for k,v in pairs{ 3, 5, 10, 20 } do
 				
-				submenu:AddOption( "Buy "..v, function() RunConsoleCommand( "inv_buy", self.ID, v ) SaleScreen:AddItems( self.ID, v ) end )
+				submenu:AddOption( "Buy "..v, function() if LocalPlayer():GetNWInt( "Cash", 0 ) >= self.ItemTable.Price * v then
+			
+					RunConsoleCommand( "inv_buy", self.ID, v )
+					GAMEMODE:AddToCart( self.ItemTable, v )
+					//SaleScreen:AddItems( self.ID, 1 )
+				
+				end end )
 				
 			end
 			
