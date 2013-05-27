@@ -208,7 +208,6 @@ function SWEP:MeleeTrace( dmg )
 						
 						ent:EmitSound( Sound( "Wood_Crate.Break" ) )
 						ent:Remove()
-						ent = nil
 						
 						return
 					
@@ -252,8 +251,4 @@ function SWEP:MeleeTrace( dmg )
 		
 	end
 
-end
-
-function SWEP:DrawHUD()
-	
 end

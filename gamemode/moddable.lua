@@ -61,7 +61,7 @@ GM.ZombieModels = {}
 GM.ZombieModels[CLASS_RUNNER] = "models/player/corpse1.mdl"
 GM.ZombieModels[CLASS_BANSHEE] = "models/player/charple.mdl"
 GM.ZombieModels[CLASS_CONTAGION] = "models/player/zombie_classic.mdl"
-GM.ZombieModels[CLASS_LEAPER] = "models/zombie/fast.mdl"
+GM.ZombieModels[CLASS_LEAPER] = "models/player/zombie_fast.mdl"
 
 GM.ZombieWeapons = {}
 GM.ZombieWeapons[CLASS_RUNNER] = "rad_z_runner"

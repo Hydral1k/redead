@@ -29,16 +29,6 @@ end
 function GM:Move( ply, mv )
 
 	if ply:Team() == TEAM_ARMY then
-
-		--[[if ply:GetNWFloat( "Weight", 0 ) > GAMEMODE.MaxWeight then
-		
-			local scale = 1 - ( math.Clamp( ply:GetNWFloat( "Weight", 0 ), GAMEMODE.MaxWeight, GAMEMODE.WeightCap ) - GAMEMODE.MaxWeight ) / ( GAMEMODE.WeightCap - GAMEMODE.MaxWeight )
-			
-			mv:SetMaxSpeed( 100 + math.Round( scale * 100 ) )
-			
-			return self.BaseClass:Move( ply, mv )
-			
-		end]]
 		
 		if ply:GetNWFloat( "Stamina", 0 ) <= 5 then
 		
@@ -46,9 +36,17 @@ function GM:Move( ply, mv )
 		
 		end
 	
-	elseif ply:GetModel() == "models/zombie/fast.mdl" or ply:GetModel() == "models/player/zombie_classic.mdl" then
+	else
 	
-		mv:SetSideSpeed( 0 )
+		if mv:GetSideSpeed() > 0 then
+	
+			mv:SetSideSpeed( 175 )
+			
+		elseif mv:GetSideSpeed() < 0 then
+		
+			mv:SetSideSpeed( -175 )
+		
+		end
 	
 	end
 	

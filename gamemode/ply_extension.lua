@@ -493,6 +493,7 @@ function meta:OnSpawn()
 	self:SetRadiation( 0 )
 	self:SetInfected( false )
 	self:SetBleeding( false )
+	self:SetJumpPower( 200 )
 
 	if self:Team() == TEAM_ARMY then
 	
@@ -1311,10 +1312,6 @@ function meta:OnDeath()
 			local ed = EffectData()
 			ed:SetOrigin( self:GetPos() )
 			util.Effect( "puke_explosion", ed, true, true )
-		
-		elseif self:GetPlayerClass() == CLASS_LEAPER then
-		
-			self:SetModel( "models/player/zombiefast.mdl" )
 		
 		end
 	

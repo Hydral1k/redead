@@ -1,6 +1,6 @@
 if SERVER then
 
-	AddCSLuaFile("shared.lua")
+	AddCSLuaFile( "shared.lua" )
 	
 end
 
@@ -14,7 +14,7 @@ if CLIENT then
 	SWEP.Slot = 0
 	SWEP.Slotpos = 0
 	
-	killicon.AddFont( "rad_z_leaper", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
+	killicon.AddFont( "rad_z_leaper", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) )
 	
 end
 
@@ -47,17 +47,9 @@ SWEP.Primary.Automatic		= true
 
 SWEP.JumpTime = 0
 
-function SWEP:Deploy()
+function SWEP:NoobHelp()
 
-	self.Owner:DrawWorldModel( false )
-	
-	if SERVER then
-	
-		self.Weapon:NoobHelp()
-	
-	end
-	
-	return true
+	self.Owner:NoticeOnce( "Your attacks cause bleeding", GAMEMODE.Colors.Blue, 5, 10 )
 
 end
 
@@ -76,20 +68,14 @@ function SWEP:Think()
 	if self.JumpTime < CurTime() and self.Owner:KeyDown( IN_SPEED ) then
 	
 		local vec = self.Owner:GetAimVector()
-		vec.z = math.Clamp( vec.z, 0.25, 0.75 )
+		vec.z = math.Clamp( vec.z, 0.40, 0.75 )
 	
 		self.JumpTime = CurTime() + 8
 	
-		self.Owner:SetVelocity( vec * 1000 )
+		self.Owner:SetVelocity( vec * 800 )
 		self.Owner:EmitSound( self.Scream, 100, math.random( 90, 110 ) )
 	
 	end
-
-end
-
-function SWEP:NoobHelp()
-
-	self.Owner:NoticeOnce( "Your attacks cause bleeding", GAMEMODE.Colors.Blue, 5, 10 )
 
 end
 
@@ -102,7 +88,7 @@ function SWEP:MeleeTrace( dmg )
 	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 	
 	local pos = self.Owner:GetShootPos()
-	local aim = self.Owner:GetAimVector() * 50
+	local aim = self.Owner:GetAimVector() * 64
 	
 	local line = {}
 	line.start = pos
@@ -115,8 +101,8 @@ function SWEP:MeleeTrace( dmg )
 	tr.start = pos + self.Owner:GetAimVector() * -5
 	tr.endpos = pos + aim
 	tr.filter = self.Owner
-	tr.mins = Vector(-20,-20,-20)
-	tr.maxs = Vector(20,20,20)
+	tr.mins = Vector(-16,-16,-16)
+	tr.maxs = Vector(16,16,16)
 
 	local trace = util.TraceHull( tr )
 	local ent = trace.Entity
@@ -138,9 +124,11 @@ function SWEP:MeleeTrace( dmg )
 		
 		if ent:IsPlayer() and ent:Team() == TEAM_ARMY then
 		
-			ent:SetBleeding( true )
 			ent:TakeDamage( dmg, self.Owner, self.Weapon )
+			ent:SetBleeding( true )
 			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
+			
+			self.Owner:AddZedDamage( dmg )
 			
 		elseif string.find( ent:GetClass(), "npc" ) then
 		
@@ -172,7 +160,7 @@ function SWEP:MeleeTrace( dmg )
 						prop:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 						prop:Spawn()
 						
-						local dir = ( ent:GetPos() - self.Owner:GetPos() )
+						local dir = ent:GetPos() - self.Owner:GetPos()
 						dir:Normalize()
 						
 						local phys = prop:GetPhysicsObject()
@@ -185,7 +173,6 @@ function SWEP:MeleeTrace( dmg )
 						
 						ent:EmitSound( Sound( "Wood_Crate.Break" ) )
 						ent:Remove()
-						ent = nil
 						
 						return
 					
@@ -221,7 +208,7 @@ function SWEP:MeleeTrace( dmg )
 				ent:EmitSound( self.Primary.Hit, 100, math.random(90,110) )
 				
 				phys:Wake()
-				phys:ApplyForceCenter( self.Owner:GetAimVector() * phys:GetMass() * 400 )
+				phys:ApplyForceCenter( self.Owner:GetAimVector() * phys:GetMass() * 300 )
 				
 			end
 			

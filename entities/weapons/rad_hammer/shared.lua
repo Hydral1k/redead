@@ -42,7 +42,7 @@ SWEP.Primary.Sound			= Sound( "weapons/iceaxe/iceaxe_swing1.wav" )
 SWEP.Primary.Recoil			= 6.5
 SWEP.Primary.Damage			= 50
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Delay			= 1.200
+SWEP.Primary.Delay			= 1.400
 
 SWEP.Primary.ClipSize		= 1
 SWEP.Primary.Automatic		= true

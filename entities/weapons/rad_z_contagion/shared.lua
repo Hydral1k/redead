@@ -104,6 +104,8 @@ function SWEP:MeleeTrace( dmg )
 			ent:TakeDamage( dmg, self.Owner, self.Weapon )
 			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
 			
+			self.Owner:AddZedDamage( dmg )
+			
 		elseif string.find( ent:GetClass(), "npc" ) then
 		
 			ent:TakeDamage( 20, self.Owner, self.Weapon )
@@ -147,7 +149,6 @@ function SWEP:MeleeTrace( dmg )
 						
 						ent:EmitSound( Sound( "Wood_Crate.Break" ) )
 						ent:Remove()
-						ent = nil
 						
 						return
 					
@@ -191,8 +192,4 @@ function SWEP:MeleeTrace( dmg )
 		
 	end
 
-end
-
-function SWEP:DrawHUD()
-	
 end

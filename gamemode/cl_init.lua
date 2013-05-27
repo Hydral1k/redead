@@ -46,13 +46,7 @@ function GM:Initialize()
 	DeathScreenTime = 0
 	DeathScreenScale = 0
 	HeartBeat = 0
-	//ArmAngle = 0
-	//ArmSpeed = 70
-	//BlipTime = 2.0
-	//FadeDist = 0.3 // radar vars
-	//MaxDist = 1500
-	//PosTable = {}
-	//RadarEntTable = {}
+	JumpTimer = 0
 	TimeSeedTable = {}
 	
 	surface.CreateFont ( "DeathFont", { size = 34, weight = 200, antialias = true, additive = true, font = "Graffiare" } )
@@ -992,11 +986,23 @@ function GM:CreateMove( cmd )
 
 	if LocalPlayer():Team() == TEAM_ZOMBIES then
 	
-		for k,v in pairs{ IN_MOVELEFT, IN_MOVERIGHT, IN_LEFT, IN_RIGHT, IN_DUCK, IN_JUMP } do
+		for k,v in pairs{ IN_DUCK, IN_JUMP } do
 		
 			if bit.band( cmd:GetButtons(), v ) > 0 then
 			
-				if not ( v == IN_JUMP and LocalPlayer():GetModel() == "models/zombie/fast.mdl" ) then
+				if v == IN_JUMP then
+				
+					if JumpTimer < CurTime() then
+
+						JumpTimer = CurTime() + 8
+						
+					else
+					
+						cmd:SetButtons( cmd:GetButtons() - v )
+					
+					end
+				
+				elseif v == IN_DUCK then
 			
 					cmd:SetButtons( cmd:GetButtons() - v )
 					

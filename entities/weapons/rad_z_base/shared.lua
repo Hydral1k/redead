@@ -162,7 +162,7 @@ function SWEP:MeleeTrace( dmg )
 			if not ent:IsInfected() then
 			
 				ent:SetInfected( true )
-				self.Owner:AddZedDamage( 25 )
+				self.Owner:AddZedDamage( dmg )
 				self.Owner:Notice( "You infected a human", GAMEMODE.Colors.Green )
 				
 			end
@@ -212,7 +212,6 @@ function SWEP:MeleeTrace( dmg )
 						
 						ent:EmitSound( Sound( "Wood_Crate.Break" ) )
 						ent:Remove()
-						ent = nil
 						
 						return
 					
