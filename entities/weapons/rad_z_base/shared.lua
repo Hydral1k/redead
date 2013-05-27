@@ -199,8 +199,7 @@ function SWEP:MeleeTrace( dmg )
 						prop:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 						prop:Spawn()
 						
-						local dir = ( ent:GetPos() - self.Owner:GetShootPos() )
-						dir = dir or Vector()
+						local dir = ent:GetPos() - self.Owner:GetShootPos() 
 						dir:Normalize()
 						
 						local phys = prop:GetPhysicsObject()
@@ -214,6 +213,8 @@ function SWEP:MeleeTrace( dmg )
 						ent:EmitSound( Sound( "Wood_Crate.Break" ) )
 						ent:Remove()
 						ent = nil
+						
+						return
 					
 					else
 					
@@ -226,16 +227,17 @@ function SWEP:MeleeTrace( dmg )
 			elseif string.find( ent:GetClass(), "breakable" ) then
 			
 				ent:TakeDamage( 50, self.Owner, self.Weapon )
+				ent:EmitSound( self.Primary.Hit, 100, math.random(90,110) )
 				
 				if ent:GetClass() == "func_breakable_surf" then
 				
 					ent:Fire( "shatter", "1 1 1", 0 )
+					
+					return
 				
 				end
 			
 			end
-		
-			ent:EmitSound( self.Primary.Hit, 100, math.random(90,110) )
 			
 			local phys = ent:GetPhysicsObject()
 			
@@ -243,6 +245,7 @@ function SWEP:MeleeTrace( dmg )
 			
 				ent:SetPhysicsAttacker( self.Owner )
 				ent:TakeDamage( 25, self.Owner, self.Weapon )
+				ent:EmitSound( self.Primary.Hit, 100, math.random(90,110) )
 				
 				phys:Wake()
 				phys:ApplyForceCenter( self.Owner:GetAimVector() * phys:GetMass() * 400 )

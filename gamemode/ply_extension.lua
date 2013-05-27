@@ -526,6 +526,8 @@ function meta:OnSpawn()
 		
 		self:SetModel( GAMEMODE.ClassModels[ self:GetPlayerClass() ] )
 		
+		self:SetCollisionGroup( COLLISION_GROUP_PLAYER )
+		
 	else
 		
 		if self.NextClass then
@@ -551,6 +553,8 @@ function meta:OnSpawn()
 		self:SetRunSpeed( GAMEMODE.ZombieSpeed[ self:GetPlayerClass() ] )
 		
 		self:SetModel( GAMEMODE.ZombieModels[ self:GetPlayerClass() ] )
+		
+		//self:SetCollisionGroup( COLLISION_GROUP_INTERACTIVE )
 		
 		self:NoticeOnce( "You can choose your class by pressing F2", GAMEMODE.Colors.Blue, 5, 2 )
 	
@@ -1097,7 +1101,7 @@ end
 function meta:GetItemDropPos()
 
 	local trace = {}
-	trace.start = self:GetShootPos()
+	trace.start = self:GetShootPos() + Vector(0,0,-15)
 	trace.endpos = trace.start + self:GetAimVector() * 30
 	trace.filter = self
 	

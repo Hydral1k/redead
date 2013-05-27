@@ -731,7 +731,7 @@ function GM:Think()
 
 	if ( GAMEMODE.NextGameThink or 0 ) < CurTime() then
 
-		if GAMEMODE.NextZombieThink < CurTime() then
+		if ( GAMEMODE.NextZombieThink or 0 ) < CurTime() then
 		
 			GAMEMODE:NPCThink()
 			
@@ -1577,23 +1577,23 @@ function DropItem( ply, cmd, args )
 	
 	end
 	
-	local items = {}
 	local itemcount = math.min( ply:GetItemCount( id ), count )
 	local loot = ents.Create( "sent_lootbag" )
 	
 	for i=1, itemcount do
 	
-		loot:AddItem( v )
+		loot:AddItem( id )
 	
 	end
 	
 	loot:SetAngles( ply:GetAimVector():Angle() )
 	loot:SetPos( ply:GetItemDropPos() )
 	loot:SetRemoval( 60 * 5 )
+	loot:SetUser( ply )
 	loot:Spawn()
 	
 	ply:EmitSound( Sound( "items/ammopickup.wav" ) )
-	ply:RemoveMultipleFromInventory( items )
+	ply:RemoveMultipleFromInventory( loot:GetItems() )
 	
 	if tbl.DropFunction then
 		

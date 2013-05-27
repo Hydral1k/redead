@@ -277,9 +277,17 @@ function SWEP:BarricadeTrace()
 		
 		local prop = ents.Create( "prop_physics" )
 		prop:SetModel( self.Barricade )
-		prop:SetCollisionGroup( COLLISION_GROUP_PASSABLE_DOOR )
+		prop:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 		prop:Spawn()
 		prop:SetHealth( 350 )
+		
+		--[[local phys = prop:GetPhysicsObject()
+		
+		if IsValid( phys ) then
+		
+			phys:EnableCollisions( false )
+			
+		end]]
 		
 		self.Weapon:SetPlacePosition( prop )
 		

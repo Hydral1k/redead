@@ -21,7 +21,7 @@ function ENT:Initialize()
 
 	end
 
-	self.LastUse = 0
+	self.LastUse = CurTime() + 1
 	self.Cash = 0
 	
 end
