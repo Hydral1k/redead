@@ -82,7 +82,7 @@ function GM:Initialize()
 									for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do 
 										v:Notice( "The evac chopper has arrived", GAMEMODE.Colors.White, 5 ) 
 										v:Notice( "You have 45 seconds to reach the evac zone", GAMEMODE.Colors.White, 5, 2 )
-										v:Notice( "The location is marked on your radar", GAMEMODE.Colors.White, 5, 4 )
+										v:Notice( "The location has been highlighted", GAMEMODE.Colors.White, 5, 4 )
 									end 
 									if IsValid( GAMEMODE.Antidote ) then
 									
