@@ -26,6 +26,22 @@ function GM:CreateTeams()
 
 end
 
+function GM:ShouldCollide( ent1, ent2 )
+
+	if ent1:IsPlayer() and ent1:Team() == TEAM_ARMY and ent2.IsWood then
+	
+		return false
+	
+	elseif ent2:IsPlayer() and ent2:Team() == TEAM_ARMY and ent1.IsWood then
+	
+		return false
+	
+	end
+	
+	return self.BaseClass:ShouldCollide( ent1, ent2 )
+
+end
+
 function GM:Move( ply, mv )
 
 	if ply:Team() == TEAM_ARMY then

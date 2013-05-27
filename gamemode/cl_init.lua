@@ -1101,12 +1101,20 @@ usermessage.Hook( "CashSynch", CashSynch )
 
 function Radio( msg )
 
-	local snd = msg:ReadString()
 	local num = msg:ReadShort()
+	local snd = msg:ReadString()
 	
-	if not IsValid( LocalPlayer() ) then return end
+	if num == 100 then
 	
-	LocalPlayer():EmitSound( Sound( snd ), 100, num )
+		surface.PlaySound( snd )
+	
+	else
+	
+		if not IsValid( LocalPlayer() ) then return end
+		
+		sound.Play( snd, LocalPlayer():GetShootPos(), 180, num, 1 )
+		
+	end
 
 end
 usermessage.Hook( "Radio", Radio )

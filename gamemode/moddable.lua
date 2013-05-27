@@ -170,7 +170,7 @@ GM.OpeningMusic = { "music/HL1_song5.mp3",
 
 // Music to play on death
 
-GM.DeathMusic = { "music/Ravenholm_1.mp3",
+GM.DeathMusic = { "music/ravenholm_1.mp3",
 "music/HL2_song28.mp3",
 "music/stingers/HL1_stinger_song16.mp3",
 "music/stingers/HL1_stinger_song7.mp3",
@@ -231,7 +231,7 @@ GM.RunSpeed = 250
 
 GM.SpawnChance = {}
 GM.SpawnChance[ "npc_zombie_common" ] = 1.0 // 100% chance
-GM.SpawnChance[ "npc_zombie_normal" ] = 0.2 // 20% chance
-GM.SpawnChance[ "npc_zombie_fast" ] = 0.4
-GM.SpawnChance[ "npc_zombie_poison" ] = 0.3
+GM.SpawnChance[ "npc_zombie_normal" ] = 0.1 // 10% chance
+GM.SpawnChance[ "npc_zombie_fast" ] = 0.3
+GM.SpawnChance[ "npc_zombie_poison" ] = 0.2
 

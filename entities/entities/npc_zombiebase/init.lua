@@ -440,6 +440,9 @@ function ENT:OnFire()
 
 end
 
+ENT.WoodHit = Sound( "Wood_Plank.Break" )
+ENT.WoodBust = Sound( "Wood_Crate.Break" ) 
+
 function ENT:Think()
 
 	if self.RemoveTimer then
@@ -557,7 +560,7 @@ function ENT:Think()
 					
 					self.Entity:EmitSound( self.DoorHit, 100, math.random(90,110) )
 					
-					self.AttackDoor:EmitSound( Sound( "Wood_Plank.Break" ) )
+					self.AttackDoor:EmitSound( self.WoodHit )
 				
 				else
 				
@@ -584,7 +587,7 @@ function ENT:Think()
 
 							end
 							
-							self.AttackDoor:EmitSound( Sound( "Wood_Crate.Break" ) )
+							self.AttackDoor:EmitSound( self.WoodBust )
 							self.AttackDoor:Remove()
 							
 							self.AttackDoor = nil
@@ -601,7 +604,7 @@ function ENT:Think()
 					
 						self.Entity:EmitSound( self.DoorHit, 100, math.random(90,110) )
 					
-						self.AttackDoor:EmitSound( Sound( "Wood_Plank.Break" ) )
+						self.AttackDoor:EmitSound( self.WoodHit )
 					
 					end
 				

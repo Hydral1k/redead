@@ -82,7 +82,7 @@ function GM:Initialize()
 									for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do 
 										v:Notice( "The evac chopper has arrived", GAMEMODE.Colors.White, 5 ) 
 										v:Notice( "You have 45 seconds to reach the evac zone", GAMEMODE.Colors.White, 5, 2 )
-										v:Notice( "The location has been highlighted", GAMEMODE.Colors.White, 5, 4 )
+										v:Notice( "The location has been marked", GAMEMODE.Colors.White, 5, 4 )
 									end 
 									if IsValid( GAMEMODE.Antidote ) then
 									
@@ -603,7 +603,7 @@ function GM:WoodThink()
 		local ent = table.Random( ents.FindByClass( "prop_phys*" ) )
 		local phys = ent:GetPhysicsObject()
 		
-		if IsValid( phys ) and not ent.IsItem and table.HasValue( { "wood", "wood_crate", "wood_furniture", "default" }, phys:GetMaterial() ) and phys:GetMass() > 8 then
+		if IsValid( phys ) and not ent.IsItem and not ent.IsWood and table.HasValue( { "wood", "wood_crate", "wood_furniture", "default" }, phys:GetMaterial() ) and phys:GetMass() > 8 then
 		
 			ent:Remove()
 			
@@ -807,7 +807,6 @@ function GM:PlayerInitialSpawn( pl )
 	
 		pl:SetTeam( TEAM_UNASSIGNED )
 		pl:Spectate( OBS_MODE_ROAMING )
-		pl:ClientSound( table.Random( GAMEMODE.OpeningMusic ) )
 		
 	end
 	
@@ -844,6 +843,14 @@ function GM:PlayerSpawn( pl )
 		hands:Spawn()
 		
 	end	
+	
+	if pl:Team() == TEAM_ARMY then
+	
+		local music = table.Random( GAMEMODE.OpeningMusic )
+	
+		pl:ClientSound( music, 100 )
+		
+	end
 	
 	pl:NoticeOnce( "Press F1 to view the help menu", GAMEMODE.Colors.Blue, 5, 15 )
 	pl:NoticeOnce( "Press F2 to buy items and weapons", GAMEMODE.Colors.Blue, 5, 17 )
@@ -998,6 +1005,7 @@ function GM:PropBreak( att, prop )
 			local ent = ents.Create( "prop_physics" )
 			ent:SetPos( prop:LocalToWorld( prop:OBBCenter() ) )
 			ent:SetModel( "models/props_debris/wood_chunk04a.mdl" )
+			ent:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 			ent:Spawn()
 			ent.IsItem = true
 			
@@ -1287,9 +1295,10 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 		
 		end
 	
-		//ply:VoiceSound( table.Random( GAMEMODE.Death ) )
+		local music = table.Random( GAMEMODE.DeathMusic )
+		
+		ply:ClientSound( music, 100 )
 		ply:RadioSound( VO_DEATH )
-		ply:ClientSound( table.Random( GAMEMODE.DeathMusic ) )
 		ply:SetTeam( TEAM_ZOMBIES )
 		
 		if IsValid( attacker ) and attacker:IsPlayer() and attacker != ply then
@@ -1368,12 +1377,16 @@ function GM:EndGame( winner )
 	
 		if v:Team() == winner and winner == TEAM_ARMY then
 		
-			v:ClientSound( table.Random( GAMEMODE.WinMusic ) )
+			local music = table.Random( GAMEMODE.WinMusic )
+		
+			v:ClientSound( music, 100 )
 			v:GodEnable()
 			
 		else
 		
-			v:ClientSound( table.Random( GAMEMODE.LoseMusic ) )
+			local music = table.Random( GAMEMODE.LoseMusic )
+		
+			v:ClientSound( music, 100 )
 			
 		end
 		

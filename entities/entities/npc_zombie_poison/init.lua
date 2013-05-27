@@ -4,8 +4,8 @@ AddCSLuaFile( "shared.lua" )
 include('shared.lua')
 	
 ENT.Damage = 75
-ENT.Radius = 300
-ENT.SoundRadius = 700
+ENT.Radius = 150
+ENT.SoundRadius = 500
 
 ENT.VoiceSounds = {}
 
@@ -57,7 +57,7 @@ function ENT:Initialize()
 
 end
 
---[[function ENT:OnThink()
+function ENT:OnThink()
 
 	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do
 	
@@ -69,7 +69,7 @@ end
 		
 				if ( v.RadAddTime or 0 ) < CurTime() then
 			
-					v.RadAddTime = CurTime() + 10
+					v.RadAddTime = CurTime() + 12
 					v:AddRadiation( 1 )
 					
 				end
@@ -82,8 +82,8 @@ end
 			
 				v.NextRadSound = CurTime() + 1 - scale 
 				v:EmitSound( table.Random( GAMEMODE.Geiger ), 100, math.random( 80, 90 ) + scale * 20 )
-				v:NoticeOnce( "An irradiated zombie is nearby", GAMEMODE.Colors.Blue )
-				v:NoticeOnce( "Radioactive zombies will poison nearby humans", GAMEMODE.Colors.Blue, 3, 2 )
+				v:NoticeOnce( "A radioactive zombie is nearby", GAMEMODE.Colors.Blue )
+				v:NoticeOnce( "Radioactive zombies will poison nearby people", GAMEMODE.Colors.Blue, 3, 2 )
 				
 			end
 		
@@ -91,7 +91,7 @@ end
 	
 	end
 
-end]]
+end
 
 function ENT:OnDamageEnemy( enemy )
 

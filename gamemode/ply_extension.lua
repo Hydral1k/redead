@@ -64,8 +64,8 @@ end
 function meta:ClientSound( snd, pitch )
 
 	umsg.Start( "Radio", self )
+	umsg.Short( ( pitch or 100 ) )
 	umsg.String( snd )
-	umsg.Short( pitch or 100 )
 	umsg.End()
 
 	//self:SendLua( "LocalPlayer():EmitSound( \"" .. snd .. "\", 100, " .. ( pitch or 100 ) .. " )" ) 
@@ -527,8 +527,6 @@ function meta:OnSpawn()
 		
 		self:SetModel( GAMEMODE.ClassModels[ self:GetPlayerClass() ] )
 		
-		self:SetCollisionGroup( COLLISION_GROUP_PLAYER )
-		
 	else
 		
 		if self.NextClass then
@@ -554,8 +552,6 @@ function meta:OnSpawn()
 		self:SetRunSpeed( GAMEMODE.ZombieSpeed[ self:GetPlayerClass() ] )
 		
 		self:SetModel( GAMEMODE.ZombieModels[ self:GetPlayerClass() ] )
-		
-		//self:SetCollisionGroup( COLLISION_GROUP_INTERACTIVE )
 		
 		self:NoticeOnce( "You can choose your class by pressing F2", GAMEMODE.Colors.Blue, 5, 2 )
 	

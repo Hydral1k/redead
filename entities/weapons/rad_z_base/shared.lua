@@ -28,12 +28,13 @@ SWEP.IsSniper = false
 SWEP.AmmoType = "Knife"
 SWEP.ThinkTime = 0
 
+SWEP.Primary.Door           = Sound( "Wood_Plank.Break" )
 SWEP.Primary.Hit            = Sound( "npc/zombie/claw_strike1.wav" )
 SWEP.Primary.HitFlesh		= Sound( "npc/zombie/claw_strike2.wav" )
 SWEP.Primary.Sound			= Sound( "npc/fast_zombie/idle1.wav" )
 SWEP.Primary.Miss           = Sound( "npc/zombie/claw_miss1.wav" )
 SWEP.Primary.Recoil			= 3.5
-SWEP.Primary.Damage			= 40
+SWEP.Primary.Damage			= 35
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Delay			= 1.500
 
@@ -111,6 +112,21 @@ function SWEP:Think()
 
 end
 
+function SWEP:OnHitHuman( ent, dmg )
+
+	if not ent:IsInfected() then
+			
+		ent:SetInfected( true )
+		
+		self.Owner:Notice( "You infected a human", GAMEMODE.Colors.Green )
+		self.Owner:AddZedDamage( 10 )
+				
+	end
+	
+	self.Owner:AddZedDamage( dmg )
+
+end
+
 function SWEP:MeleeTrace( dmg )
 	
 	self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
@@ -158,16 +174,9 @@ function SWEP:MeleeTrace( dmg )
 		if ent:IsPlayer() and ent:Team() == TEAM_ARMY then
 		
 			ent:TakeDamage( dmg, self.Owner, self.Weapon )
-			
-			if not ent:IsInfected() then
-			
-				ent:SetInfected( true )
-				self.Owner:AddZedDamage( dmg )
-				self.Owner:Notice( "You infected a human", GAMEMODE.Colors.Green )
-				
-			end
-			
 			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
+			
+			self.Weapon:OnHitHuman( ent, dmg )
 			
 		elseif string.find( ent:GetClass(), "npc" ) then
 		
@@ -243,8 +252,18 @@ function SWEP:MeleeTrace( dmg )
 			if IsValid( phys ) then
 			
 				ent:SetPhysicsAttacker( self.Owner )
-				ent:TakeDamage( 25, self.Owner, self.Weapon )
 				ent:EmitSound( self.Primary.Hit, 100, math.random(90,110) )
+				
+				if ent.IsWood then
+				
+					ent:TakeDamage( 75, self.Owner, self.Weapon )
+					ent:EmitSound( self.Primary.Door )
+				
+				else
+				
+					ent:TakeDamage( 25, self.Owner, self.Weapon )
+				
+				end
 				
 				phys:Wake()
 				phys:ApplyForceCenter( self.Owner:GetAimVector() * phys:GetMass() * 400 )
