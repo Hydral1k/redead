@@ -137,7 +137,7 @@ function SWEP:MeleeTrace( dmg )
 	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 	
 	local pos = self.Owner:GetShootPos()
-	local aim = self.Owner:GetAimVector() * 64
+	local aim = self.Owner:GetAimVector() * 80
 	
 	local line = {}
 	line.start = pos
