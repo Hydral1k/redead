@@ -84,7 +84,7 @@ function SWEP:SecondaryAttack()
 				umsg.Start( "ScreamHit", v )
 				umsg.End()
 				
-				v:TakeDamage( scale * 25, self.Owner, self.Weapon )
+				v:TakeDamage( scale * 20, self.Owner, self.Weapon )
 				v:SetDSP( 34, false )
 				
 				self.Owner:AddZedDamage( 5 )

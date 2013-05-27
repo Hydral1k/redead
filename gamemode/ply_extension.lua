@@ -751,7 +751,7 @@ function meta:Think()
 		if self:IsInfected() and math.random(1,4) == 1 then
 		
 			self:AddStamina( -2 )
-			self:AddHealth( -2 )
+			self:AddHealth( -3 )
 			self:ViewBounce( math.random( 10, 15 ) )
 			self:VoiceSound( table.Random( GAMEMODE.Coughs ), 100, math.random( 90, 100 ) )
 		
@@ -1238,7 +1238,7 @@ function meta:OnDeath()
 	umsg.Short( self:Team() )
 	umsg.End()
 	
-	self.NextSpawn = CurTime() + 15
+	self.NextSpawn = CurTime() + 10
 
 	if self:Team() == TEAM_ARMY then
 
