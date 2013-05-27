@@ -72,9 +72,9 @@ function SWEP:SecondaryAttack()
 		
 			local dist = v:GetPos():Distance( self.Owner:GetPos() )
 			
-			if dist <= 400 then
+			if dist <= 350 then
 			
-				local scale = 1 - ( dist / 400 )
+				local scale = 1 - ( dist / 350 )
 				local count = math.Round( scale * 4 )
 				
 				umsg.Start( "Drunk", v )
@@ -87,7 +87,7 @@ function SWEP:SecondaryAttack()
 				v:TakeDamage( scale * 25, self.Owner, self.Weapon )
 				v:SetDSP( 34, false )
 				
-				self.Owner:AddZedDamage( 25 )
+				self.Owner:AddZedDamage( 5 )
 				
 				hit = true
 			
