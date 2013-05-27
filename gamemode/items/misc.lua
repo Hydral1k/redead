@@ -44,10 +44,10 @@ function FUNC_BOOZE( ply, id, client, icon )
 	ply:AddStamina( 20 )
 	ply:Notice( "+20 Stamina", GAMEMODE.Colors.Green )
 	ply:Notice( "-2 Radiation", GAMEMODE.Colors.Green )
-	ply:Notice( "+3 Drunkness", GAMEMODE.Colors.Red )
+	ply:Notice( "+4 Intoxication", GAMEMODE.Colors.Red )
 	
 	umsg.Start( "Drunk", ply )
-    umsg.Short( 3 )
+    umsg.Short( 4 )
 	umsg.End()
 
 end
@@ -61,10 +61,10 @@ function FUNC_MOONSHINE( ply, id, client, icon )
 	ply:EmitSound( table.Random{ "npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav" }, 100, math.random( 90, 110 ) )
 	ply:AddRadiation( -1 )
 	ply:Notice( "-1 Radiation", GAMEMODE.Colors.Green )
-	ply:Notice( "+5 Drunkness", GAMEMODE.Colors.Red )
+	ply:Notice( "+6 Intoxication", GAMEMODE.Colors.Red )
 	
 	umsg.Start( "Drunk", ply )
-    umsg.Short( 5 )
+    umsg.Short( 6 )
 	umsg.End()
 
 end
@@ -78,7 +78,7 @@ function FUNC_BEER( ply, id, client, icon )
 	ply:EmitSound( table.Random{ "npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav" }, 100, math.random( 90, 110 ) )
 	ply:AddStamina( 15 )
 	ply:Notice( "+15 Stamina", GAMEMODE.Colors.Green )
-	ply:Notice( "+2 Drunkness", GAMEMODE.Colors.Red )
+	ply:Notice( "+2 Intoxication", GAMEMODE.Colors.Red )
 	
 	umsg.Start( "Drunk", ply )
     umsg.Short( 2 )
@@ -93,7 +93,7 @@ function FUNC_SPACEBEER( ply, id, client, icon )
 	
 	ply:RemoveFromInventory( id )
 	ply:EmitSound( table.Random{ "npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav" }, 100, math.random( 90, 110 ) )
-	ply:Notice( "+15 Drunkness", GAMEMODE.Colors.Red )
+	ply:Notice( "+15 Intoxication", GAMEMODE.Colors.Red )
 	
 	umsg.Start( "Drunk", ply )
     umsg.Short( 15 )
@@ -178,9 +178,9 @@ function FUNC_UNMUTAGEN( ply, id, client, icon )
 		
 		elseif rand == 5 then
 		
-			ply:Notice( "Your body begins to ache", GAMEMODE.Colors.Red, 5, inc * 2 )
+			ply:Notice( "Your whole body aches", GAMEMODE.Colors.Red, 5, inc * 2 )
 			
-			local dmg = math.random(2,5)
+			local dmg = math.random(1,5)
 			
 			ply:AddHealth( dmg * -10 )
 			

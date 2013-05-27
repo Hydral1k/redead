@@ -108,7 +108,7 @@ function FUNC_MUTAGEN( ply, id, client, icon )
 		
 		elseif rand == 3 then
 		
-			ply:Notice( "Your body begins to ache", GAMEMODE.Colors.Red, 5, inc * 2 )
+			ply:Notice( "Your whole body aches", GAMEMODE.Colors.Red, 5, inc * 2 )
 			
 			local dmg = math.random(2,5)
 			
@@ -190,7 +190,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "Beta Mutagen", 
+	Name = "Alpha Mutagen", 
 	Description = "Prototype drug which cures the infection.",
 	Stackable = true, 
 	Type = ITEM_SUPPLY,
