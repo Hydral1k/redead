@@ -864,6 +864,25 @@ function meta:GetShipment()
 
 end
 
+function meta:RefundAll()
+
+	local tbl = self:GetShipment()
+	local cash = 0
+	
+	for k,v in pairs( tbl ) do
+		
+		local itbl = item.GetByID( v )
+		cash = cash + itbl.Price
+		
+	end
+	
+	if cash == 0 then return end
+		
+	self:AddCash( cash )
+	self.Shipment = {}
+
+end
+
 function meta:SendShipment()
 
 	if not self:GetShipment()[1] then
@@ -876,6 +895,8 @@ function meta:SendShipment()
 	if self:IsIndoors() then 
 	
 		self:Notice( "You can't order shipments while indoors", GAMEMODE.Colors.Red ) 
+		self:RefundAll()
+		
 		return 
 		
 	end
@@ -883,11 +904,13 @@ function meta:SendShipment()
 	if GAMEMODE.RadioBlock and GAMEMODE.RadioBlock > CurTime() then
 		
 		self:Notice( "Radio communications are offline", GAMEMODE.Colors.Red )
+		self:RefundAll()
+		
 		return
 		
 	end
 	
-	local droptime = 12 + ( table.Count( self.Shipment ) * 0.5 )
+	local droptime = 9.5 + ( table.Count( self.Shipment ) * 0.5 )
 	
 	self:Notice( "Your shipment is due in " .. math.Round( droptime ) .. " seconds", GAMEMODE.Colors.Green )
 	
