@@ -5,6 +5,7 @@ ENT.Base = "base_nextbot"
 
 // Moddable
 
+ENT.Skins = 0
 ENT.AttackAnims = nil
 ENT.AnimSpeed = 0.8
 ENT.AttackTime = 0.5
@@ -58,6 +59,7 @@ function ENT:Initialize()
 	
 	self.Entity:SetHealth( self.BaseHealth )
 	self.Entity:SetCollisionGroup( COLLISION_GROUP_NPC )
+	self.Entity:SetSkin( math.random( 0, self.Skins ) )
 	
 	self.loco:SetDeathDropHeight( 1000 )	
 	self.loco:SetAcceleration( 500 )	

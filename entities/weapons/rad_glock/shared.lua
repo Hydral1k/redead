@@ -34,10 +34,10 @@ SWEP.IsSniper = false
 SWEP.AmmoType = "Pistol"
 
 SWEP.Primary.Sound			= Sound( "Weapon_Glock.Single" )
-SWEP.Primary.Recoil			= 5.5
+SWEP.Primary.Recoil			= 6.5
 SWEP.Primary.Damage			= 25
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Cone			= 0.045
+SWEP.Primary.Cone			= 0.040
 SWEP.Primary.Delay			= 0.100
 
 SWEP.Primary.ClipSize		= 15

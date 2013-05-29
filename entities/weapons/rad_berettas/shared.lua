@@ -22,7 +22,7 @@ SWEP.HoldType = "pistol"
 SWEP.Base = "rad_base"
 
 SWEP.ViewModel	= "models/weapons/v_pist_elite.mdl"
-SWEP.WorldModel = "models/weapons/w_alyx_gun.mdl"
+SWEP.WorldModel = "models/weapons/w_pist_fiveseven.mdl"
 
 SWEP.SprintPos = Vector (-0.626, 0.5615, 3.5852)
 SWEP.SprintAng = Vector (-25.2347, -3.1815, 0.3427)
@@ -37,8 +37,8 @@ SWEP.Anims[1] = ACT_VM_SECONDARYATTACK
 SWEP.Anims[2] = ACT_VM_PRIMARYATTACK
 
 SWEP.Primary.Sound			= Sound( "Weapon_Elite.Single" )
-SWEP.Primary.Recoil			= 9.5
-SWEP.Primary.Damage			= 35
+SWEP.Primary.Recoil			= 8.5
+SWEP.Primary.Damage			= 40
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Cone			= 0.040
 SWEP.Primary.Delay			= 0.180

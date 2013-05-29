@@ -5,6 +5,7 @@ ENT.Base = "npc_nb_base"
 
 // Moddable
 
+ENT.Skins = 22
 ENT.AttackAnims = { "attack01", "attack02", "attack03", "attack04" }
 ENT.AnimSpeed = 0.8
 ENT.AttackTime = 0.5
