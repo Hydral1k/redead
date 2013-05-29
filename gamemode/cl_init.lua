@@ -994,7 +994,7 @@ function GM:CreateMove( cmd )
 				
 					if JumpTimer < CurTime() then
 
-						JumpTimer = CurTime() + 8
+						JumpTimer = CurTime() + 3
 						
 					else
 					
