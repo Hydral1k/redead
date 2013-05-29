@@ -92,9 +92,9 @@ function ENT:RunBehaviour()
 		
 			if math.random(1,25) == 1 then
 			
-				self.loco:SetJumpHeight( math.random( 150, 300 ) )
+				self.loco:SetJumpHeight( math.random( 150, self.JumpHeight ) )
 				self.loco:Jump()
-				self.loco:SetDesiredSpeed( math.random( 400, 600 ) )
+				self.loco:SetDesiredSpeed( math.random( 350, 700 ) )
 				
 				self.Entity:EmitSound( self.Leap, 100, math.random(90,110) )
 			
