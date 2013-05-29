@@ -21,7 +21,7 @@
 			"text"		"Zombies per player:"
 			"help"		"Number of NPCs to spawn per player."
 			"type"		"Numeric"
-			"default"	"5"
+			"default"	"3"
 		}
 		3
 		{

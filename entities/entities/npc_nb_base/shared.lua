@@ -644,13 +644,13 @@ end
 function ENT:MeleeTrace( ent )
 
 	local trace = {}
-	trace.start = self.Entity:GetPos() + Vector(0,0,50)
-	trace.endpos = ent:GetPos() + Vector(0,0,50)
+	trace.start = self.Entity:GetPos() + Vector(0,0,40)
+	trace.endpos = ent:GetPos() + Vector(0,0,40)
 	trace.filter = { ent, self.Entity }
 	
 	local tr = util.TraceLine( trace )
 	
-	if not IsValid( tr.Entity ) then
+	if not tr.Hit then
 	
 		return true
 	
