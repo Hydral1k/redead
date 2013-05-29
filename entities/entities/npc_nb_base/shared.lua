@@ -13,6 +13,7 @@ ENT.BreakableDistance = 96
 ENT.Damage = 35
 ENT.BaseHealth = 100
 ENT.MoveSpeed = 225
+ENT.JumpHeight = 100
 ENT.MoveAnim = ACT_RUN
 
 ENT.Models = nil
@@ -56,9 +57,11 @@ function ENT:Initialize()
 	end
 	
 	self.Entity:SetHealth( self.BaseHealth )
+	self.Entity:SetCollisionGroup( COLLISION_GROUP_NPC )
 	
 	self.loco:SetDeathDropHeight( 1000 )	
 	self.loco:SetAcceleration( 500 )	
+	self.loco:SetJumpHeight( self.JumpHeight )
 	
 end
 
@@ -108,7 +111,7 @@ function ENT:Think()
 				
 				end
 			
-			elseif self.CurEnemy:GetPos():Distance( self.Entity:GetPos() ) <= self.BreakableDistance then // todo: add case for npcs
+			elseif self.CurEnemy:GetPos():Distance( self.Entity:GetPos() ) <= self.BreakableDistance or self.CurEnemy:GetClass() == "func_breakable_surf" then // todo: add case for npcs
 			
 				self.Entity:EmitSound( self.DoorHit, 100, math.random(90,110) )
 				self.Entity:OnHitBreakable( self.CurEnemy )
@@ -634,7 +637,32 @@ end
 
 function ENT:CanAttack( ent )
 
-	return IsValid( ent ) and self.Entity:CanTarget( ent ) and ent:GetPos():Distance( self.Entity:GetPos() ) <= self.MeleeDistance
+	return IsValid( ent ) and self.Entity:CanTarget( ent ) and ent:GetPos():Distance( self.Entity:GetPos() ) <= self.MeleeDistance and self.Entity:MeleeTrace( ent )
+
+end
+
+function ENT:MeleeTrace( ent )
+
+	local trace = {}
+	trace.start = self.Entity:GetPos() + Vector(0,0,50)
+	trace.endpos = ent:GetPos() + Vector(0,0,50)
+	trace.filter = { ent, self.Entity }
+	
+	local tr = util.TraceLine( trace )
+	
+	if not IsValid( tr.Entity ) then
+	
+		return true
+	
+	end
+	
+	if tr.HitWorld or tr.Entity:GetClass() == "prop_door_rotating" or tr.Entity:GetClass() == "func_breakable" or tr.Entity:GetClass() == "func_breakable_surf"	then
+	
+		return false
+	
+	end
+	
+	return true
 
 end
 
@@ -674,6 +702,19 @@ function ENT:GetBreakable()
 			return v
 		
 		end
+	
+	end
+	
+	local trace = {}
+	trace.start = self.Entity:GetPos() + Vector(0,0,50)
+	trace.endpos = trace.start + self.Entity:GetForward() * self.BreakableDistance
+	trace.filter = self.Entity
+	
+	local tr = util.TraceLine( trace )
+	
+	if table.HasValue( GAMEMODE.Breakables, tr.Entity ) then
+	
+		return tr.Entity
 	
 	end
 	

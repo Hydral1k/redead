@@ -11,8 +11,8 @@ ENT.AttackTime = 0.5
 ENT.MeleeDistance = 64
 ENT.BreakableDistance = 96
 ENT.Damage = 30
-ENT.BaseHealth = 100
-ENT.MoveSpeed = 200
+ENT.BaseHealth = 90
+ENT.MoveSpeed = 175
 ENT.MoveAnim = ACT_RUN
 
 ENT.Models = { Model( "models/zed/malezed_04.mdl" ), 

@@ -710,29 +710,33 @@ function GM:NPCRespawnThink()
 
 	for k,v in pairs( GAMEMODE.NPCSpawns ) do
 	
-		local box = ents.FindInBox( v:GetPos() + Vector( -32, -32, 0 ), v:GetPos() + Vector( 32, 32, 64 ) )
-		local can = true
-		
-		for k,v in pairs( box ) do
-		
-			if v.NextBot then
+		if IsValid( v ) then
+	
+			local box = ents.FindInBox( v:GetPos() + Vector( -32, -32, 0 ), v:GetPos() + Vector( 32, 32, 64 ) )
+			local can = true
 			
-				can = false
+			for k,v in pairs( box ) do
+			
+				if v.NextBot then
+				
+					can = false
+				
+				end
 			
 			end
-		
-		end
-		
-		if can and GAMEMODE.SpawnCounter > 0 then 
-		
-			local ent = ents.Create( GAMEMODE:GetZombieClass() )
-			ent:SetPos( v:GetPos() )
-			ent:Spawn()
 			
-			GAMEMODE.SpawnCounter = GAMEMODE.SpawnCounter - 1
-		
+			if can and GAMEMODE.SpawnCounter > 0 then 
+			
+				local ent = ents.Create( GAMEMODE:GetZombieClass() )
+				ent:SetPos( v:GetPos() )
+				ent:Spawn()
+				
+				GAMEMODE.SpawnCounter = GAMEMODE.SpawnCounter - 1
+			
+			end
+			
 		end
-	
+		
 	end
 
 end
