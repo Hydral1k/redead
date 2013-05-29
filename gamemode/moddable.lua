@@ -122,10 +122,10 @@ GM.ZombieLogos[CLASS_LEAPER] = "nuke/redead/zomb_leaper"
 // The individual waves and the list of zombies that will spawn. ( more waves means a longer match )
 
 GM.Waves = {}
-GM.Waves[1] = { "npc_zombie_common" }
-GM.Waves[2] = { "npc_zombie_common", "npc_zombie_normal" }
-GM.Waves[3] = { "npc_zombie_common", "npc_zombie_normal", "npc_zombie_fast" }
-GM.Waves[4] = { "npc_zombie_common", "npc_zombie_normal", "npc_zombie_fast", "npc_zombie_poison" }
+GM.Waves[1] = { "npc_nb_common" }
+GM.Waves[2] = { "npc_nb_common", "npc_nb_contagion" }
+GM.Waves[3] = { "npc_nb_common", "npc_nb_contagion", "npc_nb_leaper" }
+GM.Waves[4] = { "npc_nb_common", "npc_nb_contagion", "npc_nb_leaper", "npc_nb_poison" }
 
 // Colors used by notices
 
@@ -209,16 +209,16 @@ GM.HeadshotCombos[50] = 25
 // Point values
 
 GM.KillValues = {}
-GM.KillValues[ "npc_zombie_common" ] = 2
-GM.KillValues[ "npc_zombie_fast" ] = 2
-GM.KillValues[ "npc_zombie_normal" ] = 3
-GM.KillValues[ "npc_zombie_poison" ] = 3
+GM.KillValues[ "npc_nb_common" ] = 2
+GM.KillValues[ "npc_nb_leaper" ] = 2
+GM.KillValues[ "npc_nb_contagion" ] = 3
+GM.KillValues[ "npc_nb_poison" ] = 4
 
 GM.AssistValues = {}
-GM.AssistValues[ "npc_zombie_common" ] = 1
-GM.AssistValues[ "npc_zombie_fast" ] = 1
-GM.AssistValues[ "npc_zombie_normal" ] = 1
-GM.AssistValues[ "npc_zombie_poison" ] = 2
+GM.AssistValues[ "npc_nb_common" ] = 1
+GM.AssistValues[ "npc_nb_leaper" ] = 1
+GM.AssistValues[ "npc_nb_contagion" ] = 1
+GM.AssistValues[ "npc_nb_poison" ] = 2
 
 GM.PlayerZombieKillValue = 3
 
@@ -230,8 +230,8 @@ GM.RunSpeed = 250
 // Chances to spawn each zombie type ( from 100 to 0 %)
 
 GM.SpawnChance = {}
-GM.SpawnChance[ "npc_zombie_common" ] = 1.0 // 100% chance
-GM.SpawnChance[ "npc_zombie_normal" ] = 0.1 // 10% chance
-GM.SpawnChance[ "npc_zombie_fast" ] = 0.3
-GM.SpawnChance[ "npc_zombie_poison" ] = 0.2
+GM.SpawnChance[ "npc_nb_common" ] = 1.0 // 100% chance
+GM.SpawnChance[ "npc_nb_contagion" ] = 0.1 // 10% chance
+GM.SpawnChance[ "npc_nb_leaper" ] = 0.3
+GM.SpawnChance[ "npc_nb_poison" ] = 0.2
 

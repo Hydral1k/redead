@@ -288,7 +288,7 @@ function SWEP:BarricadeTrace()
 	
 		self.Owner:Notice( "Fortified a door using 1 piece of wood", GAMEMODE.Colors.Green )
 		
-		tr.Entity.MaxHits = 20
+		tr.Entity.MaxHits = 30
 		tr.Entity.Hits = 0
 		
 	else
@@ -300,7 +300,7 @@ function SWEP:BarricadeTrace()
 		
 	end
 	
-	self.Owner:AddStamina( -10 )
+	self.Owner:AddStamina( -15 )
 	self.Owner:RemoveFromInventory( id )
 	self.Owner:AddStat( "Wood" )
 	

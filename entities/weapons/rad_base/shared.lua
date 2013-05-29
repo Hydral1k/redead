@@ -673,17 +673,19 @@ function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
 	
 	//end
 	
-	if math.random(1,5) == 1 then
-	
-		bullet.Callback = function ( attacker, tr, dmginfo )
+	bullet.Callback = function ( attacker, tr, dmginfo )
 		
-			dmginfo:ScaleDamage( self:GetDamageFalloffScale( tr.HitPos:Distance( self.Owner:GetShootPos() ) ) )
-
-			if IsValid( tr.Entity ) and tr.Entity:IsPlayer() then return end
-		
-			self.Weapon:BulletPenetration( attacker, tr, dmginfo, 0 )
-
+		dmginfo:ScaleDamage( self:GetDamageFalloffScale( tr.HitPos:Distance( self.Owner:GetShootPos() ) ) )
+			
+		if tr.Entity.NextBot then
+			
+			tr.Entity:OnLimbHit( tr.HitGroup, dmginfo )
+			
 		end
+
+		if ( IsValid( tr.Entity ) and tr.Entity:IsPlayer() ) or math.random(1,5) != 1 then return end
+		
+		self.Weapon:BulletPenetration( attacker, tr, dmginfo, 0 )
 		
 	end
 	
@@ -769,7 +771,11 @@ function SWEP:BulletPenetration( attacker, tr, dmginfo, bounce )
 		
 		bullet.Callback = function ( attacker, tr, dmginfo )
 	
-			self.Weapon:BulletPenetration( attacker, tr, dmginfo, bounce + 1 )
+			if IsValid( self ) and IsValid( self.Weapon ) then
+	
+				self.Weapon:BulletPenetration( attacker, tr, dmginfo, bounce + 1 )
+				
+			end
 		
 		end
 		

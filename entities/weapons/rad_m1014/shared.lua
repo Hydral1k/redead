@@ -263,6 +263,12 @@ function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
 	
 		dmginfo:ScaleDamage( self:GetDamageFalloffScale( tr.HitPos:Distance( self.Owner:GetShootPos() ) ) )
 		
+		if tr.Entity.NextBot then
+			
+			tr.Entity:OnLimbHit( tr.HitGroup, dmginfo )
+			
+		end
+		
 		if math.random(1,6) == 1 then
 		
 			self.Weapon:BulletPenetration( attacker, tr, dmginfo, 0 )

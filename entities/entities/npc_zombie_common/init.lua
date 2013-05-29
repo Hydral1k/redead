@@ -50,7 +50,8 @@ ENT.SoundOverride = 85
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/zed/malezed_0" .. ( math.random( 2, 4 ) * 2 ) .. ".mdl" )
+	local model = table.Random( models )
+	self.Entity:SetModel( model )
 	
 	self.Entity:SetHullSizeNormal()
 	self.Entity:SetHullType( HULL_HUMAN )

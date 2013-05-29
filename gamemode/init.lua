@@ -98,9 +98,11 @@ function GM:Initialize()
 	
 end
 
+GM.Breakables = {}
 GM.WoodLocations = {}
 GM.WoodCount = 1
 GM.WoodPercent = 1
+GM.SpawnCounter = 0
 
 function GM:InitPostEntity()	
 
@@ -167,6 +169,13 @@ function GM:InitPostEntity()
 	end
 	
 	GAMEMODE:LoadAllEnts()
+	
+	local tbl = ents.FindByClass( "prop_door_rotating" )
+	tbl = table.Add( tbl, ents.FindByClass( "func_breakable*" ) )
+	tbl = table.Add( tbl, ents.FindByClass( "func_door*" ) )
+	
+	GAMEMODE.Breakables = tbl
+	GAMEMODE.NPCSpawns = ents.FindByClass( "info_npcspawn" )
 	
 	local num = #ents.FindByClass( "point_radiation" )
 	
@@ -303,7 +312,7 @@ function GM:LoadAllEnts()
 
 				for c,d in pairs( v ) do
 				
-					if k != "point_radiation" and k != "info_lootspawn" then
+					if k != "point_radiation" and k != "info_lootspawn" and k != "info_npcspawn" then
 				
 						local function spawnent()
 						
@@ -684,16 +693,47 @@ end
 function GM:GetZombieClass()
 
 	local rand = math.Rand(0,1)
-	local class = table.Random( GAMEMODE.Waves[ GAMEMODE.Wave ] or { "npc_zombie_common" } )
+	local class = table.Random( GAMEMODE.Waves[ GAMEMODE.Wave ] or { "npc_nb_common" } )
 	
 	while #GAMEMODE.Waves[ GAMEMODE.Wave ] != 1 and rand > GAMEMODE.SpawnChance[ class ] do
 	
 		rand = math.Rand(0,1)
-		class = table.Random( GAMEMODE.Waves[ GAMEMODE.Wave ] or { "npc_zombie_common" } )
+		class = table.Random( GAMEMODE.Waves[ GAMEMODE.Wave ] or { "npc_nb_common" } )
 	
 	end
 	
 	return class
+
+end
+
+function GM:NPCRespawnThink()
+
+	for k,v in pairs( GAMEMODE.NPCSpawns ) do
+	
+		local box = ents.FindInBox( v:GetPos() + Vector( -32, -32, 0 ), v:GetPos() + Vector( 32, 32, 64 ) )
+		local can = true
+		
+		for k,v in pairs( box ) do
+		
+			if v.NextBot then
+			
+				can = false
+			
+			end
+		
+		end
+		
+		if can and GAMEMODE.SpawnCounter > 0 then 
+		
+			local ent = ents.Create( GAMEMODE:GetZombieClass() )
+			ent:SetPos( v:GetPos() )
+			ent:Spawn()
+			
+			GAMEMODE.SpawnCounter = GAMEMODE.SpawnCounter - 1
+		
+		end
+	
+	end
 
 end
 
@@ -706,7 +746,9 @@ function GM:NPCThink()
 		local total = GetConVar( "sv_redead_zombies_per_player" ):GetInt() * team.NumPlayers( TEAM_ARMY )
 		local num = math.Clamp( total, 1, math.Min( GetConVar( "sv_redead_max_zombies" ):GetInt() - #ents.FindByClass( "npc_zombie*" ), total ) )
 		
-		for i=1, num do
+		GAMEMODE.SpawnCounter = num
+		
+		--[[for i=1, num do
 	
 			local tbl = ents.FindByClass( "info_npcspawn" )
 			
@@ -721,7 +763,7 @@ function GM:NPCThink()
 			ent:SetPos( spawn:GetPos() + vec )
 			ent:Spawn()
 			
-		end
+		end]]
 	
 	end
 
@@ -739,6 +781,7 @@ function GM:Think()
 			
 		end
 		
+		GAMEMODE:NPCRespawnThink()
 		GAMEMODE:RespawnAntidote()
 		GAMEMODE:EventThink()
 		GAMEMODE:LootThink()
@@ -1155,13 +1198,7 @@ function GM:EntityTakeDamage( ent, dmginfo )
 	
 end
 
-function GM:ScaleNPCDamage( npc, hitgroup, dmginfo )
-
-	if dmginfo:IsExplosionDamage() then
-	
-		dmginfo:ScaleDamage( 1.25 )
-	
-	end
+function GM:ScaleNPCDamage( npc, hitgroup, dmginfo ) // obsolete!
 
 	if hitgroup == HITGROUP_HEAD then
 	
@@ -1515,8 +1552,8 @@ function GM:PanicButton( ply )
 	{ ply:GetRadiation() > 0, { "Vodka", "Moonshine Vodka", "Anti-Rad" }, "irradiated" },
 	{ ply:Health() < 50, { "Advanced Medikit", "Basic Medikit", "Canned Food" }, "severely wounded" },
 	{ ply:Health() < 100, { "Basic Medikit", "Canned Food" }, "wounded" },
-	{ ply:GetStamina() < 50, { "Energy Drink" }, "exhausted" },
-	{ ply:GetStamina() < 50, { "Water" }, "fatigued" } }
+	{ ply:GetStamina() < 100, { "Energy Drink" }, "fatigued" },
+	{ ply:GetStamina() < 100, { "Water" }, "fatigued" } }
 
 	for k,v in pairs( panic ) do
 	

@@ -5,7 +5,7 @@ EVENT.Type = EVENT_BONUS
 
 function EVENT:Start()
 	
-	local spawns = ents.FindByClass( "info_evac" )
+	--[[local spawns = ents.FindByClass( "info_evac" )
 	local evac = table.Random( spawns )
 	
 	local ent = ents.Create( "npc_scientist" )
@@ -16,7 +16,7 @@ function EVENT:Start()
 		
 		v:Notice( "A surviving field researcher has been sighted", GAMEMODE.Colors.White, 5 )
 		
-	end
+	end]]
 	
 end
 	
