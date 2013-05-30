@@ -59,7 +59,8 @@ function ENT:Initialize()
 	end
 	
 	self.Entity:SetHealth( self.BaseHealth )
-	self.Entity:SetCollisionGroup( COLLISION_GROUP_NPC )
+	//self.Entity:SetCollisionGroup( COLLISION_GROUP_INTERACTIVE_DEBRIS )
+	self.Entity:SetCollisionBounds( Vector(-4,-4,0), Vector(4,4,64) ) // nice fat shaming
 	self.Entity:SetSkin( math.random( 0, self.Skins ) )
 	
 	self.loco:SetDeathDropHeight( 1000 )	
@@ -76,6 +77,13 @@ function ENT:Think()
 	
 		self.Entity:VoiceSound( self.VoiceSounds.Taunt )
 		self.IdleTalk = CurTime() + math.Rand(10,20)
+		
+	end
+	
+	if ( self.Stick or 0 ) < CurTime() then
+	
+		self.Entity:StuckThink()
+		self.Stick = CurTime() + 1
 		
 	end
 	
@@ -133,6 +141,16 @@ function ENT:Think()
 end
 
 function ENT:OnThink()
+
+end
+
+function ENT:StuckThink()
+
+	if self.loco:IsAttemptingToMove() and ( self.loco:IsStuck() or self.loco:GetVelocity() == 0 ) then
+	
+		self.loco:SetDesiredSpeed( 500 )
+	
+	end
 
 end
 
@@ -766,6 +784,8 @@ function ENT:OnStuck()
 		self.loco:SetDesiredSpeed( self.BumpSpeed )
 	
 	end
+	
+	self.loco:ClearStuck()
 
 end
 
