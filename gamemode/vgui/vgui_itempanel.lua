@@ -376,7 +376,25 @@ function PANEL:Paint()
 	
 	draw.RoundedBox( 0, 3, 3, self:GetWide() - 6, self:GetTall() - 6, Color( 80, 80, 80, 50 ) )
 	
-	surface.SetDrawColor( 200, 200, 200, 200 )
+	if self.StashStyle == "Buy" then
+	
+		if LocalPlayer():GetNWInt( "Cash", 0 ) >= self.ItemTable.Price then
+		
+			surface.SetDrawColor( 100, 200, 100, 200 )
+		
+		else
+		
+			surface.SetDrawColor( 200, 100, 100, 200 )
+		
+		end
+	
+	else
+	
+		surface.SetDrawColor( 200, 200, 200, 200 )
+	
+	end
+	
+	
 	surface.DrawOutlinedRect( 3, 3, self:GetWide() - 6, self:GetTall() - 6 )
 
 
