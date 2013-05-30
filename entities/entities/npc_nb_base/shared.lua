@@ -41,7 +41,6 @@ ENT.ShouldDrawPath = false
 ENT.Obstructed = false
 ENT.FireDamageTime = 0
 ENT.FireTime = 0
-ENT.DmgTable = {}
 
 ENT.DoorHit = Sound( "npc/zombie/zombie_hit.wav" )
 
@@ -66,6 +65,8 @@ function ENT:Initialize()
 	self.loco:SetDeathDropHeight( 1000 )	
 	self.loco:SetAcceleration( 500 )	
 	self.loco:SetJumpHeight( self.JumpHeight )
+	
+	self.DmgTable = {}
 	
 end
 
