@@ -418,11 +418,11 @@ function GM:GoreRagdolls()
 					for i=1, math.random(2,6) do
 			
 						local count = v:GetPhysicsObjectCount()
-						local limb = v:GetPhysicsObjectNum( math.random(0,count) )
+						local limb = v:GetPhysicsObjectNum( math.random( 0, count ) )
 					
 						if IsValid( limb ) then
 					
-							limb:SetDamping( math.Rand(0,2), math.Rand(0,5) )
+							limb:SetDamping( math.Rand( 0, 2 ), math.Rand( 0, 5 ) )
 							limb:ApplyForceCenter( VectorRand() * 75 )
 				
 						end
@@ -1041,7 +1041,7 @@ function DeathScreen( msg )
 end
 usermessage.Hook( "DeathScreen", DeathScreen )
 
-function Ragdoll( msg )
+--[[function Ragdoll( msg )
 
 	local pos = msg:ReadVector()
 	local burn = msg:ReadShort()
@@ -1061,7 +1061,14 @@ function Ragdoll( msg )
 	end
 
 end
-usermessage.Hook( "Ragdoll", Ragdoll )
+usermessage.Hook( "Ragdoll", Ragdoll )]]
+
+function Burned( msg )
+
+	table.insert( BurnTbl, { Pos = msg:ReadVector(), Time = CurTime() + 0.5 } )
+
+end
+usermessage.Hook( "Burned", Burned )
 
 function Gibbed( msg )
 

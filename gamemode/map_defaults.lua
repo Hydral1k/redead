@@ -1,5 +1,5 @@
 
-// garry is a fucking idiot.
+// eat shit garry
 
 local maps = { "redead/rd_zombocity_f2_json.txt", 
 			   "redead/rd_deadvilla_json.txt",

@@ -14,7 +14,8 @@ ENT.BreakableDistance = 96
 ENT.Damage = 35
 ENT.BaseHealth = 100
 ENT.MoveSpeed = 225
-ENT.JumpHeight = 100
+ENT.JumpHeight = 80
+ENT.BumpSpeed = 500
 ENT.MoveAnim = ACT_RUN
 
 ENT.Models = nil
@@ -338,6 +339,14 @@ function ENT:OnKilled( dmginfo )
 				
 				self.Entity:VoiceSound( self.VoiceSounds.Death )
 				self.Entity:SpawnRagdoll( dmginfo )
+				
+				if self.Entity:OnFire() then
+				
+					umsg.Start( "Burned" )
+					umsg.Vector( self.Entity:GetPos() )
+					umsg.End()
+				
+				end
 			
 			elseif self.Entity:GetHeadshotter( ent1 ) then //self.HeadshotEffects
 			
@@ -352,12 +361,28 @@ function ENT:OnKilled( dmginfo )
 				umsg.Vector( self.Entity:GetPos() )
 				umsg.End()
 				
+				if self.Entity:OnFire() then
+				
+					umsg.Start( "Burned" )
+					umsg.Vector( self.Entity:GetPos() )
+					umsg.End()
+				
+				end
+				
 				self.Entity:SpawnRagdoll( dmginfo )
 			
 			else
 			
 				self.Entity:VoiceSound( self.VoiceSounds.Death )
 				self.Entity:SpawnRagdoll( dmginfo )
+				
+				if self.Entity:OnFire() then
+				
+					umsg.Start( "Burned" )
+					umsg.Vector( self.Entity:GetPos() )
+					umsg.End()
+				
+				end
 			
 			end
 		
@@ -735,9 +760,10 @@ function ENT:OnStuck()
 	else
 	
 		self.Obstructed = false
+		
+		self.loco:SetDesiredSpeed( self.BumpSpeed )
 		self.loco:Jump()
-		self.loco:SetDesiredSpeed( 300 )
-		self.Entity:SetPos( self.Entity:GetPos() + self.Entity:GetForward() * 5 )
+		self.loco:SetDesiredSpeed( self.BumpSpeed )
 	
 	end
 
