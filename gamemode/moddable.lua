@@ -71,8 +71,8 @@ GM.ZombieWeapons[CLASS_LEAPER] = "rad_z_leaper"
 
 GM.ZombieHealth = {}
 GM.ZombieHealth[CLASS_RUNNER] = 100
-GM.ZombieHealth[CLASS_BANSHEE] = 100
-GM.ZombieHealth[CLASS_CONTAGION] = 200
+GM.ZombieHealth[CLASS_BANSHEE] = 75
+GM.ZombieHealth[CLASS_CONTAGION] = 175
 GM.ZombieHealth[CLASS_LEAPER] = 50
 
 GM.ZombieSpeed = {}

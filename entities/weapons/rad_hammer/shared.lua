@@ -93,7 +93,7 @@ function SWEP:UpdateGhost()
 	if not trace.Hit then return end
 	
 	local ang = ( trace.HitNormal * -1 ):Angle() + Angle( 0, 0, math.NormalizeAngle( 90 + self.Weapon:GetNWInt( "BuildAng", 0 ) ) )
-	local pos = trace.HitPos + trace.HitNormal
+	local pos = trace.HitPos 
 	
 	local trlength = self.Weapon:GetOwner():GetPos() - trace.HitPos
 	trlength = trlength:Length() 
@@ -141,7 +141,7 @@ function SWEP:SetPlacePosition( ent )
 	local ang = ( trace.HitNormal * -1 ):Angle() + Angle( 0, 0, math.NormalizeAngle( 90 + self.Weapon:GetNWInt( "BuildAng", 0 ) ) )
 	ent:SetAngles( ang )
 	
-	local pos = trace.HitPos + trace.HitNormal
+	local pos = trace.HitPos 
 	ent:SetPos( pos + ( ent:GetUp() * self.Position ) )
 	
 	local phys = ent:GetPhysicsObject()
@@ -351,16 +351,21 @@ function SWEP:MeleeTrace( dmg )
 	
 		self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
 		
-		if ent:IsPlayer() and ent:Team() != self.Owner:Team() then
-		
-			ent:TakeDamage( dmg * 2, self.Owner, self.Weapon )
+		if ent:IsPlayer() then 
+			
 			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
 			
-			self.Owner:DrawBlood()
+			if ent:Team() != self.Owner:Team() then
+		
+				ent:TakeDamage( dmg, self.Owner, self.Weapon )
 			
-			local ed = EffectData()
-			ed:SetOrigin( trace.HitPos )
-			util.Effect( "BloodImpact", ed, true, true )
+				self.Owner:DrawBlood()
+			
+				local ed = EffectData()
+				ed:SetOrigin( trace.HitPos )
+				util.Effect( "BloodImpact", ed, true, true )
+				
+			end
 			
 		elseif string.find( ent:GetClass(), "npc" ) then
 		

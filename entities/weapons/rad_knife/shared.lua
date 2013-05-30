@@ -34,7 +34,7 @@ SWEP.Primary.Deploy         = Sound( "Weapon_Knife.Deploy" )
 SWEP.Primary.Recoil			= 3.5
 SWEP.Primary.Damage			= 35
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Delay			= 1.100
+SWEP.Primary.Delay			= 0.950
 
 SWEP.Primary.ClipSize		= 1
 SWEP.Primary.Automatic		= true
@@ -53,6 +53,12 @@ function SWEP:PrimaryAttack()
 	
 	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 	self.Weapon:MeleeTrace( self.Primary.Damage )
+	
+	if SERVER then
+	
+		self.Owner:AddStamina( -1 )
+	
+	end
 	
 end
 
@@ -103,16 +109,21 @@ function SWEP:MeleeTrace( dmg )
 		self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
 		self.Owner:AddStamina( -2 )
 		
-		if ent:IsPlayer() and ent:Team() != self.Owner:Team() then
-		
-			ent:TakeDamage( dmg * 2, self.Owner, self.Weapon )
+		if ent:IsPlayer() then 
+			
 			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
 			
-			self.Owner:DrawBlood()
+			if ent:Team() != self.Owner:Team() then
+		
+				ent:TakeDamage( dmg, self.Owner, self.Weapon )
 			
-			local ed = EffectData()
-			ed:SetOrigin( trace.HitPos )
-			util.Effect( "BloodImpact", ed, true, true )
+				self.Owner:DrawBlood()
+			
+				local ed = EffectData()
+				ed:SetOrigin( trace.HitPos )
+				util.Effect( "BloodImpact", ed, true, true )
+				
+			end
 			
 		elseif string.find( ent:GetClass(), "npc" ) then
 		

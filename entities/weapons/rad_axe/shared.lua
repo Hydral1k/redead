@@ -142,16 +142,21 @@ function SWEP:MeleeTrace( dmg )
 	
 		self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
 		
-		if ent:IsPlayer() and ent:Team() != self.Owner:Team() then
+		if ent:IsPlayer() then 
+			
+			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
+			
+			if ent:Team() != self.Owner:Team() then
 		
-			ent:TakeDamage( dmg * 2, self.Owner, self.Weapon )
-			ent:EmitSound( table.Random( GAMEMODE.AxeHit ), 100, math.random(90,110) )
+				ent:TakeDamage( dmg, self.Owner, self.Weapon )
 			
-			self.Owner:DrawBlood()
+				self.Owner:DrawBlood()
 			
-			local ed = EffectData()
-			ed:SetOrigin( trace.HitPos )
-			util.Effect( "BloodImpact", ed, true, true )
+				local ed = EffectData()
+				ed:SetOrigin( trace.HitPos )
+				util.Effect( "BloodImpact", ed, true, true )
+				
+			end
 			
 		elseif string.find( ent:GetClass(), "npc" ) then
 		
