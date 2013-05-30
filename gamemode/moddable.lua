@@ -52,9 +52,9 @@ GM.ClassWeapons[CLASS_SPECIALIST] = "models/weapons/w_pist_p228.mdl"
 GM.ClassWeapons[CLASS_ENGINEER] = "models/weapons/w_pist_fiveseven.mdl"
 
 GM.ClassLoadouts = {}
-GM.ClassLoadouts[CLASS_SCOUT] = { ITEM_MISC, ITEM_SUPPLY, ITEM_SUPPLY }
-GM.ClassLoadouts[CLASS_COMMANDO] = { ITEM_MISC, ITEM_SUPPLY, ITEM_SUPPLY }
-GM.ClassLoadouts[CLASS_SPECIALIST] = { ITEM_SPECIAL, ITEM_SUPPLY, ITEM_SUPPLY }
+GM.ClassLoadouts[CLASS_SCOUT] = { ITEM_MISC, ITEM_MISC, ITEM_SUPPLY, ITEM_SUPPLY }
+GM.ClassLoadouts[CLASS_COMMANDO] = { ITEM_MISC, ITEM_MISC, ITEM_SUPPLY, ITEM_SUPPLY }
+GM.ClassLoadouts[CLASS_SPECIALIST] = { ITEM_MISC, ITEM_SPECIAL, ITEM_SUPPLY, ITEM_SUPPLY }
 GM.ClassLoadouts[CLASS_ENGINEER] = { ITEM_MISC }
 
 GM.ZombieModels = {}
