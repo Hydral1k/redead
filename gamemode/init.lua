@@ -745,10 +745,12 @@ function GM:NPCThink()
 
 	if GAMEMODE.Wave > #GAMEMODE.Waves then return end
 	
-	if #ents.FindByClass( "npc_zombie*" ) < GetConVar( "sv_redead_max_zombies" ):GetInt() and #ents.FindByClass( "npc_zombie*" ) < GetConVar( "sv_redead_zombies_per_player" ):GetInt() * team.NumPlayers( TEAM_ARMY ) then
+	local tbl = ents.FindByClass( "npc_nb*" )
+	
+	if #tbl < GetConVar( "sv_redead_max_zombies" ):GetInt() and #tbl < GetConVar( "sv_redead_zombies_per_player" ):GetInt() * team.NumPlayers( TEAM_ARMY ) then
 	
 		local total = GetConVar( "sv_redead_zombies_per_player" ):GetInt() * team.NumPlayers( TEAM_ARMY )
-		local num = math.Clamp( total, 1, math.Min( GetConVar( "sv_redead_max_zombies" ):GetInt() - #ents.FindByClass( "npc_zombie*" ), total ) )
+		local num = math.Clamp( total, 1, math.Min( GetConVar( "sv_redead_max_zombies" ):GetInt() - #tbl, total ) )
 		
 		GAMEMODE.SpawnCounter = num
 		
