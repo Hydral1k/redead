@@ -67,6 +67,8 @@ function ENT:Initialize()
 	self.loco:SetJumpHeight( self.JumpHeight )
 	
 	self.DmgTable = {}
+	self.LastPos = self.Entity:GetPos()
+	self.Stuck = CurTime() + 10
 	
 end
 
@@ -81,10 +83,12 @@ function ENT:Think()
 		
 	end
 	
-	if ( self.Stick or 0 ) < CurTime() then
+	if ( self.Stuck or 0 ) < CurTime() then
 	
 		self.Entity:StuckThink()
-		self.Stick = CurTime() + 1
+	
+		self.Stuck = CurTime() + 10
+		self.LastPos = self.Entity:GetPos() 
 		
 	end
 	
@@ -147,10 +151,42 @@ end
 
 function ENT:StuckThink()
 
-	if self.loco:IsAttemptingToMove() and ( self.loco:IsStuck() or self.loco:GetVelocity() == 0 ) then
+	if self.LastPos:Distance( self.Entity:GetPos() ) < 50 then
 	
-		self.loco:SetDesiredSpeed( 500 )
+		self.Entity:Respawn()
 	
+	end
+
+end
+
+function ENT:Respawn()
+
+	for k,v in pairs( GAMEMODE.NPCSpawns ) do
+	
+		if IsValid( v ) then
+	
+			local box = ents.FindInBox( v:GetPos() + Vector( -32, -32, 0 ), v:GetPos() + Vector( 32, 32, 64 ) )
+			local can = true
+			
+			for k,v in pairs( box ) do
+			
+				if v.NextBot then
+				
+					can = false
+				
+				end
+			
+			end
+			
+			if can then 
+			
+				self.Entity:SetPos( v:GetPos() )
+				return
+			
+			end
+			
+		end
+		
 	end
 
 end
