@@ -13,8 +13,6 @@ if CLIENT then
 	SWEP.Slot = 1
 	SWEP.Slotpos = 0
 	
-	killicon.AddFont( "rad_knife", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
-	
 end
 
 SWEP.HoldType = "knife"
@@ -178,14 +176,10 @@ function SWEP:Deploy()
 
 	if SERVER then
 	
-		self.Weapon:SetViewModelPosition()
-		self.Weapon:SetZoomMode( 1 )
 		self.Owner:DrawViewModel( true )
 		self.Owner:EmitSound( self.Primary.Deploy, 100, math.random(90,110) )
 		
 	end	
-	
-	self.InIron = false
 
 	self.Weapon:SendWeaponAnim( ACT_VM_DRAW )
 	

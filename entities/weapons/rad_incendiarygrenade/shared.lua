@@ -13,9 +13,6 @@ if CLIENT then
 	SWEP.Slot = 3
 	SWEP.Slotpos = 3
 	
-	killicon.AddFont( "sent_grenade_incendiary", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
-	killicon.AddFont( "rad_incendiarygrenade", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
-	
 end
 
 SWEP.HoldType = "grenade"

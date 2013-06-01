@@ -227,7 +227,7 @@ item.Register( {
 	CamOrigin = Vector(5,0,0)
 } )
 
-item.Register( { // fuck this gun
+item.Register( { 
 	Name = "UMP45", 
 	Description = "Size isn't everything.",
 	Stackable = false, 
@@ -318,7 +318,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "FN P90 LV", 
+	Name = "FN P90", 
 	Description = "A powerful SMG with a large magazine.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
@@ -426,7 +426,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "SG552", 
+	Name = "SG 552", 
 	Description = "Comes with a free scope.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,

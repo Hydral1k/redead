@@ -14,8 +14,6 @@ if CLIENT then
 	SWEP.Slot = 1
 	SWEP.Slotpos = 0
 	
-	killicon.AddFont( "rad_axe", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
-	
 end
 
 SWEP.HoldType = "melee"

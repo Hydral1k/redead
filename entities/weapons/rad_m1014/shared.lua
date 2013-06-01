@@ -13,8 +13,6 @@ if CLIENT then
 	SWEP.Slot = 3
 	SWEP.Slotpos = 3
 	
-	killicon.AddFont( "rad_m1014", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) )
-	
 end
 
 SWEP.HoldType = "shotgun"
@@ -26,9 +24,6 @@ SWEP.WorldModel = "models/weapons/w_shot_xm1014.mdl"
 
 SWEP.SprintPos = Vector(-0.6026, -2.715, 0.0137)
 SWEP.SprintAng = Vector(-3.4815, -21.9362, 0.0001)
-
-SWEP.IronPos = Vector( 5.1476, -4.3763, 2.1642 )
-SWEP.IronAng = Vector( -0.1387, 0.6955, 0 )
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "Buckshot"
@@ -43,8 +38,6 @@ SWEP.Primary.Delay			= 0.320
 SWEP.Primary.ClipSize		= 8
 SWEP.Primary.Automatic		= true
 
-SWEP.Primary.ShellType = SHELL_SHOTGUN
-
 function SWEP:Deploy()
 
 	self.Weapon:SetNWBool( "Reloading", false )
@@ -53,7 +46,6 @@ function SWEP:Deploy()
 
 	if SERVER then
 	
-		self.Weapon:SetViewModelPosition()
 		self.Weapon:SetZoomMode( 1 )
 		
 	end	
@@ -96,12 +88,6 @@ function SWEP:CanPrimaryAttack()
 		self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 		self.Weapon:SetClip1( self.Weapon:Clip1() + 1 )
 		
-		if not self.IsSniper then
-	
-			self.Weapon:SetIron( false )
-		
-		end
-		
 		return false
 		
 	end
@@ -143,8 +129,6 @@ function SWEP:Reload()
 
 	if self.HolsterMode or self.Weapon:Clip1() == self.Primary.ClipSize then return end
 	
-	self.Weapon:SetIron( false )
-	
 	if self.Weapon:Clip1() < self.Primary.ClipSize and not self.Weapon:GetNWBool( "Reloading", false ) then
 		
 		self.Weapon:SetNWBool( "Reloading", true )
@@ -162,7 +146,7 @@ function SWEP:Think()
 	if self.Owner:KeyDown( IN_WALK ) and self.HolsterTime < CurTime() then
 	
 		self.HolsterTime = CurTime() + 2
-		self.HolsterMode = !self.HolsterMode
+		--[[self.HolsterMode = !self.HolsterMode
 		
 		if self.HolsterMode then
 		
@@ -172,7 +156,7 @@ function SWEP:Think()
 		
 			self.Owner:StopAllLuaAnimations( 0.5 )
 		
-		end
+		end]]
 	
 	end
 
@@ -205,22 +189,10 @@ function SWEP:Think()
 
 	if self.Owner:GetVelocity():Length() > 0 then
 	
-		if self.Owner:KeyDown( IN_SPEED ) and self.Owner:GetNWFloat( "Weight", 0 ) < 50 then
+		if self.Owner:KeyDown( IN_SPEED ) then
 		
 			self.LastRunFrame = CurTime() + 0.3
-			
-			if self.InIron and not self.IsSniper then
 		
-				self.Weapon:SetIron( false )
-			
-			end
-		
-		end
-		
-		if self.Weapon:GetZoomMode() != 1 then
-		
-			self.Weapon:UnZoom()
-			
 		end
 		
 	end

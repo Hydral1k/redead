@@ -36,6 +36,8 @@ ENT.VoiceSounds = {}
 
 // Other stuff
 
+ENT.HeadshotNoise = Sound( "Player.DamageHeadShot" )
+
 ENT.NextBot = true
 ENT.ShouldDrawPath = false
 ENT.Obstructed = false
@@ -195,7 +197,7 @@ function ENT:OnLimbHit( hitgroup, dmginfo )
 
 	if hitgroup == HITGROUP_HEAD then
 	
-		self.Entity:EmitSound( "Player.DamageHeadShot" )
+		self.Entity:EmitSound( self.HeadshotNoise, 80, math.random( 100, 120 ) )
 		self.Entity:SetHeadshotter( dmginfo:GetAttacker(), true )
 		
 		local effectdata = EffectData()
@@ -816,9 +818,9 @@ function ENT:OnStuck()
 	
 		self.Obstructed = false
 		
-		self.loco:SetDesiredSpeed( self.BumpSpeed )
-		self.loco:Jump()
-		self.loco:SetDesiredSpeed( self.BumpSpeed )
+		//self.loco:SetDesiredSpeed( self.BumpSpeed )
+		//self.loco:Jump()
+		//self.loco:SetDesiredSpeed( self.BumpSpeed )
 	
 	end
 	

@@ -36,17 +36,13 @@ SWEP.ViewModel	= "models/weapons/v_pistol.mdl"
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 
 SWEP.SprintPos = Vector(0,0,0)
-SWEP.SprintAng = Vector(1,0,0)
-
-SWEP.IronPos = Vector(1,0,0)
-SWEP.IronAng = Vector(0,0,0)
+SWEP.SprintAng = Vector(0,0,0)
 
 SWEP.ZoomModes = { 0, 50, 10 }
 SWEP.ZoomSpeeds = { 5, 5, 5 }
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "SMG"
-SWEP.IronsightsFOV = 65
 
 SWEP.Primary.Empty          = Sound( "weapons/clipempty_rifle.wav" )
 SWEP.Primary.Sound			= Sound( "Weapon_USP.Single" )
@@ -54,6 +50,7 @@ SWEP.Primary.Recoil			= 3.5
 SWEP.Primary.Damage			= 10
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Cone			= 0.025
+SWEP.Primary.SniperCone     = 0.025
 SWEP.Primary.Delay			= 0.150
 
 SWEP.Primary.Ammo			= "Pistol"
@@ -70,14 +67,10 @@ SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 
-SWEP.Laser = false
 SWEP.LaserOffset = Vector(0,0,0)
-
 SWEP.HolsterMode = false
 SWEP.HolsterTime = 0
 SWEP.LastRunFrame = 0
-SWEP.InIron = false
-SWEP.ApproachPos = Vector(0,0,0)
 
 SWEP.MinShellDelay = 0.3
 SWEP.MaxShellDelay = 0.6
@@ -89,116 +82,88 @@ SWEP.FalloffDistances[ "SMG" ] = { Range = 1500, Falloff = 1500 }
 SWEP.FalloffDistances[ "Pistol" ] = { Range = 1000, Falloff = 500 }
 SWEP.FalloffDistances[ "Buckshot" ] = { Range = 300, Falloff = 500 }
 
-SWEP.ShellSounds = {}
-SWEP.ShellSounds[1] = { Pitch = 100, Wavs = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" } }
-SWEP.ShellSounds[2] = { Pitch = 100, Wavs = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" } }
-SWEP.ShellSounds[3] = { Pitch = 90, Wavs = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" } }
-SWEP.ShellSounds[4] = { Pitch = 90, Wavs = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" } }
-SWEP.ShellSounds[5] = { Pitch = 110, Wavs = { "weapons/fx/tink/shotgun_shell1.wav", "weapons/fx/tink/shotgun_shell2.wav", "weapons/fx/tink/shotgun_shell3.wav" } }
-SWEP.ShellSounds[6] = { Pitch = 80, Wavs = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" } }
-SWEP.ShellSounds[7] = { Pitch = 70, Wavs = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" } }
+SWEP.UseShellSounds = true
+SWEP.ShellSounds = { "player/pl_shell1.wav", "player/pl_shell2.wav", "player/pl_shell3.wav" }
+SWEP.BuckshotShellSounds = { "weapons/fx/tink/shotgun_shell1.wav", "weapons/fx/tink/shotgun_shell2.wav", "weapons/fx/tink/shotgun_shell3.wav" } 
 
-function SWEP:SetViewModelPosition( vec, ang, movetime )
-	
-	self.Weapon:SetNWVector( "ViewVector", vec )
-	self.Weapon:SetNWVector( "ViewAngle", ang )
-	self.Weapon:SetNWInt( "ViewDuration", movetime ) 
-	self.Weapon:SetNWInt( "ViewTime", CurTime() )
-
-end
+SWEP.Pitches = {}
+SWEP.Pitches[ "Pistol" ] = 100
+SWEP.Pitches[ "SMG" ] = 90
+SWEP.Pitches[ "Rifle" ] = 80
+SWEP.Pitches[ "Sniper" ] = 70
+SWEP.Pitches[ "Buckshot" ] = 100
 
 function SWEP:GetViewModelPosition( pos, ang )
 
-	local newpos = self.Weapon:GetNWVector( "ViewVector", nil )
-	local newang = self.Weapon:GetNWVector( "ViewAngle", nil )
-	local movetime = self.Weapon:GetNWInt( "ViewDuration", 0.25 ) 
-	local duration = self.Weapon:GetNWInt( "ViewTime", 0 ) 
-	
-	local pang = self.Owner:EyeAngles()
-	local vel = self.Owner:GetVelocity()
-	
-	if not self.Owner:GetNWBool( "InIron", false ) then
-	
-		vel.x = math.Clamp( vel.x, -300, 300 )
-		vel.y = math.Clamp( vel.y, -300, 300 )
-		vel.z = math.Clamp( vel.z, -200, 200 )
-		
-		self.ApproachPos.x = math.Approach( self.ApproachPos.x, vel.x, 18 ) 
-		self.ApproachPos.y = math.Approach( self.ApproachPos.y, vel.y, 18 ) 
-		self.ApproachPos.z = math.Approach( self.ApproachPos.z, vel.z, 18 ) 
-		
-		pos = pos - self.ApproachPos / 150
-		
-	end
-		
-	if not newpos or not newang then
-	
-		newpos = pos
-		newang = ang
-		
-	end
-	
-	local mul = 0
-	
-	self.SwayScale 	= 1.0
-	self.BobScale 	= 1.0
-	
-	if ( self.Owner:KeyDown( IN_SPEED ) and self.Owner:GetVelocity():Length() > 0 and self.Owner:GetNWFloat( "Weight", 0 ) < 50 ) or GAMEMODE:ElementsVisible() or self.HolsterMode then
-	
-		self.SwayScale 	= 1.25
-		self.BobScale 	= 1.25
-		
-		if not self.SprintStart then
-		
-			self.SprintStart = CurTime()
-			
-		end
-		
-		mul = math.Clamp( ( CurTime() - self.SprintStart ) / movetime, 0, 1 )
-		mul = -( mul - 1 ) ^ 2 + 1
-		
-		newang = self.SprintAng
-		newpos = self.SprintPos
-		
-	else 
-	
-		if self.Owner:GetNWBool( "InIron", false ) then
-		
-			self.SwayScale 	= 0.25
-			self.BobScale 	= 0.25
-		
-		end
-		
-		if self.SprintStart then
-		
-			self.SprintEnd = CurTime()
-			self.SprintStart = nil
-			
-		end
-	
-		if self.SprintEnd then
-		
-			mul = math.Clamp( ( CurTime() - self.SprintEnd ) / movetime, 0, 1 )
-			mul = ( mul - 1 ) ^ 2
-			
-			newang = self.SprintAng
-			newpos = self.SprintPos
-			
-			if mul == 0 then
-			
-				self.SprintEnd = nil 
-				
-			end
-			
-		else
-		
-			mul = self:GetMoveScale( movetime, duration, mul )
-			
-		end
-	end
+    local newpos = nil
+    local newang = nil
+    local movetime = 0.25
+    local duration = 0//self.Weapon:GetNWInt( "ViewTime", 0 )
 
-	return self:MoveViewModelTo( newpos, newang, pos, ang, mul )
-	
+    local pang = self.Owner:EyeAngles()
+    local vel = self.Owner:GetVelocity()
+
+    //if not newpos or not newang then
+
+       // newpos = pos
+       // newang = ang
+
+    //end
+
+    local mul = 0
+
+    self.SwayScale = 1.0
+    self.BobScale = 1.0
+
+    if ( self.Owner:KeyDown( IN_SPEED ) and self.Owner:GetVelocity():Length() > 0 ) or GAMEMODE:ElementsVisible() or self.HolsterMode then
+
+        self.SwayScale = 1.25
+        self.BobScale = 1.25
+
+        if not self.SprintStart then
+
+            self.SprintStart = CurTime()
+
+        end
+
+        mul = math.Clamp( ( CurTime() - self.SprintStart ) / movetime, 0, 1 )
+        mul = -( mul - 1 ) ^ 2 + 1
+
+        newang = self.SprintAng
+        newpos = self.SprintPos
+
+    else
+
+        if self.SprintStart then
+
+            self.SprintEnd = CurTime()
+            self.SprintStart = nil
+
+        end
+
+        if self.SprintEnd then
+
+            mul = math.Clamp( ( CurTime() - self.SprintEnd ) / movetime, 0, 1 )
+            mul = ( mul - 1 ) ^ 2
+
+            newang = self.SprintAng
+            newpos = self.SprintPos
+
+            if mul == 0 then
+
+                self.SprintEnd = nil
+
+            end
+
+        else
+
+            mul = self:GetMoveScale( movetime, duration, mul )
+
+        end
+    end
+
+    return self:MoveViewModelTo( newpos, newang, pos, ang, mul )
+
 end
 
 function SWEP:GetMoveScale( movetime, duration, mul )
@@ -223,6 +188,8 @@ end
 
 function SWEP:AngApproach( newang, ang, mul )
 
+	if not newang then return ang end
+
 	ang:RotateAroundAxis( ang:Right(), 		newang.x * mul )
 	ang:RotateAroundAxis( ang:Up(), 		newang.y * mul )
 	ang:RotateAroundAxis( ang:Forward(), 	newang.z * mul )
@@ -236,6 +203,8 @@ function SWEP:PosApproach( newpos, pos, ang, mul )
 	local right 	= ang:Right()
 	local up 		= ang:Up()
 	local forward 	= ang:Forward()
+	
+	if not newpos then return pos end
 
 	pos = pos + newpos.x * right * mul
 	pos = pos + newpos.y * forward * mul
@@ -249,7 +218,7 @@ function SWEP:MoveViewModelTo( newpos, newang, pos, ang, mul )
 
 	ang = self:AngApproach( newang, ang, mul )
 	pos = self:PosApproach( newpos, pos, ang, mul )
-
+	
 	return pos, ang
 
 end
@@ -264,13 +233,10 @@ function SWEP:Deploy()
 
 	if SERVER then
 	
-		self.Weapon:SetViewModelPosition()
 		self.Weapon:SetZoomMode( 1 )
 		self.Owner:DrawViewModel( true )
 		
 	end	
-	
-	self.InIron = false
 
 	self.Weapon:SendWeaponAnim( ACT_VM_DRAW )
 	
@@ -280,8 +246,6 @@ end
 
 function SWEP:Holster()
 	
-	self.Weapon:SetIron( false )
-	
 	return true
 
 end
@@ -290,33 +254,11 @@ function SWEP:Think()
 
 	self.Weapon:ReloadThink()
 
-	if self.Owner:GetVelocity():Length() > 0 then
-	
-		if self.Owner:KeyDown( IN_SPEED ) and self.Owner:GetNWFloat( "Weight", 0 ) < 50 then
+	if self.Owner:GetVelocity():Length() > 0 and self.Owner:KeyDown( IN_SPEED ) then
 		
-			self.LastRunFrame = CurTime() + 0.3
+		self.LastRunFrame = CurTime() + 0.3
 			
-			if self.InIron and not self.IsSniper then
-		
-				self.Weapon:SetIron( false )
-			
-			end
-		
-		end
-		
-		if self.Weapon:GetZoomMode() != 1 then
-		
-			self.Weapon:UnZoom()
-			
-		end
-		
-	end
-	
-	if self.MoveTime and self.MoveTime < CurTime() and SERVER then
-	
-		self.MoveTime = nil
-		self.Weapon:SetZoomMode( self.Weapon:GetZoomMode() + 1 )
-		self.Owner:DrawViewModel( false )
+		self.Weapon:UnZoom()
 		
 	end
 
@@ -332,9 +274,13 @@ function SWEP:SetZoomMode( num )
 		
 	end
 	
-	self.Owner:SetNWBool( "InIron", num != 1)
 	self.Weapon:SetNWInt( "Mode", num )
-	self.Owner:SetFOV( self.ZoomModes[num], self.ZoomSpeeds[num] )
+	
+	if self.Owner:GetFOV() != self.ZoomModes[num] then
+	
+		self.Owner:SetFOV( self.ZoomModes[num], self.ZoomSpeeds[num] )
+		
+	end
 
 end
 
@@ -350,38 +296,16 @@ function SWEP:UnZoom()
 
 	self.Weapon:SetZoomMode( 1 )
 	self.Weapon:SetNWBool( "ReverseAnim", true )
-	self.Weapon:SetViewModelPosition( self.IronPos, self.IronAng, 0.3 )
 	
 	self.Owner:DrawViewModel( true )
-	self.Owner:SetNWBool( "InIron", false )
 	
-end
-
-function SWEP:SetIron( bool )
-
-	if CLIENT then return end
-	
-	if self.InIron == bool then return end
-
-	self.InIron = bool
-	self.Weapon:SetNWBool( "ReverseAnim", !bool )
-	self.Weapon:SetViewModelPosition( self.IronPos, self.IronAng, 0.3 )
-	
-	self.Owner:SetNWBool( "InIron", bool )
-	
-	if not bool then
-		self.Owner:SetFOV( 0, 0.2 )
-	else
-		self.Owner:SetFOV( self.IronsightsFOV, 0.2 )
-	end
-
 end
 
 function SWEP:Reload()
 
-	if self.Weapon:Clip1() == self.Primary.ClipSize or self.HolsterMode or self.ReloadTime then return end
+	if self.Weapon:Clip1() == self.Primary.ClipSize or self.Weapon:Clip1() > self.Owner:GetNWInt( "Ammo" .. self.AmmoType, 0 ) or self.HolsterMode or self.ReloadTime then return end
 	
-	if self.Owner:GetNWInt( "Ammo"..self.AmmoType, 0 ) < 1 then 
+	if self.Owner:GetNWInt( "Ammo" .. self.AmmoType, 0 ) < 1 then 
 	
 		self.Weapon:SetClip1( self.Primary.ClipSize )
 		
@@ -394,12 +318,6 @@ function SWEP:Reload()
 		self.Weapon:UnZoom()
 		
 	end	
-	
-	if not self.IsSniper then
-	
-		self.Weapon:SetIron( false )
-		
-	end
 
 	self.Weapon:DoReload()
 	
@@ -458,7 +376,7 @@ function SWEP:CanSecondaryAttack()
 
 	if self.HolsterMode or self.Owner:KeyDown( IN_SPEED ) or self.LastRunFrame > CurTime() then return false end
 
-	if ( self.Owner:KeyDown( IN_FORWARD ) or self.Owner:KeyDown( IN_BACK ) or self.Owner:KeyDown( IN_LEFT ) or self.Owner:KeyDown( IN_RIGHT ) or self.Weapon:Clip1() <= 0 ) and self.IsSniper then
+	if self.Weapon:Clip1() <= 0 and self.IsSniper then
 	
 		if self.Weapon:GetZoomMode() != 1 then
 		
@@ -478,9 +396,10 @@ function SWEP:CanPrimaryAttack()
 
 	if self.HolsterMode or self.ReloadTime or self.LastRunFrame > CurTime() then return false end
 	
-	if self.Owner:GetNWInt( "Ammo"..self.AmmoType, 0 ) < 1 then 
+	if self.Owner:GetNWInt( "Ammo" .. self.AmmoType, 0 ) < 1 then 
 	
 		self.Weapon:EmitSound( self.Primary.Empty )
+		
 		return false 
 		
 	end
@@ -495,12 +414,6 @@ function SWEP:CanPrimaryAttack()
 			self.Weapon:UnZoom()
 			
 		end	
-		
-		if not self.IsSniper then
-	
-			self.Weapon:SetIron( false )
-		
-		end
 		
 		return false
 		
@@ -524,18 +437,22 @@ function SWEP:ShootEffects()
 	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) 
 	
 	if CLIENT then return end
-
-	local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ] 
-	local pos = self.Owner:GetPos()
 	
-	timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() sound.Play( table.Random( tbl.Wavs ), pos, 75, tbl.Pitch ) end )
+	if self.UseShellSounds then
 	
-	--[[local ed = EffectData()
-	ed:SetOrigin( self.Owner:GetShootPos() )
-	ed:SetEntity( self.Weapon )
-	ed:SetAttachment( self.Weapon:LookupAttachment( "2" ) )
-	ed:SetScale( ( self.Primary.ShellType or SHELL_9MM ) )
-	util.Effect( "weapon_shell", ed, true, true )]]
+		local pitch = self.Pitches[ self.AmmoType ] + math.random( -3, 3 )
+		local tbl = self.ShellSounds
+		local pos = self.Owner:GetPos()
+		
+		if self.AmmoType == "Buckshot" then
+		
+			tbl = self.BuckshotShellSounds
+		
+		end
+	
+		timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() sound.Play( table.Random( tbl ), pos, 50, pitch ) end )
+		
+	end
 	
 end
 
@@ -543,16 +460,26 @@ function SWEP:PrimaryAttack()
 
 	if not self.Weapon:CanPrimaryAttack() then 
 		
-		self.Weapon:SetNextPrimaryFire( CurTime() + 0.5 )
+		self.Weapon:SetNextPrimaryFire( CurTime() + 0.25 )
+		
 		return 
 		
 	end
 
 	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(95,105) )
-	self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone, self.Weapon:GetZoomMode() )
 	self.Weapon:SetClip1( self.Weapon:Clip1() - 1 )
 	self.Weapon:ShootEffects()
+	
+	if self.IsSniper and self.Weapon:GetZoomMode() == 1 then
+	
+		self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.SniperCone, 1 )
+	
+	else
+	
+		self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone, self.Weapon:GetZoomMode() )
+	
+	end
 	
 	if self.Weapon:GetZoomMode() > 1 then
 	
@@ -576,15 +503,7 @@ function SWEP:SecondaryAttack()
 	
 	if not self.IsSniper then
 	
-		if self.Laser then
-		
-			self.Weapon:ToggleLaser()
-			
-			return
-			
-		end
-	
-		self.Weapon:SetIron( !self.InIron )
+		self.Weapon:ToggleLaser()
 	
 		return
 	
@@ -594,15 +513,11 @@ function SWEP:SecondaryAttack()
 		
 		if self.Weapon:GetZoomMode() == 1 then
 		
-			self.Weapon:SetNWBool( "ReverseAnim", false )
-			self.Weapon:SetViewModelPosition( self.IronPos, self.IronAng, 0.3 )
-			self.MoveTime = CurTime() + 0.35
-			
-		else
-		
-			self.Weapon:SetZoomMode( self.Weapon:GetZoomMode() + 1 )
+			self.Owner:DrawViewModel( false )
 			
 		end
+		
+		self.Weapon:SetZoomMode( self.Weapon:GetZoomMode() + 1 )
 	
 	end
 	
@@ -620,10 +535,12 @@ end
 function SWEP:AdjustMouseSensitivity()
 
 	local num = self.Weapon:GetNWInt( "Mode", 1 )
-	local scale = ( self.ZoomModes[num] or 0 ) / 100
+	local scale = ( self.ZoomModes[ num ] or 0 ) / 100
 	
 	if scale == 0 then
+	
 		return nil
+		
 	end
 
 	return scale
@@ -641,6 +558,7 @@ function SWEP:GetDamageFalloffScale( distance )
 	end		
 	
 	return math.Clamp( scale, 0.1, 1.0 )
+	
 end
 
 function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
@@ -808,13 +726,7 @@ end
 
 function SWEP:ShouldNotDraw()
 
-	if IsValid( self.Owner:GetVehicle() ) or self.Weapon:GetNWBool( "Laser", false ) then
-	
-		return true
-	
-	end
-
-	return false
+	return self.Weapon:GetNWBool( "Laser", false )
 	
 end
 
@@ -899,28 +811,33 @@ function SWEP:DrawHUD()
 
 	if self.Weapon:ShouldNotDraw() then return end
 	
-	if self.Laser and self.Weapon:GetNWBool( "Laser", false ) then
+	if self.Weapon:GetNWBool( "Laser", false ) then return end
 	
-		//self.Weapon:LaserDraw()
-		
-		return
-	
-	end
+	local mode = self.Weapon:GetZoomMode()
 
-	if not self.IsSniper and not self.Owner:GetNWBool( "InIron", false ) then
+	if not self.IsSniper or mode == 1 then
+	
+		local cone = self.Primary.Cone
+		local scale = cone
+	
+		if self.IsSniper then
+		
+			cone = self.Primary.SniperCone
+			scale = cone
+		
+		end
 	
 		local x = ScrW() * 0.5
 		local y = ScrH() * 0.5
 		local scalebywidth = ( ScrW() / 1024 ) * 10
-		local scale = self.Primary.Cone
 		
 		if self.Owner:KeyDown( IN_FORWARD ) or self.Owner:KeyDown( IN_BACK ) or self.Owner:KeyDown( IN_MOVELEFT ) or self.Owner:KeyDown( IN_MOVERIGHT ) then
 		
-			scale = self.Primary.Cone * 1.75
+			scale = cone * 1.75
 			
 		elseif self.Owner:KeyDown( IN_DUCK ) or self.Owner:KeyDown( IN_WALK ) then
 		
-			scale = math.Clamp( self.Primary.Cone / 1.75, 0, 10 )
+			scale = math.Clamp( cone / 1.75, 0, 10 )
 			
 		end
 		
@@ -941,8 +858,6 @@ function SWEP:DrawHUD()
 		return
 	
 	end
-	
-	local mode = self.Weapon:GetNWInt( "Mode", 1 )
 	
 	if mode != 1 then
 	

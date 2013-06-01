@@ -13,8 +13,6 @@ if CLIENT then
 	SWEP.Slot = 3
 	SWEP.Slotpos = 3
 	
-	killicon.AddFont( "rad_shotgun", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) )
-	
 end
 
 SWEP.HoldType = "shotgun"
@@ -26,9 +24,6 @@ SWEP.WorldModel = "models/weapons/w_annabelle.mdl"
 
 SWEP.SprintPos = Vector(-0.6026, -2.715, 0.0137)
 SWEP.SprintAng = Vector(-3.4815, -21.9362, 0.0001)
-
-SWEP.IronPos = Vector(4.7112, -4.0519, 1.7934)
-SWEP.IronAng = Vector(0.3075, -0.1695, 0.9757)
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "Buckshot"
@@ -47,23 +42,12 @@ SWEP.Primary.Automatic		= false
 SWEP.MinShellDelay = 0.5
 SWEP.MaxShellDelay = 0.7
 
-SWEP.Primary.ShellType = SHELL_SHOTGUN
-
 function SWEP:Deploy()
 
 	self.Weapon:SetNWBool( "Reloading", false )
 	self.Weapon:SetVar( "PumpTime", 0 )
 	self.Weapon:SetNextPrimaryFire( CurTime() + 0.3 )
-
-	if SERVER then
 	
-		self.Weapon:SetViewModelPosition()
-		self.Weapon:SetZoomMode( 1 )
-		
-	end	
-	
-	self.InIron = false
-
 	self.Weapon:SendWeaponAnim( ACT_VM_DRAW )
 	
 	return true
@@ -74,7 +58,7 @@ function SWEP:CanPrimaryAttack()
 
 	if self.HolsterMode or self.LastRunFrame > CurTime() then return false end
 	
-	if self.Owner:GetNWInt( "Ammo"..self.AmmoType, 0 ) < 1 then 
+	if self.Owner:GetNWInt( "Ammo" .. self.AmmoType, 0 ) < 1 then 
 	
 		self.Weapon:EmitSound( self.Primary.Empty )
 		return false 
@@ -98,13 +82,7 @@ function SWEP:CanPrimaryAttack()
 		self.Weapon:SetVar( "ReloadTimer", CurTime() + 0.5 )
 		self.Weapon:SendWeaponAnim( ACT_VM_RELOAD )
 		self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-		self.Weapon:SetClip1( self.Weapon:Clip1() + 1 )
-		
-		if not self.IsSniper then
-	
-			self.Weapon:SetIron( false )
-		
-		end
+		//self.Weapon:SetClip1( self.Weapon:Clip1() + 1 )
 		
 		return false
 		
@@ -121,19 +99,21 @@ function SWEP:ShootEffects()
 		self.Owner:ViewPunch( Angle( math.Rand( -0.2, -0.1 ) * self.Primary.Recoil, math.Rand( -0.05, 0.05 ) * self.Primary.Recoil, 0 ) )
 		
 	end
-
-	if SERVER then
-		
-		local tbl = self.ShellSounds[ ( self.Primary.ShellType or 1 ) ]
-	
-		timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() sound.Play( table.Random( tbl.Wavs ), self.Owner:GetPos(), 75, tbl.Pitch ) end )
-		
-	end
 	
 	self.Owner:MuzzleFlash()								
 	self.Owner:SetAnimation( PLAYER_ATTACK1 )	
 	
 	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) 
+	
+	if self.UseShellSounds then
+	
+		local pitch = self.Pitches[ self.AmmoType ] + math.random( -3, 3 )
+		local tbl = self.BuckshotShellSounds
+		local pos = self.Owner:GetPos()
+	
+		timer.Simple( math.Rand( self.MinShellDelay, self.MaxShellDelay ), function() sound.Play( table.Random( tbl ), pos, 50, pitch ) end )
+		
+	end
 	
 end
 
@@ -153,7 +133,6 @@ function SWEP:PrimaryAttack()
 	self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone, self.Weapon:GetZoomMode() )
 	self.Weapon:TakePrimaryAmmo( 1 )
 	self.Weapon:ShootEffects()
-	self.Weapon:SetIron( false )
 	
 	if SERVER then
 	
@@ -165,9 +144,7 @@ end
 
 function SWEP:Reload()
 
-	if self.HolsterMode or self.Weapon:Clip1() == self.Primary.ClipSize then return end
-	
-	self.Weapon:SetIron( false )
+	if self.Weapon:Clip1() == self.Primary.ClipSize or self.Weapon:Clip1() > self.Owner:GetNWInt( "Ammo" .. self.AmmoType, 0 ) or self.HolsterMode or self.ReloadTime then return end
 	
 	if self.Weapon:Clip1() < self.Primary.ClipSize then
 		
@@ -175,7 +152,6 @@ function SWEP:Reload()
 		self.Weapon:SetVar( "ReloadTimer", CurTime() + 0.5 )
 		self.Weapon:SendWeaponAnim( ACT_VM_RELOAD )
 		self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-		
 		//self.Weapon:SetClip1( self.Weapon:Clip1() + 1 )
 		
 	end
@@ -246,22 +222,10 @@ function SWEP:Think()
 
 	if self.Owner:GetVelocity():Length() > 0 then
 	
-		if self.Owner:KeyDown( IN_SPEED ) and self.Owner:GetNWFloat( "Weight", 0 ) < 50 then
+		if self.Owner:KeyDown( IN_SPEED ) then
 		
 			self.LastRunFrame = CurTime() + 0.3
-			
-			if self.InIron and not self.IsSniper then
 		
-				self.Weapon:SetIron( false )
-			
-			end
-		
-		end
-		
-		if self.Weapon:GetZoomMode() != 1 then
-		
-			self.Weapon:UnZoom()
-			
 		end
 		
 	end
@@ -326,37 +290,33 @@ function SWEP:DrawHUD()
 
 	if self.Weapon:ShouldNotDraw() then return end
 
-	if not self.IsSniper and not self.Owner:GetNWBool( "InIron", false ) then
-	
-		local x = ScrW() * 0.5
-		local y = ScrH() * 0.5
-		local scalebywidth = ( ScrW() / 1024 ) * 10
-		local scale = self.Primary.Cone
+	local x = ScrW() * 0.5
+	local y = ScrH() * 0.5
+	local scalebywidth = ( ScrW() / 1024 ) * 10
+	local scale = self.Primary.Cone
 		
-		if self.Owner:KeyDown( IN_FORWARD ) or self.Owner:KeyDown( IN_BACK ) or self.Owner:KeyDown( IN_MOVELEFT ) or self.Owner:KeyDown( IN_MOVERIGHT ) then
+	if self.Owner:KeyDown( IN_FORWARD ) or self.Owner:KeyDown( IN_BACK ) or self.Owner:KeyDown( IN_MOVELEFT ) or self.Owner:KeyDown( IN_MOVERIGHT ) then
 		
-			scale = self.Primary.Cone * 1.75
+		scale = self.Primary.Cone * 1.75
 			
-		elseif self.Owner:KeyDown( IN_DUCK ) or self.Owner:KeyDown( IN_WALK ) then
+	elseif self.Owner:KeyDown( IN_DUCK ) or self.Owner:KeyDown( IN_WALK ) then
 		
-			scale = math.Clamp( self.Primary.Cone / 1.25, 0, 10 )
+		scale = math.Clamp( self.Primary.Cone / 1.25, 0, 10 )
 			
-		end
-		
-		scale = scale * scalebywidth
-		
-		local dist = math.abs( self.CrosshairScale - scale )
-		self.CrosshairScale = math.Approach( self.CrosshairScale, scale, FrameTime() * 2 + dist * 0.05 )
-		
-		local gap = 40 * self.CrosshairScale
-		local length = gap + 20 * self.CrosshairScale
-		
-		surface.SetDrawColor( self.CrossRed:GetInt(), self.CrossGreen:GetInt(), self.CrossBlue:GetInt(), self.CrossAlpha:GetInt() )
-		surface.DrawLine( x - length, y, x - gap, y )
-		surface.DrawLine( x + length, y, x + gap, y )
-		surface.DrawLine( x, y - length, x, y - gap )
-		surface.DrawLine( x, y + length, x, y + gap )
-	
 	end
+		
+	scale = scale * scalebywidth
+		
+	local dist = math.abs( self.CrosshairScale - scale )
+	self.CrosshairScale = math.Approach( self.CrosshairScale, scale, FrameTime() * 2 + dist * 0.05 )
+		
+	local gap = 40 * self.CrosshairScale
+	local length = gap + 20 * self.CrosshairScale
+		
+	surface.SetDrawColor( self.CrossRed:GetInt(), self.CrossGreen:GetInt(), self.CrossBlue:GetInt(), self.CrossAlpha:GetInt() )
+	surface.DrawLine( x - length, y, x - gap, y )
+	surface.DrawLine( x + length, y, x + gap, y )
+	surface.DrawLine( x, y - length, x, y - gap )
+	surface.DrawLine( x, y + length, x, y + gap )
 	
 end

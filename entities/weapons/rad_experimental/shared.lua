@@ -13,8 +13,6 @@ if CLIENT then
 	SWEP.Slot = 4
 	SWEP.Slotpos = 2
 	
-	killicon.AddFont( "rad_experimental", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
-	
 end
 
 SWEP.HoldType = "ar2"
@@ -29,7 +27,6 @@ SWEP.SprintAng = Vector (0.8736, 40.1165, 28.0526)
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "Prototype"
-SWEP.Laser = true
 SWEP.LaserOffset = Angle( -90, -0.9, 0 )
 SWEP.LaserScale = 0.25
 //SWEP.IronsightsFOV = 60

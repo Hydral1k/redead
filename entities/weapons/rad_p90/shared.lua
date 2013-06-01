@@ -13,8 +13,6 @@ if CLIENT then
 	SWEP.Slot = 3
 	SWEP.Slotpos = 2
 	
-	killicon.AddFont( "rad_p90", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
-	
 end
 
 SWEP.HoldType = "smg"
@@ -29,19 +27,16 @@ SWEP.SprintAng = Vector(4.4604, -47.001, 6.8488)
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "SMG"
-SWEP.Laser = true
+
 SWEP.LaserOffset = Angle( 39.9, -50, -90 )
 SWEP.LaserScale = 0.75
-//SWEP.IronsightsFOV = 60
 
 SWEP.Primary.Sound			= Sound( "Weapon_p90.Single" )
-SWEP.Primary.Recoil			= 7.5
-SWEP.Primary.Damage			= 32
+SWEP.Primary.Recoil			= 6.5
+SWEP.Primary.Damage			= 40
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Cone			= 0.050
+SWEP.Primary.Cone			= 0.040
 SWEP.Primary.Delay			= 0.075
 
 SWEP.Primary.ClipSize		= 50
 SWEP.Primary.Automatic		= true
-
-SWEP.Primary.ShellType = SHELL_9MM

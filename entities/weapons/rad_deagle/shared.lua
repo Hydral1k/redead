@@ -13,8 +13,6 @@ if CLIENT then
 	SWEP.Slot = 2
 	SWEP.Slotpos = 1
 	
-	killicon.AddFont( "rad_deagle", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
-	
 end
 
 SWEP.HoldType = "revolver"
@@ -23,9 +21,6 @@ SWEP.Base = "rad_base"
 
 SWEP.ViewModel	= "models/weapons/v_pist_deagle.mdl"
 SWEP.WorldModel = "models/weapons/w_pist_deagle.mdl"
-
-SWEP.IronPos = Vector (5.1378, 1.6550, 2.6575)
-SWEP.IronAng = Vector (0.3551, -0.1281, 0.4)
 
 SWEP.SprintPos = Vector (-4.2232, -5.1203, -2.0386)
 SWEP.SprintAng = Vector (12.7496, -52.6848, -7.5206)
@@ -42,5 +37,3 @@ SWEP.Primary.Delay			= 0.380
 
 SWEP.Primary.ClipSize		= 7
 SWEP.Primary.Automatic		= false
-
-SWEP.Primary.ShellType = SHELL_57

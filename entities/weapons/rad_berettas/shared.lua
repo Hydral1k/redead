@@ -13,8 +13,6 @@ if CLIENT then
 	SWEP.Slot = 2
 	SWEP.Slotpos = 0
 	
-	killicon.AddFont( "rad_berettas", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
-	
 end
 
 SWEP.HoldType = "pistol"
@@ -37,7 +35,7 @@ SWEP.Anims[1] = ACT_VM_SECONDARYATTACK
 SWEP.Anims[2] = ACT_VM_PRIMARYATTACK
 
 SWEP.Primary.Sound			= Sound( "Weapon_Elite.Single" )
-SWEP.Primary.Recoil			= 8.5
+SWEP.Primary.Recoil			= 9.5
 SWEP.Primary.Damage			= 40
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Cone			= 0.040
@@ -45,8 +43,6 @@ SWEP.Primary.Delay			= 0.180
 
 SWEP.Primary.ClipSize		= 30
 SWEP.Primary.Automatic		= false
-
-SWEP.Primary.ShellType = SHELL_9MM
 
 function SWEP:ShootEffects()	
 
@@ -71,7 +67,7 @@ function SWEP:ShootEffects()
 	
 end
 
-function SWEP:PrimaryAttack()
+--[[function SWEP:PrimaryAttack()
 
 	if not self.Weapon:CanPrimaryAttack() then 
 		
@@ -86,16 +82,10 @@ function SWEP:PrimaryAttack()
 	self.Weapon:TakePrimaryAmmo( 1 )
 	self.Weapon:ShootEffects()
 	
-	if self.Weapon:GetZoomMode() > 1 then
-	
-		self.Weapon:UnZoom()
-	
-	end
-	
 	if SERVER then
 	
 		self.Owner:AddAmmo( self.AmmoType, -1 )
 		
 	end
 
-end
+end]]

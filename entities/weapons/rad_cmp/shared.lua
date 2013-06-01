@@ -14,8 +14,6 @@ if CLIENT then
 	SWEP.Slot = 3
 	SWEP.Slotpos = 1
 	
-	killicon.AddFont( "rad_cmp", "CSKillIcons", SWEP.IconLetter, Color( 255, 80, 0, 255 ) );
-	
 end
 
 SWEP.HoldType = "smg"
@@ -26,9 +24,6 @@ SWEP.UseHands = true
 
 SWEP.ViewModel	= "models/weapons/c_smg1.mdl"
 SWEP.WorldModel = "models/weapons/w_smg1.mdl"
-
-SWEP.IronPos = Vector (-6.39, -0.5168, 1.8135)
-SWEP.IronAng = Vector (2.4247, 0.1947, 0.8866)
 
 SWEP.SprintPos = Vector (3.6907, -0.6364, -0.5846)
 SWEP.SprintAng = Vector (-2.2928, 28.9069, 0)
@@ -41,16 +36,14 @@ SWEP.Primary.Sound			= Sound( "Weapon_smg1.Single" )
 SWEP.Primary.Sound2			= Sound( "Weapon_smg1.Burst" )
 SWEP.Primary.ReloadSound    = Sound( "Weapon_smg1.reload" )
 SWEP.Primary.Recoil			= 9.5
-SWEP.Primary.Damage			= 25
+SWEP.Primary.Damage			= 30
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Cone			= 0.040
+SWEP.Primary.Cone			= 0.035
 SWEP.Primary.Delay			= 0.550
 SWEP.Primary.ShotDelay      = 0.055
 
 SWEP.Primary.ClipSize		= 20
 SWEP.Primary.Automatic		= true
-
-SWEP.Primary.ShellType = SHELL_9MM
 
 function SWEP:PrimaryAttack()
 
@@ -79,12 +72,6 @@ function SWEP:PrimaryAttack()
 	self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone, self.Weapon:GetZoomMode() )
 	self.Weapon:TakePrimaryAmmo( 1 )
 	self.Weapon:ShootEffects()
-	
-	if self.Weapon:GetZoomMode() > 1 then
-	
-		self.Weapon:UnZoom()
-	
-	end
 	
 	if SERVER then
 	
