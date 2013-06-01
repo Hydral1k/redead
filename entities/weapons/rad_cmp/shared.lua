@@ -36,9 +36,9 @@ SWEP.Primary.Sound			= Sound( "Weapon_smg1.Single" )
 SWEP.Primary.Sound2			= Sound( "Weapon_smg1.Burst" )
 SWEP.Primary.ReloadSound    = Sound( "Weapon_smg1.reload" )
 SWEP.Primary.Recoil			= 9.5
-SWEP.Primary.Damage			= 30
+SWEP.Primary.Damage			= 35
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Cone			= 0.035
+SWEP.Primary.Cone			= 0.040
 SWEP.Primary.Delay			= 0.550
 SWEP.Primary.ShotDelay      = 0.055
 

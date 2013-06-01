@@ -29,10 +29,10 @@ SWEP.IsSniper = false
 SWEP.AmmoType = "SMG"
 
 SWEP.Primary.Sound			= Sound( "Weapon_USP.SilencedShot" )
-SWEP.Primary.Recoil			= 5.5
+SWEP.Primary.Recoil			= 4.5
 SWEP.Primary.Damage			= 35
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Cone			= 0.030
+SWEP.Primary.Cone			= 0.035
 SWEP.Primary.Delay			= 0.075
 
 SWEP.Primary.ClipSize		= 30

@@ -427,7 +427,7 @@ function GM:PreDrawHalos()
 	
 	if LocalPlayer():Team() == TEAM_ARMY then
 	
-		if IsValid( TargetedEntity ) and not TargetedEntity:IsPlayer() and not TargetedEntity.Ragdolled then
+		if IsValid( TargetedEntity ) and not TargetedEntity:IsPlayer() and ( TargetedEntity:GetClass() != "npc_scientist" or TargetedEntity:GetNWBool( "Dead", false ) == false ) then
 	
 			local dist = math.Clamp( TargetedEntity:GetPos():Distance( LocalPlayer():GetPos() ), 0, 500 )
 			local scale = 1 - ( dist / 500 )
