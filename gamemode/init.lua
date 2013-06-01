@@ -1952,6 +1952,7 @@ function MapSetupMode( ply, cmd, args )
 		ply:Give( "rad_itemplacer" )
 		ply:Give( "rad_propplacer" )
 		ply:Give( "weapon_physgun" )
+		ply:AddCash( 500 )
 	
 	end
 
