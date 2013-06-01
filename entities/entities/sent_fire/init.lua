@@ -53,7 +53,7 @@ function ENT:Touch( ent )
 	
 	//if ent:IsPlayer() and ent:Team() == self.Entity:GetOwner():Team() then return end
 	
-	if not ent:IsNPC() and not ent:IsPlayer() then return end
+	if not ent.NextBot and not ent:IsPlayer() then return end
 	
 	ent:DoIgnite( self.Entity:GetOwner() )
 	

@@ -60,7 +60,7 @@ function ENT:Initialize()
 	end
 	
 	self.Entity:SetHealth( self.BaseHealth )
-	//self.Entity:SetCollisionGroup( COLLISION_GROUP_INTERACTIVE_DEBRIS )
+	self.Entity:SetCollisionGroup( COLLISION_GROUP_NPC )
 	self.Entity:SetCollisionBounds( Vector(-4,-4,0), Vector(4,4,64) ) // nice fat shaming
 	self.Entity:SetSkin( math.random( 0, self.Skins ) )
 	
@@ -194,6 +194,8 @@ function ENT:Respawn()
 end
 
 function ENT:OnLimbHit( hitgroup, dmginfo )
+
+	if not IsValid( self.Entity ) then return end
 
 	if hitgroup == HITGROUP_HEAD then
 	

@@ -5,7 +5,7 @@ include( 'shared.lua' )
 
 ENT.Bang = Sound( "Wood.ImpactHard" )
 ENT.Open = Sound( "Wood.Strain" )
-ENT.Model = Model( "models/Items/item_item_crate.mdl" )
+ENT.Model = Model( "models/items/ammocrate_smg1.mdl" )
 
 function ENT:Initialize()
 	
@@ -22,15 +22,14 @@ function ENT:Initialize()
 	if IsValid( phys ) then
 	
 		phys:Wake()
+		phys:SetDamping( 0, 200 )
 
 	end
-	
-	self.Entity:SetColor( Color( 200, 255, 150, 255 ) )
 
 	self.Removing = false
 	self.Contents = { 1 }
 	self.Users = {}
-	self.Uses = math.random( 1, 3 ) 
+	self.Uses = math.random( 1, 5 ) 
 
 end
 
@@ -41,8 +40,16 @@ end
 function ENT:GenerateContents()
 
 	self.Contents = {}
+	
+	local tbl = { ITEM_WPN_COMMON, ITEM_AMMO, ITEM_AMMO }
+	
+	if math.random( 1, 50 ) == 1 then
+	
+		tbl = { ITEM_WPN_SPECIAL, ITEM_AMMO, ITEM_AMMO }
+	
+	end
 
-	for k,v in pairs{ ITEM_WPN_COMMON, ITEM_AMMO, ITEM_AMMO } do
+	for k,v in pairs( tbl ) do
 	
 		local tbl = item.RandomItem( v )
 		local id = tbl.ID
