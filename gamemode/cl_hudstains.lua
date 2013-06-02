@@ -1,4 +1,6 @@
 
+local BloodTable = {}
+
 local function DrawBlood()
 	
 	if #BloodTable < 1 then return end
@@ -17,9 +19,10 @@ local function DrawBlood()
 			
 				local alpha = math.floor( BloodTable[i].Alpha * scale )
 				
-				surface.SetTexture( surface.GetTextureID( BloodTable[i].Mat ) )
-				surface.SetDrawColor( 250, 10, 10, alpha )
-				surface.DrawTexturedRectRotated( BloodTable[i].X, BloodTable[i].Y, BloodTable[i].W, BloodTable[i].H, BloodTable[i].Rot )
+				surface.SetTexture( BloodTable[i].Mat )
+				//surface.SetDrawColor( 250, 10, 10, alpha )
+				surface.SetDrawColor( 175, 10, 10, alpha )
+				surface.DrawTexturedRect( BloodTable[i].X, BloodTable[i].Y, BloodTable[i].Size, BloodTable[i].Size )//, BloodTable[i].Rot )
 				
 			end
 			
@@ -48,10 +51,7 @@ StainMats = { "nuke/blood/Blood1",
 "nuke/blood/Blood4",
 "nuke/blood/Blood5",
 "nuke/blood/Blood6",
-"nuke/blood/Blood7",
-"nuke/blood/Blood8" }
-
-BloodTable = {}
+"nuke/blood/Blood7" } 
 
 function AddStain( msg )
 
@@ -67,16 +67,15 @@ function AddStain( msg )
 
 		local count = #BloodTable + 1
 		
-		local RandomH = ScrH() * math.Rand(0.4,0.6)
-		local RandomW = ScrW() * math.Rand(0.4,0.6)
-		local RandomX = ScrW() * math.Rand(-0.2,1)
-		local RandomY = ScrH() * math.Rand(-0.2,1)
-		local rand = math.Rand(3.0,6.0)
+		local size = math.random( 256, 1024 )
+		local x = math.random( size * -0.5, ScrW() - ( size * 0.5 ) )
+		local y = math.random( size * -0.5, ScrH() - ( size * 0.5 ) )
+		local rand = math.Rand( 3.0, 6.0 )
 		
-		BloodTable[count] = { H = RandomH, W = RandomW, X = RandomX, Y = RandomY, Mat = table.Random( StainMats ), Die = rand, DieTime = CurTime() + rand, Rot = math.random(0,360), Alpha = math.random(100,200) }
+		BloodTable[count] = { Size = size, X = x, Y = y, Mat = surface.GetTextureID( table.Random( StainMats ) ), Die = rand, DieTime = CurTime() + rand, Alpha = math.random( 150, 250 ) }
 		
 	end
 	
 end
-usermessage.Hook( "BloodStain", AddStain ) 
 
+usermessage.Hook( "BloodStain", AddStain ) 

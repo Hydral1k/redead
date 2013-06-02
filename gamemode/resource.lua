@@ -5,12 +5,6 @@ resource.AddFile( "resource/fonts/typenoksidi.ttf" )
 resource.AddFile( "models/Zed/male_shared.mdl" )
 resource.AddFile( "sound/nuke/redead/lastminute.mp3" )
 
-for i=1,10 do
-
-	resource.AddFile( "materials/nuke/blood/Blood" .. i .. ".vmt" )
-
-end
-
 for i=1,4 do
 
 	for e=1,5 do
@@ -111,6 +105,13 @@ local include_mat = { "models/weapons/v_models/shot_m3super91/shot_m3super91_nor
 "nuke/redead/allyvision",
 "nuke/gore1",
 "nuke/gore2",
+"nuke/blood/Blood1",
+"nuke/blood/Blood2",
+"nuke/blood/Blood3",
+"nuke/blood/Blood4",
+"nuke/blood/Blood5",
+"nuke/blood/Blood6",
+"nuke/blood/Blood7",
 "radbox/img_radiation",
 "radbox/img_blood",
 "radbox/img_health",
