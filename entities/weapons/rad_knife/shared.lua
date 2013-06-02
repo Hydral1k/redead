@@ -154,11 +154,19 @@ function SWEP:MeleeTrace( dmg )
 			
 			if IsValid( phys ) then
 			
-				ent:SetPhysicsAttacker( self.Owner )
-				ent:TakeDamage( 10, self.Owner, self.Weapon )
+				if ent.IsWooden then
 				
-				phys:Wake()
-				phys:ApplyForceCenter( self.Owner:GetAimVector() * phys:GetMass() * 200 )
+					ent:Fire( "break", 0, 0 )
+				
+				else
+				
+					ent:SetPhysicsAttacker( self.Owner )
+					ent:TakeDamage( 10, self.Owner, self.Weapon )
+					
+					phys:Wake()
+					phys:ApplyForceCenter( self.Owner:GetAimVector() * phys:GetMass() * 200 )
+					
+				end
 				
 			end
 			

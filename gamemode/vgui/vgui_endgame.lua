@@ -9,6 +9,7 @@ function PANEL:Init()
 	self.YPos = 220
 	self.ListMode = true
 	self.DrawTbl = {} 
+	self.Awards = {}
 	
 	self.Lists = {}
 	self.Lists[1] = { 5, ScrW() * 0.30, "Survivors", function() return self:GetSurvivors() end, "bot/whoo2.wav" } 
@@ -17,25 +18,31 @@ function PANEL:Init()
 	
 	local x, w = ScrW() * 0.50 - ScrW() * 0.15, ScrW() * 0.65 - 5
 	
-	self.Awards = {}
-	self.Awards[1] = { x, w, "Grey Matter:", "got the most headshots.", function() return self:GetStatMax( "Headshot" ) end, "zombie craniums", "player/headshot1.wav" }
-	self.Awards[2] = { x, w, "Silent Partner:", "got the most kill assists.", function() return self:GetStatMax( "Assist" ) end, "assists", "weapons/357/357_spin1.wav" }
-	self.Awards[3] = { x, w, "Longshot:", "got the longest distance kill.", function() return self:GetStatMax( "Longshot" ) end, "feet", "weapons/fx/nearmiss/bulletLtoR05.wav" }
-	self.Awards[4] = { x, w, "Big Game Hunter:", "killed the most zombies with a shotgun.", function() return self:GetStatMax( "Meat" ) end, "zombies poached", "nuke/gore/blood01.wav", true }
-	self.Awards[5] = { x, w, "Crazy Ivan:", "killed the most zombies with explosives.", function() return self:GetStatMax( "Explode" ) end, "unidentified bodies", "weapons/underwater_explode3.wav", true }
-	self.Awards[6] = { x, w, "Firebug:", "ignited the most zombies.", function() return self:GetStatMax( "Igniter" ) end, "crispy zombies", "ambient/fire/mtov_flame2.wav", true }
-	self.Awards[7] = { x, w, "Shoplifter:", "looted the most items.", function() return self:GetStatMax( "Loot" ) end, "items taken", "items/itempickup.wav" }
-	self.Awards[8] = { x, w, "Broke The Bank:", "bought the most expensive weapon.", function() return self:GetStatMax( "Pricey" ) end, GAMEMODE.CurrencyName .. "s spent", "ambient/office/coinslot1.wav" }
-	self.Awards[9] = { x, w, "Meat Grinder:", "butchered the most zombies with a melee weapon.", function() return self:GetStatMax( "Knife" ) end, "melee kills", "weapons/knife/knife_hit2.wav", true }
-	self.Awards[10] ={ x, w, "Get To Ze Choppa:", "was the first to reach the evacuation zone.", function() return self:GetStatMax( "Evac" ) end, "Arnold Schwarzenegger impression", "ambient/machines/spinup.wav", true }
-	self.Awards[11] ={ x, w, "Meet The Engineer:", "built the most barricades.", function() return self:GetStatMax( "Wood" ) end, "barricades built", "npc/dog/dog_servo6.wav", true }
-	self.Awards[12] ={ x, w, "Brain Munch:", "killed the most humans.", function() return self:GetStatMax( "ZedKills" ) end, "brains eaten", "npc/zombie/zombie_voice_idle2.wav", true }
-	self.Awards[13] ={ x, w, "Cum Dumpster:", "was infected by zombies the most.", function() return self:GetStatMax( "Infections" ) end, "infections", "ambient/voices/cough1.wav", true }
-	self.Awards[14] ={ x, w, "Accident Prone:", "took the most damage from zombies.", function() return self:GetStatMax( "Damage" ) end, "damage", "bot/pain2.wav" }
-	self.Awards[15] ={ x, w, "Piss Poor:", "spent the least " .. GAMEMODE.CurrencyName .. "s.", function() return self:GetStatMin( "Spent" ) end, GAMEMODE.CurrencyName .. "s spent", "bot/i_got_nothing.wav" }
-	self.Awards[16] ={ x, w, "Martyr:", "was the first human to die.", function() return self:GetStatMax( "Martyr" ) end, "sacrifice made", "npc/crow/alert1.wav", true }
-	self.Awards[17] ={ x, w, "Roleplayer:", "did jack shit.", function() return self:GetWorstPlayer() end, "kills", "ambient/sheep.wav" }
+	self:ListNewAward( { x, w, "Grey Matter:", "got the most headshots.", function() return self:GetStatMax( "Headshot" ) end, "zombie craniums", "player/headshot1.wav" } ) 
+	self:ListNewAward( { x, w, "Silent Partner:", "got the most kill assists.", function() return self:GetStatMax( "Assist" ) end, "assists", "weapons/357/357_spin1.wav" } )
+	self:ListNewAward( { x, w, "Longshot:", "got the longest distance kill.", function() return self:GetStatMax( "Longshot" ) end, "feet", "weapons/fx/nearmiss/bulletLtoR05.wav" } )
+	self:ListNewAward( { x, w, "Big Game Hunter:", "dismembered the most zombies with a shotgun.", function() return self:GetStatMax( "Meat" ) end, "zombies poached", "nuke/gore/blood01.wav", true } )
+	self:ListNewAward( { x, w, "Bullet Hose:", "used the most ammunition.", function() return self:GetStatMax( "Bullets" ) end, "rounds fired", "player/pl_shell3.wav" } )
+	self:ListNewAward( { x, w, "Meat Grinder:", "butchered the most zombies with a melee weapon.", function() return self:GetStatMax( "Knife" ) end, "melee kills", "weapons/knife/knife_hit2.wav", true } )
+	self:ListNewAward( { x, w, "Demolitionist:", "killed the most zombies with explosives.", function() return self:GetStatMax( "Explode" ) end, "unidentified bodies", "weapons/underwater_explode3.wav", true } )
+	self:ListNewAward( { x, w, "Firebug:", "ignited the most zombies.", function() return self:GetStatMax( "Igniter" ) end, "crispy corpses", "ambient/fire/mtov_flame2.wav", true } )
+	self:ListNewAward( { x, w, "Kleptomaniac:", "looted the most items.", function() return self:GetStatMax( "Loot" ) end, "items taken", "items/itempickup.wav" } )
+	self:ListNewAward( { x, w, "Broke The Bank:", "bought the most expensive weapon.", function() return self:GetStatMax( "Pricey" ) end, GAMEMODE.CurrencyName .. "s spent", "ambient/office/coinslot1.wav" } )
+	self:ListNewAward( { x, w, "Get To Ze Choppa:", "was the first to reach the evacuation zone.", function() return self:GetStatMax( "Evac" ) end, "Arnold Schwarzenegger impression", "ambient/machines/spinup.wav", true } )
+	self:ListNewAward( { x, w, "Meet The Engineer:", "built the most barricades.", function() return self:GetStatMax( "Wood" ) end, "barricades built", "npc/dog/dog_servo6.wav", true } )
+	self:ListNewAward( { x, w, "Brain Munch:", "killed the most humans.", function() return self:GetStatMax( "ZedKills" ) end, "brains eaten", "npc/zombie/zombie_voice_idle2.wav", true } )
+	self:ListNewAward( { x, w, "Cum Dumpster:", "was infected by zombies the most.", function() return self:GetStatMax( "Infections" ) end, "infections", "ambient/voices/cough1.wav", true } )
+	self:ListNewAward( { x, w, "Accident Prone:", "took the most damage from zombies.", function() return self:GetStatMax( "Damage" ) end, "damage", "bot/pain2.wav" } )
+	//self:ListNewAward( { x, w, "Piss Poor:", "spent the least " .. GAMEMODE.CurrencyName .. "s.", function() return self:GetStatMin( "Spent" ) end, GAMEMODE.CurrencyName .. "s spent", "bot/i_got_nothing.wav" } )
+	self:ListNewAward( { x, w, "Martyr:", "was the first human to die.", function() return self:GetStatMax( "Martyr" ) end, "sacrifice made", "npc/crow/alert1.wav", true } )
+	self:ListNewAward( { x, w, "Roleplayer:", "did jack shit.", function() return self:GetWorstPlayer() end, "kills", "ambient/sheep.wav" } )
 	
+end
+
+function PANEL:ListNewAward( tbl )
+
+	table.insert( self.Awards, tbl )
+
 end
 
 function PANEL:GetWorstPlayer()
@@ -252,9 +259,9 @@ function PANEL:Think()
 		
 		if self.ListMode then
 		
-			local list = self.Lists[ self.Pos ]
+			local alist = self.Lists[ self.Pos ]
 		
-			self:AddList( list[1], list[2], list[3], list[4](), list[5] )
+			self:AddList( alist[1], alist[2], alist[3], alist[4](), alist[5] )
 			
 			self.Pos = self.Pos + 1
 			
@@ -268,11 +275,11 @@ function PANEL:Think()
 			
 		else
 		
-			local list = self.Awards[ self.Pos ] 
+			local alist = self.Awards[ self.Pos ] 
 			
-			local ply, amt = list[5]()
+			local ply, amt = alist[5]()
 		
-			self:AddAward( self.YPos, list[1], list[2], list[3], list[4], ply, amt, list[6], list[7], list[8] )
+			self:AddAward( self.YPos, alist[1], alist[2], alist[3], alist[4], ply, amt, alist[6], alist[7], alist[8] )
 			
 			self.Pos = self.Pos + 1
 			

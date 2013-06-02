@@ -85,6 +85,12 @@ end
 
 function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
 
+	if SERVER then
+	
+		self.Owner:AddStat( "Bullets", numbullets )
+	
+	end
+
 	local scale = aimcone
 	
 	if self.Owner:KeyDown( IN_FORWARD ) or self.Owner:KeyDown( IN_BACK ) or self.Owner:KeyDown( IN_MOVELEFT ) or self.Owner:KeyDown( IN_MOVERIGHT ) then

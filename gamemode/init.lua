@@ -131,11 +131,19 @@ function GM:InitPostEntity()
 		
 		local phys = v:GetPhysicsObject()
 		
-		if IsValid( phys ) and table.HasValue( { "wood", "wood_crate", "wood_furniture", "default" }, phys:GetMaterial() ) and phys:GetMass() > 8 then
+		if IsValid( phys ) and table.HasValue( { "wood", "wood_crate", "wood_furniture", "wood_plank", "default" }, phys:GetMaterial() ) and phys:GetMass() > 8 then
 		
-			table.insert( GAMEMODE.WoodLocations, { Pos = v:GetPos(), Ang = v:GetAngles(), Model = v:GetModel() } )
+			table.insert( GAMEMODE.WoodLocations, { Pos = v:GetPos(), Ang = v:GetAngles(), Model = v:GetModel(), Health = v:Health() } )
 			
 			GAMEMODE.WoodCount = GAMEMODE.WoodCount + 1
+			
+			v.IsWooden = true
+			
+			if v:Health() == 0 then
+			
+				v:SetHealth( 100 )
+			
+			end
 			
 			if phys:IsAsleep() then
 			
@@ -603,7 +611,9 @@ function GM:WoodThink()
 		prop:SetPos( tbl.Pos )
 		prop:SetAngles( tbl.Ang )
 		prop:SetModel( tbl.Model )
+		prop:SetHealth( math.Clamp( tbl.Health, 50, 1000 ) )
 		prop:Spawn()
+		prop.IsWooden = true
 		
 		GAMEMODE.WoodCount = GAMEMODE.WoodCount + 1
 	
@@ -612,7 +622,7 @@ function GM:WoodThink()
 		local ent = table.Random( ents.FindByClass( "prop_phys*" ) )
 		local phys = ent:GetPhysicsObject()
 		
-		if IsValid( phys ) and not ent.IsItem and not ent.IsWood and table.HasValue( { "wood", "wood_crate", "wood_furniture", "default" }, phys:GetMaterial() ) and phys:GetMass() > 8 then
+		if IsValid( phys ) and not ent.IsItem and ent.IsWooden then
 		
 			ent:Remove()
 			
@@ -1049,15 +1059,9 @@ function GM:PropBreak( att, prop )
 	
 	if IsValid( phys ) and prop:GetModel() != "models/props_debris/wood_board04a.mdl" then
 	
-		if table.HasValue( { "wood", "wood_crate", "wood_furniture", "default" }, phys:GetMaterial() ) and phys:GetMass() > 8 then
+		if prop.IsWooden then
 		
-			local ent = ents.Create( "prop_physics" )
-			ent:SetPos( prop:LocalToWorld( prop:OBBCenter() ) )
-			ent:SetModel( "models/props_debris/wood_chunk04a.mdl" )
-			ent:SetCollisionGroup( COLLISION_GROUP_WEAPON )
-			ent:Spawn()
-			ent.IsItem = true
-			
+			GAMEMODE:SpawnChunk( prop:LocalToWorld( prop:OBBCenter() ) )
 			GAMEMODE.WoodCount = GAMEMODE.WoodCount - 1
 		
 		end
@@ -1065,6 +1069,17 @@ function GM:PropBreak( att, prop )
 	end
 
 end 
+
+function GM:SpawnChunk( pos )
+
+	local ent = ents.Create( "prop_physics" )
+	ent:SetPos( pos )
+	ent:SetModel( "models/props_debris/wood_chunk04a.mdl" )
+	ent:SetCollisionGroup( COLLISION_GROUP_WEAPON )
+	ent:Spawn()
+	ent.IsItem = true
+
+end
 
 function GM:AllowPlayerPickup( ply, ent )
 
@@ -1131,7 +1146,19 @@ end
 
 function GM:EntityTakeDamage( ent, dmginfo )
 
-	if ent:GetClass() == "prop_physics" and ent:IsOnFire() then
+	if ent.IsWooden then
+	
+		ent.WoodHits = ( ent.WoodHits or 1 ) + 1
+		
+		if ent.WoodHits > 10 then
+		
+			ent:Fire( "break", 0, 0 )
+		
+		end
+	
+	end
+
+	if not ent:IsPlayer() and ent:IsOnFire() then
 	
 		ent:Extinguish()
 	

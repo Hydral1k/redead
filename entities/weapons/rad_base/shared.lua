@@ -489,7 +489,7 @@ function SWEP:PrimaryAttack()
 	
 	if SERVER then
 	
-		self.Owner:AddAmmo( self.AmmoType, -1 )
+		self.Owner:AddAmmo( self.AmmoType, self.Primary.NumShots * -1 )
 		
 	end
 
@@ -562,6 +562,12 @@ function SWEP:GetDamageFalloffScale( distance )
 end
 
 function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
+
+	if SERVER then
+	
+		self.Owner:AddStat( "Bullets", numbullets )
+	
+	end
 
 	local scale = aimcone
 	

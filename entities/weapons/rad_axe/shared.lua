@@ -70,15 +70,9 @@ function SWEP:Think()
 
 	if self.Owner:GetVelocity():Length() > 0 then
 	
-		if self.Owner:KeyDown( IN_SPEED ) and self.Owner:GetNWFloat( "Weight", 0 ) < 50 then
+		if self.Owner:KeyDown( IN_SPEED ) then
 		
 			self.LastRunFrame = CurTime() + 0.3
-			
-			if self.InIron and not self.IsSniper then
-		
-				self.Weapon:SetIron( false )
-			
-			end
 		
 		end
 		
@@ -190,11 +184,19 @@ function SWEP:MeleeTrace( dmg )
 			
 			if IsValid( phys ) then
 			
-				ent:SetPhysicsAttacker( self.Owner )
-				ent:TakeDamage( 25, self.Owner, self.Weapon )
+				if ent.IsWooden then
 				
-				phys:Wake()
-				phys:ApplyForceCenter( self.Owner:GetAimVector() * phys:GetMass() * 200 )
+					ent:Fire( "break", 0, 0 )
+				
+				else
+				
+					ent:SetPhysicsAttacker( self.Owner )
+					ent:TakeDamage( 10, self.Owner, self.Weapon )
+					
+					phys:Wake()
+					phys:ApplyForceCenter( self.Owner:GetAimVector() * phys:GetMass() * 200 )
+					
+				end
 				
 			end
 			

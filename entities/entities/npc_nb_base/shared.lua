@@ -895,7 +895,7 @@ function ENT:RunBehaviour()
 			
 			end
 		
-			local age = math.Clamp( math.min( enemy:GetPos():Distance( self.Entity:GetPos() ), 1000 ) / 1000, 0.1, 1 )
+			local age = math.Clamp( math.min( enemy:GetPos():Distance( self.Entity:GetPos() ), 1000 ) / 1000, 0.2, 1 )
 			local opts = { draw = self.ShouldDrawPath, maxage = 5 * age, tolerance = self.MeleeDistance }
 		
 			self.Entity:MoveToPos( enemy:GetPos(), opts ) 
