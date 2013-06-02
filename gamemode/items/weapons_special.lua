@@ -36,8 +36,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,34,5),
-	CamOrigin = Vector(12,0,2)
+	CamPos = Vector(0,38,5),
+	CamOrigin = Vector(1,0,4)
 } )
 
 item.Register( { 
@@ -54,8 +54,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,36,5),
-	CamOrigin = Vector(13,0,2)
+	CamPos = Vector(0,38,5),
+	CamOrigin = Vector(2,0,6)
 } )
 
 item.Register( { 
@@ -72,8 +72,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,55,5),
-	CamOrigin = Vector(12,0,2)
+	CamPos = Vector(0,51,5),
+	CamOrigin = Vector(1,0,4)
 } )
 
 item.Register( { 
@@ -90,13 +90,13 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(1,10,4),
+	CamPos = Vector(1,12,4),
 	CamOrigin = Vector(0,0,1)
 } )
 
 item.Register( { 
 	Name = "Incendiary Grenade", 
-	Description = "These grenades ignite a small area.",
+	Description = "Comes with free marshmallows.",
 	Stackable = true, 
 	Type = ITEM_WPN_SPECIAL,
 	TypeOverride = "sent_droppedgun",
@@ -108,8 +108,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(3,11,1),
-	CamOrigin = Vector(0,0,-1)
+	CamPos = Vector(3,16,3),
+	CamOrigin = Vector(0,0,5)
 } )
 
 --[[item.Register( { 

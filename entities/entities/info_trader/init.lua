@@ -21,7 +21,7 @@ function ENT:GenerateInventory()
 	
 	for k,v in pairs( item.GetByType( ITEM_BUYABLE ) ) do
 	
-		self.Entity:AddItem( v.ID)
+		self.Entity:AddItem( v.ID )
 	
 	end
 	
@@ -84,6 +84,10 @@ function ENT:GetItems()
 end
 
 function ENT:AddItem( id )
+	
+	local tbl = item.GetByID( id )
+	
+	if tbl.SaleOverride then return end
 
 	self.Items = self.Items or {}
 

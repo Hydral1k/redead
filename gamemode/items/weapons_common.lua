@@ -89,6 +89,7 @@ item.Register( {
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
+	SaleOverride = true,
 	Weight = 3, 
 	Price = 8,
 	Rarity = 0.50,
@@ -97,8 +98,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,15,5),
-	CamOrigin = Vector(6,0,2)
+	CamPos = Vector(0,17,5),
+	CamOrigin = Vector(2,0,3)
 } )
 
 item.Register( { 
@@ -107,6 +108,7 @@ item.Register( {
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
+	SaleOverride = true,
 	Weight = 3, 
 	Price = 8,
 	Rarity = 0.50,
@@ -115,8 +117,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,-18,0),
-	CamOrigin = Vector(0,0,-1)
+	CamPos = Vector(0,-17,0),
+	CamOrigin = Vector(-1,0,-2)
 } )
 
 item.Register( { 
@@ -125,6 +127,7 @@ item.Register( {
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
+	SaleOverride = true,
 	Weight = 3, 
 	Price = 8,
 	Rarity = 0.50,
@@ -133,8 +136,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,15,5),
-	CamOrigin = Vector(6,0,2)
+	CamPos = Vector(0,17,5),
+	CamOrigin = Vector(2,0,3)
 } )
 
 item.Register( { 
@@ -143,6 +146,7 @@ item.Register( {
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
+	SaleOverride = true,
 	Weight = 3, 
 	Price = 8,
 	Rarity = 0.50,
@@ -151,13 +155,13 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,15,5),
-	CamOrigin = Vector(5,0,2)
+	CamPos = Vector(0,17,5),
+	CamOrigin = Vector(2,0,3)
 } )
 
 item.Register( { 
 	Name = "Dual Berettas", 
-	Description = "Double the guns, double the fun.",
+	Description = "A gun for each hand.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
@@ -169,8 +173,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,18,-5),
-	CamOrigin = Vector(6,0,2)
+	CamPos = Vector(0,15,-5),
+	CamOrigin = Vector(2,0,3)
 } )
 
 item.Register( { 
@@ -187,7 +191,7 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,20,0),
+	CamPos = Vector(0,18,0),
 	CamOrigin = Vector(6,0,0)
 } )
 
@@ -205,13 +209,13 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,16,5),
-	CamOrigin = Vector(7,0,2)
+	CamPos = Vector(0,15,2),
+	CamOrigin = Vector(3,0,4)
 } )
 
 item.Register( { 
 	Name = "MAC-10", 
-	Description = "A compact SMG that packs a kick.",
+	Description = "A compact SMG with moderate recoil.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
@@ -223,13 +227,13 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,22,5),
-	CamOrigin = Vector(5,0,0)
+	CamPos = Vector(0,20,5),
+	CamOrigin = Vector(2,0,3)
 } )
 
 item.Register( { 
 	Name = "UMP45", 
-	Description = "Size isn't everything.",
+	Description = "A powerful SMG with a smaller magazine.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
@@ -241,8 +245,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,36,5),
-	CamOrigin = Vector(5,0,0)
+	CamPos = Vector(0,30,5),
+	CamOrigin = Vector(-2,0,4)
 } )
 
 item.Register( { 
@@ -295,8 +299,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,24,5),
-	CamOrigin = Vector(10,0,0)
+	CamPos = Vector(0,31,5),
+	CamOrigin = Vector(5,0,3)
 } )
 
 item.Register( { 
@@ -313,8 +317,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,37,5),
-	CamOrigin = Vector(5,0,2)
+	CamPos = Vector(0,38,5),
+	CamOrigin = Vector(2,0,5)
 } )
 
 item.Register( { 
@@ -331,8 +335,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,32,5),
-	CamOrigin = Vector(3,0,0)
+	CamPos = Vector(0,35,5),
+	CamOrigin = Vector(1,0,5)
 } )
 
 item.Register( { 
@@ -349,8 +353,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,45,5),
-	CamOrigin = Vector(10,0,0)
+	CamPos = Vector(0,44,5),
+	CamOrigin = Vector(0,0,4)
 } )
 
 item.Register( { 
@@ -367,8 +371,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,43,5),
-	CamOrigin = Vector(10,0,0)
+	CamPos = Vector(0,42,5),
+	CamOrigin = Vector(-1,0,3)
 } )
 
 item.Register( { 
@@ -391,7 +395,7 @@ item.Register( {
 
 item.Register( { 
 	Name = "AK-47", 
-	Description = "A solid, reliable assault rifle.",
+	Description = "A well-rounded assault rifle.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
@@ -404,7 +408,7 @@ item.Register( {
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
 	CamPos = Vector(0,43,5),
-	CamOrigin = Vector(10,0,0)
+	CamOrigin = Vector(0,0,3)
 } )
 
 item.Register( { 
@@ -421,8 +425,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(-7,35,5),
-	CamOrigin = Vector(3,0,0)
+	CamPos = Vector(-7,39,5),
+	CamOrigin = Vector(-6,0,5)
 } )
 
 item.Register( { 
@@ -439,8 +443,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,40,5),
-	CamOrigin = Vector(6,0,0)
+	CamPos = Vector(0,37,5),
+	CamOrigin = Vector(-4,0,5)
 } )
 
 item.Register( { 
@@ -457,8 +461,8 @@ item.Register( {
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
-	CamPos = Vector(0,45,5),
-	CamOrigin = Vector(7,0,2)
+	CamPos = Vector(0,42,5),
+	CamOrigin = Vector(-3,0,5)
 } )
 
 

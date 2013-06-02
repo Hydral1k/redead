@@ -50,8 +50,8 @@ item.Register( {
 	Price = 40,
 	Rarity = 0.95,
 	Model = "models/items/combine_rifle_cartridge01.mdl",
-	CamPos = Vector(13,-13,0),
-	CamOrigin = Vector(0,0,0)	
+	CamPos = Vector(13,-14,0),
+	CamOrigin = Vector(0,0,-1)	
 } )
 
 --[[item.Register( { 
