@@ -646,7 +646,7 @@ function GM:EventThink()
 		
 		local ev = event.GetRandom()
 		
-		while ev.Type == EVENT_WEATHER and GAMEMODE.Weather do
+		while ( ( ev.Type == EVENT_WEATHER and GAMEMODE.Weather and math.random(1,2) == 1 ) or ev.Chance < math.Rand(0,1) ) do
 		
 			ev = event.GetRandom()
 		

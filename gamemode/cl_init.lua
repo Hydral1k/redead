@@ -37,6 +37,7 @@ function GM:Initialize()
 	
 	WindVector = Vector( math.random(-10,10), math.random(-10,10), 0 )
 	StaticPos = Vector(0,0,0)
+	ViewWobble = 0
 	ShopMenu = false
 	HeadlessTbl = {}
 	GibbedTbl = {}
@@ -47,7 +48,6 @@ function GM:Initialize()
 	DeathScreenScale = 0
 	HeartBeat = 0
 	JumpTimer = 0
-	TimeSeedTable = {}
 	
 	surface.CreateFont ( "DeathFont", { size = 34, weight = 200, antialias = true, additive = true, font = "Graffiare" } )
 	surface.CreateFont ( "AmmoFont", { size = 28, weight = 200, antialias = true, additive = true, font = "Graffiare" } )
@@ -146,18 +146,6 @@ function GM:HUDShouldDraw( name )
 	
 end
 
-function TimeSeed( num, min, max )
-	
-	if not TimeSeedTable[num] then 
-	
-		TimeSeedTable[num] = { Min = min, Max = max, Curr = min, Dest = min, Approach = 0.001 } 
-		
-	end
-	
-	return TimeSeedTable[num].Curr
-
-end
-
 function GM:Think()
 
 	GAMEMODE:ProcessWeather()
@@ -172,21 +160,6 @@ function GM:Think()
 		
 		local endscreen = vgui.Create( "EndGame" )
 		endscreen:SetPos(0,0)
-	
-	end
-
-	for k,v in pairs( TimeSeedTable ) do
-	
-		if v.Curr != v.Dest then
-		
-			v.Curr = math.Approach( v.Curr, v.Dest, v.Approach )
-		
-		else
-		
-			v.Dest = math.Rand( v.Min, v.Max )
-			v.Approach = math.Rand( 0.001, 0.01 )
-		
-		end
 	
 	end
 
@@ -994,7 +967,7 @@ function GM:CreateMove( cmd )
 				
 					if JumpTimer < CurTime() then
 
-						JumpTimer = CurTime() + 3
+						JumpTimer = CurTime() + 2
 						
 					else
 					
@@ -1009,6 +982,53 @@ function GM:CreateMove( cmd )
 				end
 				
 			end
+		
+		end
+	
+	else
+	
+		local scale = LocalPlayer():GetNWInt( "Radiation", 0 ) / 5
+		local wobble = 0
+		
+		if scale > 0 and LocalPlayer():Alive() then
+		
+			wobble = scale * 0.05
+			
+		end
+		
+		local drunkscale = Drunkness / 10
+		
+		if Drunkness > 0 then
+		
+			if ( DrunkTimer or 0 ) < CurTime() then
+			
+				Drunkness = math.Clamp( Drunkness - 1, 0, 20 )
+				DrunkTimer = CurTime() + 15
+			
+			end
+			
+			wobble = wobble + ( drunkscale * 0.08 )
+
+		end
+		
+		if LocalPlayer():Health() <= 75 and LocalPlayer():Alive() then
+		
+			local hscale = math.Clamp( LocalPlayer():Health() / 50, 0, 1 )
+			wobble = wobble + ( 0.05 - 0.05 * hscale )
+			
+		end
+		
+		ViewWobble = math.Approach( ViewWobble, wobble, FrameTime() * 0.1 ) 
+		
+		local ang = cmd:GetViewAngles()
+		
+		if ViewWobble > 0 or ang.r != 0 then
+			
+			ang.p = ang.p + math.sin( CurTime() ) * ViewWobble
+			ang.y = ang.y + math.cos( CurTime() ) * ViewWobble
+			ang.r = math.Approach( ang.r + math.sin( CurTime() ) * ( ( ViewWobble * 0.5 ) * math.cos( CurTime() * ViewWobble ) ), 0, FrameTime() * 0.5 )
+		
+			cmd:SetViewAngles( ang )
 		
 		end
 	

@@ -1,6 +1,7 @@
 
 local EVENT = {}
 
+EVENT.Chance = 0.95
 EVENT.Type = EVENT_WEATHER
 
 EVENT.Types = {}

@@ -1,7 +1,6 @@
 
 Sharpen = 0
 MotionBlur = 0
-ViewWobble = 0
 DisorientTime = 0
 
 ColorModify = {}
@@ -464,48 +463,15 @@ function GM:CalcView( ply, origin, angle, fov )
 	
 	angle.roll = angle.roll + ang:Right():DotProduct( vel ) * 0.002
 	
-	local scale = LocalPlayer():GetNWInt( "Radiation", 0 ) / 5
-	local wobble = 0
-	
-	if scale > 0 and LocalPlayer():Alive() then
-	
-		wobble = scale * 0.3
-		
-	end
-	
-	local drunkscale = Drunkness / 10
-	
-	if Drunkness > 0 then
-	
-		if ( DrunkTimer or 0 ) < CurTime() then
-		
-			Drunkness = math.Clamp( Drunkness - 1, 0, 20 )
-			DrunkTimer = CurTime() + 15
-		
-		end
-		
-		wobble = wobble + ( drunkscale * 0.3 )
-
-	end
-	
-	if LocalPlayer():Health() <= 75 and LocalPlayer():Alive() then
-	
-		local hscale = math.Clamp( LocalPlayer():Health() / 50, 0, 1 )
-		wobble = wobble + ( 0.2 - 0.2 * hscale )
-		
-	end
-	
-	ViewWobble = math.Approach( ViewWobble, wobble, FrameTime() * 0.1 ) 
-	
 	if ply:Alive() then
 	
-		if ViewWobble > 0 then
+		--[[if ViewWobble > 0 then
 	
 			angle.roll = angle.roll + math.sin( CurTime() + TimeSeed( 1, -2, 2 ) ) * ( ViewWobble * 15 )
 			angle.pitch = angle.pitch + math.sin( CurTime() + TimeSeed( 2, -2, 2 ) ) * ( ViewWobble * 15 )
 			angle.yaw = angle.yaw + math.sin( CurTime() + TimeSeed( 3, -2, 2 ) ) * ( ViewWobble * 15 )
 			
-		end
+		end]]
 		
 		DeathAngle = angle
 		DeathOrigin = origin

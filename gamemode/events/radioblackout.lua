@@ -1,6 +1,7 @@
 
 local EVENT = {}
 
+EVENT.Chance = 0.75
 EVENT.Type = EVENT_BAD
 EVENT.TimeText = { "30 seconds", "1 minute", "90 seconds" }  
 EVENT.Times = { 30, 60, 90 }  
