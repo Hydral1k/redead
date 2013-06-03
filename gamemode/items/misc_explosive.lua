@@ -37,7 +37,7 @@ item.Register( {
 	Type = ITEM_LOOT,
 	Weight = 1.50, 
 	Price = 50,
-	Rarity = 0.15,
+	Rarity = 0.95,
 	Model = "models/props_phx/misc/potato_launcher_explosive.mdl",
 	Functions = { FUNC_OXYGEN },
 	DropFunction = FUNC_DROPOXYGEN,
