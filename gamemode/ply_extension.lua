@@ -920,9 +920,9 @@ function meta:SendShipment()
 		
 	end
 	
-	local droptime = 9.5 + ( table.Count( self.Shipment ) * 0.5 )
+	local droptime = math.Round( 9.5 + ( table.Count( self.Shipment ) * 0.5 ) )
 	
-	self:Notice( "Your shipment is due in " .. math.Round( droptime ) .. " seconds", GAMEMODE.Colors.Green )
+	self:Notice( "Your shipment is due in " .. droptime .. " seconds", GAMEMODE.Colors.Green )
 	
 	local prop = ents.Create( "sent_dropflare" )
 	prop:SetPos( self:GetPos() + Vector(0,0,10) )
