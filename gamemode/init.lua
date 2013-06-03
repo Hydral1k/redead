@@ -718,7 +718,7 @@ end
 
 function GM:NPCRespawnThink()
 
-	for k,v in pairs( GAMEMODE.NPCSpawns ) do
+	for k,v in pairs( ( GAMEMODE.NPCSpawns or {} ) ) do
 	
 		if IsValid( v ) then
 	

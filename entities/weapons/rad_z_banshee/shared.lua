@@ -34,7 +34,7 @@ SWEP.Primary.Sound			= Sound( "npc/zombie/zo_attack1.wav" )
 SWEP.Primary.Recoil			= 3.5
 SWEP.Primary.Damage			= 25
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Delay			= 1.800
+SWEP.Primary.Delay			= 1.900
 
 SWEP.Primary.ClipSize		= 1
 SWEP.Primary.Automatic		= true

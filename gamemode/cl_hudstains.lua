@@ -70,7 +70,7 @@ function AddStain( msg )
 		local size = math.random( 256, 1024 )
 		local x = math.random( size * -0.5, ScrW() - ( size * 0.5 ) )
 		local y = math.random( size * -0.5, ScrH() - ( size * 0.5 ) )
-		local rand = math.Rand( 3.0, 6.0 )
+		local rand = math.Rand( 3.5, 6.5 )
 		
 		BloodTable[count] = { Size = size, X = x, Y = y, Mat = surface.GetTextureID( table.Random( StainMats ) ), Die = rand, DieTime = CurTime() + rand, Alpha = math.random( 150, 250 ) }
 		

@@ -134,6 +134,23 @@ function ENT:Think()
 				self.Entity:EmitSound( self.DoorHit, 100, math.random(90,110) )
 				self.Entity:OnHitBreakable( self.CurEnemy )
 			
+			elseif self.CurEnemy.NextBot then
+			
+				local enemy = self.Entity:CanAttackEnemy( self.CurEnemy )
+				
+				if IsValid( enemy ) then
+				
+					local snd = table.Random( self.ClawHit )
+					self.Entity:EmitSound( snd, 100, math.random(90,110) )
+					self.Entity:OnHitEnemy( enemy )
+				
+				else
+				
+					local snd = table.Random( self.ClawMiss )
+					self.Entity:EmitSound( snd, 100, math.random(90,110) )
+				
+				end
+			
 			end
 			
 		else
@@ -682,7 +699,7 @@ end
 
 function ENT:CanTarget( v )
 
-	return ( ( v:IsPlayer() and v:Alive() and v:GetObserverMode() == OBS_MODE_NONE and v:Team() == TEAM_ARMY ) or ( v:IsNPC() and not v:IsZombie() ) )
+	return ( ( v:IsPlayer() and v:Alive() and v:GetObserverMode() == OBS_MODE_NONE and v:Team() == TEAM_ARMY ) or ( v.NextBot and not v:IsZombie() ) )
 
 end
 

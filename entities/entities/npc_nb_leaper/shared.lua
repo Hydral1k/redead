@@ -64,6 +64,42 @@ function ENT:OnHitEnemy( enemy )
 
 end
 
+function ENT:OnStuck()
+
+	local ent = self.Entity:GetBreakable()
+	
+	if IsValid( ent ) then
+	
+		self.Obstructed = true
+	
+	else
+	
+		self.Obstructed = false
+		self.Entity:DownTrace()
+	
+	end
+	
+	self.loco:ClearStuck()
+
+end
+
+function ENT:DownTrace()
+
+	local trace = {}
+	trace.start = self.Entity:GetPos() 
+	trace.endpos = trace.start + Vector(0,0,-1000)
+	trace.filter = self.Entity
+	
+	local tr = util.TraceLine( trace )
+	
+	if tr.Hit then
+	
+		self.Entity:SetPos( tr.HitPos + tr.HitNormal * 5 )
+	
+	end
+
+end
+
 function ENT:RunBehaviour()
 
     while true do
@@ -91,7 +127,7 @@ function ENT:RunBehaviour()
 			local age = math.Clamp( math.min( enemy:GetPos():Distance( self.Entity:GetPos() ), 1000 ) / 1000, 0.2, 1 )
 			local opts = { draw = self.ShouldDrawPath, maxage = 5 * age, tolerance = self.MeleeDistance }
 		
-			if math.random(1,25) == 1 then
+			if math.random(1,35) == 1 then
 			
 				self.loco:SetJumpHeight( math.random( 150, self.JumpHeight ) )
 				self.loco:Jump()

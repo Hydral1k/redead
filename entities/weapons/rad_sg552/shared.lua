@@ -132,7 +132,7 @@ function SWEP:DrawHUD()
 	self.CrosshairScale = math.Approach( self.CrosshairScale, scale, FrameTime() * 2 + dist * 0.05 )
 			
 	local gap = 40 * self.CrosshairScale
-	local length = gap + 20 * self.CrosshairScale
+	local length = gap + self.CrossLength:GetInt() //20 * self.CrosshairScale
 			
 	surface.SetDrawColor( self.CrossRed:GetInt(), self.CrossGreen:GetInt(), self.CrossBlue:GetInt(), self.CrossAlpha:GetInt() )
 	surface.DrawLine( x - length, y, x - gap, y )

@@ -738,10 +738,11 @@ end
 
 if CLIENT then
 
-	SWEP.CrossRed = CreateClientConVar( "crosshair_r", 255, true, false )
-	SWEP.CrossGreen = CreateClientConVar( "crosshair_g", 255, true, false )
-	SWEP.CrossBlue = CreateClientConVar( "crosshair_b", 255, true, false )
-	SWEP.CrossAlpha = CreateClientConVar( "crosshair_a", 255, true, false )
+	SWEP.CrossRed = CreateClientConVar( "cl_redead_crosshair_r", 255, true, false )
+	SWEP.CrossGreen = CreateClientConVar( "cl_redead_crosshair_g", 255, true, false )
+	SWEP.CrossBlue = CreateClientConVar( "cl_redead_crosshair_b", 255, true, false )
+	SWEP.CrossAlpha = CreateClientConVar( "cl_redead_crosshair_a", 255, true, false )
+	SWEP.CrossLength = CreateClientConVar( "cl_redead_crosshair_length", 10, true, false )
 	
 	SWEP.DotMat = Material( "Sprites/light_glow02_add_noz" )
 	SWEP.LasMat = Material( "sprites/bluelaser1" )
@@ -853,7 +854,7 @@ function SWEP:DrawHUD()
 		self.CrosshairScale = math.Approach( self.CrosshairScale, scale, FrameTime() * 2 + dist * 0.05 )
 		
 		local gap = 40 * self.CrosshairScale
-		local length = gap + 20 * self.CrosshairScale
+		local length = gap + self.CrossLength:GetInt() //20 * self.CrosshairScale
 		
 		surface.SetDrawColor( self.CrossRed:GetInt(), self.CrossGreen:GetInt(), self.CrossBlue:GetInt(), self.CrossAlpha:GetInt() )
 		surface.DrawLine( x - length, y, x - gap, y )
