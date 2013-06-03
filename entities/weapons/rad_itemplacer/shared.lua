@@ -57,7 +57,6 @@ SWEP.ItemTypes = { "info_player_zombie",
 "info_lootspawn",
 "info_npcspawn",
 "info_evac",
-"point_stash",
 "point_radiation" }
 
 SWEP.ServersideItems = { "info_player_zombie",
@@ -67,7 +66,7 @@ SWEP.ServersideItems = { "info_player_zombie",
 "info_evac",
 "point_radiation" }
 
-SWEP.SharedItems = { "point_stash" }
+SWEP.SharedItems = {}
 
 function SWEP:Initialize()
 
