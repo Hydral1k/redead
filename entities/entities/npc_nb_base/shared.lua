@@ -171,35 +171,25 @@ end
 function ENT:StuckThink()
 
 	if self.LastPos:Distance( self.Entity:GetPos() ) < 50 then
-	
-		self.Entity:Respawn()
+
+		self.Entity:StartRespawn()
 	
 	end
 
 end
 
-function ENT:Respawn()
+function ENT:StartRespawn()
 
 	for k,v in pairs( GAMEMODE.NPCSpawns ) do
 	
 		if IsValid( v ) then
 	
 			local box = ents.FindInBox( v:GetPos() + Vector( -32, -32, 0 ), v:GetPos() + Vector( 32, 32, 64 ) )
-			local can = true
 			
-			for k,v in pairs( box ) do
-			
-				if v.NextBot then
-				
-					can = false
-				
-				end
-			
-			end
-			
-			if can then 
+			if table.Count( box ) <= 1 then 
 			
 				self.Entity:SetPos( v:GetPos() )
+				
 				return
 			
 			end
@@ -253,6 +243,14 @@ function ENT:OnLimbHit( hitgroup, dmginfo )
 end
 
 function ENT:OnInjured( dmginfo )
+
+	if IsValid( dmginfo:GetAttacker() ) and dmginfo:GetAttacker():GetClass() == "trigger_hurt" then
+	
+		self.Entity:SpawnRagdoll( dmginfo )
+		
+		return
+	
+	end
 
 	if dmginfo:IsExplosionDamage() then
 	
@@ -600,6 +598,7 @@ end
 
 function ENT:StartAttack( enemy )
 
+	self.Stuck = CurTime() + 10
 	self.CurAttack = CurTime() + self.AttackTime
 	self.CurEnemy = enemy
 	

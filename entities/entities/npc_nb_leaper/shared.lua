@@ -127,12 +127,13 @@ function ENT:RunBehaviour()
 			local age = math.Clamp( math.min( enemy:GetPos():Distance( self.Entity:GetPos() ), 1000 ) / 1000, 0.2, 1 )
 			local opts = { draw = self.ShouldDrawPath, maxage = 3 * age, tolerance = self.MeleeDistance }
 		
-			if math.random(1,35) == 1 then
+			if math.random(1,15) == 1 then
 			
+				self.loco:SetDesiredSpeed( math.random( 350, 700 ) )
 				self.loco:SetJumpHeight( math.random( 150, self.JumpHeight ) )
 				self.loco:Jump()
-				self.loco:SetDesiredSpeed( math.random( 350, 700 ) )
 				
+				self.Entity:SetVelocity( self.Entity:GetForward() * math.random( 350, 700 ) + Vector(0,0,200) )
 				self.Entity:EmitSound( self.Leap, 100, math.random(90,110) )
 			
 			end
