@@ -18,17 +18,19 @@ GM.ZombieTeamName = "The Undead"
 
 GM.DeathScreenText = {}
 
-GM.DeathScreenText[ TEAM_ARMY ] = { "DEATH IS A BITCH, AIN'T IT",
+GM.DeathScreenText[ TEAM_ARMY ] = { "RUN FASTER NEXT TIME",
 "DEATH IS THE FINAL UNKNOWN",
 "LIFE'S A BITCH AND THEN YOU DIE",
 "EVERYTHING HAS AN EXPIRATION DATE",
 "THE UNDEAD ARMY GROWS STRONGER",
+"YOU'VE GOT RED ON YOU",
 "YOU'RE ZOMBIE BAIT" }
 
 GM.DeathScreenText[ TEAM_ZOMBIES ] = { "DEATH IS ONLY THE BEGINNING",
 "GET UP AND TRY AGAIN",
 "YOU'RE RAVEN FOOD",
-"IF AT FIRST YOU DON'T SUCCEED... DIE, DIE AGAIN",
+"REST IN PEACE",
+"DEATH IS A BITCH, AIN'T IT",
 "LIFE IS OVERRATED",
 "REST IS FOR THE LIVING" }
 
@@ -112,20 +114,6 @@ GM.ZombieLogos[CLASS_RUNNER] = "nuke/redead/zomb_corpse"
 GM.ZombieLogos[CLASS_BANSHEE] = "nuke/redead/zomb_banshee"
 GM.ZombieLogos[CLASS_CONTAGION] = "nuke/redead/zomb_zombie"
 GM.ZombieLogos[CLASS_LEAPER] = "nuke/redead/zomb_leaper"
-	
-// Weight Limits (lbs) - obsolete
-
-//GM.OptimalWeight = 20 // If your weight is less than this then you gain stamina faster.
-//GM.MaxWeight = 35     // If your weight is higher than this then you run slower. 
-//GM.WeightCap = 40     // If your weight is higher than this then you run at a snail's pace.
-
-// The individual waves and the list of zombies that will spawn. ( more waves means a longer match )
-
-GM.Waves = {}
-GM.Waves[1] = { "npc_nb_leaper" }
-GM.Waves[2] = { "npc_nb_common", "npc_nb_leaper" }
-GM.Waves[3] = { "npc_nb_common", "npc_nb_contagion", "npc_nb_leaper" }
-GM.Waves[4] = { "npc_nb_common", "npc_nb_contagion", "npc_nb_leaper", "npc_nb_poison" }
 
 // Colors used by notices
 
@@ -234,4 +222,12 @@ GM.SpawnChance[ "npc_nb_common" ] = 1.0 // 100% chance
 GM.SpawnChance[ "npc_nb_contagion" ] = 0.1 // 10% chance
 GM.SpawnChance[ "npc_nb_leaper" ] = 0.3
 GM.SpawnChance[ "npc_nb_poison" ] = 0.2
+
+// The individual waves and the list of zombies that will spawn. ( more waves means a longer match )
+
+GM.Waves = {}
+GM.Waves[1] = { "npc_nb_common" }
+GM.Waves[2] = { "npc_nb_common", "npc_nb_leaper" }
+GM.Waves[3] = { "npc_nb_common", "npc_nb_contagion", "npc_nb_leaper" }
+GM.Waves[4] = { "npc_nb_common", "npc_nb_contagion", "npc_nb_leaper", "npc_nb_poison" }
 
