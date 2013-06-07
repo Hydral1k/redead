@@ -179,6 +179,10 @@ function SWEP:MeleeTrace( dmg )
 			
 			self.Weapon:OnHitHuman( ent, dmg )
 			
+			local ed = EffectData()
+			ed:SetOrigin( trace.HitPos )
+			util.Effect( "BloodImpact", ed, true, true )
+			
 		elseif string.find( ent:GetClass(), "npc" ) then
 		
 			ent:TakeDamage( 20, self.Owner, self.Weapon )
