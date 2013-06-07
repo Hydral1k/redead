@@ -116,9 +116,16 @@ end
 
 function SWEP:OnHitHuman( ent, dmg )
 
-	ent:AddRadiation( 1 )
+	if ent:GetRadiation() != 5 then
+
+		ent:AddRadiation( 1 )
+		
+		self.Owner:AddZedDamage( 10 )
+		
+	end
 	
 	self.Owner:AddZedDamage( dmg )
+	self.Owner:DrawBlood( 4 )
 	self.Owner:Notice( "You irradiated a human", GAMEMODE.Colors.Green )
 
 end

@@ -51,9 +51,9 @@ function meta:NoticeOnce( text, col, len, delay )
 
 end
 
-function meta:DrawBlood()
+function meta:DrawBlood( num )
 
-	local num = math.random(1,3)
+	num = num or math.random(1,3)
 	
 	umsg.Start( "BloodStain", self )
 	umsg.Short( num )
@@ -457,14 +457,20 @@ end
 
 function meta:AddZedDamage( num )
 
+	self:AddStat( "ZedDamage", num )
+
 	if self:IsLord() then
 
 		self:SetZedDamage( self:GetZedDamage() + num )
 		
-		if self:GetZedDamage() > GAMEMODE.RedemptionDamage then
+		if self:GetZedDamage() >= GAMEMODE.RedemptionDamage then
 		
 			self:NoticeOnce( "You have redeemed yourself", GAMEMODE.Colors.Green, 5 )
 			self:NoticeOnce( "You will respawn as a human", GAMEMODE.Colors.Green, 5, 2 )
+		
+		else 
+		
+			self:Notice( "+ " .. num .. " " .. GAMEMODE.BloodName, GAMEMODE.Colors.Green, 5 )
 		
 		end
 		
@@ -1318,7 +1324,7 @@ function meta:OnDeath()
 	
 				if v:GetPos():Distance( self:GetPos() ) < 200 then
 		
-					self:AddZedDamage( 50 )
+					self:AddZedDamage( 20 )
 					v:TakeDamage( 25, self )
 					v:SetInfected( true )
 			

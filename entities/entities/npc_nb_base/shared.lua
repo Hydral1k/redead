@@ -128,12 +128,7 @@ function ENT:Think()
 					self.Entity:EmitSound( snd, 100, math.random(90,110) )
 				
 				end
-			
-			elseif self.CurEnemy:GetPos():Distance( self.Entity:GetPos() ) <= self.BreakableDistance or self.CurEnemy:GetClass() == "func_breakable_surf" then // todo: add case for npcs
-			
-				self.Entity:EmitSound( self.DoorHit, 100, math.random(90,110) )
-				self.Entity:OnHitBreakable( self.CurEnemy )
-			
+				
 			elseif self.CurEnemy.NextBot then
 			
 				local enemy = self.Entity:CanAttackEnemy( self.CurEnemy )
@@ -150,6 +145,11 @@ function ENT:Think()
 					self.Entity:EmitSound( snd, 100, math.random(90,110) )
 				
 				end
+			
+			elseif self.CurEnemy:GetPos():Distance( self.Entity:GetPos() ) <= self.BreakableDistance then
+			
+				self.Entity:EmitSound( self.DoorHit, 100, math.random(90,110) )
+				self.Entity:OnHitBreakable( self.CurEnemy )
 			
 			end
 			

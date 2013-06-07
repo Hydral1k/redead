@@ -40,7 +40,7 @@ SWEP.Primary.Miss           = Sound( "npc/zombie/claw_miss1.wav" )
 SWEP.Primary.Recoil			= 3.5
 SWEP.Primary.Damage			= 15
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Delay			= 1.300
+SWEP.Primary.Delay			= 1.200
 
 SWEP.Primary.ClipSize		= 1
 SWEP.Primary.Automatic		= true
@@ -91,5 +91,6 @@ function SWEP:OnHitHuman( ent, dmg )
 	end
 	
 	self.Owner:AddZedDamage( dmg )
+	self.Owner:DrawBlood( 5 )
 	
 end

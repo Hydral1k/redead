@@ -260,7 +260,7 @@ function GM:LoadAllEnts()
 	
 	if not read then
 	
-		MsgN( "ERROR: No ReDead map config data found!" )
+		MsgN( "No map config data found for " .. game.GetMap() .. "." )
 		
 		return
 	
@@ -270,7 +270,7 @@ function GM:LoadAllEnts()
 	
 	if not config then 
 	
-		MsgN( "ERROR: No ReDead map config data found!" ) 
+		MsgN( "ERROR: ReDead map config data file was empty!" ) 
 		
 		return 
 		
@@ -1213,11 +1213,11 @@ function GM:EntityTakeDamage( ent, dmginfo )
 		
 			ent:AddStat( "Damage", math.Round( dmginfo:GetDamage() ) )
 			
-			if attacker:IsPlayer() then
+			--[[if attacker:IsPlayer() then
 			
 				attacker:AddZedDamage( math.Round( dmginfo:GetDamage() ) )
 				
-			end
+			end]]
 		
 		end
 		
@@ -1373,7 +1373,6 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 		
 		if IsValid( attacker ) and attacker:IsPlayer() and attacker != ply then
 		
-			attacker:AddStat( "ZedKills" )
 			attacker:AddZedDamage( 50 )
 		
 		end

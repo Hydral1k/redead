@@ -705,9 +705,19 @@ function GM:HUDPaint()
 			
 			draw.RoundedBox( 4, xpos, ypos, w + 20, h + 20, Color( 0, 0, 0, 180 ) )
 			
+			if scale == 200 then
+			
+				draw.RoundedBox( 0, xpos + 10, ScrH() - 60, scale, h, Color( 200, 0, 0, 200 ) )
+			
+			else
+			
+				draw.RoundedBox( 0, xpos + 10, ScrH() - 60, scale, h, Color( 100, 0, 0, 200 ) )
+				
+			end
+			
 			while pos < scale do
 			
-				local width = math.min( math.random(5,30), math.max( scale - pos, 1 ) ) 
+				local width = math.min( math.random( 10, 50 ), math.max( scale - pos, 1 ) ) 
 			
 				local tbl = {} 
 				tbl.texture = surface.GetTextureID( "nuke/redead/noise0" .. math.random(1,3) )

@@ -119,12 +119,13 @@ function SWEP:OnHitHuman( ent, dmg )
 		ent:SetInfected( true )
 		
 		self.Owner:Notice( "You infected a human", GAMEMODE.Colors.Green )
-		self.Owner:AddZedDamage( 10 )
+		self.Owner:AddZedDamage( 15 )
 				
 	end
 	
 	self.Owner:AddZedDamage( dmg )
-
+	self.Owner:DrawBlood( 3 )
+	
 end
 
 function SWEP:MeleeTrace( dmg )

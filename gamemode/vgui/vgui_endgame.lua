@@ -26,16 +26,16 @@ function PANEL:Init()
 	self:ListNewAward( { x, w, "Meat Grinder:", "butchered the most zombies with a melee weapon.", function() return self:GetStatMax( "Knife" ) end, "melee kills", "weapons/knife/knife_hit2.wav", true } )
 	self:ListNewAward( { x, w, "Demolitionist:", "killed the most zombies with explosives.", function() return self:GetStatMax( "Explode" ) end, "unidentified bodies", "weapons/underwater_explode3.wav", true } )
 	self:ListNewAward( { x, w, "Firebug:", "ignited the most zombies.", function() return self:GetStatMax( "Igniter" ) end, "crispy corpses", "ambient/fire/mtov_flame2.wav", true } )
-	self:ListNewAward( { x, w, "Kleptomaniac:", "looted the most items.", function() return self:GetStatMax( "Loot" ) end, "items taken", "items/itempickup.wav" } )
+	self:ListNewAward( { x, w, "Kleptomaniac:", "picked up the most items.", function() return self:GetStatMax( "Loot" ) end, "items taken", "items/itempickup.wav" } )
 	self:ListNewAward( { x, w, "Broke The Bank:", "bought the most expensive weapon.", function() return self:GetStatMax( "Pricey" ) end, GAMEMODE.CurrencyName .. "s spent", "ambient/office/coinslot1.wav" } )
-	self:ListNewAward( { x, w, "Get To Ze Choppa:", "was the first to reach the evacuation zone.", function() return self:GetStatMax( "Evac" ) end, "Arnold Schwarzenegger impression", "ambient/machines/spinup.wav", true } )
+	self:ListNewAward( { x, w, "Get To Ze Choppa:", "was the first to reach the evacuation zone.", function() return self:GetStatMax( "Evac" ) end, nil, "ambient/machines/spinup.wav", true } )
 	self:ListNewAward( { x, w, "Meet The Engineer:", "built the most barricades.", function() return self:GetStatMax( "Wood" ) end, "barricades built", "npc/dog/dog_servo6.wav", true } )
-	self:ListNewAward( { x, w, "Brain Munch:", "killed the most humans.", function() return self:GetStatMax( "ZedKills" ) end, "brains eaten", "npc/zombie/zombie_voice_idle2.wav", true } )
+	self:ListNewAward( { x, w, "Brain Munch:", "dealt the most damage to humans.", function() return self:GetStatMax( "ZedDamage" ) end, "health points", "npc/zombie/zombie_voice_idle2.wav", true } )
 	self:ListNewAward( { x, w, "Cum Dumpster:", "was infected by zombies the most.", function() return self:GetStatMax( "Infections" ) end, "infections", "ambient/voices/cough1.wav", true } )
 	self:ListNewAward( { x, w, "Accident Prone:", "took the most damage from zombies.", function() return self:GetStatMax( "Damage" ) end, "damage", "bot/pain2.wav" } )
-	//self:ListNewAward( { x, w, "Piss Poor:", "spent the least " .. GAMEMODE.CurrencyName .. "s.", function() return self:GetStatMin( "Spent" ) end, GAMEMODE.CurrencyName .. "s spent", "bot/i_got_nothing.wav" } )
-	self:ListNewAward( { x, w, "Martyr:", "was the first human to die.", function() return self:GetStatMax( "Martyr" ) end, "sacrifice made", "npc/crow/alert1.wav", true } )
+	self:ListNewAward( { x, w, "Martyr:", "was the first human to die.", function() return self:GetStatMax( "Martyr" ) end, nil, "npc/crow/alert1.wav", true } )
 	self:ListNewAward( { x, w, "Roleplayer:", "did jack shit.", function() return self:GetWorstPlayer() end, "kills", "ambient/sheep.wav" } )
+	//self:ListNewAward( { x, w, "Piss Poor:", "spent the least " .. GAMEMODE.CurrencyName .. "s.", function() return self:GetStatMin( "Spent" ) end, GAMEMODE.CurrencyName .. "s spent", "bot/i_got_nothing.wav" } )
 	
 end
 
@@ -243,11 +243,16 @@ function PANEL:AddAward( ypos, pos, width, title, desc, ply, amt, append, sound,
 	
 	local list = vgui.Create( "PlayerPanel" )
 	list:SetPlayerEnt( ply )
-	list:SetCount( amt .. " " .. append )
 	list:SetDescription( desc )
 	list:SetTall( 26 )
 	list:SetWide( width - offset )
 	list:SetPos( pos + offset, ypos ) 
+	
+	if append then
+	
+		list:SetCount( amt .. " " .. append )
+	
+	end
 
 end
 

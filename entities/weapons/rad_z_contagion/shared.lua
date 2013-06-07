@@ -61,5 +61,6 @@ function SWEP:OnHitHuman( ent, dmg )
 	ent:ViewBounce( 20 )
 	
 	self.Owner:AddZedDamage( dmg )
+	self.Owner:DrawBlood( 5 )
 
 end
