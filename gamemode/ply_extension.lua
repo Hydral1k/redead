@@ -470,7 +470,7 @@ function meta:AddZedDamage( num )
 		
 		else 
 		
-			self:Notice( "+ " .. num .. " " .. GAMEMODE.BloodName, GAMEMODE.Colors.Green, 5 )
+			self:Notice( "+" .. num .. " " .. GAMEMODE.BloodName, GAMEMODE.Colors.Green, 5 )
 		
 		end
 		
