@@ -405,8 +405,12 @@ function ENT:OnKilled( dmginfo )
 				local snd = table.Random( GAMEMODE.GoreSplash )
 				self.Entity:EmitSound( snd, 90, math.random( 60, 80 ) )
 				
+				local vec = ( self.Entity:GetPos() - ent1:GetPos() )
+				vec:Normalize()
+				
 				local effectdata = EffectData()
 				effectdata:SetOrigin( self.Entity:GetPos() + Vector(0,0,20) )
+				effectdata:SetNormal( vec )
 				util.Effect( "body_gib", effectdata, true, true )
 				
 				ent1:AddStat( "Meat" )
