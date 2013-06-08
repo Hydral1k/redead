@@ -96,6 +96,12 @@ function GM:Initialize()
 	
 	GAMEMODE:WeatherInit()
 	
+	if math.random( 1, 10 ) == 1 then
+	
+		GAMEMODE.RandomEvent = CurTime() + ( 60 * math.Rand( 1.5, 3.5 ) )
+	
+	end
+	
 end
 
 GM.Breakables = {}
