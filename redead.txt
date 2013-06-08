@@ -25,13 +25,21 @@
 		}
 		3
 		{
+			"name"		"sv_redead_zombies_per_player_zombie"
+			"text"		"Zombies per player:"
+			"help"		"Number of NPCs to spawn per player zombie."
+			"type"		"Numeric"
+			"default"	"0.3"
+		}
+		4
+		{
 			"name"		"sv_redead_wave_length"
 			"text"		"Wave time:"
 			"help"		"Length of each wave in minutes."
 			"type"		"Numeric"
 			"default"	"4"
 		}
-		4
+		5
 		{
 			"name"		"sv_redead_wave_time"
 			"text"		"Wave delay:"
@@ -39,7 +47,7 @@
 			"type"		"Numeric"
 			"default"	"25"
 		}
-		5
+		6
 		{
 			"name"		"sv_redead_team_dmg"
 			"text"		"Team damage:"
@@ -47,7 +55,7 @@
 			"type"		"CheckBox"
 			"default"	"0"
 		}
-		6
+		7
 		{
 			"name"		"sv_redead_dmg_scale"
 			"text"		"Damage scale:"
@@ -55,7 +63,7 @@
 			"type"		"Numeric"
 			"default"	"1.0"
 		}
-		7
+		8
 		{
 			"name"		"sv_redead_setup_time"
 			"text"		"Setup Time:"

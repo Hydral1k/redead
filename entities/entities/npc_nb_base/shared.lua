@@ -146,7 +146,7 @@ function ENT:Think()
 				
 				end
 			
-			elseif self.CurEnemy:GetPos():Distance( self.Entity:GetPos() ) <= self.BreakableDistance then
+			elseif self.CurEnemy:GetPos():Distance( self.Entity:GetPos() ) <= self.BreakableDistance or self.CurEnemy == self.Entity:GetBreakable() then
 			
 				self.Entity:EmitSound( self.DoorHit, 100, math.random(90,110) )
 				self.Entity:OnHitBreakable( self.CurEnemy )

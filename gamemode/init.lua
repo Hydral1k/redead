@@ -759,7 +759,7 @@ function GM:NPCThink()
 	
 	if #tbl < GetConVar( "sv_redead_max_zombies" ):GetInt() and #tbl < GetConVar( "sv_redead_zombies_per_player" ):GetInt() * team.NumPlayers( TEAM_ARMY ) then
 	
-		local total = GetConVar( "sv_redead_zombies_per_player" ):GetInt() * team.NumPlayers( TEAM_ARMY )
+		local total = math.Round( GetConVar( "sv_redead_zombies_per_player" ):GetInt() * team.NumPlayers( TEAM_ARMY ) + GetConVar( "sv_redead_zombies_per_player_zombie" ):GetFloat() * team.NumPlayers( TEAM_ZOMBIES ) )
 		local num = math.Clamp( total, 1, math.Min( GetConVar( "sv_redead_max_zombies" ):GetInt() - #tbl, total ) )
 		
 		GAMEMODE.SpawnCounter = num
