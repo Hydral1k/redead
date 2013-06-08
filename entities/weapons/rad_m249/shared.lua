@@ -29,10 +29,10 @@ SWEP.IsSniper = false
 SWEP.AmmoType = "Rifle"
 
 SWEP.Primary.Sound			= Sound( "Weapon_M249.Single" )
-SWEP.Primary.Recoil			= 8.5
+SWEP.Primary.Recoil			= 9.5
 SWEP.Primary.Damage			= 75
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Cone			= 0.035
+SWEP.Primary.Cone			= 0.040
 SWEP.Primary.Delay			= 0.090
 
 SWEP.Primary.ClipSize		= 100

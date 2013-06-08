@@ -137,7 +137,7 @@ function ENT:Think()
 				
 					local snd = table.Random( self.ClawHit )
 					self.Entity:EmitSound( snd, 100, math.random(90,110) )
-					self.Entity:OnHitEnemy( enemy )
+					self.Entity:OnHitBot( enemy )
 				
 				else
 				
@@ -146,7 +146,7 @@ function ENT:Think()
 				
 				end
 			
-			elseif self.CurEnemy:GetPos():Distance( self.Entity:GetPos() ) <= self.BreakableDistance or self.CurEnemy == self.Entity:GetBreakable() then
+			elseif ( self.CurEnemy:GetPos():Distance( self.Entity:GetPos() ) <= self.BreakableDistance ) or self.CurEnemy == self.Entity:GetBreakable() then
 			
 				self.Entity:EmitSound( self.DoorHit, 100, math.random(90,110) )
 				self.Entity:OnHitBreakable( self.CurEnemy )
@@ -161,6 +161,12 @@ function ENT:Think()
 		end
 	
 	end
+
+end
+
+function ENT:OnHitBot( enemy )
+
+	enemy:TakeDamage( self.Damage, self.Entity )
 
 end
 
@@ -799,7 +805,7 @@ function ENT:GetBreakable()
 
 	for k,v in pairs( tbl ) do
 	
-		if IsValid( v ) and v:GetPos():Distance( self.Entity:GetPos() ) <= self.BreakableDistance then
+		if IsValid( v ) and v:GetPos() != Vector(0,0,0) and v:GetPos():Distance( self.Entity:GetPos() ) <= self.BreakableDistance then
 		
 			return v
 		

@@ -25,6 +25,14 @@ function EVENT:Start()
 		end
 	
 	end
+	
+	if table.Count( tbl2 ) == 0 then
+	
+		GAMEMODE:ManualWeather(1,0,0,0)
+		
+		table.insert( tbl2, "rain" )
+	
+	end
 
 	if table.Count( tbl2 ) > 1 then
 	

@@ -50,13 +50,8 @@ end
 function ENT:OnHitEnemy( enemy )
 
 	enemy:TakeDamage( self.Damage, self.Entity )
-	
-	if enemy:IsPlayer() then
-	
-		enemy:SetBleeding( true )
-		enemy:ViewBounce( 15 )
-	
-	end
+	enemy:SetBleeding( true )
+	enemy:ViewBounce( 15 )
 	
 	umsg.Start( "Drunk", enemy )
 	umsg.Short( 1 )

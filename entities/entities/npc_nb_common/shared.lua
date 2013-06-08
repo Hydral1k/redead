@@ -59,13 +59,8 @@ end
 function ENT:OnHitEnemy( enemy )
 
 	enemy:TakeDamage( self.Damage, self.Entity )
-	
-	if enemy:IsPlayer() then
-	
-		enemy:SetInfected( true )
-		enemy:ViewBounce( 10 )
-	
-	end
+	enemy:SetInfected( true )
+	enemy:ViewBounce( 10 )
 	
 	umsg.Start( "Drunk", enemy )
 	umsg.Short( 1 )

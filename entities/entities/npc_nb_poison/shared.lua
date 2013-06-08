@@ -88,13 +88,8 @@ end
 function ENT:OnHitEnemy( enemy )
 
 	enemy:TakeDamage( self.Damage, self.Entity )
-	
-	if enemy:IsPlayer() then
-	
-		enemy:AddRadiation( 2 )
-		enemy:ViewBounce( 35 )
-	
-	end
+	enemy:AddRadiation( 2 )
+	enemy:ViewBounce( 35 )
 	
 	umsg.Start( "Drunk", enemy )
 	umsg.Short( 3 )

@@ -249,13 +249,21 @@ function ENT:OnInjured( dmginfo )
 		
 	end
 	
+	local att = dmginfo:GetAttacker()
+	
+	if IsValid( att ) and att.NextBot then
+	
+		//self.Entity:OnKilled( dmginfo )
+	
+	end
+	
 end 
 
-function ENT:SpawnRagdoll( damageinfo, model, pos, override )
+function ENT:SpawnRagdoll( dmginfo, model, pos, override )
 
 	if not model then
 		
-		self.Entity:BecomeRagdoll( damageinfo )
+		self.Entity:BecomeRagdoll( dmginfo )
 		
 	else
 	
@@ -380,8 +388,10 @@ function ENT:OnKilled( dmginfo )
 				end
 			
 			end
-			
-			self.RemoveTime = CurTime() + 0.1
+		
+		else
+		
+			self.Entity:SpawnRagdoll( dmginfo )
 		
 		end
 	
