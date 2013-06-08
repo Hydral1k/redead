@@ -40,6 +40,12 @@ function ENT:SetOverride()
 
 end
 
+function ENT:SetCures( num )
+
+	self.CureCount = num
+
+end
+
 function ENT:CuresLeft()
 
 	return self.CureCount
