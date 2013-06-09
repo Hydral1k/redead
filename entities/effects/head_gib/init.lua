@@ -14,6 +14,16 @@ function EFFECT:Init( data )
 	particle:SetRoll( math.random( -360, 360 ) )
 	particle:SetColor( 50, 0, 0 )
 	
+	local particle = emitter:Add( "effects/blood_core", pos )
+	particle:SetDieTime( math.Rand( 5.0, 7.0 ) )
+	particle:SetStartAlpha( 50 )
+	particle:SetEndAlpha( 0 )
+	particle:SetStartSize( math.random( 40, 80 ) )
+	particle:SetEndSize( 200 )
+	particle:SetRoll( math.Rand( -360, 360 ) )
+	particle:SetColor( 50, 0, 0 )
+	particle:SetGravity( Vector( 0, 0, -5 ) )
+	
 	for i=1, math.random(5,10) do
 	
 		local particle = emitter:Add( "effects/blood", pos )

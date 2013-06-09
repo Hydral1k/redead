@@ -10,6 +10,8 @@ function Register( tbl )
 	tbl.ID = ID
 	ItemTables[ ID ] = tbl
 	
+	util.PrecacheModel( tbl.Model )
+	
 	ID = ID + 1
 	
 end
