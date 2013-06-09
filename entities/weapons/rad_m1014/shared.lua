@@ -232,7 +232,7 @@ function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
 	bullet.Src 		= self.Owner:GetShootPos()			
 	bullet.Dir 		= self.Owner:GetAimVector()			
 	bullet.Spread 	= Vector( scale, scale, 0 )		
-	bullet.Tracer	= tracer
+	bullet.Tracer	= 0
 	bullet.Force	= damage * 2						
 	bullet.Damage	= damage 
 	bullet.AmmoType = "Pistol"
@@ -286,7 +286,7 @@ function SWEP:DrawHUD()
 		self.CrosshairScale = math.Approach( self.CrosshairScale, scale, FrameTime() * 2 + dist * 0.05 )
 		
 		local gap = 40 * self.CrosshairScale
-		local length = gap + 20 * self.CrosshairScale
+		local length = gap + self.CrossLength:GetInt()
 		
 		surface.SetDrawColor( self.CrossRed:GetInt(), self.CrossGreen:GetInt(), self.CrossBlue:GetInt(), self.CrossAlpha:GetInt() )
 		surface.DrawLine( x - length, y, x - gap, y )

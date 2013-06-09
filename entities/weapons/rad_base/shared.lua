@@ -468,7 +468,7 @@ function SWEP:PrimaryAttack()
 
 	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(95,105) )
-	self.Weapon:SetClip1( self.Weapon:Clip1() - 1 )
+	self.Weapon:SetClip1( self.Weapon:Clip1() - self.Primary.NumShots )
 	self.Weapon:ShootEffects()
 	
 	if self.IsSniper and self.Weapon:GetZoomMode() == 1 then
@@ -586,7 +586,7 @@ function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
 	bullet.Src 		= self.Owner:GetShootPos()			
 	bullet.Dir 		= self.Owner:GetAimVector()			
 	bullet.Spread 	= Vector( scale, scale, 0 )		
-	bullet.Tracer	= 1
+	bullet.Tracer	= 0
 	bullet.Force	= damage * 2						
 	bullet.Damage	= damage
 	bullet.AmmoType = "Pistol"

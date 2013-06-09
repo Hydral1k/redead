@@ -6,7 +6,7 @@ end
 
 if CLIENT then
 
-	SWEP.ViewModelFOV = 75
+	SWEP.ViewModelFOV = 70
 	SWEP.ViewModelFlip = false
 	
 	SWEP.PrintName = "Colt Python"

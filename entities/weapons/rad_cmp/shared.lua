@@ -32,20 +32,59 @@ SWEP.IsSniper = false
 SWEP.AmmoType = "SMG"
 SWEP.FirstShot = true
 
-SWEP.Primary.Sound			= Sound( "Weapon_smg1.Single" )
-SWEP.Primary.Sound2			= Sound( "Weapon_smg1.Burst" )
+SWEP.Primary.Sound			= Sound( "Weapon_smg1.Burst" )
+SWEP.Primary.Sound2			= Sound( "weapons/smg1/smg1_fireburst1.wav" )
 SWEP.Primary.ReloadSound    = Sound( "Weapon_smg1.reload" )
-SWEP.Primary.Recoil			= 9.5
-SWEP.Primary.Damage			= 35
-SWEP.Primary.NumShots		= 1
-SWEP.Primary.Cone			= 0.040
-SWEP.Primary.Delay			= 0.550
-SWEP.Primary.ShotDelay      = 0.055
+SWEP.Primary.Recoil			= 12.5
+SWEP.Primary.Damage			= 30
+SWEP.Primary.NumShots		= 3
+SWEP.Primary.Cone			= 0.045
+SWEP.Primary.Delay			= 0.600
 
-SWEP.Primary.ClipSize		= 20
+SWEP.Primary.ClipSize		= 24
 SWEP.Primary.Automatic		= true
 
 function SWEP:PrimaryAttack()
+
+	if not self.Weapon:CanPrimaryAttack() then 
+		
+		self.Weapon:SetNextPrimaryFire( CurTime() + 0.25 )
+		
+		return 
+		
+	end
+
+	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(95,105) )
+	self.Weapon:SetClip1( self.Weapon:Clip1() - self.Primary.NumShots )
+	self.Weapon:ShootEffects()
+	
+	if self.IsSniper and self.Weapon:GetZoomMode() == 1 then
+	
+		self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.SniperCone, 1 )
+	
+	else
+	
+		self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone, self.Weapon:GetZoomMode() )
+	
+	end
+	
+	if self.Weapon:GetZoomMode() > 1 then
+	
+		self.Weapon:UnZoom()
+	
+	end
+	
+	if SERVER then
+	
+		self.Owner:AddAmmo( self.AmmoType, self.Primary.NumShots * -1 )
+		self.Owner:EmitSound( self.Primary.Sound2, 100, math.random( 110, 120 ) )
+		
+	end
+
+end
+
+--[[function SWEP:PrimaryAttack()
 
 	if not self.Weapon:CanPrimaryAttack() then 
 		
@@ -79,13 +118,13 @@ function SWEP:PrimaryAttack()
 		
 	end
 
-end
+end]]
 
 function SWEP:DoReload()
 
 	local time = self.Weapon:StartWeaponAnim( ACT_VM_RELOAD )
 	
-	self.Weapon:SetNextPrimaryFire( CurTime() + time + 0.080 )
+	self.Weapon:SetNextPrimaryFire( CurTime() + time + 0.100 )
 	self.Weapon:EmitSound( self.Primary.ReloadSound )
 	
 	self.ReloadTime = CurTime() + time
@@ -93,18 +132,6 @@ function SWEP:DoReload()
 end
 
 function SWEP:ReloadThink()
-
-	if self.AutoShoot and self.AutoShoot <= CurTime() then
-	
-		self.AutoShoot = nil
-		
-		if not self.Owner:KeyDown( IN_ATTACK ) then
-		
-			self.Weapon:PrimaryAttack()
-			
-		end
-	
-	end
 
 	if self.ReloadTime and self.ReloadTime <= CurTime() then
 	

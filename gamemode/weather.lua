@@ -232,7 +232,7 @@ end
 
 RainMat = Material( "models/shadertest/shader3" )
 
-GM.MaxRainRefract = 0.01
+GM.MaxRainRefract = 0.008
 
 function GM:PaintWeather()
 
@@ -250,15 +250,19 @@ function GM:PaintWeather()
 		
 		if GAMEMODE.RainRefract == 0 or GAMEMODE.Weather.Rain < 0.5 then return end
 		
-		render.UpdateScreenEffectTexture()
-
-		RainMat:SetFloat( "$envmap", 0 )
-		RainMat:SetFloat( "$envmaptint", 0 )
-		RainMat:SetFloat( "$refractamount", GAMEMODE.RainRefract )
-		RainMat:SetInt( "$ignorez", 1 )
+		if render.GetDXLevel() > 8 then
 		
-		render.SetMaterial( RainMat )
-		render.DrawScreenQuad()
+			render.UpdateScreenEffectTexture()
+
+			RainMat:SetFloat( "$envmap", 0 )
+			RainMat:SetFloat( "$envmaptint", 0 )
+			RainMat:SetFloat( "$refractamount", GAMEMODE.RainRefract )
+			RainMat:SetInt( "$ignorez", 1 )
+			
+			render.SetMaterial( RainMat )
+			render.DrawScreenQuad()
+			
+		end
 	
 	end
 

@@ -8,6 +8,8 @@ if CLIENT then
 	
 	SWEP.ViewModelFlip = false
 	
+	SWEP.ViewModelFOV = 60
+	
 	SWEP.PrintName = "FAMAS PBW-75"
 	SWEP.IconLetter = "m"
 	SWEP.Slot = 4
@@ -19,11 +21,16 @@ SWEP.HoldType = "ar2"
 
 SWEP.Base = "rad_base"
 
-SWEP.ViewModel = "models/weapons/v_rif_famas.mdl"
-SWEP.WorldModel = "models/weapons/w_rif_famas.mdl"
+SWEP.UseHands = true
 
-SWEP.SprintPos = Vector (4.9288, -2.4157, 2.2032)
-SWEP.SprintAng = Vector (0.8736, 40.1165, 28.0526)
+SWEP.ViewModel = "models/weapons/c_irifle.mdl"
+SWEP.WorldModel = "models/weapons/w_irifle.mdl"
+
+//SWEP.SprintPos = Vector (4.9288, -2.4157, 2.2032)
+//SWEP.SprintAng = Vector (0.8736, 40.1165, 28.0526)
+
+SWEP.SprintPos = Vector(0.55, -5.119, -1.025)
+SWEP.SprintAng = Vector(7.44, 25.079, 16.26)
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "Prototype"
@@ -41,8 +48,8 @@ SWEP.Primary.NumShots		= 1
 SWEP.Primary.Cone			= 0.015
 SWEP.Primary.Delay			= 1.400
 
-SWEP.Primary.ClipSize		= 5
-SWEP.Primary.Automatic		= false
+SWEP.Primary.ClipSize		= 3
+SWEP.Primary.Automatic		= true
 
 function SWEP:ShootEffects()	
 
@@ -69,7 +76,7 @@ function SWEP:PrimaryAttack()
 	end
 
 	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(95,105) )
+	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(120,130) )
 	self.Weapon:EmitSound( self.Primary.Sound2, 100, math.random(120,130) )
 	self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone, self.Weapon:GetZoomMode() )
 	self.Weapon:TakePrimaryAmmo( 1 )
