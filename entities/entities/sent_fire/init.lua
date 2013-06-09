@@ -5,6 +5,7 @@ include( 'shared.lua' )
 
 ENT.BurnSound = Sound( "fire_large" )
 ENT.LifeTime = 10
+ENT.Explosives = { "sent_oxygen", "sent_propane_canister", "sent_propane_tank", "sent_fuel_diesel", "sent_fuel_gas" }
 
 function ENT:Initialize()
 	
@@ -52,6 +53,13 @@ function ENT:Touch( ent )
 	if not IsValid( self.Entity:GetOwner() ) then return end
 	
 	//if ent:IsPlayer() and ent:Team() == self.Entity:GetOwner():Team() then return end
+	
+	if table.HasValue( self.Explosives, ent:GetClass() ) then
+	
+		ent:SetOwner( self.Entity:GetOwner() )
+		ent:Explode()
+	
+	end
 	
 	if not ent.NextBot and not ent:IsPlayer() then return end
 	
