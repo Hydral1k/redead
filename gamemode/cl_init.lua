@@ -1065,7 +1065,7 @@ function DeathScreen( msg )
 	local dteam = msg:ReadShort()
 
 	DeathScreenScale = 0
-	DeathScreenTime = CurTime() + 15
+	DeathScreenTime = CurTime() + 10
 	DeathScreenText = table.Random( GAMEMODE.DeathScreenText[ dteam or TEAM_ARMY ] )
 	
 end
