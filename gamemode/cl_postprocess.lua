@@ -64,7 +64,7 @@ function GM:RenderScreenspaceEffects()
 	
 		if LocalPlayer():Alive() then
 	
-			ColorModify[ "$pp_colour_brightness" ] 	= -0.20
+			ColorModify[ "$pp_colour_brightness" ] 	= -0.15
 			ColorModify[ "$pp_colour_addr" ]		= 0.25
 			ColorModify[ "$pp_colour_mulr" ] 		= 0.15
 			ColorModify[ "$pp_colour_addg" ]		= 0.15
@@ -268,17 +268,17 @@ function DrawLaser()
 
 	if LocalPlayer():Team() != TEAM_ARMY then return end
 	
-	local vm = LocalPlayer():GetViewModel( 0 )
+	//local vm = LocalPlayer():GetViewModel( 0 )
 	
-	if not IsValid( vm ) then return end
+	//if not IsValid( vm ) then return end
 	
 	local wep = LocalPlayer():GetActiveWeapon()
 	
-	if not wep:GetNWBool( "Laser", false ) then return end
+	if not IsValid( wep ) or not wep:GetNWBool( "Laser", false ) then return end
 	
-	local idx = vm:LookupAttachment( "1" )
+	//local idx = vm:LookupAttachment( "1" )
 		
-	if idx == 0 then idx = vm:LookupAttachment( "muzzle" ) end
+	//if idx == 0 then idx = vm:LookupAttachment( "muzzle" ) end
 		
 	--[[local trace = util.GetPlayerTrace( LocalPlayer() )
 	local tr = util.TraceLine( trace )
@@ -288,30 +288,29 @@ function DrawLaser()
 	
 	local look = LocalPlayer():EyeAngles()
 	local dir = look:Forward()
-	local tbl = vm:GetAttachment( idx )
-	local ang = tbl.Ang
-	local offset = wep.LaserOffset
+	//local tbl = vm:GetAttachment( idx )
+	//local ang = tbl.Ang
+	//local offset = wep.LaserOffset
 						
-	ang:RotateAroundAxis( look:Up(), ( offset.p or 0 ) )
-	ang:RotateAroundAxis( look:Forward(), ( offset.r or 0 ) )
-	ang:RotateAroundAxis( look:Right(), ( offset.y or 0 ) )
+	//ang:RotateAroundAxis( look:Up(), ( offset.p or 0 ) )
+	//ang:RotateAroundAxis( look:Forward(), ( offset.r or 0 ) )
+	//ang:RotateAroundAxis( look:Right(), ( offset.y or 0 ) )
 						
-	local forward = ang:Forward()
+	//local forward = ang:Forward()
 	//lasforward = tbl.Ang:Forward()
 						
-	forward = forward * wep.LaserScale
+	//forward = forward * wep.LaserScale
 						
-	dir = dir +	forward
+	//dir = dir +	forward
 	
 	local trace = {}
-	trace.start = LocalPlayer():GetShootPos()
-					
+	
+	trace.start = LocalPlayer():GetShootPos()	
 	trace.endpos = trace.start + dir * 9000
 	trace.filter = { LocalPlayer(), weap, lp }
 	trace.mask = MASK_SOLID
 					
-	local tr = util.TraceLine( trace )
-											
+	local tr = util.TraceLine( trace )			
 	local dist = math.Clamp( tr.HitPos:Distance( EyePos() ), 0, 500 )
 	local size = math.Rand( 2, 4 ) + ( dist / 500 ) * 6
 	local col = Color( 255, 0, 0, 255 )

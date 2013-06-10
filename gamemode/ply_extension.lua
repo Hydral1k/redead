@@ -348,8 +348,7 @@ function meta:AddRadiation( num )
 		self:EmitSound( table.Random{ "Geiger.BeepLow", "Geiger.BeepHigh" }, 100, math.random( 90, 110 ) )
 		
 		self:NoticeOnce( "You have been irradiated", GAMEMODE.Colors.Red, 5 )
-		self:NoticeOnce( "You can cure radiation sickness with vodka", GAMEMODE.Colors.Blue, 5, 2 )
-		self:NoticeOnce( "Radiation sickness will fade over time", GAMEMODE.Colors.Blue, 5, 4 )
+		self:NoticeOnce( "Radiation sickness will fade over time", GAMEMODE.Colors.Blue, 5, 2 )
 		
 	end
 

@@ -3,7 +3,12 @@
 ITEM_AMMO = 4
 
 // ammo constant
-PRICE_AMMOBOX = 5
+PRICE_PISTOL = 5
+PRICE_BUCKSHOT = 8
+PRICE_SMGROUNDS = 5
+PRICE_RIFLEROUNDS = 10
+PRICE_SNIPERROUNDS = 10
+PRICE_ENERGYCELL = 8
 
 function FUNC_AMMO( ply, id )
 
@@ -35,7 +40,7 @@ item.Register( {
 	Stackable = true, 
 	Type = ITEM_AMMO,
 	Weight = 0.75, 
-	Price = PRICE_AMMOBOX,
+	Price = PRICE_PISTOL,
 	Rarity = 0.20,
 	Model = "models/items/357ammo.mdl",
 	Ammo = "Pistol",
@@ -52,7 +57,7 @@ item.Register( {
 	Stackable = true, 
 	Type = ITEM_AMMO,
 	Weight = 0.75, 
-	Price = PRICE_AMMOBOX,
+	Price = PRICE_BUCKSHOT,
 	Rarity = 0.20,
 	Model = "models/items/boxbuckshot.mdl",
 	Ammo = "Buckshot",
@@ -69,8 +74,8 @@ item.Register( {
 	Stackable = true, 
 	Type = ITEM_AMMO,
 	Weight = 0.75, 
-	Price = PRICE_AMMOBOX,
-	Rarity = 0.60,
+	Price = PRICE_SMGROUNDS,
+	Rarity = 0.50,
 	Model = "models/items/boxsrounds.mdl",
 	Ammo = "SMG",
 	Amount = 60,
@@ -86,7 +91,7 @@ item.Register( {
 	Stackable = true, 
 	Type = ITEM_AMMO,
 	Weight = 0.75, 
-	Price = PRICE_AMMOBOX + 5,
+	Price = PRICE_RIFLEROUNDS,
 	Rarity = 0.80,
 	Model = "models/items/boxmrounds.mdl",
 	Ammo = "Rifle",
@@ -103,8 +108,8 @@ item.Register( {
 	Stackable = true, 
 	Type = ITEM_AMMO,
 	Weight = 0.75, 
-	Price = PRICE_AMMOBOX + 5,
-	Rarity = 0.80,
+	Price = PRICE_SNIPERROUNDS,
+	Rarity = 0.75,
 	Model = "models/items/boxqrounds.mdl",
 	Ammo = "Sniper",
 	Amount = 30,
@@ -116,15 +121,15 @@ item.Register( {
 
 item.Register( { 
 	Name = "Prototype Energy Cell", 
-	Description = "20 energy charges per cell.",
+	Description = "15 energy charges per cell.",
 	Stackable = true, 
 	Type = ITEM_AMMO,
 	Weight = 1.25, 
-	Price = PRICE_AMMOBOX + 5,
-	Rarity = 0.80,
+	Price = PRICE_ENERGYCELL,
+	Rarity = 0.85,
 	Model = "models/items/battery.mdl",
 	Ammo = "Prototype",
-	Amount = 20,
+	Amount = 15,
 	PickupFunction = FUNC_AMMO,
 	DropFunction = FUNC_DROPAMMO,
 	CamPos = Vector(15,15,8),

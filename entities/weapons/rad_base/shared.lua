@@ -597,7 +597,7 @@ function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
 	
 	//end
 	
-	bullet.Callback = function ( attacker, tr, dmginfo )
+	bullet.Callback = function( attacker, tr, dmginfo )
 		
 		dmginfo:ScaleDamage( self:GetDamageFalloffScale( tr.HitPos:Distance( self.Owner:GetShootPos() ) ) )
 			
@@ -647,7 +647,7 @@ function SWEP:GetPenetrationDamageLoss( mat_type, distance, damage )
 	
 end
 
-function SWEP:BulletPenetration( attacker, tr, dmginfo, bounce )
+--[[function SWEP:BulletPenetration( attacker, tr, dmginfo, bounce )
 
 	if ( !self or !IsValid( self.Weapon ) ) then return end
 	
@@ -721,6 +721,76 @@ function SWEP:BulletPenetration( attacker, tr, dmginfo, bounce )
 		timer.Simple( 0.05, function() func( attacker, bullet ) end )
 		
 		if SERVER and tr.MatType != MAT_FLESH then
+	
+			sound.Play( table.Random( GAMEMODE.Ricochet ), tr.HitPos, 100, math.random(90,120) )
+	
+		end
+		
+	end
+	
+end]]
+
+function SWEP:BulletPenetration( attacker, tr, dmginfo, bounce )
+
+	if ( !self or not IsValid( self.Weapon ) ) then return end
+	
+	if IsValid( tr.Entity ) and string.find( tr.Entity:GetClass(), "npc" ) then		
+	
+		local effectdata = EffectData()		
+		effectdata:SetOrigin( tr.HitPos )		
+		util.Effect( "BloodImpact", effectdata )		
+	
+	end	
+	
+	if ( bounce > 3 ) then return false end
+	
+	local PeneDir = tr.Normal * self:GetPenetrationDistance( tr.MatType )
+		
+	local PeneTrace = {}
+	   PeneTrace.endpos = tr.HitPos
+	   PeneTrace.start = tr.HitPos + PeneDir
+	   PeneTrace.mask = MASK_SHOT
+	   PeneTrace.filter = { self.Owner }
+	   
+	local PeneTrace = util.TraceLine( PeneTrace ) 
+	
+	if ( PeneTrace.StartSolid || PeneTrace.Fraction >= 1.0 || tr.Fraction <= 0.0 ) then return false end
+	
+	local distance = ( PeneTrace.HitPos - tr.HitPos ):Length()
+	local new_damage = self:GetPenetrationDamageLoss( tr.MatType, distance, dmginfo:GetDamage() )
+	
+	if new_damage > 0 then
+	
+		local bullet = 
+		{	
+			Num 		= 1,
+			Src 		= PeneTrace.HitPos,
+			Dir 		= tr.Normal,	
+			Spread 		= Vector( 0, 0, 0 ),
+			Tracer		= 0,
+			Force		= 5,
+			Damage		= new_damage,
+			AmmoType 	= "Pistol",
+		}
+		
+		bullet.Callback = function( a, b, c ) 
+		
+			if IsValid( self ) and IsValid( self.Weapon ) then
+	
+				self.Weapon:BulletPenetration( attacker, tr, dmginfo, bounce + 1 )
+						
+			end 
+			
+		end
+		
+		local effectdata = EffectData()
+		effectdata:SetOrigin( PeneTrace.HitPos );
+		effectdata:SetNormal( PeneTrace.Normal );
+		util.Effect( "Impact", effectdata ) 
+		
+		timer.Simple( 0.01, function() attacker:FireBullets( bullet, true ) end )
+		
+		if SERVER and tr.MatType != MAT_FLESH and bounce == 0 then
 	
 			sound.Play( table.Random( GAMEMODE.Ricochet ), tr.HitPos, 100, math.random(90,120) )
 	

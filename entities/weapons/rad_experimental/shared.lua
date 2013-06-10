@@ -10,7 +10,7 @@ if CLIENT then
 	
 	SWEP.ViewModelFOV = 60
 	
-	SWEP.PrintName = "FAMAS PBW-75"
+	SWEP.PrintName = "PPW-95"
 	SWEP.IconLetter = "m"
 	SWEP.Slot = 4
 	SWEP.Slotpos = 2

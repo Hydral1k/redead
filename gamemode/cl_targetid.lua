@@ -5,7 +5,7 @@ local TargetedName = nil
 local TargetedTime = 0
 local TargetedDist = Vector(0,0,0)
 
-ValidTargetEnts = { "prop_physics", "sent_oxygen", "sent_fuel_diesel", "sent_fuel_gas", "sent_propane_tank", "sent_propane_canister" }
+ValidTargetEnts = { "prop_physics", "sent_oxygen", "sent_fuel_diesel", "sent_fuel_gas", "sent_propane_tank", "sent_propane_canister", "sent_barrel_radioactive" }
 
 function GM:GetEntityID( ent )
 	

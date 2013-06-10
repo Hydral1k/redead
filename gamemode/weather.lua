@@ -250,7 +250,7 @@ function GM:PaintWeather()
 		
 		if GAMEMODE.RainRefract == 0 or GAMEMODE.Weather.Rain < 0.5 then return end
 		
-		if render.GetDXLevel() > 8 then
+		if render.GetDXLevel() >= 90 then
 		
 			render.UpdateScreenEffectTexture()
 

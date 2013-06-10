@@ -279,6 +279,7 @@ function PANEL:SetItemTable( tbl )
 	self.Stackable = tbl.Stackable
 	self.PanelModel = tbl.Model
 	self.ItemTable = tbl
+	self.ItemTable.Price = tbl.Price or 0
 	
 	if tbl.Sellable != nil and tbl.Sellable == false then
 	

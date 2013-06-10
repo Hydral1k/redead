@@ -73,16 +73,6 @@ function ENT:Explode()
 		
 	end
 	
-	for k,v in pairs( player.GetAll() ) do
-	
-		if v:Team() != self.Entity:GetOwner():Team() and v:GetPos():Distance( self.Entity:GetPos() ) < self.Radius then
-		
-			v:SetBleeding( true )
-		
-		end
-	
-	end
-	
 	self.Entity:EmitSound( self.DieSound, 100, math.random(90,110) )
 	self.Entity:Remove()
 

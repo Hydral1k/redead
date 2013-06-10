@@ -427,6 +427,13 @@ GM.BigGibs = {"models/gibs/HGIBS.mdl",
 "models/props/cs_office/Snowman_arm.mdl",
 "models/props/cs_italy/bananna.mdl" }
 
+GM.BarrelGibs = { "models/props_c17/oildrumchunk01a.mdl",
+"models/props_c17/oildrumchunk01b.mdl",
+"models/props_c17/oildrumchunk01c.mdl",
+"models/props_c17/oildrumchunk01d.mdl",
+"models/props_c17/oildrumchunk01e.mdl" }
+
+
 for k, v in pairs( GM.Radio ) do
 
 	for c,d in pairs( v ) do
@@ -434,6 +441,12 @@ for k, v in pairs( GM.Radio ) do
 		util.PrecacheSound( d )
 		
 	end
+
+end
+
+for k, v in pairs( GM.BarrelGibs ) do
+
+	util.PrecacheModel( v )
 
 end
 	

@@ -88,3 +88,14 @@ item.Register( {
 	Model = "models/props_junk/propanecanister001a.mdl",
 	Functions = {}
 } )
+
+item.Register( { 
+	Name = "Radioactive Waste", 
+	TypeOverride = "sent_barrel_radioactive",
+	AllowPickup = true,
+	CollisionOverride = false,
+	Type = ITEM_LOOT,
+	Rarity = 0.50,
+	Model = "models/props/de_train/barrel.mdl",
+	Functions = {}
+} )

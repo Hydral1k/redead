@@ -61,7 +61,7 @@ function ENT:OnThink()
 		
 				if ( v.RadAddTime or 0 ) < CurTime() then
 			
-					v.RadAddTime = CurTime() + 12
+					v.RadAddTime = CurTime() + 8
 					v:AddRadiation( 1 )
 					
 				end

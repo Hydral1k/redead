@@ -3,15 +3,19 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
-ENT.HitSound = Sound( "Canister.ImpactHard" )
-ENT.DieSound = Sound( "PropaneTank.Burst" )
-ENT.Model = Model( "models/props_junk/propanecanister001a.mdl" )
-ENT.Damage = 180
-ENT.Radius = 350
+ENT.HitSound = Sound( "Metal_Barrel.ImpactSoft" )
+ENT.DieSound = Sound( "Breakable.Metal" )
+ENT.Model = Model(  "models/props/de_train/barrel.mdl" )
+ENT.Damage = 60
+ENT.Radius = 300
+ENT.Skins = {0,1,7}
 
 function ENT:Initialize()
 
+	local skin = table.Random( self.Skins )
+
 	self.Entity:SetModel( self.Model )
+	self.Entity:SetSkin( skin )
 	
 	self.Entity:PhysicsInit( SOLID_VPHYSICS )
 	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
@@ -72,6 +76,18 @@ function ENT:Explode()
 		util.BlastDamage( self.Entity, self.Entity:GetOwner(), self.Entity:GetPos(), self.Radius, self.Damage )
 		
 	end
+	
+	for i=1, math.random( 2, 4 ) do
+	
+		local ed = EffectData()
+		ed:SetOrigin( self.Entity:GetPos() )
+		util.Effect( "barrel_gib", ed, true, true )
+	
+	end
+	
+	local ent = ents.Create( "sent_radiation" ) 
+	ent:SetPos( self.Entity:GetPos() )
+	ent:Spawn()
 	
 	self.Entity:EmitSound( self.DieSound, 100, math.random(90,110) )
 	self.Entity:Remove()
