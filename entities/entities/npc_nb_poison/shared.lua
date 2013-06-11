@@ -96,3 +96,11 @@ function ENT:OnHitEnemy( enemy )
 	umsg.End()
 
 end
+
+function ENT:OnDeath( dmginfo ) 
+
+	local ent = ents.Create( "sent_radiation" ) 
+	ent:SetPos( self.Entity:GetPos() )
+	ent:Spawn()
+
+end
