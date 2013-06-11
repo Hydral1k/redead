@@ -502,6 +502,8 @@ function meta:OnSpawn()
 
 	if self:Team() == TEAM_ARMY then
 	
+		player_manager.SetPlayerClass( self, "player_army" )
+	
 		if self:GetPlayerClass() == CLASS_SCOUT then
 	
 			self:SetCash( 25 )
@@ -533,6 +535,8 @@ function meta:OnSpawn()
 		self:SetModel( GAMEMODE.ClassModels[ self:GetPlayerClass() ] )
 		
 	else
+	
+		player_manager.SetPlayerClass( self, "player_zombie" )
 		
 		if self.NextClass then
 		

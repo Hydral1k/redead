@@ -1,5 +1,5 @@
 
-include( 'default_player.lua' )
+include( 'animations.lua' )
 include( 'items.lua' )
 include( 'shared.lua' )
 include( 'enums.lua' )
@@ -969,30 +969,10 @@ function GM:CreateMove( cmd )
 
 	if LocalPlayer():Team() == TEAM_ZOMBIES then
 	
-		for k,v in pairs{ IN_DUCK, IN_JUMP } do
+		if bit.band( cmd:GetButtons(), IN_DUCK ) > 0 then
 		
-			if bit.band( cmd:GetButtons(), v ) > 0 then
+			cmd:SetButtons( cmd:GetButtons() - IN_DUCK )
 			
-				if v == IN_JUMP then
-				
-					if JumpTimer < CurTime() then
-
-						JumpTimer = CurTime() + 2
-						
-					else
-					
-						cmd:SetButtons( cmd:GetButtons() - v )
-					
-					end
-				
-				elseif v == IN_DUCK then
-			
-					cmd:SetButtons( cmd:GetButtons() - v )
-					
-				end
-				
-			end
-		
 		end
 	
 	else

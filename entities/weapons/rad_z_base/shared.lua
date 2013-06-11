@@ -130,6 +130,8 @@ end
 
 function SWEP:MeleeTrace( dmg )
 	
+	self.Owner:SetAnimation( PLAYER_ATTACK1 )
+	
 	self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
 	
 	if CLIENT then return end

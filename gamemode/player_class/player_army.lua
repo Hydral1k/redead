@@ -1,4 +1,5 @@
-DEFINE_BASECLASS( "player_default" )
+
+AddCSLuaFile()
 
 local PLAYER = {} 
 
@@ -12,4 +13,4 @@ function PLAYER:Spawn()
 
 end
 
-player_manager.RegisterClass( "player_army", PLAYER, "player_default" )
+player_manager.RegisterClass( "player_army", PLAYER, "player_baseclass" )

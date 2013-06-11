@@ -5,6 +5,10 @@ GM.Email 		= ""
 GM.Website 		= ""
 GM.TeamBased 	= true
 
+include( 'player_class/player_default.lua' )
+include( 'player_class/player_zombie.lua' )
+include( 'player_class/player_army.lua' )
+
 CreateConVar( "sv_redead_max_zombies", "45", { FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_SERVER_CAN_EXECUTE }, "Controls the amount of zombie NPCs that can be spawned at any time. (def 45)" )
 CreateConVar( "sv_redead_zombies_per_player", "3", { FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_SERVER_CAN_EXECUTE }, "Controls the amount of zombie NPCs that spawn per player. (def 3)" )
 CreateConVar( "sv_redead_zombies_per_player_zombie", "1", { FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_SERVER_CAN_EXECUTE }, "Controls the amount of zombie NPCs that spawn per player zombie. (def 1)" )

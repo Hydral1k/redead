@@ -1,7 +1,5 @@
 
 include( 'map_defaults.lua' )
-include( 'default_player.lua' )
-include( 'npcfix.lua' )
 include( 'resource.lua' )
 include( 'enums.lua' )
 include( 'items.lua' )
@@ -12,7 +10,7 @@ include( 'ply_extension.lua' )
 include( 'tables.lua' )
 include( 'weather.lua' )
 
-AddCSLuaFile( 'default_player.lua' )
+AddCSLuaFile( 'animations.lua' )
 AddCSLuaFile( 'enums.lua' )
 AddCSLuaFile( 'items.lua' )
 AddCSLuaFile( 'shared.lua' )
@@ -896,8 +894,6 @@ function GM:PlayerSpawn( pl )
 	end
 	
 	GAMEMODE:RespawnAntidote()
-	
-	player_manager.SetPlayerClass( pl, "player_army" )
 	
 	local oldhands = pl:GetHands()
 	
