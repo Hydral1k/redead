@@ -1,4 +1,6 @@
 
+ITEM_EXPLOSIVE = 345
+
 function FUNC_OXYGEN( ply, id, client, icon )
 
 	if icon then return "icon16/arrow_turn_right.png" end
@@ -34,7 +36,7 @@ item.Register( {
 	Description = "Highly explosive liquid oxygen.",
 	TypeOverride = "sent_oxygen",
 	Stackable = true, 
-	Type = ITEM_LOOT,
+	Type = ITEM_EXPLOSIVE,
 	Weight = 1.50, 
 	Price = 50,
 	Rarity = 0.95,
@@ -50,8 +52,8 @@ item.Register( {
 	TypeOverride = "sent_fuel_gas",
 	AllowPickup = true,
 	CollisionOverride = true,
-	Type = ITEM_LOOT,
-	Rarity = 0.40,
+	Type = ITEM_EXPLOSIVE,
+	Rarity = 0.50,
 	Model = "models/props_junk/gascan001a.mdl",
 	Functions = {}
 } )
@@ -61,8 +63,8 @@ item.Register( {
 	TypeOverride = "sent_fuel_diesel",
 	AllowPickup = true,
 	CollisionOverride = true,
-	Type = ITEM_LOOT,
-	Rarity = 0.60,
+	Type = ITEM_EXPLOSIVE,
+	Rarity = 0.50,
 	Model = "models/props_junk/metalgascan.mdl",
 	Functions = {}
 } )
@@ -72,8 +74,8 @@ item.Register( {
 	TypeOverride = "sent_propane_canister",
 	AllowPickup = true,
 	CollisionOverride = true,
-	Type = ITEM_LOOT,
-	Rarity = 0.60,
+	Type = ITEM_EXPLOSIVE,
+	Rarity = 0.50,
 	Model = "models/props_junk/propane_tank001a.mdl",
 	Functions = {}
 } )
@@ -83,8 +85,8 @@ item.Register( {
 	TypeOverride = "sent_propane_tank",
 	AllowPickup = true,
 	CollisionOverride = true,
-	Type = ITEM_LOOT,
-	Rarity = 0.40,
+	Type = ITEM_EXPLOSIVE,
+	Rarity = 0.50,
 	Model = "models/props_junk/propanecanister001a.mdl",
 	Functions = {}
 } )
@@ -93,9 +95,9 @@ item.Register( {
 	Name = "Radioactive Waste", 
 	TypeOverride = "sent_barrel_radioactive",
 	AllowPickup = true,
-	CollisionOverride = false,
-	Type = ITEM_LOOT,
-	Rarity = 0.50,
+	CollisionOverride = true,
+	Type = ITEM_EXPLOSIVE,
+	Rarity = 0.10,
 	Model = "models/props/de_train/barrel.mdl",
 	Functions = {}
 } )

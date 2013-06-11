@@ -11,7 +11,17 @@ function FUNC_DROPWEAPON( ply, id, client, icon )
 	
 	local prop = ents.Create( "sent_droppedgun" )
 	prop:SetPos( ply:GetItemDropPos() )
-	prop:SetModel( tbl.Model )
+	
+	if tbl.DropModel then
+			
+		prop:SetModel( tbl.DropModel )
+				
+	else
+			
+		prop:SetModel( tbl.Model )
+				
+	end
+	
 	prop:Spawn()
 	
 	ply:EmitSound( Sound( "items/ammopickup.wav" ) )
@@ -169,6 +179,7 @@ item.Register( {
 	Price = 35,
 	Rarity = 0.40,
 	Model = "models/weapons/w_pist_elite_single.mdl",
+	DropModel = "models/weapons/w_pist_elite_dropped.mdl",
 	Weapon = "rad_berettas",
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
@@ -466,7 +477,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "PPW-95", 
+	Name = "PPW-952", 
 	Description = "An experimental particle projectile weapon.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,

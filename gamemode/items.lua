@@ -36,7 +36,7 @@ function GetByModel( model )
 	
 	for k,v in pairs( ItemTables ) do
 		
-		if string.lower( v.Model ) == string.lower( model ) then
+		if string.lower( v.Model ) == string.lower( model ) or ( v.DropModel and string.lower( v.DropModel ) == string.lower( model ) ) then
 		
 			return v
 		

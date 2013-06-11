@@ -630,7 +630,7 @@ function meta:GetDroppedItems()
 
 	if not inv[1] then
 		
-		local rand = item.RandomItem( ITEM_FOOD )
+		local rand = item.RandomItem( ITEM_BUYABLE )
 		
 		return { rand.ID } 
 	
@@ -757,17 +757,17 @@ function meta:Think()
 		
 			if self:Health() > 75 then
 				
-				self:AddStamina( -3 )
-				self:AddHealth( -3 )
+				self:AddStamina( -4 )
+				self:AddHealth( -4 )
 			
 			else
 			
-				self:AddStamina( -2 )
-				self:AddHealth( -2 )
+				self:AddStamina( -3 )
+				self:AddHealth( -3 )
 			
 			end
 		
-			self:ViewBounce( math.random( 10, 15 ) )
+			self:ViewBounce( math.random( 10, 20 ) )
 			self:VoiceSound( table.Random( GAMEMODE.Coughs ), 100, math.random( 90, 100 ) )
 		
 		end

@@ -78,7 +78,7 @@ function SWEP:PrimaryAttack()
 	if SERVER then
 	
 		self.Owner:AddAmmo( self.AmmoType, self.Primary.NumShots * -1 )
-		self.Owner:EmitSound( self.Primary.Sound2, 100, math.random( 110, 120 ) )
+		self.Owner:EmitSound( self.Primary.Sound2, 100, math.random( 120, 130 ) )
 		
 	end
 

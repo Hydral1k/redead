@@ -72,9 +72,9 @@ function GM:Initialize()
 	
 	timer.Simple( GetConVar( "sv_redead_setup_time" ):GetInt(), function() for k,v in pairs( player.GetAll() ) do v:Notice( "The undead onslaught has begun", GAMEMODE.Colors.White, 5 ) end end )
 	
-	timer.Simple( 90, function() GAMEMODE:PickLord() end )
+	timer.Simple( GetConVar( "sv_redead_setup_time" ):GetInt() - 5, function() for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do v:Notice( "Press F4 if you want to be the zombie lord", GAMEMODE.Colors.White, 5 ) end end )
 	
-	timer.Simple( 110, function() GAMEMODE:PickLord( true ) end )
+	timer.Simple( GetConVar( "sv_redead_setup_time" ):GetInt() + 5, function() GAMEMODE:PickLord() end )
 	
 	timer.Simple( length - 60, function() GAMEMODE.EvacAlert = true for k,v in pairs( player.GetAll() ) do v:ClientSound( GAMEMODE.LastMinute ) v:Notice( "The evac chopper is en route", GAMEMODE.Colors.White, 5 ) end end )
 	
@@ -378,56 +378,53 @@ function GM:AddToZombieList( ply )
 
 end
 
-function GM:PickLord( force )
+function GM:PickLord()
 
-	if team.NumPlayers( TEAM_ZOMBIES ) > 0 then return end
-
-	if team.NumPlayers( TEAM_ARMY ) < 8 then return end
-	
-	if force then
-	
-		local ply = table.Random( team.GetPlayers( TEAM_ARMY ) )
-	
-		if #GAMEMODE.Lords > 0 then
-			
-			local tbl = {}
-			
-			for k,v in pairs( GAMEMODE.Lords ) do
-			
-				if IsValid( v ) then
-			
-					table.insert( tbl, v )
-					
-				end
-			
-			end
-			
-			if tbl[1] then
+	local tbl = team.GetPlayers( TEAM_ZOMBIES )
 		
-				ply = table.Random( tbl )
-				
-			end
+	for k,v in pairs( GAMEMODE.Lords ) do
 		
+		if IsValid( v ) then
+			
+			table.insert( tbl, v )
+			
 		end
 		
-		for k,v in pairs( player.GetAll() ) do
-		
-			v:Notice( "A zombie lord has been randomly chosen", GAMEMODE.Colors.White, 5 )
-		
-		end
-		
-		ply:Notice( "You have been chosen to become the zombie lord", GAMEMODE.Colors.White, 5, 1 )
-		
-		timer.Simple( 6, function() ply:Gib() ply:SetLord( true ) ply:SetTeam( TEAM_ZOMBIES ) end )
-		
-		return
+	end
+	
+	if table.Count( tbl ) < 1 then
+	
+		tbl = team.GetPlayers( TEAM_ARMY )
 	
 	end
-
+		
+	local ply = table.Random( tbl )
+	
+	local snd = table.Random( GAMEMODE.AmbientScream )
+	ply:ClientSound( snd, 100 )
+		
+	if ply:Team() == TEAM_ZOMBIES then
+		
+		ply:Notice( "You have become the zombie lord", GAMEMODE.Colors.White, 5 )
+		
+		timer.Simple( 3, function() ply:Gib() ply:SetLord( true ) end )
+		
+	else
+		
+		ply:Notice( "You will become the zombie lord", GAMEMODE.Colors.White, 5 )
+			
+		timer.Simple( 3, function() ply:SetTeam( TEAM_ZOMBIES ) ply:SetPlayerClass( CLASS_RUNNER ) ply:SetCash( 0 ) ply:Gib() ply:SetLord( true ) end )
+		
+	end
+		
 	for k,v in pairs( player.GetAll() ) do
-	
-		v:Notice( "Press F4 if you want to be the zombie lord", GAMEMODE.Colors.White, 5 )
-	
+		
+		if v != ply then
+		
+			v:Notice( "A zombie lord has been chosen", GAMEMODE.Colors.White, 5 )
+				
+		end
+		
 	end
 
 end
@@ -560,8 +557,8 @@ function GM:LootThink()
 	
 	if num > 0 then
 	
-		local tbl = { ITEM_SUPPLY, ITEM_LOOT, ITEM_AMMO, ITEM_MISC, ITEM_SPECIAL, ITEM_WPN_COMMON, ITEM_WPN_SPECIAL }
-		local chancetbl = { 0.60,     0.80,      0.70,     0.95,       0.05,           0.02,           0.01 }
+		local tbl = { ITEM_SUPPLY, ITEM_LOOT, ITEM_AMMO, ITEM_MISC, ITEM_SPECIAL, ITEM_WPN_COMMON, ITEM_WPN_SPECIAL, ITEM_EXPLOSIVE }
+		local chancetbl = { 0.60,     0.80,      0.70,     0.95,       0.05,           0.02,           0.01,             0.10 }
 		
 		for i=1, num do
 			
@@ -589,7 +586,17 @@ function GM:LootThink()
 			local loot = ents.Create( proptype )
 			loot:SetPos( pos + Vector(0,0,5) )
 			loot:SetAngles( VectorRand():Angle() )
-			loot:SetModel( rand.Model )
+			
+			if rand.DropModel then
+			
+				loot:SetModel( rand.DropModel )
+			
+			else
+			
+				loot:SetModel( rand.Model )
+			
+			end
+			
 			loot:Spawn()
 			loot.RandomLoot = true
 			loot.IsItem = true
@@ -1648,7 +1655,17 @@ function DropItem( ply, cmd, args )
 				local prop = ents.Create( "prop_physics" )
 				prop:SetPos( ply:GetItemDropPos() )
 				prop:SetAngles( ply:GetAimVector():Angle() )
-				prop:SetModel( tbl.Model ) 
+				
+				if tbl.DropModel then
+			
+					prop:SetModel( tbl.DropModel )
+				
+				else
+				
+					prop:SetModel( tbl.Model )
+				
+				end
+				
 				prop:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 				prop:Spawn()
 				prop.IsItem = true

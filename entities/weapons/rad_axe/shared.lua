@@ -138,7 +138,8 @@ function SWEP:MeleeTrace( dmg )
 		
 		if ent:IsPlayer() then 
 			
-			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
+			local snd = table.Random( GAMEMODE.AxeHit )
+			ent:EmitSound( snd, 100, math.random(90,110) )
 			
 			if ent:Team() != self.Owner:Team() then
 		
@@ -156,7 +157,9 @@ function SWEP:MeleeTrace( dmg )
 		
 			ent:SetHeadshotter( self.Owner, true )
 			ent:TakeDamage( dmg, self.Owner, self.Weapon )
-			ent:EmitSound( table.Random( GAMEMODE.AxeHit ), 100, math.random(90,110) )
+			
+			local snd = table.Random( GAMEMODE.AxeHit )
+			ent:EmitSound( snd, 100, math.random(90,110) )
 			
 			self.Owner:DrawBlood()
 			

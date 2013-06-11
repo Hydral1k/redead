@@ -62,12 +62,20 @@ function PANEL:Init()
 	
 end
 
+function PANEL:Think()
+
+	self.Dragging = false
+
+end
+
 function PANEL:ChooseParent()
 	
 end
 
 function PANEL:GetPadding()
+
 	return 5
+	
 end
 
 function PANEL:PerformLayout()

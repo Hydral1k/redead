@@ -34,10 +34,6 @@ Sound( "npc/zombie/claw_miss2.wav" ) }
 
 ENT.VoiceSounds = {}
 
-// Other stuff
-
-ENT.HeadshotNoise = Sound( "Player.DamageHeadShot" )
-
 ENT.NextBot = true
 ENT.ShouldDrawPath = false
 ENT.Obstructed = false
@@ -212,7 +208,9 @@ function ENT:OnLimbHit( hitgroup, dmginfo )
 
 	if hitgroup == HITGROUP_HEAD then
 	
-		self.Entity:EmitSound( self.HeadshotNoise, 80, math.random( 100, 120 ) )
+		local snd = table.Random( GAMEMODE.HeadShot )
+	
+		self.Entity:EmitSound( snd, 90, math.random( 100, 120 ) )
 		self.Entity:SetHeadshotter( dmginfo:GetAttacker(), true )
 		
 		local effectdata = EffectData()
@@ -427,6 +425,21 @@ function ENT:OnKilled( dmginfo )
 				if self.Entity:OnFire() then
 				
 					umsg.Start( "Burned" )
+					umsg.Vector( self.Entity:GetPos() )
+					umsg.End()
+				
+				end
+				
+				if self.Entity:GetHeadshotter( ent1 ) then
+				
+					local snd = table.Random( GAMEMODE.GoreSplash )
+					self.Entity:EmitSound( snd, 90, math.random( 90, 110 ) )
+					
+					local effectdata = EffectData()
+					effectdata:SetOrigin( self.Entity:GetPos() + Vector(0,0,40) )
+					util.Effect( "head_gib", effectdata, true, true )
+					
+					umsg.Start( "Headless" )
 					umsg.Vector( self.Entity:GetPos() )
 					umsg.End()
 				

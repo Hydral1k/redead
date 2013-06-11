@@ -301,6 +301,7 @@ function SWEP:BarricadeTrace()
 	self.Owner:AddStamina( -15 )
 	self.Owner:RemoveFromInventory( id )
 	self.Owner:AddStat( "Wood" )
+	self.Owner:AddCash( 1 )
 	
 	self.Owner:EmitSound( table.Random( GAMEMODE.Drill ), 100, math.random(90,110) )
 	self.Owner:EmitSound( table.Random( GAMEMODE.WoodHammer ), 100, math.random(90,110) )
@@ -367,7 +368,12 @@ function SWEP:MeleeTrace( dmg )
 			
 		elseif string.find( ent:GetClass(), "npc" ) then
 		
-			ent:SetHeadshotter( self.Owner, true )
+			if math.random(1,3) == 1 then
+		
+				ent:SetHeadshotter( self.Owner, true )
+				
+			end
+			
 			ent:TakeDamage( dmg, self.Owner, self.Weapon )
 			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
 			

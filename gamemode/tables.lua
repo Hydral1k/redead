@@ -258,11 +258,14 @@ GM.Burning = { "player/pl_burnpain1.wav",
 
 GM.BurnFlesh = Sound( "general.burningflesh" )
 
-GM.AxeHit = { "nuke/weapon/hit01.wav", 
-"nuke/weapon/hit02.wav", 
-"nuke/weapon/hit03.wav", 
-"nuke/weapon/hit04.wav", 
-"nuke/weapon/hit05.wav" }
+GM.AxeHit = { "ambient/machines/slicer1.wav",
+"ambient/machines/slicer2.wav",
+"ambient/machines/slicer3.wav",
+"ambient/machines/slicer4.wav" }
+
+GM.HeadShot = { "player/headshot1.wav",
+"player/headshot2.wav",
+"physics/flesh/flesh_bloody_break.wav" }
 
 GM.GoreSplash = { "nuke/gore/blood01.wav", 
 "nuke/gore/blood02.wav", 
@@ -274,7 +277,9 @@ GM.GoreSplat = { "physics/flesh/flesh_squishy_impact_hard1.wav",
 "physics/flesh/flesh_squishy_impact_hard3.wav",
 "physics/flesh/flesh_squishy_impact_hard4.wav",
 "physics/flesh/flesh_bloody_impact_hard1.wav",
+"physics/body/body_medium_break2.wav",
 "physics/body/body_medium_break3.wav",
+"physics/body/body_medium_break4.wav",
 "ambient/levels/canals/toxic_slime_sizzle1.wav",
 "ambient/levels/canals/toxic_slime_sizzle2.wav",
 "ambient/levels/canals/toxic_slime_gurgle3.wav",
@@ -289,7 +294,11 @@ GM.GoreBullet = { "nuke/gore/flesh01.wav",
 GM.Drill = { "npc/dog/dog_servo6.wav",
 "npc/dog/dog_servo7.wav",
 "npc/dog/dog_servo10.wav",
-"npc/dog/dog_servo12.wav" }
+"npc/dog/dog_servo12.wav",
+"ambient/machines/pneumatic_drill_1.wav",
+"ambient/machines/pneumatic_drill_2.wav",
+"ambient/machines/pneumatic_drill_3.wav",
+"ambient/machines/pneumatic_drill_4.wav" }
 
 GM.WoodHammer = { "physics/wood/wood_plank_impact_hard2.wav",
 "physics/wood/wood_plank_impact_hard3.wav",

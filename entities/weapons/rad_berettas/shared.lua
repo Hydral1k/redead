@@ -15,12 +15,12 @@ if CLIENT then
 	
 end
 
-SWEP.HoldType = "pistol"
+SWEP.HoldType = "duel"
 
 SWEP.Base = "rad_base"
 
 SWEP.ViewModel	= "models/weapons/v_pist_elite.mdl"
-SWEP.WorldModel = "models/weapons/w_pist_fiveseven.mdl"
+SWEP.WorldModel = "models/weapons/w_pist_elite.mdl"
 
 SWEP.SprintPos = Vector (-0.626, 0.5615, 3.5852)
 SWEP.SprintAng = Vector (-25.2347, -3.1815, 0.3427)

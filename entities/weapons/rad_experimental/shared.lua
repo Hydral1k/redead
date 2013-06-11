@@ -10,7 +10,7 @@ if CLIENT then
 	
 	SWEP.ViewModelFOV = 60
 	
-	SWEP.PrintName = "PPW-95"
+	SWEP.PrintName = "PPW-952"
 	SWEP.IconLetter = "m"
 	SWEP.Slot = 4
 	SWEP.Slotpos = 2
@@ -40,7 +40,7 @@ SWEP.LaserScale = 0.25
 
 SWEP.Gore = Sound( "npc/roller/mine/rmine_explode_shock1.wav" )
 
-SWEP.Primary.Sound			= Sound( "Weapon_famas.Single" )
+SWEP.Primary.Sound			= Sound( "Airboat.FireGunHeavy" )
 SWEP.Primary.Sound2			= Sound( "npc/scanner/scanner_electric2.wav" )
 SWEP.Primary.Recoil			= 15.5
 SWEP.Primary.Damage			= 350
@@ -76,7 +76,7 @@ function SWEP:PrimaryAttack()
 	end
 
 	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(120,130) )
+	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(90,100) )
 	self.Weapon:EmitSound( self.Primary.Sound2, 100, math.random(120,130) )
 	self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone, self.Weapon:GetZoomMode() )
 	self.Weapon:TakePrimaryAmmo( 1 )
