@@ -1,4 +1,6 @@
 
+include( 'player_class/player_base.lua' )
+include( 'player_class/player_zombie.lua' )
 include( 'map_defaults.lua' )
 include( 'resource.lua' )
 include( 'enums.lua' )
@@ -10,6 +12,8 @@ include( 'ply_extension.lua' )
 include( 'tables.lua' )
 include( 'weather.lua' )
 
+AddCSLuaFile( 'player_class/player_base.lua' )
+AddCSLuaFile( 'player_class/player_zombie.lua' )
 AddCSLuaFile( 'animations.lua' )
 AddCSLuaFile( 'enums.lua' )
 AddCSLuaFile( 'items.lua' )
@@ -395,6 +399,8 @@ function GM:PickLord()
 		tbl = team.GetPlayers( TEAM_ARMY )
 	
 	end
+		
+	if table.Count( tbl ) <= 1 then return end
 		
 	local ply = table.Random( tbl )
 	
@@ -895,23 +901,6 @@ function GM:PlayerSpawn( pl )
 	
 	GAMEMODE:RespawnAntidote()
 	
-	local oldhands = pl:GetHands()
-	
-	if IsValid( oldhands ) then
-	
-		oldhands:Remove()
-		
-	end
-
-	local hands = ents.Create( "gmod_hands" )
-	
-	if IsValid( hands ) then
-	
-		hands:DoSetup( pl )
-		hands:Spawn()
-		
-	end	
-	
 	if pl:Team() == TEAM_ARMY then
 	
 		local music = table.Random( GAMEMODE.OpeningMusic )
@@ -926,6 +915,23 @@ function GM:PlayerSpawn( pl )
 	pl:InitializeInventory()
 	pl:OnSpawn()
 	pl:OnLoadout()
+	
+	local oldhands = pl:GetHands()
+	
+	if IsValid( oldhands ) then
+	
+		oldhands:Remove()
+		
+	end
+	
+	local hands = ents.Create( "gmod_hands" )
+	
+	if IsValid( hands ) then
+	
+		hands:DoSetup( pl )
+		hands:Spawn()
+		
+	end	
 
 end
 

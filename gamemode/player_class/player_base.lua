@@ -5,6 +5,12 @@ DEFINE_BASECLASS( "player_default" )
 
 local PLAYER = {} 
 
+function PLAYER:GetHandsModel()
+
+	return { model = "models/weapons/c_arms_cstrike.mdl", skin = 1, body = "0100000" }
+
+end
+
 function PLAYER:HandlePlayerJumping( velocity )
 
 	if ( self.Player:GetMoveType() == MOVETYPE_NOCLIP ) then
@@ -171,10 +177,6 @@ function PLAYER:UpdateAnimation( velocity, maxseqgroundspeed )
 
 end
 
---
--- If you don't want the player to grab his ear in your gamemode then
--- just override this.
---
 function PLAYER:GrabEarAnimation()	
 
 	self.Player.ChatGestureWeight = self.Player.ChatGestureWeight or 0
@@ -197,9 +199,6 @@ function PLAYER:GrabEarAnimation()
 
 end
 
---
--- Moves the mouth when talking on voicecom
---
 function PLAYER:MouthMoveAnimation()
 
 	local FlexNum = self.Player:GetFlexNum() - 1
@@ -276,7 +275,6 @@ local IdleActivityTranslate = {}
 	IdleActivityTranslate [ ACT_MP_SWIM ] 						= ACT_MP_SWIM
 	IdleActivityTranslate [ ACT_LAND ] 							= ACT_LAND
 
--- it is preferred you return ACT_MP_* in CalcMainActivity, and if you have a specific need to not tranlsate through the weapon do it here
 function PLAYER:TranslateActivity( act )
 
 	local act = act
@@ -337,4 +335,4 @@ function PLAYER:DoAnimationEvent( event, data )
 	return nil
 end
 
-player_manager.RegisterClass( "player_baseclass", PLAYER, "player_default" )
+player_manager.RegisterClass( "player_base", PLAYER, "player_default" )

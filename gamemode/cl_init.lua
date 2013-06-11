@@ -1,4 +1,6 @@
 
+include( 'player_class/player_base.lua' )
+include( 'player_class/player_zombie.lua' )
 include( 'animations.lua' )
 include( 'items.lua' )
 include( 'shared.lua' )
@@ -168,7 +170,7 @@ function GM:Think()
 		StartMenuShown = true
 		GAMEMODE:ShowClasses()
 		
-		player_manager.SetPlayerClass( LocalPlayer(), "player_army" )
+		//player_manager.SetPlayerClass( LocalPlayer(), "player_base" )
 	
 	end
 

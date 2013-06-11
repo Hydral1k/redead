@@ -90,4 +90,4 @@ function PLAYER:DoAnimationEvent( event, data )
 
 end
 
-player_manager.RegisterClass( "player_zombie", PLAYER, "player_baseclass" )
+player_manager.RegisterClass( "player_zombie", PLAYER, "player_base" )
