@@ -413,7 +413,7 @@ function ENT:OnDeath( dmginfo )
 	
 	end
 	
-	if math.random(1,2) == 1 then
+	if math.random(1,4) != 1 then
 	
 		local model = table.Random{ "models/healthvial.mdl", "models/items/healthkit.mdl" }
 	

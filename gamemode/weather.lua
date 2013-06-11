@@ -276,6 +276,8 @@ function GM:GetSky()
 	
 		GAMEMODE.LastSkyPos = tr.HitPos
 		GAMEMODE.PlayerIsIndoors = false
+		
+		GAMEMODE:ComputeSkyBounds()
 	
 		return tr.HitPos
 	
@@ -293,31 +295,54 @@ function GM:GetSky()
 
 end
 
+GM.RainDist = 1000
+
+function GM:ComputeSkyBounds()
+
+	local trace = {}
+	trace.start = GAMEMODE.LastSkyPos
+	trace.endpos = trace.start + Vector( GAMEMODE.RainDist, 0, 0 )
+	
+	local tr = util.TraceLine( trace )
+	
+	trace = {}
+	trace.start = tr.HitPos
+	trace.endpos = trace.start + Vector( 0, GAMEMODE.RainDist, 0 )
+	
+	tr = util.TraceLine( trace )
+	
+	GAMEMODE.RightSkyBound = tr.HitPos
+	
+	trace = {}
+	trace.start = GAMEMODE.LastSkyPos
+	trace.endpos = trace.start + Vector( GAMEMODE.RainDist * -1, 0, 0 )
+	
+	tr = util.TraceLine( trace )
+	
+	trace = {}
+	trace.start = tr.HitPos
+	trace.endpos = trace.start + Vector( 0, GAMEMODE.RainDist * -1, 0 )
+	
+	tr = util.TraceLine( trace )
+	
+	GAMEMODE.LeftSkyBound = tr.HitPos
+
+end
+
 function GM:GetClosestSkyPos()
 
 	local skypos = GAMEMODE:GetSky()
 	local pos = LocalPlayer():GetPos()
 	
-	if Vector( pos.x, pos.y, 0 ):Distance( Vector( skypos.x, skypos.y, 0 ) ) < 80 then return skypos end
-	
 	local trace = {}
 	trace.start = skypos
 	trace.endpos = Vector( pos.x, pos.y, skypos.z )
-	trace.filter = LocalPlayer()
 	
 	local tr = util.TraceLine( trace )
 	
-	if tr.Hit then
-	
-		trace.start = Vector( pos.x, pos.y, skypos.z )
-		trace.endpos = skypos
-		trace.filter = LocalPlayer()
-		
-		tr = util.TraceLine( trace )
-	
-	end
-	
 	GAMEMODE.LastSkyPos = tr.HitPos
+	
+	GAMEMODE:ComputeSkyBounds()
 	
 	return tr.HitPos
 
@@ -331,7 +356,7 @@ function GM:RainThink()
 	
 		GAMEMODE.NextRain = CurTime() + 0.2
 		
-		local amt = math.floor( GAMEMODE.Weather.Rain * 150 * CV_Density:GetFloat() )
+		local amt = math.floor( GAMEMODE.Weather.Rain * 175 * CV_Density:GetFloat() )
 		
 		GAMEMODE:SpawnRain( amt )
 		
@@ -375,14 +400,15 @@ function GM:SpawnRain( amt )
 		
 		if math.random(1,6) == 1 then
 		
-			local particle = RainEmitter:Add( "nuke/gore" .. math.random(1,2), pos )
+			local particle = RainEmitter:Add( "effects/blood", pos )
 			particle:SetVelocity( Vector(0,0,0) )
 			particle:SetLifeTime( 0 )
-			particle:SetDieTime( 0.3 )
+			particle:SetDieTime( 0.25 )
 			particle:SetStartAlpha( 100 )
 			particle:SetEndAlpha( 0 )
 			particle:SetStartSize( 1 )
-			particle:SetEndSize( math.Rand( 5, 10 ) )
+			particle:SetEndSize( math.Rand( 5, 10 + GAMEMODE.Weather.Rain * 5 ) )
+			particle:SetRoll( math.Rand( -360, 360 ) )
 			particle:SetAirResistance( 0 )
 			particle:SetCollide( false )
 			//particle:SetColor( Color( 200, 200, 250 ) )
@@ -391,15 +417,16 @@ function GM:SpawnRain( amt )
 		
 	end
 	
+	local pos = GAMEMODE:GetClosestSkyPos()
+	
+	if not pos then return end
+	
 	for i=1, amt do
 	
-		local vec = VectorRand()
-		vec.z = -0.1
-		
-		local pos = GAMEMODE:GetClosestSkyPos() + vec * 1200
+		local vec = Vector( math.random( GAMEMODE.LeftSkyBound.x, GAMEMODE.RightSkyBound.x ), math.random( GAMEMODE.LeftSkyBound.y, GAMEMODE.RightSkyBound.y ), pos.z )
 		local len = math.random( 40, 80 )
 		
-		local particle = RainEmitter:Add( "particle/Water/WaterDrop_001a", pos )			
+		local particle = RainEmitter:Add( "particle/Water/WaterDrop_001a", vec )			
 		particle:SetVelocity( Vector( 0, 0, math.random( -900, -800 ) ) + WindVector * ( 1 + math.sin( CurTime() * 0.1 ) ) )
 		particle:SetLifeTime( 0 )
 		particle:SetDieTime( 10 )

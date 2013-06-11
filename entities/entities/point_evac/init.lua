@@ -5,7 +5,7 @@ include( 'shared.lua' )
 
 ENT.Heli = Sound( "ambient/machines/heli_pass2.wav" )
 
-ENT.EvacDist = 350
+ENT.EvacDist = 400
 
 function ENT:Initialize()
 	

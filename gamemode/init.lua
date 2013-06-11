@@ -562,7 +562,7 @@ function GM:LootThink()
 	if num > 0 then
 	
 		local tbl = { ITEM_SUPPLY, ITEM_LOOT, ITEM_AMMO, ITEM_MISC, ITEM_SPECIAL, ITEM_WPN_COMMON, ITEM_WPN_SPECIAL, ITEM_EXPLOSIVE }
-		local chancetbl = { 0.60,     0.80,      0.70,     0.95,       0.05,           0.02,           0.01,             0.10 }
+		local chancetbl = { 0.60,     0.70,      0.70,     0.95,       0.05,           0.02,           0.01,             0.10 }
 		
 		for i=1, num do
 			
@@ -621,6 +621,8 @@ end
 
 function GM:WoodThink()
 
+	if table.Count( GAMEMODE.WoodLocations ) < 1 then return end
+
 	if GAMEMODE.WoodCount < GAMEMODE.WoodPercent then
 	
 		local tbl = table.Random( GAMEMODE.WoodLocations ) 
@@ -628,7 +630,7 @@ function GM:WoodThink()
 		prop:SetPos( tbl.Pos )
 		prop:SetAngles( tbl.Ang )
 		prop:SetModel( tbl.Model )
-		prop:SetHealth( math.Clamp( tbl.Health, 50, 1000 ) )
+		prop:SetHealth( math.Clamp( tbl.Health, 50, 500 ) )
 		prop:Spawn()
 		prop.IsWooden = true
 		
@@ -1163,9 +1165,9 @@ function GM:EntityTakeDamage( ent, dmginfo )
 
 	if ent.IsWooden then
 	
-		ent.WoodHits = ( ent.WoodHits or 1 ) + 1
+		ent.WoodHealth = ( ent.WoodHealth or 150 ) - dmginfo:GetDamage() 
 		
-		if ent.WoodHits > 10 then
+		if ent.WoodHealth < 1 then
 		
 			ent:Fire( "break", 0, 0 )
 		

@@ -397,7 +397,7 @@ item.Register( {
 	Type = ITEM_LOOT,
 	Weight = 0.30, 
 	Price = 5,
-	Rarity = 0.50,
+	Rarity = 0.30,
 	Model = "models/props_junk/glassbottle01a.mdl",
 	Functions = { FUNC_BEER },
 	CamPos = Vector(16,12,1),

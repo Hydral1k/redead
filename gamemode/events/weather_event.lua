@@ -12,54 +12,11 @@ EVENT.Types[4] = "strong winds"
 
 function EVENT:Start()
 
-	local tbl = GAMEMODE:RandomizeWeather( true )
-	local tbl2 = {}
-	local str = ""
-	
-	for k,v in pairs( tbl ) do
-	
-		if v > 0 then
-		
-			table.insert( tbl2, EVENT.Types[k] )
-		
-		end
-	
-	end
-	
-	if table.Count( tbl2 ) == 0 then
-	
-		GAMEMODE:ManualWeather(1,0,0,0)
-		
-		table.insert( tbl2, "rain" )
-	
-	end
-
-	if table.Count( tbl2 ) > 1 then
-	
-		for k,v in pairs( tbl2 ) do
-		
-			if k < table.Count( tbl2 ) - 1 then
-		
-				str = str .. v .. ", "
-				
-			elseif k == table.Count( tbl2 ) then
-			
-				str = str .. v
-			
-			else
-			
-				str = v .. " and "
-			
-			end
-		
-		end
-	
-	end
+	GAMEMODE:RandomizeWeather( true )
 	
 	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do
 		
 		v:Notice( "The weather conditions are changing", GAMEMODE.Colors.White, 5 )
-		v:Notice( "Immediate forecast: " .. str, GAMEMODE.Colors.White, 5, 2 )
 		
 	end
 	
