@@ -43,7 +43,7 @@ SWEP.Primary.Automatic		= true
 
 function SWEP:GetViewModelPosition( pos, ang )
 
-	return self.Weapon:MoveViewModelTo( self.HoldPos, self.HoldAng, pos, ang, 1 )
+	return pos, ang //self.Weapon:MoveViewModelTo( self.HoldPos, self.HoldAng, pos, ang, 1 )
 	
 end
 
