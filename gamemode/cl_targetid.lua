@@ -17,7 +17,6 @@ function GM:GetEntityID( ent )
 	
 			TargetedName = tbl.Name
 			TargetedEntity = ent
-			TargetedTime = CurTime() + 5
 			TargetedDist = Vector( 0, 0, TargetedEntity:OBBCenter():Distance( TargetedEntity:OBBMaxs() ) )
 		
 		end
@@ -30,7 +29,6 @@ function GM:GetEntityID( ent )
 	
 			TargetedName = tbl.Name
 			TargetedEntity = ent
-			TargetedTime = CurTime() + 5
 			TargetedDist = Vector( 0, 0, 10 )
 		
 		end
@@ -39,43 +37,49 @@ function GM:GetEntityID( ent )
 	
 		TargetedName = "Loot"
 		TargetedEntity = ent
-		TargetedTime = CurTime() + 5
 		TargetedDist = Vector( 0, 0, 10 )
 		
 	elseif ent:GetClass() == "sent_cash" then
 	
 		TargetedName = ent:GetNWInt( "Cash", 10 ) .. " " .. GAMEMODE.CurrencyName .. "s"
 		TargetedEntity = ent
-		TargetedTime = CurTime() + 5
 		TargetedDist = Vector( 0, 0, 5 )
 	
 	elseif ent:GetClass() == "sent_antidote" then
 	
 		TargetedName = "Antidote Crate"
 		TargetedEntity = ent
-		TargetedTime = CurTime() + 5
 		TargetedDist = Vector( 0, 0, 15 )
 		
 	elseif ent:GetClass() == "sent_supplycrate" then
 	
 		TargetedName = "Supply Crate"
 		TargetedEntity = ent
-		TargetedTime = CurTime() + 5
 		TargetedDist = Vector( 0, 0, 15 )
+		
+	elseif ent:GetClass() == "sent_bonuscrate" then
+	
+		TargetedName = "Weapon Cache"
+		TargetedEntity = ent
+		TargetedDist = Vector( 0, 0, 25 )
 		
 	elseif ent:GetClass() == "npc_scientist" then
 	
 		TargetedName = "Field Researcher"
 		TargetedEntity = ent
-		TargetedTime = CurTime() + 5
 		TargetedDist = Vector( 0, 0, 40 )
 	
 	elseif ent:IsPlayer() and ent:Team() == TEAM_ARMY then
 	
 		TargetedName = ent:Name()
 		TargetedEntity = ent
-		TargetedTime = CurTime() + 5
 		TargetedDist = Vector( 0, 0, 45 )
+	
+	end
+	
+	if IsValid( TargetedEntity ) then
+	
+		TargetedTime = CurTime() + 5
 	
 	end
 	
