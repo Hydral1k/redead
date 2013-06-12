@@ -332,7 +332,9 @@ function meta:GetRadiation()
 end
 
 function meta:SetRadiation( num )
+
 	self:SetNWInt( "Radiation", math.Clamp( num, 0, 5 ) )
+	
 end
 
 function meta:AddRadiation( num )
@@ -353,6 +355,8 @@ function meta:AddRadiation( num )
 		local ed = EffectData()
 		ed:SetEntity( self )
 		util.Effect( "radiation", ed, true, true )
+		
+		self:AddStat( "Rad", num )
 		
 	end
 
