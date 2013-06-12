@@ -35,12 +35,11 @@ SWEP.Click = Sound( "Buttons.snd14" )
 SWEP.Deny = Sound( "HL1/fvox/buzz.wav" )
 
 SWEP.Primary.Hit            = Sound( "weapons/crowbar/crowbar_impact1.wav" )
-SWEP.Primary.HitFlesh		= Sound( "Flesh.BulletImpact" )
 SWEP.Primary.Sound			= Sound( "weapons/iceaxe/iceaxe_swing1.wav" )
 SWEP.Primary.Recoil			= 6.5
 SWEP.Primary.Damage			= 50
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Delay			= 1.300
+SWEP.Primary.Delay			= 1.100
 
 SWEP.Primary.ClipSize		= 1
 SWEP.Primary.Automatic		= true
@@ -352,7 +351,8 @@ function SWEP:MeleeTrace( dmg )
 		
 		if ent:IsPlayer() then 
 			
-			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
+			local snd = table.Random( GAMEMODE.BluntHit )
+			ent:EmitSound( snd, 100, math.random(90,110) )
 			
 			if ent:Team() != self.Owner:Team() then
 		
@@ -368,6 +368,9 @@ function SWEP:MeleeTrace( dmg )
 			
 		elseif string.find( ent:GetClass(), "npc" ) then
 		
+			local snd = table.Random( GAMEMODE.BluntHit )
+			ent:EmitSound( snd, 100, math.random(90,110) )
+		
 			if math.random(1,3) == 1 then
 		
 				ent:SetHeadshotter( self.Owner, true )
@@ -375,7 +378,6 @@ function SWEP:MeleeTrace( dmg )
 			end
 			
 			ent:TakeDamage( dmg, self.Owner, self.Weapon )
-			ent:EmitSound( self.Primary.HitFlesh, 100, math.random(90,110) )
 			
 			self.Owner:DrawBlood()
 			

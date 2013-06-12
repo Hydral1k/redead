@@ -263,6 +263,12 @@ GM.AxeHit = { "ambient/machines/slicer1.wav",
 "ambient/machines/slicer3.wav",
 "ambient/machines/slicer4.wav" }
 
+GM.BluntHit = { "ambient/machines/slicer2.wav",
+"ambient/machines/slicer3.wav",
+"weapons/crossbow/hitbod1.wav",
+"weapons/crossbow/hitbod2.wav",
+"Flesh.BulletImpact" }
+
 GM.HeadShot = { "player/headshot1.wav",
 "player/headshot2.wav",
 "physics/flesh/flesh_bloody_break.wav" }

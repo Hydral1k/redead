@@ -230,7 +230,7 @@ GM.SpawnChance[ "npc_nb_poison" ] = 0.2
 // The individual waves and the list of zombies that will spawn. ( more waves means a longer match )
 
 GM.Waves = {}
-GM.Waves[1] = { "npc_nb_common" }
+GM.Waves[1] = { "npc_nb_poison" }
 GM.Waves[2] = { "npc_nb_common", "npc_nb_leaper" }
 GM.Waves[3] = { "npc_nb_common", "npc_nb_contagion", "npc_nb_leaper" }
 GM.Waves[4] = { "npc_nb_common", "npc_nb_contagion", "npc_nb_leaper", "npc_nb_poison" }

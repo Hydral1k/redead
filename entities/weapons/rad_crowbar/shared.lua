@@ -6,10 +6,10 @@ end
 
 if CLIENT then
 
-	SWEP.ViewModelFOV		= 80
+	SWEP.ViewModelFOV		= 75
 	SWEP.ViewModelFlip		= false
 	
-	SWEP.PrintName = "Axe"
+	SWEP.PrintName = "Crowbar"
 	SWEP.IconLetter = "j"
 	SWEP.Slot = 1
 	SWEP.Slotpos = 0
@@ -20,11 +20,13 @@ SWEP.HoldType = "melee2"
 
 SWEP.Base = "rad_base"
 
-SWEP.ViewModel			= "models/weapons/v_axe/v_axe.mdl"
-SWEP.WorldModel			= "models/weapons/w_axe.mdl"
+SWEP.UseHands = true
 
-SWEP.HoldPos = Vector (1.1747, -16.6759, -5.7913)
-SWEP.HoldAng = Vector (23.7548, -8.0105, -5.154)
+SWEP.ViewModel			= "models/weapons/c_crowbar.mdl"
+SWEP.WorldModel			= "models/weapons/w_crowbar.mdl"
+
+SWEP.HoldPos = Vector(8.72, 0, 3.319)
+SWEP.HoldAng = Vector(0, 0, 0)
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "Knife"
@@ -32,9 +34,9 @@ SWEP.AmmoType = "Knife"
 SWEP.Primary.Hit            = Sound( "weapons/crowbar/crowbar_impact2.wav" )
 SWEP.Primary.Sound			= Sound( "weapons/iceaxe/iceaxe_swing1.wav" )
 SWEP.Primary.Recoil			= 9.5
-SWEP.Primary.Damage			= 100
+SWEP.Primary.Damage			= 90
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Delay			= 1.300
+SWEP.Primary.Delay			= 0.950
 
 SWEP.Primary.ClipSize		= 1
 SWEP.Primary.Automatic		= true
@@ -53,7 +55,7 @@ function SWEP:PrimaryAttack()
 
 	if SERVER then
 	
-		self.Owner:AddStamina( -4 )
+		self.Owner:AddStamina( -3 )
 	
 	end
 	
@@ -136,7 +138,7 @@ function SWEP:MeleeTrace( dmg )
 		
 		if ent:IsPlayer() then 
 			
-			local snd = table.Random( GAMEMODE.AxeHit )
+			local snd = table.Random( GAMEMODE.BluntHit )
 			ent:EmitSound( snd, 100, math.random(90,110) )
 			
 			if ent:Team() != self.Owner:Team() then
@@ -153,10 +155,15 @@ function SWEP:MeleeTrace( dmg )
 			
 		elseif string.find( ent:GetClass(), "npc" ) then
 		
-			ent:SetHeadshotter( self.Owner, true )
+			if math.random(1,3) == 1 then
+			
+				ent:SetHeadshotter( self.Owner, true )
+				
+			end
+			
 			ent:TakeDamage( dmg, self.Owner, self.Weapon )
 			
-			local snd = table.Random( GAMEMODE.AxeHit )
+			local snd = table.Random( GAMEMODE.BluntHit )
 			ent:EmitSound( snd, 100, math.random(90,110) )
 			
 			self.Owner:DrawBlood()

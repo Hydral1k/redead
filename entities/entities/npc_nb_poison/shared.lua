@@ -17,6 +17,7 @@ ENT.MoveAnim = ACT_WALK
 
 ENT.Radius = 175
 ENT.SoundRadius = 500
+ENT.EffectTime = 0
 
 ENT.Models = nil
 ENT.Model = Model( "models/zombie/poison.mdl" )
@@ -50,6 +51,16 @@ function ENT:OnDeath( dmginfo )
 end
 
 function ENT:OnThink()
+
+	if self.EffectTime < CurTime() then
+	
+		self.EffectTime = CurTime() + 5
+		
+		local ed = EffectData()
+		ed:SetEntity( self.Entity )
+		util.Effect( "radiation", ed, true, true )
+	
+	end
 
 	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do
 	
@@ -102,5 +113,9 @@ function ENT:OnDeath( dmginfo )
 	local ent = ents.Create( "sent_radiation" ) 
 	ent:SetPos( self.Entity:GetPos() )
 	ent:Spawn()
+	
+	local ed = EffectData()
+	ed:SetOrigin( self.Entity:GetPos() )
+	util.Effect( "rad_explosion", ed, true, true )
 
 end

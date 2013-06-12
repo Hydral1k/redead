@@ -65,7 +65,7 @@ item.Register( {
 	TypeOverride = "sent_droppedgun",
 	Weight = 3, 
 	Price = 35,
-	Rarity = 0.95,
+	Rarity = 0.50,
 	Model = "models/weapons/w_hammer.mdl",
 	Weapon = "rad_hammer",
 	Functions = { FUNC_DROPWEAPON },
@@ -82,14 +82,33 @@ item.Register( {
 	Type = ITEM_WPN_COMMON,
 	TypeOverride = "sent_droppedgun",
 	Weight = 5, 
-	Price = 70,
-	Rarity = 0.95,
+	Price = 50,
+	Rarity = 0.50,
 	Model = "models/weapons/w_axe.mdl",
 	Weapon = "rad_axe",
 	Functions = { FUNC_DROPWEAPON },
 	PickupFunction = FUNC_GRABWEAPON,
 	DropFunction = FUNC_REMOVEWEAPON,
 	CamPos = Vector(0,-42,0),
+	CamOrigin = Vector(0,0,8)
+} )
+
+item.Register( { 
+	Name = "Crowbar", 
+	Description = "Gordon's weapon of choice.",
+	Stackable = false, 
+	Type = ITEM_WPN_COMMON,
+	TypeOverride = "sent_droppedgun",
+	SaleOverride = true,
+	Weight = 5, 
+	Price = 50,
+	Rarity = 0.40,
+	Model = "models/weapons/w_crowbar.mdl",
+	Weapon = "rad_crowbar",
+	Functions = { FUNC_DROPWEAPON },
+	PickupFunction = FUNC_GRABWEAPON,
+	DropFunction = FUNC_REMOVEWEAPON,
+	CamPos = Vector(0,0,-44),
 	CamOrigin = Vector(0,0,8)
 } )
 

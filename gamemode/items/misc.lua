@@ -212,6 +212,20 @@ function FUNC_UNMUTAGEN( ply, id, client, icon )
 
 end
 
+function FUNC_WRENCH( ply, id, client, icon )
+
+	if icon then return "icon16/cake.png" end
+	if client then return "Eat" end
+	
+	ply:RemoveFromInventory( id )
+	ply:EmitSound( "npc/barnacle/barnacle_crunch2.wav", 100, math.random( 90, 110 ) )
+	ply:EmitSound( "weapons/crowbar/crowbar_impact2.wav", 100, math.random( 90, 110 ) )
+	ply:TakeDamage( 20 )
+	ply:Notice( "-20 Health", GAMEMODE.Colors.Red )
+	ply:Notice( "You just ate a fucking wrench", GAMEMODE.Colors.Red )
+
+end
+
 function FUNC_OPENSUITCASE( ply, id )
 	
 	ply:Notice( "You found some " .. GAMEMODE.CurrencyName .. "s", GAMEMODE.Colors.Green )
@@ -374,6 +388,20 @@ item.Register( {
 	Functions = { FUNC_EAT },
 	CamPos = Vector(10,10,0),
 	CamOrigin = Vector(0,0,0)	
+} )
+
+item.Register( { 
+	Name = "Wrench", 
+	Description = "Why would you eat this?",
+	Stackable = true, 
+	Type = ITEM_LOOT,
+	Weight = 0.15, 
+	Price = 3,
+	Rarity = 0.99,
+	Model = "models/props_c17/tools_wrench01a.mdl",
+	Functions = { FUNC_WRENCH },
+	CamPos = Vector(0,0,29),
+	CamOrigin = Vector(0,1,4)	
 } )
 
 item.Register( { 

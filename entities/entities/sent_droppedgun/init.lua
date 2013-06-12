@@ -7,7 +7,13 @@ function ENT:Initialize()
 	
 	if string.find( self.Entity:GetModel(), "hammer" ) or string.find( self.Entity:GetModel(), "axe" ) then
 
-		self.Entity:PhysicsInitBox( Vector(-5,-5,-5), Vector(5,5,5) )
+		local model = self.Entity:GetModel()
+	
+		self.Entity:SetModel( "models/props_canal/mattpipe.mdl" )
+		self.Entity:PhysicsInit( SOLID_VPHYSICS )
+		self.Entity:SetModel( model )
+	
+		//self.Entity:PhysicsInitBox( Vector(-5,-5,-5), Vector(5,5,5) )
 
 	else
 	

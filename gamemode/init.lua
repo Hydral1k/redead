@@ -562,7 +562,7 @@ function GM:LootThink()
 	if num > 0 then
 	
 		local tbl = { ITEM_SUPPLY, ITEM_LOOT, ITEM_AMMO, ITEM_MISC, ITEM_SPECIAL, ITEM_WPN_COMMON, ITEM_WPN_SPECIAL, ITEM_EXPLOSIVE }
-		local chancetbl = { 0.60,     0.70,      0.70,     0.95,       0.05,           0.02,           0.01,             0.10 }
+		local chancetbl = { 0.60,     0.70,      0.70,     0.95,       0.05,           0.03,           0.02,             0.10 }
 		
 		for i=1, num do
 			

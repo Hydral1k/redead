@@ -350,6 +350,10 @@ function meta:AddRadiation( num )
 		self:NoticeOnce( "You have been irradiated", GAMEMODE.Colors.Red, 5 )
 		self:NoticeOnce( "Radiation sickness will fade over time", GAMEMODE.Colors.Blue, 5, 2 )
 		
+		local ed = EffectData()
+		ed:SetEntity( self )
+		util.Effect( "radiation", ed, true, true )
+		
 	end
 
 	self:SetRadiation( self:GetRadiation() + num ) 
