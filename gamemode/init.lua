@@ -76,7 +76,7 @@ function GM:Initialize()
 	
 	timer.Simple( GetConVar( "sv_redead_setup_time" ):GetInt() - 5, function() for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do v:Notice( "Press F4 if you want to be the zombie lord", GAMEMODE.Colors.White, 5 ) end end )
 	
-	timer.Simple( GetConVar( "sv_redead_setup_time" ):GetInt() + 5, function() GAMEMODE:PickLord() end )
+	timer.Simple( GetConVar( "sv_redead_setup_time" ):GetInt() + 5, function() GAMEMODE:PickLord() GAMEMODE.EarlyPick = true end )
 	
 	timer.Simple( length - 60, function() GAMEMODE.EvacAlert = true for k,v in pairs( player.GetAll() ) do v:ClientSound( GAMEMODE.LastMinute ) v:Notice( "The evac chopper is en route", GAMEMODE.Colors.White, 5 ) end end )
 	
@@ -111,6 +111,8 @@ GM.WoodLocations = {}
 GM.WoodCount = 1
 GM.WoodPercent = 1
 GM.SpawnCounter = 0
+GM.LordExists = false
+GM.EarlyPick = false
 
 function GM:InitPostEntity()	
 
@@ -364,23 +366,38 @@ function GM:AddToZombieList( ply )
 
 	if team.NumPlayers( TEAM_ZOMBIES ) > 0 then 
 	
+		ply:ClientSound( "HL1/fvox/buzz.wav", 100 )
 		ply:Notice( "You cannot be the zombie lord now", GAMEMODE.Colors.Red, 5 )
 	
 		return
 	
 	end
 
-	if not table.HasValue( GAMEMODE.Lords, ply ) then
+	if not table.HasValue( GAMEMODE.Lords, ply ) and not GAMEMODE.LordExists then
 	
 		table.insert( GAMEMODE.Lords, ply )
 		
+		local snd = table.Random( GAMEMODE.AmbientScream )
+		ply:ClientSound( snd, 100 )
 		ply:Notice( "You have volunteered to be the zombie lord", GAMEMODE.Colors.White, 5 )
 		
 	end
 
 end
 
-function GM:PickLord()
+function GM:PickLord( force )
+
+	if table.Count( player.GetAll() ) < GetConVar( "sv_redead_minimum_players" ):GetInt() and not force then 
+	
+		for k,v in pairs( player.GetAll() ) do
+		
+			v:Notice( "A zombie lord cannot be chosen at this time", GAMEMODE.Colors.White, 5 )
+				
+		end
+	
+		return 
+		
+	end
 
 	local tbl = team.GetPlayers( TEAM_ZOMBIES )
 		
@@ -399,8 +416,6 @@ function GM:PickLord()
 		tbl = team.GetPlayers( TEAM_ARMY )
 	
 	end
-		
-	if table.Count( tbl ) <= 1 then return end
 		
 	local ply = table.Random( tbl )
 	
@@ -423,13 +438,15 @@ function GM:PickLord()
 		
 	for k,v in pairs( player.GetAll() ) do
 		
-		if v != ply then
+		if v != ply and not force then
 		
 			v:Notice( "A zombie lord has been chosen", GAMEMODE.Colors.White, 5 )
 				
 		end
 		
 	end
+	
+	GAMEMODE.LordExists = true
 
 end
 
@@ -1387,6 +1404,12 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 		ply:ClientSound( music, 100 )
 		ply:RadioSound( VO_DEATH )
 		ply:SetTeam( TEAM_ZOMBIES )
+		
+		if not GAMEMODE.LordExists and GAMEMODE.EarlyPick then
+		
+			GAMEMODE:PickLord( true )
+		
+		end
 		
 		if IsValid( attacker ) and attacker:IsPlayer() and attacker != ply then
 		

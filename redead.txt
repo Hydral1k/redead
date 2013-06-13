@@ -71,5 +71,13 @@
 			"type"		"Numeric"
 			"default"	"60"
 		}
+		9
+		{
+			"name"		"sv_redead_minimum_players"
+			"text"		"Minimum players:"
+			"help"		"Number of players needed for a zombie lord to be chosen."
+			"type"		"Numeric"
+			"default"	"6"
+		}
 	}
 }

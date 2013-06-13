@@ -487,6 +487,8 @@ end
 
 function meta:Gib()
 
+	if not self:Alive() then return end
+
 	local dmg = DamageInfo()
 	dmg:SetDamage( 500 )
 	dmg:SetDamageType( DMG_BLAST )
