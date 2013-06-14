@@ -682,6 +682,14 @@ function meta:DropLoot()
 		prop:SetPos( self:GetPos() + Vector(0,0,40) )
 		prop:SetModel( gun )
 		prop:Spawn()
+		
+		local phys = prop:GetPhysicsObject()
+		
+		if IsValid( phys ) then
+		
+			phys:ApplyForceCenter( self:GetAngles():Forward() * 200 )
+		
+		end
 	
 	end
 	

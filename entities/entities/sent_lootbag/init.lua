@@ -40,22 +40,10 @@ end
 
 function ENT:Think() 
 
-	if not IsValid( self.Entity:GetUser() ) then
-		
-		if ( #self.Entity:GetItems() < 1 and self:GetCash() < 5 ) or ( self.DieTime and self.DieTime < CurTime() ) then
+	if ( table.Count( self.Entity:GetItems() ) < 1 and self:GetCash() < 1 ) or ( self.DieTime and self.DieTime < CurTime() ) then
 	
-			self.Entity:Remove()
+		self.Entity:Remove()
 			
-		end
-	
-	end
-	
-	if not IsValid( self.Entity:GetUser() ) then return end
-	
-	if not self.Entity:GetUser():Alive() then
-	
-		self.Entity:SetUser()
-	
 	end
 	
 end 
@@ -66,41 +54,7 @@ function ENT:SetRemoval( num )
 
 end
 
-function ENT:GetUser()
-
-	return self.User
-	
-end
-
-function ENT:SetUser( ply )
-
-	self.User = ply
-	
-	local phys = self.Entity:GetPhysicsObject()
-	
-	if IsValid( phys ) then
-	
-		if ply then
-	
-			phys:EnableMotion( false )
-			
-		else
-		
-			phys:EnableMotion( true )
-		
-		end
-	
-	end
-	
-	if not ply and #self.Entity:GetItems() < 1 and self.Entity:GetCash() < 5 then
-	
-		self.Entity:Remove()
-	
-	end
-	
-end
-
-function ENT:OnExit( ply )
+--[[function ENT:OnExit( ply )
 
 	if ( self.LastUse or 0 ) > CurTime() then return end
 	if IsValid( self.Entity:GetNWEntity( "QuestOwner", nil ) ) and self.Entity:GetNWEntity( "QuestOwner", nil ) != ply then return end
@@ -132,15 +86,15 @@ function ENT:OnUsed( ply )
 	
 	end
 
-end
+end]]
 
 function ENT:Use( ply, caller )
-
-	if IsValid( self.User ) and self.User:Alive() and ply != self.User then return end
 	
 	if ply:Team() != TEAM_ARMY then return end
 
 	if self.Removing then return end
+	
+	self.Removing = true
 
 	ply:AddMultipleToInventory( self.Items )
 	ply:AddCash( self:GetCash() )
@@ -161,7 +115,7 @@ function ENT:AddItem( id )
 
 	table.insert( self.Items, id )
 	
-	self.Entity:Synch()
+	//self.Entity:Synch()
 
 end
 
@@ -171,7 +125,7 @@ function ENT:RemoveItem( id )
 	
 		if v == id then
 		
-			self.Entity:Synch()
+			//self.Entity:Synch()
 		
 			table.remove( self.Items, k )
 			
@@ -185,11 +139,11 @@ end
 
 function ENT:Synch()
 
-	if IsValid( self.Entity:GetUser() ) then
+	--[[if IsValid( self.Entity:GetUser() ) then
 			
 		self.Entity:GetUser():SynchStash( self.Entity )
 			
-	end
+	end]]
 
 end
 
