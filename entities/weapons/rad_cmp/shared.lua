@@ -41,7 +41,7 @@ SWEP.Primary.NumShots		= 3
 SWEP.Primary.Cone			= 0.045
 SWEP.Primary.Delay			= 0.600
 
-SWEP.Primary.ClipSize		= 24
+SWEP.Primary.ClipSize		= 18
 SWEP.Primary.Automatic		= true
 
 function SWEP:PrimaryAttack()
@@ -82,6 +82,37 @@ function SWEP:PrimaryAttack()
 		
 	end
 
+end
+
+function SWEP:CanPrimaryAttack()
+
+	if self.HolsterMode or self.ReloadTime or self.LastRunFrame > CurTime() then return false end
+	
+	if self.Owner:GetNWInt( "Ammo" .. self.AmmoType, 0 ) < self.Primary.NumShots then 
+	
+		self.Weapon:EmitSound( self.Primary.Empty )
+		
+		return false 
+		
+	end
+
+	if self.Weapon:Clip1() <= 0 then
+	
+		self.Weapon:SetNextPrimaryFire( CurTime() + 0.5 )
+		self.Weapon:DoReload()
+		
+		if self.Weapon:GetZoomMode() != 1 then
+		
+			self.Weapon:UnZoom()
+			
+		end	
+		
+		return false
+		
+	end
+	
+	return true
+	
 end
 
 --[[function SWEP:PrimaryAttack()
