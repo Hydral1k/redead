@@ -8,7 +8,7 @@ ENT.DieSound = Sound( "Breakable.Metal" )
 ENT.Model = Model(  "models/props/de_train/barrel.mdl" )
 ENT.Damage = 60
 ENT.Radius = 300
-ENT.Skins = {0,1,7}
+ENT.Skins = {2,4,5,6}
 
 function ENT:Initialize()
 
@@ -77,6 +77,16 @@ function ENT:Explode()
 		
 	end
 	
+	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do
+	
+		if v:GetPos():Distance( self.Entity:GetPos() ) < 200 and not v:IsInfected() and v:Alive() then
+		
+			v:SetInfected( true )
+		
+		end
+	
+	end
+	
 	for i=1, math.random( 2, 4 ) do
 	
 		local ed = EffectData()
@@ -87,11 +97,7 @@ function ENT:Explode()
 	
 	local ed = EffectData()
 	ed:SetOrigin( self.Entity:GetPos() )
-	util.Effect( "rad_explosion", ed, true, true )
-	
-	local ent = ents.Create( "sent_radiation" ) 
-	ent:SetPos( self.Entity:GetPos() )
-	ent:Spawn()
+	util.Effect( "biohazard", ed, true, true )
 	
 	self.Entity:EmitSound( self.DieSound, 100, math.random(90,110) )
 	self.Entity:Remove()

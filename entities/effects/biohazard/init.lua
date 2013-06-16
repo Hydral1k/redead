@@ -1,24 +1,15 @@
 
-EFFECT.Color = Color(100,50,0)
+EFFECT.Color = Color(100,80,0)
 
 function EFFECT:Init( data )
 
 	self.DieTime = CurTime() + 1.5
 	self.SoundTime = 0
 	
-	local pos = data:GetOrigin() + Vector(0,0,50)
+	local pos = data:GetOrigin() + Vector(0,0,10)
 	local emitter = ParticleEmitter( pos )
 	
 	self.Pos = pos
-	
-	local particle = emitter:Add( "effects/blood_core", pos )
-	particle:SetDieTime( math.Rand( 0.5, 1.0 ) )
-	particle:SetStartAlpha( 255 )
-	particle:SetEndAlpha( 0 )
-	particle:SetStartSize( 10 )
-	particle:SetEndSize( math.random( 100, 150 ) )
-	particle:SetRoll( math.Rand( -360, 360 ) )
-	particle:SetColor( self.Color.r, self.Color.g, 0 )
 	
 	for i=1, math.random(4,8) do
 	
@@ -41,7 +32,7 @@ function EFFECT:Init( data )
 		vec.z = math.Rand( -0.2, 1.0 )
 	
 		local particle = emitter:Add( "nuke/gore" .. math.random(1,2), pos )
-		particle:SetVelocity( vec * 300 )
+		particle:SetVelocity( vec * 250 )
 		particle:SetDieTime( math.Rand( 0.8, 1.0 ) )
 		particle:SetStartAlpha( 200 )
 		particle:SetEndAlpha( 0 )
@@ -82,21 +73,6 @@ function EFFECT:Init( data )
 	end
 
 	emitter:Finish()
-	
-	for i=1, 10 do
-	
-		local ed = EffectData()
-		ed:SetOrigin( pos + Vector( 0, 0, math.random( 0, 30 ) ) )
-		
-		if i < 5 then
-			ed:SetScale( 1 )
-		else
-			ed:SetScale( 2 )
-		end
-		
-		util.Effect( "player_gib", ed, true, true )
-	
-	end
 	
 end
 

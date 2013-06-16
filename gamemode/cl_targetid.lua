@@ -5,19 +5,31 @@ local TargetedName = nil
 local TargetedTime = 0
 local TargetedDist = Vector(0,0,0)
 
-ValidTargetEnts = { "prop_physics", "sent_oxygen", "sent_fuel_diesel", "sent_fuel_gas", "sent_propane_tank", "sent_propane_canister", "sent_barrel_radioactive" }
+ValidTargetEnts = { "prop_physics", "sent_oxygen", "sent_fuel_diesel", "sent_fuel_gas", "sent_propane_tank", "sent_propane_canister", "sent_barrel_radioactive", "sent_barrel_biohazard" }
 
 function GM:GetEntityID( ent )
 	
 	if table.HasValue( ValidTargetEnts, ent:GetClass() ) then
 	
-		local tbl = item.GetByModel( ent:GetModel() )
+		local tbl = item.GetByClass( ent:GetClass() )
 		
 		if tbl then
 	
 			TargetedName = tbl.Name
 			TargetedEntity = ent
 			TargetedDist = Vector( 0, 0, TargetedEntity:OBBCenter():Distance( TargetedEntity:OBBMaxs() ) )
+		
+		else
+		
+			tbl = item.GetByModel( ent:GetModel() )
+			
+			if tbl then
+			
+				TargetedName = tbl.Name
+				TargetedEntity = ent
+				TargetedDist = Vector( 0, 0, TargetedEntity:OBBCenter():Distance( TargetedEntity:OBBMaxs() ) )
+			
+			end
 		
 		end
 		
@@ -73,7 +85,7 @@ function GM:GetEntityID( ent )
 	
 		TargetedName = ent:Name()
 		TargetedEntity = ent
-		TargetedDist = Vector( 0, 0, 45 )
+		TargetedDist = Vector( 0, 0, 35 )
 	
 	end
 	

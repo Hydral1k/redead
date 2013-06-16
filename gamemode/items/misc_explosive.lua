@@ -101,3 +101,14 @@ item.Register( {
 	Model = "models/props/de_train/barrel.mdl",
 	Functions = {}
 } )
+
+item.Register( { 
+	Name = "Toxic Waste", 
+	TypeOverride = "sent_barrel_biohazard",
+	AllowPickup = true,
+	CollisionOverride = true,
+	Type = ITEM_EXPLOSIVE,
+	Rarity = 0.10,
+	Model = "models/props/de_train/barrel.mdl",
+	Functions = {}
+} )

@@ -46,6 +46,20 @@ function GetByModel( model )
 
 end
 
+function GetByClass( class )
+	
+	for k,v in pairs( ItemTables ) do
+		
+		if v.TypeOverride and string.lower( v.TypeOverride ) == string.lower( class ) then
+		
+			return v
+		
+		end
+		
+	end
+
+end
+
 function GetByName( name )
 
 	for k,v in pairs( ItemTables ) do

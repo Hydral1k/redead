@@ -383,8 +383,8 @@ function meta:SetInfected( bool )
 
 	if bool then
 	
-		self:NoticeOnce( "You have been infected by the undead", GAMEMODE.Colors.Red, 5 )
-		self:NoticeOnce( "You can cure infection with the antidote", GAMEMODE.Colors.Blue, 5, 2 )
+		self:NoticeOnce( "You have been infected", GAMEMODE.Colors.Red, 5 )
+		self:NoticeOnce( "You can cure your infection with the antidote", GAMEMODE.Colors.Blue, 5, 2 )
 		self:NoticeOnce( "The antidote location is marked on your screen", GAMEMODE.Colors.Blue, 5, 4 )
 		
 		self:AddStat( "Infections" )
