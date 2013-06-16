@@ -883,6 +883,12 @@ function GM:PlayerDisconnected( pl )
 	
 	end
 	
+	if pl:IsLord() then
+	
+		GAMEMODE.LordExists = false
+	
+	end
+	
 end
 
 function GM:PlayerInitialSpawn( pl )
