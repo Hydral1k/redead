@@ -496,7 +496,7 @@ item.Register( {
 } )
 
 item.Register( { 
-	Name = "AME Cannon", 
+	Name = "HEAT Cannon", 
 	Description = "An experimental long range zombie cooker.",
 	Stackable = false, 
 	Type = ITEM_WPN_COMMON,
