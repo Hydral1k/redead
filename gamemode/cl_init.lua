@@ -980,11 +980,26 @@ function GM:CreateMove( cmd )
 			cmd:SetButtons( cmd:GetButtons() - IN_DUCK )
 			
 		end
+		
+		local ang = cmd:GetViewAngles()
+		
+		if ang.r != 0 then
+		
+			ang.r = 0
+			cmd:SetViewAngles( ang )
+		
+		end
 	
 	else
 	
 		local scale = LocalPlayer():GetNWInt( "Radiation", 0 ) / 5
 		local wobble = 0
+		
+		if LocalPlayer():GetNWBool( "Infected", false ) then
+		
+			scale = math.max( scale, 0.3 )
+		
+		end
 		
 		if scale > 0 and LocalPlayer():Alive() then
 		

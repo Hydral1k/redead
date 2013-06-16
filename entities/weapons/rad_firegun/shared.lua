@@ -39,15 +39,16 @@ SWEP.LaserScale = 0.25
 //SWEP.IronsightsFOV = 60
 
 SWEP.Burn = Sound( "ambient/fire/ignite.wav" )
+SWEP.Burn2 = Sound( "Weapon_Mortar.Impact" )
 
-SWEP.Primary.Sound			= Sound( "Weapon_ar2.double" )
+SWEP.Primary.Sound			= Sound( "Weapon_mortar.single" )
 SWEP.Primary.Sound2			= Sound( "Weapon_PhysCannon.Charge" )
 SWEP.Primary.Sound3			= Sound( "Weapon_PhysCannon.Drop" )
 SWEP.Primary.Recoil			= 15.5
 SWEP.Primary.Damage			= 80
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Cone			= 0.015
-SWEP.Primary.Delay			= 1.500
+SWEP.Primary.Delay			= 1.800
 
 SWEP.Primary.ClipSize		= 1
 SWEP.Primary.Automatic		= true
@@ -152,24 +153,34 @@ function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
 			
 			else
 			
-				tr.Entity:TakeDamage( math.Clamp( math.min( 50, tr.Entity:Health() - 5 ), 1, 50 ), self.Owner )
+				tr.Entity:TakeDamage( math.Clamp( math.min( 20, tr.Entity:Health() - 5 ), 1, 20 ), self.Owner )
 			
 			end
-			
-			tr.Entity:EmitSound( self.Burn, 100, math.random(90,110) )
 			
 			if tr.Entity.NextBot or ( tr.Entity:IsPlayer() and tr.Entity:Team() != TEAM_ARMY ) then
 			
 				tr.Entity:DoIgnite( self.Owner )
+				tr.Entity:EmitSound( self.Burn, 100, math.random(90,110) )
 				
 			end
 		
 		end
 		
+		sound.Play( self.Burn2, tr.HitPos )
+		
 		local ed = EffectData()
 		ed:SetOrigin( tr.HitPos )
 		ed:SetNormal( tr.HitNormal )
 		util.Effect( "fire_explosion", ed, true, true )
+		
+		if tr.HitNormal.z > 0.5 and tr.HitWorld then
+		
+			local ed = EffectData()
+			ed:SetOrigin( tr.HitPos )
+			ed:SetMagnitude( 0.5 )
+			util.Effect( "smoke_crater", ed, true, true )
+		
+		end
 		
 		util.Decal( table.Random( self.Decals ), tr.HitPos + tr.HitNormal, tr.HitPos - tr.HitNormal )
 

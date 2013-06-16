@@ -11,6 +11,11 @@ function EFFECT:Init( data )
 	self.StartPos = self:GetTracerShootPos( self.Position, self.WeaponEnt, self.Attachment )
 	self.EndPos = data:GetOrigin()
 	
+	local dir = self.StartPos - self.EndPos
+	dir:Normalize()
+	
+	self.Dir = dir
+	
 	self.Entity:SetRenderBoundsWS( self.StartPos, self.EndPos )
 	
 	self.Alpha = 100
@@ -20,12 +25,12 @@ function EFFECT:Init( data )
 	
 	if dlight then
 	
-		dlight.Pos = self.Position
+		dlight.Pos = self.StartPos
 		dlight.r = 255
 		dlight.g = 150
 		dlight.b = 50
 		dlight.Brightness = 3
-		dlight.Decay = 512
+		dlight.Decay = 256
 		dlight.size = 256 * math.Rand( 0.5, 1.0 )
 		dlight.DieTime = CurTime() + 5
 		
@@ -37,7 +42,7 @@ function EFFECT:Think( )
 
 	self.Entity:SetRenderBoundsWS( self.StartPos, self.EndPos )
 
-	self.Alpha = self.Alpha - FrameTime() * 175
+	self.Alpha = self.Alpha - FrameTime() * 200
 	self.Color = Color( 250, 150, 50, self.Alpha )
 	
 	return self.Alpha > 0
@@ -74,7 +79,7 @@ function EFFECT:Render( )
 						
 		render.SetMaterial( self.Sprite )
 
-		render.DrawSprite( self.StartPos, i * 5, i * 5, Color( self.Color.r, self.Color.g, self.Color.b, self.Alpha ) )
+		render.DrawSprite( self.StartPos + self.Dir * i, i * 5, i * 5, Color( self.Color.r, self.Color.g, self.Color.b, self.Alpha ) )
 		render.DrawSprite( self.EndPos, i * 5, i * 5, Color( self.Color.r, self.Color.g, self.Color.b, self.Alpha ) )
 	
 	end

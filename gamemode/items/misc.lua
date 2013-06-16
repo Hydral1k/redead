@@ -248,7 +248,7 @@ end
 function FUNC_OPENBOX( ply, id )
 
 	local tbl = { ITEM_SUPPLY, ITEM_AMMO, ITEM_MISC, ITEM_SPECIAL, ITEM_WPN_COMMON, ITEM_WPN_SPECIAL }
-	local chancetbl = { 0.60,     0.20,     0.50,        0.20,           0.05,           0.02 }
+	local chancetbl = { 0.60,     0.20,     0.50,        0.20,           0.05,           0.03 }
 	
 	local rnd = math.Rand(0,1)
 	local choice = math.random( 1, table.Count( tbl ) ) 
@@ -263,6 +263,7 @@ function FUNC_OPENBOX( ply, id )
 	local rand = item.RandomItem( tbl[choice] )
 	
 	ply:AddIDToInventory( rand.ID )
+	ply:EmitSound( "Cardboard.Break" )
 	
 	return false
 

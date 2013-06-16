@@ -1282,7 +1282,7 @@ function GM:EntityTakeDamage( ent, dmginfo )
 		
 		end
 		
-	elseif ent:IsPlayer() and ent:Team() == TEAM_ZOMBIES and IsValid( attacker ) and attacker:IsPlayer() then
+	elseif ent:IsPlayer() and ent:Team() == TEAM_ZOMBIES and IsValid( attacker ) and attacker:IsPlayer() and dmginfo:GetDamage() > 30 then
 	
 		sound.Play( table.Random( GAMEMODE.GoreBullet ), ent:GetPos() + Vector(0,0,50), 75, math.random( 90, 110 ), 0.8 )
 	

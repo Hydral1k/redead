@@ -96,7 +96,7 @@ function GM:RenderScreenspaceEffects()
 			ColorModify[ "$pp_colour_mulg" ] = 0.55
 			ColorModify[ "$pp_colour_addg" ] = 0.02 // too much? too little?
 			
-			MotionBlur = 0.30
+			//MotionBlur = 0.30
 		
 		end
 	
