@@ -78,21 +78,42 @@ function GM:Initialize()
 	
 	timer.Simple( GetConVar( "sv_redead_setup_time" ):GetInt() + 5, function() GAMEMODE:PickLord() GAMEMODE.EarlyPick = true end )
 	
-	timer.Simple( length - 60, function() GAMEMODE.EvacAlert = true for k,v in pairs( player.GetAll() ) do v:ClientSound( GAMEMODE.LastMinute ) v:Notice( "The evac chopper is en route", GAMEMODE.Colors.White, 5 ) end end )
+	timer.Simple( length - 60, function() 
+	
+		if GetGlobalBool( "GameOver", false ) then return end
+		
+		GAMEMODE.EvacAlert = true 
+			
+		for k,v in pairs( player.GetAll() ) do 
+			
+			v:ClientSound( GAMEMODE.LastMinute ) 
+			v:Notice( "The evac chopper is en route", GAMEMODE.Colors.White, 5 ) 
+			
+		end
+		
+	end )
 	
 	timer.Simple( length - 40, function() 
-									for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do 
-										v:Notice( "The evac chopper has arrived", GAMEMODE.Colors.White, 5 ) 
-										v:Notice( "You have 45 seconds to reach the evac zone", GAMEMODE.Colors.White, 5, 2 )
-										v:Notice( "The location has been marked", GAMEMODE.Colors.White, 5, 4 )
-									end 
-									if IsValid( GAMEMODE.Antidote ) then
+	
+		if GetGlobalBool( "GameOver", false ) then return end
+	
+		for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do 
+		
+			v:Notice( "The evac chopper has arrived", GAMEMODE.Colors.White, 5 ) 
+			v:Notice( "You have 45 seconds to reach the evac zone", GAMEMODE.Colors.White, 5, 2 )
+			v:Notice( "The location has been marked", GAMEMODE.Colors.White, 5, 4 )
+			
+		end 
+		
+		if IsValid( GAMEMODE.Antidote ) then
 									
-										GAMEMODE.Antidote:SetOverride()
+			GAMEMODE.Antidote:SetOverride()
 									
-									end
-									GAMEMODE:SpawnEvac() 
-								end )
+		end
+		
+		GAMEMODE:SpawnEvac() 
+		
+	end )
 	
 	timer.Simple( length + 5, function() GAMEMODE:CheckGameOver( true ) end )
 	

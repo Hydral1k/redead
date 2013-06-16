@@ -43,7 +43,7 @@ function EFFECT:Think()
 		
 		local particle = self.Emitter:Add( "effects/yellowflare", pos )
 		particle:SetVelocity( VectorRand() * 5 )
-		particle:SetDieTime( math.Rand( 1.0, 2.0 ) )
+		particle:SetDieTime( math.Rand( 2.0, 4.0 ) )
 		particle:SetStartAlpha( 255 )
 		particle:SetEndAlpha( 0 )
 		particle:SetStartSize( math.random( 1, 3 ) )

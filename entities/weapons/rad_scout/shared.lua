@@ -33,7 +33,7 @@ SWEP.AmmoType = "Sniper"
 
 SWEP.Primary.Sound			= Sound( "Weapon_Scout.Single" )
 SWEP.Primary.Recoil			= 15.5
-SWEP.Primary.Damage			= 100
+SWEP.Primary.Damage			= 110
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Cone			= 0.001
 SWEP.Primary.SniperCone		= 0.035

@@ -10,27 +10,27 @@ if CLIENT then
 	
 	SWEP.ViewModelFOV = 60
 	
-	SWEP.PrintName = "PPW-952"
+	SWEP.PrintName = "The Immolator"
 	SWEP.IconLetter = "m"
 	SWEP.Slot = 4
 	SWEP.Slotpos = 2
 	
 end
 
-SWEP.HoldType = "ar2"
+SWEP.HoldType = "physgun"
 
 SWEP.Base = "rad_base"
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/weapons/c_irifle.mdl"
-SWEP.WorldModel = "models/weapons/w_irifle.mdl"
+SWEP.ViewModel = "models/weapons/c_physcannon.mdl"
+SWEP.WorldModel = "models/weapons/w_physics.mdl"
 
 //SWEP.SprintPos = Vector (4.9288, -2.4157, 2.2032)
 //SWEP.SprintAng = Vector (0.8736, 40.1165, 28.0526)
 
-SWEP.SprintPos = Vector(0.55, -5.119, -1.025)
-SWEP.SprintAng = Vector(7.44, 25.079, 16.26)
+SWEP.SprintPos = Vector(5.36, -0.401, 2.88)
+SWEP.SprintAng = Vector(-3.201, 26.799, 5.4)
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "Prototype"
@@ -38,17 +38,18 @@ SWEP.LaserOffset = Angle( -90, -0.9, 0 )
 SWEP.LaserScale = 0.25
 //SWEP.IronsightsFOV = 60
 
-SWEP.Gore = Sound( "npc/roller/mine/rmine_explode_shock1.wav" )
+SWEP.Burn = Sound( "ambient/fire/ignite.wav" )
 
-SWEP.Primary.Sound			= Sound( "Airboat.FireGunHeavy" )
-SWEP.Primary.Sound2			= Sound( "npc/scanner/scanner_electric2.wav" )
-SWEP.Primary.Recoil			= 19.5
-SWEP.Primary.Damage			= 350
+SWEP.Primary.Sound			= Sound( "Weapon_ar2.double" )
+SWEP.Primary.Sound2			= Sound( "Weapon_PhysCannon.Charge" )
+SWEP.Primary.Sound3			= Sound( "Weapon_PhysCannon.Drop" )
+SWEP.Primary.Recoil			= 15.5
+SWEP.Primary.Damage			= 80
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.Cone			= 0.010
-SWEP.Primary.Delay			= 1.400
+SWEP.Primary.Cone			= 0.015
+SWEP.Primary.Delay			= 1.500
 
-SWEP.Primary.ClipSize		= 3
+SWEP.Primary.ClipSize		= 1
 SWEP.Primary.Automatic		= true
 
 function SWEP:ShootEffects()	
@@ -62,7 +63,7 @@ function SWEP:ShootEffects()
 	self.Owner:MuzzleFlash()								
 	self.Owner:SetAnimation( PLAYER_ATTACK1 )	
 	
-	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) 
+	self.Weapon:SendWeaponAnim( ACT_VM_SECONDARYATTACK ) 
 	
 end
 
@@ -77,7 +78,8 @@ function SWEP:PrimaryAttack()
 
 	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(90,100) )
-	self.Weapon:EmitSound( self.Primary.Sound2, 100, math.random(120,130) )
+	self.Weapon:EmitSound( self.Primary.Sound2 )
+	//self.Weapon:EmitSound( self.Primary.Sound3, 100, 80 )
 	self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone, self.Weapon:GetZoomMode() )
 	self.Weapon:TakePrimaryAmmo( 1 )
 	self.Weapon:ShootEffects()
@@ -87,8 +89,27 @@ function SWEP:PrimaryAttack()
 		self.Owner:AddAmmo( self.AmmoType, -1 )
 		
 	end
+	
+	self.ReloadTime = CurTime() + self.Primary.Delay
 
 end
+
+function SWEP:ReloadThink()
+
+	if self.ReloadTime and self.ReloadTime <= CurTime() then
+	
+		self.ReloadTime = nil
+		self.Weapon:SetClip1( self.Primary.ClipSize )
+	
+	end
+
+end
+
+function SWEP:Reload()
+	
+end
+
+SWEP.Decals = { "Scorch", "SmallScorch" }
 
 function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
 
@@ -119,33 +140,38 @@ function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
 	bullet.Force	= damage * 2						
 	bullet.Damage	= 1
 	bullet.AmmoType = "Pistol"
-	bullet.TracerName = "AirboatGunHeavyTracer"
+	bullet.TracerName = "fire_tracer"
 	
 	bullet.Callback = function ( attacker, tr, dmginfo )
 
 		if IsValid( tr.Entity ) and IsValid( self ) and IsValid( self.Owner ) and SERVER then
 		
-			if tr.Entity:IsPlayer() and tr.Entity:Team() == TEAM_ZOMBIES then
+			if tr.Entity:IsPlayer() then
 			
-				tr.Entity:SetModel( table.Random( GAMEMODE.Corpses ) )
+				tr.Entity:TakeDamage( self.Primary.Damage, self.Owner )
+			
+			else
+			
+				tr.Entity:TakeDamage( 50, self.Owner )
+			
+			end
+			
+			tr.Entity:EmitSound( self.Burn, 100, math.random(90,110) )
+			
+			if tr.Entity.NextBot or ( tr.Entity:IsPlayer() and tr.Entity:Team() != TEAM_ARMY ) then
+			
+				tr.Entity:DoIgnite( self.Owner )
 				
 			end
-		
-			local dmg = DamageInfo()
-			dmg:SetDamage( 500 )
-			dmg:SetDamageType( DMG_BLAST )
-			dmg:SetAttacker( self.Owner )
-			dmg:SetInflictor( self.Weapon )
-			
-			tr.Entity:EmitSound( self.Gore, 100, math.random(90,110) )
-			tr.Entity:TakeDamageInfo( dmg )
 		
 		end
 		
 		local ed = EffectData()
 		ed:SetOrigin( tr.HitPos )
 		ed:SetNormal( tr.HitNormal )
-		util.Effect( "energy_explosion", ed, true, true )
+		util.Effect( "fire_explosion", ed, true, true )
+		
+		util.Decal( table.Random( self.Decals ), tr.HitPos + tr.HitNormal, tr.HitPos - tr.HitNormal )
 
 	end
 	

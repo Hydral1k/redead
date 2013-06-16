@@ -38,7 +38,7 @@ GM.DeathScreenText[ TEAM_ZOMBIES ] = { "DEATH IS ONLY THE BEGINNING",
 "LIFE IS OVERRATED",
 "REST IS FOR THE LIVING" }
 
-GM.RedemptionDamage = 375  // Amount of damage that the zombie lord needs to deal before he is redeemed
+GM.RedemptionDamage = 350  // Amount of damage that the zombie lord needs to deal before he is redeemed
 GM.RadiationAmount = 0.6   // How much of the radiation on the map should be disabled on map startup? ( 0.6 means 60% will be disabled ) - OBSOLETE?
 GM.MaxLoot = 0.35          // Maximum amount of loot to be generated ( 0.05 means 5% of the info_lootspawns will have loot at them. )
 GM.WoodPercentage = 0.15   // What percentage of props on the map should be wooden?
@@ -192,11 +192,11 @@ if CLIENT then return end // Serverside configuration stuff past this point.
 // Headshot combo values
 
 GM.HeadshotCombos = {}
-GM.HeadshotCombos[5] = 1    // Get 1 point for 5 consecutive headshots
-GM.HeadshotCombos[10] = 2   // Get 2 points for 10 consecutive headshots
-GM.HeadshotCombos[15] = 5
+GM.HeadshotCombos[5] = 2    // Get 2 points for 5 consecutive headshots
+GM.HeadshotCombos[10] = 5   // Get 5 points for 10 consecutive headshots
+GM.HeadshotCombos[15] = 10
 GM.HeadshotCombos[20] = 15
-GM.HeadshotCombos[50] = 25
+GM.HeadshotCombos[50] = 20
 
 // Point values
 

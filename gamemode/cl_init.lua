@@ -331,6 +331,10 @@ function GM:GetNearestEnt( pos, dist, tbl )
 
 end
 
+GM.GoreSheets = { "models/charple/charple1_sheet",
+"models/charple/charple3_sheet",
+"models/charple/charple4_sheet" }
+
 function GM:GoreRagdolls()
 
 	local tbl = ents.FindByClass( "class C_HL2MPRagdoll" )
@@ -441,11 +445,11 @@ function GM:GoreRagdolls()
 		
 	for c,d in pairs( BurnTbl ) do
 	
-		local ent = GAMEMODE:GetNearestEnt( d.Pos, 30, tbl )
+		local ent = GAMEMODE:GetNearestEnt( d.Pos, 50, tbl )
 		
 		if IsValid( ent ) and not ent.IsBurnt then
 			
-			ent:SetMaterial( "models/charple/charple3_sheet" )
+			ent:SetMaterial( table.Random( GAMEMODE.GoreSheets ) )
 			ent.IsBurnt = true
 			
 			table.remove( BurnTbl, c )

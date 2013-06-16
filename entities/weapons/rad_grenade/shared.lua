@@ -27,7 +27,7 @@ SWEP.SprintAng = Vector (13.9974, 21.7915, 59.3288)
 
 SWEP.IsSniper = false
 SWEP.AmmoType = "Knife"
-SWEP.ThrowPower = 500
+SWEP.ThrowPower = 350
 
 SWEP.Primary.Sound			= Sound( "WeaponFrag.Throw" )
 SWEP.Primary.Recoil			= 6.5

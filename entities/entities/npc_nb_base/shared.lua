@@ -280,6 +280,8 @@ end
 
 function ENT:SpawnRagdoll( damageinfo, model, pos, override )
 
+	timer.Simple( 0.2, function() if IsValid( self.Entity ) then self.Entity:Remove() end end )
+
 	if not model then
 	
 		--[[umsg.Start( "Ragdoll" )
