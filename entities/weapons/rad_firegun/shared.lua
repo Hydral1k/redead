@@ -152,7 +152,7 @@ function SWEP:ShootBullets( damage, numbullets, aimcone, zoommode )
 			
 			else
 			
-				tr.Entity:TakeDamage( 50, self.Owner )
+				tr.Entity:TakeDamage( math.Clamp( math.min( 50, tr.Entity:Health() - 5 ), 1, 50 ), self.Owner )
 			
 			end
 			
