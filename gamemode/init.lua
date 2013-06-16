@@ -151,6 +151,7 @@ function GM:InitPostEntity()
 	badshit = table.Add( badshit, ents.FindByClass( "point_servercommand" ) )
 	badshit = table.Add( badshit, ents.FindByClass( "env_entity_maker" ) )
 	badshit = table.Add( badshit, ents.FindByClass( "point_template" ) )
+	badshit = table.Add( badshit, ents.FindByClass( "game_text" ) )
 	
 	for k,v in pairs( ents.FindByClass( "prop_phys*" ) ) do
 	
