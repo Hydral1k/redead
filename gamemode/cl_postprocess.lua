@@ -227,7 +227,7 @@ function DrawPlayerRenderEffects()
 			
 			local scale = ( math.Clamp( v:GetPos():Distance( LocalPlayer():GetPos() ), 500, 3000 ) - 500 ) / 2500
 
-			render.SuppressEngineLighting( true )
+			//render.SuppressEngineLighting( true )
 			render.SetBlend( scale )
 			
 			render.MaterialOverride( MaterialVision )
@@ -247,7 +247,7 @@ function DrawPlayerRenderEffects()
 			v:SetupBones()
 			v:DrawModel()
 	 
-			render.SuppressEngineLighting( false )
+			//render.SuppressEngineLighting( false )
 			render.SetColorModulation( 1, 1, 1 )
 			render.SetBlend( 1 )
 			
