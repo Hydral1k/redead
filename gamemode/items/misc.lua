@@ -453,7 +453,7 @@ item.Register( {
 	Stackable = true, 
 	Type = ITEM_MISC,
 	Weight = 0.30, 
-	Price = 12,
+	Price = 10,
 	Rarity = 0.10,
 	Model = "models/props_junk/garbage_glassbottle002a.mdl",
 	Functions = { FUNC_BOOZE },
