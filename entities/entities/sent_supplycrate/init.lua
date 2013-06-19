@@ -34,6 +34,10 @@ end
 
 function ENT:Think() 
 	
+	if IsValid( self.User ) and self.User:Alive() and self.User:Team() == TEAM_ARMY then return end
+	
+	self.Entity:SetColor( Color( 255, 255, 150, 255 ) )
+	
 end 
 
 function ENT:SetContents( tbl )
