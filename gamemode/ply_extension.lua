@@ -761,9 +761,17 @@ function meta:Think()
 	
 		if ( self.HealTime or 0 ) < CurTime() then
 
-			self.HealTime = CurTime() + 1.5
+			self.HealTime = CurTime() + 1.0
 			
-			self:AddHealth( 1 )
+			if self:IsLord() then
+			
+				self:AddHealth( 4 )
+				
+			else
+			
+				self:AddHealth( 2 )
+			
+			end
 			
 		end
 		
