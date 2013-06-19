@@ -34,6 +34,7 @@ include( 'vgui/vgui_scroller.lua' )
 
 CV_RagdollVision = CreateClientConVar( "cl_redead_ragdoll_vision", "1", true, false )
 CV_Density = CreateClientConVar( "cl_redead_rain_density", "1.0", true, false )
+CV_NoobHelp = CreateClientConVar( "cl_redead_noob_help", "1", true, false )
 
 function GM:Initialize()
 	

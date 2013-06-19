@@ -956,9 +956,9 @@ function GM:PlayerSpawn( pl )
 		
 	end
 	
-	pl:NoticeOnce( "Press F1 to view the help menu", GAMEMODE.Colors.Blue, 5, 15 )
-	pl:NoticeOnce( "Press F2 to buy items and weapons", GAMEMODE.Colors.Blue, 5, 17 )
-	pl:NoticeOnce( "Press F3 to activate the panic button", GAMEMODE.Colors.Blue, 5, 19 )
+	pl:NoticeOnce( "Press F1 to view the help menu", GAMEMODE.Colors.Blue, 7, 15 )
+	pl:NoticeOnce( "Press F2 to buy items and weapons", GAMEMODE.Colors.Blue, 7, 17 )
+	pl:NoticeOnce( "Press F3 to activate the panic button", GAMEMODE.Colors.Blue, 7, 19 )
 	pl:InitializeInventory()
 	pl:OnSpawn()
 	pl:OnLoadout()
@@ -1504,11 +1504,11 @@ function GM:EndGame( winner )
 	
 		if winner == TEAM_ZOMBIES then
 		
-			v:NoticeOnce( "The undead have overwhelmed " .. team.GetName( TEAM_ARMY ) , GAMEMODE.Colors.White, 5, 2 )
+			v:NoticeOnce( "The undead have overwhelmed " .. team.GetName( TEAM_ARMY ) , GAMEMODE.Colors.White, 7, 2 )
 		
 		elseif team.NumPlayers( TEAM_ARMY ) > 0 then
 		
-			v:NoticeOnce( team.GetName( TEAM_ARMY ) .. " has successfully evacuated", GAMEMODE.Colors.White, 5, 2 )
+			v:NoticeOnce( team.GetName( TEAM_ARMY ) .. " has successfully evacuated", GAMEMODE.Colors.White, 7, 2 )
 		
 		end
 	
@@ -1527,7 +1527,7 @@ function GM:EndGame( winner )
 			
 		end
 		
-		v:NoticeOnce( "Next map: " .. game.GetMapNext() , GAMEMODE.Colors.White, 3, 4 )
+		v:NoticeOnce( "Next map: " .. game.GetMapNext() , GAMEMODE.Colors.White, 7, 4 )
 	
 	end
 	

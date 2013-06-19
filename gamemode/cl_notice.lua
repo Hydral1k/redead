@@ -14,7 +14,10 @@ function DoNotice( msg )
 	local g = msg:ReadShort()
 	local b = msg:ReadShort()
 	local len = msg:ReadShort()
+	local once = msg:ReadBool()
 	local col = Color( r, g, b, 255 )
+	
+	if once and not CV_NoobHelp:GetBool() then return end
 	
 	MsgN( str )
 	

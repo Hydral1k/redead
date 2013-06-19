@@ -2,7 +2,7 @@
 local meta = FindMetaTable( "Player" )
 if (!meta) then return end 
 
-function meta:Notice( text, col, len, delay )
+function meta:Notice( text, col, len, delay, once )
 
 	if delay then
 	
@@ -16,6 +16,7 @@ function meta:Notice( text, col, len, delay )
 			umsg.Short( col.g )
 			umsg.Short( col.b )
 			umsg.Short( len or 3 )
+			umsg.Bool( tobool( once ) )
 			umsg.End() 
 			
 		end
@@ -32,6 +33,7 @@ function meta:Notice( text, col, len, delay )
 	umsg.Short( col.g )
 	umsg.Short( col.b )
 	umsg.Short( len or 3 )
+	umsg.Bool( tobool( once ) )
 	umsg.End() 
 	
 end
@@ -42,7 +44,7 @@ function meta:NoticeOnce( text, col, len, delay )
 	
 	if not table.HasValue( self.NoticeList or {}, crc ) then
 	
-		self:Notice( text, col, len, delay )
+		self:Notice( text, col, len, delay, true )
 	
 		self.NoticeList = self.NoticeList or {}
 		table.insert( self.NoticeList, crc )
@@ -349,8 +351,8 @@ function meta:AddRadiation( num )
 		
 		self:EmitSound( table.Random{ "Geiger.BeepLow", "Geiger.BeepHigh" }, 100, math.random( 90, 110 ) )
 		
-		self:NoticeOnce( "You have been irradiated", GAMEMODE.Colors.Red, 5 )
-		self:NoticeOnce( "Radiation sickness will fade over time", GAMEMODE.Colors.Blue, 5, 2 )
+		self:NoticeOnce( "You have been irradiated", GAMEMODE.Colors.Red, 7 )
+		self:NoticeOnce( "Radiation sickness will fade over time", GAMEMODE.Colors.Blue, 7, 2 )
 		
 		local ed = EffectData()
 		ed:SetEntity( self )
@@ -383,9 +385,9 @@ function meta:SetInfected( bool )
 
 	if bool then
 	
-		self:NoticeOnce( "You have been infected", GAMEMODE.Colors.Red, 5 )
-		self:NoticeOnce( "You can cure your infection with the antidote", GAMEMODE.Colors.Blue, 5, 2 )
-		self:NoticeOnce( "The antidote location is marked on your screen", GAMEMODE.Colors.Blue, 5, 4 )
+		self:NoticeOnce( "You have been infected", GAMEMODE.Colors.Red, 7 )
+		self:NoticeOnce( "You can cure your infection with the antidote", GAMEMODE.Colors.Blue, 7, 2 )
+		self:NoticeOnce( "The antidote location is marked on your screen", GAMEMODE.Colors.Blue, 7, 4 )
 		
 		self:AddStat( "Infections" )
 	
@@ -407,8 +409,8 @@ function meta:SetBleeding( bool )
 	
 	if bool then
 	
-		self:NoticeOnce( "You are bleeding to death", GAMEMODE.Colors.Red, 5 )
-		self:NoticeOnce( "You can cover wounds with bandages", GAMEMODE.Colors.Blue, 5, 2 )
+		self:NoticeOnce( "You are bleeding to death", GAMEMODE.Colors.Red, 7 )
+		self:NoticeOnce( "You can cover wounds with bandages", GAMEMODE.Colors.Blue, 7, 2 )
 	
 	end
 
