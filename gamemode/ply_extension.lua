@@ -558,9 +558,9 @@ function meta:OnSpawn()
 	
 		if self:IsLord() then
 		
-			self:NoticeOnce( "Harm the humans to fill your blood meter", GAMEMODE.Colors.Blue, 5, 15 )
-			self:NoticeOnce( "Once your meter is full you will be redeemed", GAMEMODE.Colors.Blue, 5, 17 )
-			self:NoticeOnce( "Killing a human will fill your meter faster", GAMEMODE.Colors.Blue, 5, 19 )
+			self:NoticeOnce( "Harm the humans to fill your blood meter", GAMEMODE.Colors.Blue, 7, 15 )
+			self:NoticeOnce( "Once your meter is full you will be redeemed", GAMEMODE.Colors.Blue, 7, 17 )
+			self:NoticeOnce( "Killing a human will fill your meter faster", GAMEMODE.Colors.Blue, 7, 19 )
 		
 		end
 	
@@ -572,7 +572,7 @@ function meta:OnSpawn()
 		
 		self:SetModel( GAMEMODE.ZombieModels[ self:GetPlayerClass() ] )
 		
-		self:NoticeOnce( "You can choose your class by pressing F2", GAMEMODE.Colors.Blue, 5, 2 )
+		self:NoticeOnce( "You can choose your class by pressing F2", GAMEMODE.Colors.Blue, 7, 2 )
 	
 	end
 
@@ -584,7 +584,7 @@ function meta:GetItemLoadout()
 
 end
 
-function meta:OnLoadout()
+function meta:OnLoadout() // this code is terrible, i just cant be arsed to tidy it up
 
 	if self:Team() == TEAM_ARMY then
 

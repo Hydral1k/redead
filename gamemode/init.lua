@@ -1531,7 +1531,7 @@ function GM:EndGame( winner )
 	
 	end
 	
-	timer.Simple( 45, function() game.LoadNextMap() end )
+	timer.Simple( GetConVar( "sv_redead_post_game_time" ):GetInt(), function() game.LoadNextMap() end )
 
 end
 

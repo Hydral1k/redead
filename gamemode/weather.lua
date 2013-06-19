@@ -79,7 +79,7 @@ function GM:RandomizeWeather( force )
 	
 			GAMEMODE.Weather.New[k] = math.Rand(0,1)
 			
-			if math.random(1,5) == 1 then
+			if math.random(1,3) == 1 then
 			
 				GAMEMODE.Weather.New[k] = 1
 			
@@ -230,37 +230,19 @@ function GM:ProcessWeather()
 
 end
 
-RainMat = Material( "models/shadertest/shader3" )
-
-GM.MaxRainRefract = 0.008
+RainMat = surface.GetTextureID( "effects/rain_warp" )
 
 function GM:PaintWeather()
 
-	if GAMEMODE.Weather.Rain > 0 then
-	
-		if GAMEMODE.PlayerIsIndoors then
+	if GAMEMODE.Weather.Rain > 0 and render.GetDXLevel() >= 90 then
 		
-			GAMEMODE.RainRefract = math.Approach( ( GAMEMODE.RainRefract or 0 ), 0, 0.0002 )
-		
-		else
-	
-			GAMEMODE.RainRefract = math.Approach( ( GAMEMODE.RainRefract or 0 ), GAMEMODE.MaxRainRefract * GAMEMODE.Weather.Rain, 0.0001 )
+		for k,v in pairs( GAMEMODE.RainDrops ) do
 			
-		end
-		
-		if GAMEMODE.RainRefract == 0 or GAMEMODE.Weather.Rain < 0.5 then return end
-		
-		if render.GetDXLevel() >= 90 then
-		
-			render.UpdateScreenEffectTexture()
-
-			RainMat:SetFloat( "$envmap", 0 )
-			RainMat:SetFloat( "$envmaptint", 0 )
-			RainMat:SetFloat( "$refractamount", GAMEMODE.RainRefract )
-			RainMat:SetInt( "$ignorez", 1 )
+			local scale = math.Clamp( ( v.Time - CurTime() ) / v.Life, 0, 1 )
 			
-			render.SetMaterial( RainMat )
-			render.DrawScreenQuad()
+			surface.SetDrawColor( 200, 200, 220, 255 * scale )
+			surface.SetTexture( RainMat )
+			surface.DrawTexturedRect( v.X, v.Y - v.Movement * scale, v.Size, v.Size )
 			
 		end
 	
@@ -296,6 +278,7 @@ function GM:GetSky()
 end
 
 GM.RainDist = 1000
+GM.RainDrops = {}
 
 function GM:ComputeSkyBounds()
 
@@ -352,6 +335,45 @@ GM.RainSound = Sound( "ambient/weather/rumble_rain_nowind.wav" )
 
 function GM:RainThink()
 
+	for k,v in pairs( GAMEMODE.RainDrops ) do
+	
+		if v.Time < CurTime() then
+				
+			table.remove( GAMEMODE.RainDrops, k )
+					
+			break
+				
+		end
+	
+	end
+
+	if GAMEMODE.Weather.Rain > 0 and ( GAMEMODE.NextRainDrop or 0 ) < CurTime() and not GAMEMODE.PlayerIsIndoors then
+	
+		GAMEMODE.NextRainDrop = CurTime() + math.Rand( 1 - GAMEMODE.Weather.Rain, ( 1.2 - GAMEMODE.Weather.Rain ) * 3 )
+		
+		for i=1, math.random( 1, math.floor( GAMEMODE.Weather.Rain * 4 ) ) do
+		
+			local tbl = {}
+			
+			tbl.Size = math.random( 40, 80 ) + math.random( 0, GAMEMODE.Weather.Rain * 20 )
+			tbl.X = math.random( 0, ScrW() - tbl.Size )
+			tbl.Y = math.random( 0, ScrH() - tbl.Size )
+			tbl.Movement = math.random( 20, 80 )
+			tbl.Life = math.Rand( 1.0, 5.0 )
+			tbl.Time = CurTime() + tbl.Life
+			
+			if math.random(1,5) == 1 then
+			
+				tbl.Movement = 10
+				
+			end
+				
+			table.insert( GAMEMODE.RainDrops, tbl )
+			
+		end
+	
+	end
+
 	if ( GAMEMODE.NextRain or 0 ) < CurTime() then
 	
 		GAMEMODE.NextRain = CurTime() + 0.2
@@ -364,7 +386,7 @@ function GM:RainThink()
 		
 			GAMEMODE.RainNoise = CreateSound( LocalPlayer(), GAMEMODE.RainSound ) 
 			GAMEMODE.RainNoise:PlayEx( GAMEMODE.Weather.Rain * 0.3, 100 )
-			GAMEMODE.RainVolume = GAMEMODE.Weather.Rain * 0.3
+			GAMEMODE.RainVolume = GAMEMODE.Weather.Rain * 0.4
 		
 		else
 		
@@ -378,7 +400,7 @@ function GM:RainThink()
 			
 			else
 		
-				GAMEMODE.RainVolume = math.Approach( ( GAMEMODE.RainVolume or 0 ), math.max( GAMEMODE.Weather.Rain * 0.3, 0.02 ), 0.002 )
+				GAMEMODE.RainVolume = math.Approach( ( GAMEMODE.RainVolume or 0 ), math.max( GAMEMODE.Weather.Rain * 0.4, 0.02 ), 0.002 )
 				
 			end
 			
@@ -392,7 +414,7 @@ end
 
 function GM:SpawnRain( amt )
 
-	if amt == 0 then return end
+	if amt == 0 and not GetGlobalBool( "Radiation", false ) then return end
 
 	local function RainCollision( particle, pos, norm )
 	
@@ -407,7 +429,7 @@ function GM:SpawnRain( amt )
 			particle:SetStartAlpha( 100 )
 			particle:SetEndAlpha( 0 )
 			particle:SetStartSize( 1 )
-			particle:SetEndSize( math.Rand( 5, 10 + GAMEMODE.Weather.Rain * 5 ) )
+			particle:SetEndSize( math.Rand( 3, 10 + GAMEMODE.Weather.Rain * 5 ) )
 			particle:SetRoll( math.Rand( -360, 360 ) )
 			particle:SetAirResistance( 0 )
 			particle:SetCollide( false )
@@ -417,9 +439,66 @@ function GM:SpawnRain( amt )
 		
 	end
 	
+	local function CloudCollision( particle, pos, norm )
+	
+		particle:SetDieTime( 0 )
+		
+	end
+	
+	local function RadCollision( particle, pos, norm )
+	
+		particle:SetDieTime( math.Rand( 1.0, 3.0 ) )
+		
+	end
+	
 	local pos = GAMEMODE:GetClosestSkyPos()
 	
 	if not pos then return end
+	
+	if GetGlobalBool( "Radiation", false ) then
+	
+		for i=1, 10 do
+	
+			local vec = Vector( math.random( GAMEMODE.LeftSkyBound.x, GAMEMODE.RightSkyBound.x ), math.random( GAMEMODE.LeftSkyBound.y, GAMEMODE.RightSkyBound.y ), pos.z )
+			
+			local particle = RainEmitter:Add( "effects/rain_cloud", vec )			
+			particle:SetVelocity( Vector( 0, 0, math.random( -1000, -800 ) ) + WindVector * math.Rand( 0, 2.0 ) )
+			particle:SetLifeTime( 0 )
+			particle:SetDieTime( 10 )
+			particle:SetStartAlpha( math.random( 5, 10 ) )
+			particle:SetEndAlpha( 5 )
+			particle:SetStartSize( math.random( 150, 250 ) )
+			particle:SetEndSize( 250 )
+			particle:SetAirResistance( 0 )
+			particle:SetCollide( true )
+			particle:SetBounce( 0 )
+			particle:SetColor( Color( 100, 250, 50 ) )
+			particle:SetCollideCallback( CloudCollision )
+			
+			if i < 3 then
+			
+				local particle = RainEmitter:Add( "effects/rain_cloud", vec )			
+				particle:SetVelocity( Vector( 0, 0, math.random( -1000, -800 ) ) + WindVector * math.Rand( 0, 2.0 ) )
+				particle:SetLifeTime( 0 )
+				particle:SetDieTime( 10 )
+				particle:SetStartAlpha( 255 )
+				particle:SetEndAlpha( 0 )
+				particle:SetStartSize( math.random( 1, 3 ) )
+				particle:SetEndSize( 0 )
+				particle:SetRoll( math.random( -180, 180 ) )
+				particle:SetColor( 100, 200, 0 )
+				particle:SetGravity( Vector( 0, 0, -300 ) + WindVector * ( math.sin( CurTime() * 0.01 ) * 20 ) )
+				particle:SetCollide( true )
+				particle:SetCollideCallback( RadCollision )
+				particle:SetBounce( math.Rand( 0, 0.1 ) )
+			
+			end
+		
+		end
+	
+	end
+	
+	if amt == 0 then return end
 	
 	for i=1, amt do
 	
@@ -427,10 +506,10 @@ function GM:SpawnRain( amt )
 		local len = math.random( 40, 80 )
 		
 		local particle = RainEmitter:Add( "particle/Water/WaterDrop_001a", vec )			
-		particle:SetVelocity( Vector( 0, 0, math.random( -900, -800 ) ) + WindVector * ( 1 + math.sin( CurTime() * 0.1 ) ) )
+		particle:SetVelocity( Vector( 0, 0, math.random( -1000, -800 ) ) )
 		particle:SetLifeTime( 0 )
 		particle:SetDieTime( 10 )
-		particle:SetStartAlpha( 20 )
+		particle:SetStartAlpha( math.random( 5, 20 ) )
 		particle:SetEndAlpha( 20 )
 		particle:SetStartSize( 2.0 )
 		particle:SetEndSize( math.Rand( 3.0, 4.0 + GAMEMODE.Weather.Rain ) )
@@ -442,6 +521,28 @@ function GM:SpawnRain( amt )
 		//particle:SetColor( Color( 200, 200, 250 ) )
 		particle:SetCollideCallback( RainCollision )
 		
+	end
+	
+	amt = math.floor( amt * 0.05 ) + 1
+	
+	for i=1, amt do
+	
+		local vec = Vector( math.random( GAMEMODE.LeftSkyBound.x, GAMEMODE.RightSkyBound.x ), math.random( GAMEMODE.LeftSkyBound.y, GAMEMODE.RightSkyBound.y ), pos.z )
+		
+		local particle = RainEmitter:Add( "effects/rain_cloud", vec )			
+		particle:SetVelocity( Vector( 0, 0, math.random( -1000, -800 ) ) + WindVector * math.Rand( 0, 2.0 ) )
+		particle:SetLifeTime( 0 )
+		particle:SetDieTime( 10 )
+		particle:SetStartAlpha( 3 + math.Rand( 0, GAMEMODE.Weather.Rain * 5 ) )
+		particle:SetEndAlpha( 5 )
+		particle:SetStartSize( math.random( 100, 200 ) )
+		particle:SetEndSize( 200 )
+		particle:SetAirResistance( 0 )
+		particle:SetCollide( true )
+		particle:SetBounce( 0 )
+		particle:SetColor( Color( 200, 200, 250 ) )
+		particle:SetCollideCallback( CloudCollision )
+	
 	end
 
 end

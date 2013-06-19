@@ -60,6 +60,15 @@ function GM:RenderScreenspaceEffects()
 		
 	end
 	
+	if GetGlobalBool( "Radiation", false ) and not GAMEMODE.PlayerIsIndoors then
+	
+		ColorModify[ "$pp_colour_mulg" ] = 0.15
+		ColorModify[ "$pp_colour_mulr" ] = 0.10
+		ColorModify[ "$pp_colour_addg" ] = 0.05
+		ColorModify[ "$pp_colour_addr" ] = 0.03
+	
+	end
+	
 	if LocalPlayer():Team() == TEAM_ZOMBIES then
 	
 		if LocalPlayer():Alive() then

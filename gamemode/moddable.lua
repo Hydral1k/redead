@@ -38,6 +38,7 @@ GM.DeathScreenText[ TEAM_ZOMBIES ] = { "DEATH IS ONLY THE BEGINNING",
 "LIFE IS OVERRATED",
 "REST IS FOR THE LIVING" }
 
+GM.RedemptionCash = 250    // Amount of cash earned for redeeming yourself
 GM.RedemptionDamage = 350  // Amount of damage that the zombie lord needs to deal before he is redeemed
 GM.RadiationAmount = 0.6   // How much of the radiation on the map should be disabled on map startup? ( 0.6 means 60% will be disabled ) - OBSOLETE?
 GM.MaxLoot = 0.35          // Maximum amount of loot to be generated ( 0.05 means 5% of the info_lootspawns will have loot at them. )

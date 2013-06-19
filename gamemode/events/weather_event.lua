@@ -16,7 +16,7 @@ function EVENT:Start()
 	
 	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do
 		
-		v:Notice( "The weather conditions are changing", GAMEMODE.Colors.White, 5 )
+		v:Notice( "The weather conditions are worsening", GAMEMODE.Colors.White, 5 )
 		
 	end
 	

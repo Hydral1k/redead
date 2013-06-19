@@ -45,7 +45,7 @@ function PANEL:Think()
 	
 	if self.Depressed and self.MoveTime < CurTime() then
 	
-		self.MoveTime = CurTime() + 0.5
+		self.MoveTime = CurTime() + 0.2
 	
 		if self.Up then
 	

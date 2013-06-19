@@ -79,5 +79,13 @@
 			"type"		"Numeric"
 			"default"	"6"
 		}
+		10
+		{
+			"name"		"sv_redead_post_game_time"
+			"text"		"Minimum players:"
+			"help"		"Amount of time before next map loads."
+			"type"		"Numeric"
+			"default"	"45"
+		}
 	}
 }

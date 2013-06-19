@@ -16,12 +16,14 @@ function EVENT:Start()
 	
 	for k,v in pairs( team.GetPlayers( TEAM_ARMY ) ) do
 		
-		v:Notice( "Nuclear fallout contamination is imminent", GAMEMODE.Colors.Red, 5 )
-		v:Notice( "Enter a building to avoid radiation poisoning", GAMEMODE.Colors.Red, 5, 2 )
-		v:Notice( "The atmospheric fallout will subside in " .. EVENT.TimeText[ num ], GAMEMODE.Colors.Red, 5, 15 )
-		v:Notice( "Atmospheric radioactivity levels are now safe", GAMEMODE.Colors.Green, 5, EVENT.Times[ num ] + 15 )
+		v:Notice( "Nuclear fallout contamination is imminent", GAMEMODE.Colors.White, 7 )
+		v:Notice( "Enter a building to avoid radiation poisoning", GAMEMODE.Colors.White, 7, 2 )
+		v:Notice( "The atmospheric fallout will subside in " .. EVENT.TimeText[ num ], GAMEMODE.Colors.White, 7, 15 )
+		v:Notice( "Atmospheric radioactivity levels are now safe", GAMEMODE.Colors.White, 7, EVENT.Times[ num ] + 15 )
 		
 	end
+	
+	timer.Simple( 15, function() SetGlobalBool( "Radiation", true ) end )
 	
 end
 	
@@ -74,6 +76,8 @@ function EVENT:EndThink()
 end
 
 function EVENT:End()
+
+	SetGlobalBool( "Radiation", false )
 
 end
 
