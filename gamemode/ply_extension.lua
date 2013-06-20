@@ -807,7 +807,7 @@ function meta:Think()
 		if self:IsBleeding() then
 			
 			self:AddHealth( -1 )
-			self.HealTime = CurTime() + 2.5
+			self.HealTime = CurTime() + 2.0
 			
 		elseif not self:IsBleeding() and not self:IsInfected() and self:GetRadiation() < 1 and self:Health() > 50 then // health regen only works if you arent affected by anything and >50 hp
 			

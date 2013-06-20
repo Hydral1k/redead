@@ -86,8 +86,9 @@ function SWEP:MeleeTrace( dmg )
 	tr.start = pos + self.Owner:GetAimVector() * -5
 	tr.endpos = pos + aim
 	tr.filter = self.Owner
-	tr.mins = Vector(-16,-16,-16)
-	tr.maxs = Vector(16,16,16)
+	tr.mask = MASK_SHOT_HULL
+	tr.mins = Vector(-20,-20,-20)
+	tr.maxs = Vector(20,20,20)
 
 	local trace = util.TraceHull( tr )
 	local ent = trace.Entity

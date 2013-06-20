@@ -10,7 +10,7 @@ if CLIENT then
 	
 	SWEP.ViewModelFOV = 60
 	
-	SWEP.PrintName = "The Immolator"
+	SWEP.PrintName = "HEAT Cannon"
 	SWEP.IconLetter = "m"
 	SWEP.Slot = 4
 	SWEP.Slotpos = 2
@@ -42,13 +42,12 @@ SWEP.Burn = Sound( "ambient/fire/ignite.wav" )
 SWEP.Burn2 = Sound( "Weapon_Mortar.Impact" )
 
 SWEP.Primary.Sound			= Sound( "Weapon_mortar.single" )
-SWEP.Primary.Sound2			= Sound( "Weapon_PhysCannon.Charge" )
-SWEP.Primary.Sound3			= Sound( "Weapon_PhysCannon.Drop" )
+SWEP.Primary.Sound2			= Sound( "weapons\physcannon\physcannon_charge.wav" )
 SWEP.Primary.Recoil			= 15.5
 SWEP.Primary.Damage			= 80
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.Cone			= 0.015
-SWEP.Primary.Delay			= 1.800
+SWEP.Primary.Delay			= 1.700
 
 SWEP.Primary.ClipSize		= 1
 SWEP.Primary.Automatic		= true
@@ -79,7 +78,6 @@ function SWEP:PrimaryAttack()
 
 	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 	self.Weapon:EmitSound( self.Primary.Sound, 100, math.random(90,100) )
-	self.Weapon:EmitSound( self.Primary.Sound2 )
 	//self.Weapon:EmitSound( self.Primary.Sound3, 100, 80 )
 	self.Weapon:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone, self.Weapon:GetZoomMode() )
 	self.Weapon:TakePrimaryAmmo( 1 )
@@ -88,6 +86,7 @@ function SWEP:PrimaryAttack()
 	if SERVER then
 	
 		self.Owner:AddAmmo( self.AmmoType, -1 )
+		self.Owner:EmitSound( self.Primary.Sound2 )
 		
 	end
 	
