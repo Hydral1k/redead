@@ -42,7 +42,7 @@ SWEP.Burn = Sound( "ambient/fire/ignite.wav" )
 SWEP.Burn2 = Sound( "Weapon_Mortar.Impact" )
 
 SWEP.Primary.Sound			= Sound( "Weapon_mortar.single" )
-SWEP.Primary.Sound2			= Sound( "weapons\physcannon\physcannon_charge.wav" )
+SWEP.Primary.Sound2			= Sound( "weapons/physcannon/physcannon_charge.wav" )
 SWEP.Primary.Recoil			= 15.5
 SWEP.Primary.Damage			= 80
 SWEP.Primary.NumShots		= 1
