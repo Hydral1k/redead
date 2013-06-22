@@ -957,13 +957,14 @@ function meta:SendShipment()
 		
 	end
 	
-	local droptime = math.Round( 9.5 + ( table.Count( self.Shipment ) * 0.5 ) )
+	local droptime = 9.5 + ( table.Count( self.Shipment ) * 0.5 )
+	local round = math.Round( droptime )
 	
-	self:Notice( "Your shipment is due in " .. droptime .. " seconds", GAMEMODE.Colors.Green )
+	self:Notice( "Your shipment is due in " .. round .. " seconds", GAMEMODE.Colors.Green )
 	
 	local prop = ents.Create( "sent_dropflare" )
 	prop:SetPos( self:GetPos() + Vector(0,0,10) )
-	prop:SetDieTime( droptime )
+	prop:SetDieTime( droptime - 0.5 )
 	prop:Spawn()
 	
 	local function DropBox( ply, pos, tbl )
@@ -981,8 +982,8 @@ function meta:SendShipment()
 	local tr = util.TraceLine( util.GetPlayerTrace( self, Vector(0,0,1) ) )
 	local ship = self:GetShipment()
 	
-	timer.Simple( droptime + 1, function() DropBox( self, tr.HitPos + Vector(0,0,-100), ship ) end )
-	timer.Simple( droptime - 1, function() sound.Play( table.Random( GAMEMODE.Choppers ), self:GetPos(), 100, 100, 0.8 ) end )
+	timer.Simple( droptime, function() DropBox( self, tr.HitPos + Vector(0,0,-100), ship ) end )
+	timer.Simple( droptime - 2, function() sound.Play( table.Random( GAMEMODE.Choppers ), self:GetPos(), 100, 100, 0.8 ) end )
 	
 	self.Shipment = {}
 
