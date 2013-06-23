@@ -51,18 +51,24 @@ function ENT:Think()
 	
 	end
 
-	local tbl = table.Random( self.PosTbl )
+	local tbl
 	
-	local particle = self.Emitter:Add( "effects/muzzleflash" .. math.random(1,4), tbl.Pos + ( VectorRand() * 2 ) )
-	particle:SetVelocity( Vector(0,0,80) )
-	particle:SetDieTime( math.Rand( 0.2, 0.4 ) + math.Rand( 0.3, 0.6 ) * tbl.Scale )
-	particle:SetStartAlpha( 255 )
-	particle:SetEndAlpha( 0 )
-	particle:SetStartSize( math.random(15,25) + ( math.random(25,50) * tbl.Scale ) )
-	particle:SetEndSize( 0 )
-	particle:SetRoll( math.random(-180,180) )
-	particle:SetColor( 255, 200, 200 )
-	particle:SetGravity( Vector( 0, 0, 400 + ( tbl.Scale * 100 ) ) )
+	for i=1,6 do
+	
+		tbl = table.Random( self.PosTbl )
+	
+		local particle = self.Emitter:Add( "effects/muzzleflash" .. math.random(1,4), tbl.Pos + ( VectorRand() * 2 ) )
+		particle:SetVelocity( Vector(0,0,80) )
+		particle:SetDieTime( math.Rand( 0.2, 0.4 ) + math.Rand( 0.3, 0.6 ) * tbl.Scale )
+		particle:SetStartAlpha( 255 )
+		particle:SetEndAlpha( 0 )
+		particle:SetStartSize( math.random(15,25) + ( math.random(25,50) * tbl.Scale ) )
+		particle:SetEndSize( 0 )
+		particle:SetRoll( math.random(-180,180) )
+		particle:SetColor( 255, 200, 200 )
+		particle:SetGravity( Vector( 0, 0, 400 + ( tbl.Scale * 100 ) ) )
+		
+	end
 	
 	if self.SmokeTime < CurTime() then
 	

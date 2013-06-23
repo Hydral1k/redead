@@ -33,6 +33,7 @@ include( 'vgui/vgui_sidebutton.lua' )
 include( 'vgui/vgui_scroller.lua' )
 
 CV_RagdollVision = CreateClientConVar( "cl_redead_ragdoll_vision", "1", true, false )
+CV_RagdollRemove = CreateClientConVar( "cl_redead_ragdoll_remove_time", "15", true, false )
 CV_Density = CreateClientConVar( "cl_redead_rain_density", "1.0", true, false )
 CV_NoobHelp = CreateClientConVar( "cl_redead_noob_help", "1", true, false )
 
@@ -64,11 +65,6 @@ function GM:Initialize()
 	surface.CreateFont ( "EndGame", { size = 14, weight = 400,  antialias = true, additive = true, font = "Tahoma" } )
 	surface.CreateFont ( "AmmoFontSmall", { size = 12, weight = 300, antialias = true, additive = true, font = "Verdana" } )
 	surface.CreateFont ( "TargetIDFont", { size = 12, weight = 200, antialias = true, additive = true, font = "Verdana" } )
-
-	//matRadar = Material( "radbox/radar" )
-	//matArm = Material( "radbox/radar_arm" )
-	//matArrow = Material( "radbox/radar_arrow" )
-	//matNoise = Material( "radbox/nvg_noise" )
 	
 	matHealth = Material( "radbox/img_health" )
 	matStamina = Material( "radbox/img_stamina" )
@@ -94,7 +90,6 @@ function GM:GetHelpHTML()
 
 end
 
-// Help menu - comment this out later?
 function GM:ShowHelp()
 
 	if IsValid( self.HelpFrame ) then return end
@@ -155,7 +150,6 @@ function GM:Think()
 	GAMEMODE:FadeRagdolls()
 	GAMEMODE:GoreRagdolls()
 	GAMEMODE:HUDTraces()
-	//GAMEMODE:SpawnRagdolls()
 	
 	if GetGlobalBool( "GameOver", false ) and not EndScreenShown then
 	
@@ -290,20 +284,12 @@ function GM:FadeRagdolls()
 	for k,v in pairs( ents.FindByClass( "class C_ClientRagdoll" ) ) do
 	
 		if v.Time and v.Time < CurTime() then
-		
-			//v:SetColor( Color( 255, 255, 255, v.Alpha ) )
-			//v.Alpha = math.Approach( v.Alpha, 0, -2 )
-			
-			//if v.Alpha <= 0 then
-				//v:Remove()
-			//end
 			
 			v:Remove()
 		
 		elseif not v.Time then
 		
-			v.Time = CurTime() + 12
-			//v.Alpha = 255
+			v.Time = CurTime() + CV_RagdollRemove:GetInt()
 		
 		end
 		
@@ -356,31 +342,44 @@ function GM:GoreRagdolls()
 			
 			end
 		
-		elseif not LocalPlayer():Alive() and IsValid( LocalPlayer():GetRagdollEntity() ) and LocalPlayer():GetRagdollEntity() == v and not v.Slowed and not table.HasValue( GAMEMODE.Corpses, string.lower( v:GetModel() ) ) then
+		elseif not LocalPlayer():Alive() and IsValid( LocalPlayer():GetRagdollEntity() ) and LocalPlayer():GetRagdollEntity() == v then
 		
-			v.Slowed = true
-			
 			local phys = v:GetPhysicsObject()
-			
-			if IsValid( phys ) then
-			
-				local count = LocalPlayer():GetRagdollEntity():GetPhysicsObjectCount()
 				
-				for i=0, count do
+			if ( v.WakeUp or 0 ) < CurTime() and IsValid( phys ) then
+			
+				v.WakeUp = CurTime() + math.Rand( 1.5, 3.5 )
+			
+				phys:Wake()
+				phys:ApplyForceCenter( VectorRand() * 10 )
+			
+			end
+		
+			if not v.Slowed and not table.HasValue( GAMEMODE.Corpses, string.lower( v:GetModel() ) ) then
+		
+				v.Slowed = true
 				
-					local limb = v:GetPhysicsObjectNum( i )
+				if IsValid( phys ) then
+				
+					local count = LocalPlayer():GetRagdollEntity():GetPhysicsObjectCount()
 					
-					if IsValid( limb ) then
+					for i=0, count do
 					
-						limb:SetDamping( 5, 0 )
-						limb:ApplyForceCenter( VectorRand() * 50 )
+						local limb = v:GetPhysicsObjectNum( i )
 						
+						if IsValid( limb ) then
+						
+							limb:SetDamping( 5, 0 )
+							limb:ApplyForceCenter( VectorRand() * 50 )
+							
+						end
+					
 					end
+					
+					phys:Wake()
 				
 				end
 				
-				phys:Wake()
-			
 			end
 		
 		end
@@ -469,35 +468,6 @@ function GM:GoreRagdolls()
 	
 end
 
-function GM:SpawnRagdolls()
-
-	local tbl = ents.FindByClass( "npc_*" )
-	
-	for c,d in pairs( RagdollTbl ) do
-	
-		local ent = GAMEMODE:GetNearestEnt( d.Pos, 30, tbl )
-		
-		if IsValid( ent ) and not ent.Ragdolled then
-			
-			ent:BecomeRagdollOnClient()
-			ent.Ragdolled = true
-			
-			table.remove( RagdollTbl, c )
-			
-			break
-			
-		elseif d.Time < CurTime() then
-			
-			table.remove( RagdollTbl, c )
-			
-			break
-		
-		end
-		
-	end
-	
-end
-
 function DrawBar( x, y, w, h, value, maxvalue, icon, colorlight, colordark, hp )
 
 	draw.RoundedBox( 4, x - 1, y, h + 1, h, Color( 0, 0, 0, 180 ) )
@@ -524,22 +494,6 @@ function DrawBar( x, y, w, h, value, maxvalue, icon, colorlight, colordark, hp )
 	
 		draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, h - 6, colordark )
 		draw.RoundedBox( 0, 1 + x + i * 2, y + 3 + ( h * 0.2 ), 1, h - 6 - ( h * 0.4 ), Color( colorlight.r, grn, colorlight.b ) )
-		
-		--[[if hp then
-		
-			if i % 6 == 0 or ( i + 1 ) % 6 == 0 or ( i + 2 ) % 6 == 0 then
-				
-				draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * ( math.sin( CurTime() * 3 + i ) * 0.2 + 0.5 ) ) - 3, Color( colorlight.r, grn, colorlight.b ) )
-				
-			end
-		
-			draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * 0.4 ) - 3, Color( colorlight.r, grn, colorlight.b ) )
-		
-		else
-		
-			draw.RoundedBox( 0, 1 + x + i * 2, y + 3, 1, ( h * ( math.sin( ( CurTime() * 0.1 + i * 0.5 ) ) * ( math.sin( CurTime() * 2 ) * 0.15 ) + 0.5 ) ) - 3, Color( colorlight.r, grn, colorlight.b ) )
-			
-		end]]
 	
 	end
 
@@ -937,20 +891,6 @@ function GM:HUDPaint()
 	end]]
 	
 end
-
---[[function IsOnRadar( ent )
-
-	for k,v in pairs( PosTable ) do
-	
-		if v.Ent == ent then
-		
-			return v
-		
-		end
-	
-	end
-
-end]]
 
 function GM:HUDWeaponPickedUp( wep )
 

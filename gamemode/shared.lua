@@ -55,18 +55,6 @@ function GM:Move( ply, mv )
 		
 		end
 	
-	else
-	
-		if mv:GetSideSpeed() > 0 then
-	
-			mv:SetSideSpeed( 175 )
-			
-		elseif mv:GetSideSpeed() < 0 then
-		
-			mv:SetSideSpeed( -175 )
-		
-		end
-	
 	end
 	
 	return self.BaseClass:Move( ply, mv )

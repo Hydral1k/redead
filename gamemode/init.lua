@@ -586,6 +586,12 @@ function GM:LootThink()
 			v:Remove()
 		
 		end
+		
+		if v:IsOnFire() then
+		
+			v:Extinguish()
+		
+		end
 	
 	end
 
@@ -1217,12 +1223,6 @@ function GM:EntityTakeDamage( ent, dmginfo )
 			ent:Fire( "break", 0, 0 )
 		
 		end
-	
-	end
-
-	if not ent:IsPlayer() and ent:IsOnFire() then
-	
-		ent:Extinguish()
 	
 	end
 
